@@ -1,0 +1,98 @@
+19	30	46	n	semantic parsing
+19	56	58	p	to
+19	63	70	n	problem
+19	71	73	p	of
+19	74	79	n	KB QA
+21	0	15	n	Semantic parses
+21	23	53	p	deterministically converted to
+21	56	61	n	query
+21	62	72	p	to extract
+21	77	84	n	answers
+21	85	89	p	from
+21	94	96	n	KB
+20	10	13	p	for
+20	14	33	n	each input question
+20	39	48	p	construct
+20	52	105	n	explicit structural semantic parse ( semantic graph )
+34	19	24	p	adapt
+34	25	62	n	Gated Graph Neural Networks ( GGNNs )
+34	80	100	p	to process and score
+34	101	116	n	semantic parses
+171	4	22	n	Pooled Edges model
+171	28	31	p	use
+171	36	40	n	DCNN
+171	41	50	p	to encode
+171	55	90	n	question and the label of each edge
+171	91	93	p	in
+171	98	112	n	semantic graph
+174	0	28	n	Graph Neural Network ( GNN )
+175	69	76	p	include
+175	79	92	n	model variant
+175	93	110	p	that does not use
+175	115	131	n	gating mechanism
+175	136	153	p	directly computes
+175	158	170	n	hidden state
+175	171	173	p	as
+175	176	187	n	combination
+175	20	22	p	of
+175	195	238	n	activations ( Eq 1 ) and the previous state
+176	0	35	n	Gated Graph Neural Network ( GGNN )
+176	54	64	p	to process
+176	65	80	n	semantic parses
+48	0	77	n	https://github.com/UKPLab/coling2018-graph-neural-networks-question-answering
+2	56	89	n	Knowledge Base Question Answering
+11	0	40	n	Knowledge base question answering ( QA )
+15	0	2	n	QA
+19	74	79	n	KB QA
+219	23	25	p	on
+219	30	50	n	WebQSP - WD data set
+220	21	33	n	graph models
+220	34	44	p	outperform
+220	45	61	n	all other models
+220	62	68	p	across
+220	69	99	n	precision , recall and F-score
+220	107	111	n	GGNN
+220	112	119	p	showing
+220	124	144	n	best over all result
+223	4	22	n	STAGG architecture
+223	23	31	p	delivers
+223	36	49	n	worst results
+224	4	21	n	Single Edge model
+224	22	33	p	outperforms
+224	38	69	n	more complex Pooled Edges model
+224	70	72	p	by
+224	75	92	n	noticeable margin
+225	4	24	n	Single Edge baseline
+225	25	32	p	prefers
+225	33	46	n	simple graphs
+225	47	62	p	that consist of
+225	65	76	n	single edge
+225	83	85	p	is
+225	88	101	n	good strategy
+225	102	112	p	to achieve
+225	113	133	n	higher recall values
+229	4	22	n	Pooled Edges model
+229	23	32	p	maintains
+229	35	53	n	better performance
+229	54	60	p	across
+229	61	94	n	questions of different complexity
+229	103	108	p	shows
+229	113	121	n	benefits
+229	122	133	p	of encoding
+229	134	149	n	all graph edges
+228	17	20	p	for
+228	25	56	n	STAGG and Single Edge baselines
+228	61	72	n	performance
+228	73	75	p	on
+228	76	98	n	more complex questions
+228	99	104	n	drops
+228	105	116	p	compared to
+228	121	128	n	results
+228	129	131	p	on
+228	132	149	n	simpler questions
+233	3	11	p	see that
+233	16	26	n	GGNN model
+233	27	33	p	offers
+233	38	50	n	best results
+233	56	58	p	on
+233	59	87	n	simple and complex questions

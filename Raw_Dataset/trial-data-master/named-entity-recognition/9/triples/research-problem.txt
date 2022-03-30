@@ -1,0 +1,5 @@
+(Contribution||has research problem||pre-trained biomedical language representation)
+(Contribution||has research problem||extracting valuable information from biomedical literature)
+(Contribution||has research problem||pre-trained language model BERT can be adapted for biomedical corpora)
+(Contribution||has research problem||biomedical text mining often yields unsatisfactory results due to a word distribution shift from general domain corpora to biomedical corpora)
+(Contribution||has research problem||word distributions of general and biomedical corpora are quite different)

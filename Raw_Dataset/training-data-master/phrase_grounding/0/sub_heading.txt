@@ -1,0 +1,19 @@
+title
+abstract
+Introduction
+Related works
+Grounding natural language in images
+Mapping to common space
+Attention mechanisms
+Method
+Feature Extraction and Common Space
+Multi-Level Multimodal Attention Mechanism
+Feature Level Selection
+Multimodal Loss
+Experiments
+Datasets
+Experimental Setup
+Phrase Localization Evaluation
+Ablation Study
+Qualitative results
+Conclusion

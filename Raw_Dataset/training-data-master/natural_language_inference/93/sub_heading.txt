@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Gated Self-Matching Networks
+Question and Passage Encoder
+Output Layer
+Experiment
+Implementation Details
+Main Results
+Ablation Study
+Discussion
+Encoding Evidence from Passage
+Result Analysis
+Related Work
+Conclusion

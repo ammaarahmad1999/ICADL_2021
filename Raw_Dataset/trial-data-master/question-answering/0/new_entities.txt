@@ -1,0 +1,62 @@
+23	48	68	p	converting questions
+23	69	117	n	to ( uninterpretable ) vectorial representations
+23	118	131	p	which require
+23	132	167	n	no pre-defined grammars or lexicons
+23	172	181	p	can query
+23	182	188	n	any KB
+23	189	203	p	independent of
+23	208	214	n	schema
+31	25	33	p	learning
+31	34	69	n	low - dimensional vector embeddings
+31	70	72	p	of
+31	73	96	n	words and of KB triples
+31	97	104	p	so that
+31	105	159	n	representations of questions and corresponding answers
+31	160	166	p	end up
+31	173	180	n	similar
+31	181	183	p	in
+31	188	203	n	embedding space
+33	113	124	p	make use of
+33	125	141	n	weak supervision
+35	3	18	p	end up learning
+35	19	55	n	meaningful vectorial representations
+35	56	59	p	for
+35	60	69	n	questions
+35	70	79	p	involving
+35	80	97	n	up to 800 k words
+35	106	113	n	triples
+35	114	116	p	of
+35	120	151	n	mostly automatically created KB
+35	152	156	p	with
+35	157	171	n	2.4 M entities
+35	176	195	n	600 k relationships
+38	10	17	p	propose
+38	30	66	n	fine - tune embedding - based models
+38	80	90	p	optimizing
+38	91	99	n	a matrix
+38	100	114	p	parameterizing
+38	119	129	n	similarity
+38	130	137	p	used in
+38	142	157	n	embedding space
+38	160	170	p	leading to
+38	173	210	n	consistent improvement in performance
+2	0	23	n	Open Question Answering
+4	0	58	n	Building computers able to answer questions on any subject
+12	48	80	n	open - domain question answering
+188	0	9	n	Reranking
+201	15	23	p	see that
+201	24	57	n	multitasking with paraphrase data
+201	80	91	p	improves F1
+201	92	109	n	from 0.60 to 0.68
+207	0	33	n	Fine - tuning the embedding model
+207	53	64	p	to optimize
+207	69	84	n	top of the list
+207	89	105	p	grants a bump of
+207	106	114	n	5 points
+207	115	117	p	of
+207	118	120	n	F1
+208	0	26	n	All versions of our system
+208	27	45	p	greatly outperform
+208	46	53	n	paralex
+208	79	102	p	improves the F1 - score
+208	103	122	n	by almost 20 points

@@ -1,0 +1,110 @@
+177	3	11	p	switched
+177	16	43	n	semantic matching functions
+177	44	49	p	among
+177	50	77	n	{ max , global , local - l}
+177	114	119	p	fixed
+177	124	137	n	other options
+177	138	140	p	as
+177	147	167	n	linear decomposition
+177	174	186	n	filter types
+177	187	196	p	including
+177	197	226	n	{unigram , bigram , trigram }
+177	237	244	p	filters
+177	233	236	n	500
+179	3	8	p	found
+179	18	30	n	max function
+179	31	49	p	worked better than
+179	54	69	n	global function
+179	70	77	p	on both
+179	78	89	n	MAP and MRR
+185	3	9	p	varied
+185	14	37	n	decomposition operation
+185	38	43	p	among
+185	44	75	n	{ rigid , linear , orthogonal }
+191	11	17	p	tested
+191	22	55	n	influence of various filter types
+192	3	14	p	constructed
+192	15	26	n	5 groups of
+192	27	34	p	filters
+192	37	44	n	win - 1
+192	45	53	p	contains
+192	54	78	n	only the unigram filters
+192	81	88	n	win - 2
+192	89	97	p	contains
+192	98	129	n	both unigram and bigram filters
+192	132	139	n	win - 3
+192	140	148	p	contains
+192	149	196	n	all the filters in win - 2 plus trigram filters
+192	199	206	n	win - 4
+192	207	225	p	extends filters in
+192	226	255	n	win - 3 with 4 - gram filters
+192	262	269	n	win - 5
+192	270	274	p	adds
+192	275	304	n	5 - gram filters into win - 4
+45	19	26	p	propose
+45	27	40	n	a novel model
+45	83	108	p	decomposing and composing
+45	109	126	n	lexical semantics
+45	127	131	p	over
+45	132	141	n	sentences
+46	0	5	p	Given
+46	8	21	n	sentence pair
+46	34	44	p	represents
+46	45	54	n	each word
+46	55	57	p	as
+46	60	83	n	low -dimensional vector
+46	106	116	p	calculates
+46	119	143	n	semantic matching vector
+46	144	147	p	for
+46	148	157	n	each word
+46	158	166	p	based on
+46	167	198	n	all words in the other sentence
+47	5	13	p	based on
+47	18	42	n	semantic matching vector
+47	65	75	p	decomposed
+47	45	61	n	each word vector
+47	76	80	p	into
+47	81	95	n	two components
+47	100	117	n	similar component
+47	124	144	n	dissimilar component
+48	3	6	p	use
+48	7	25	n	similar components
+48	26	28	p	of
+48	29	42	n	all the words
+48	43	55	p	to represent
+48	60	94	n	similar parts of the sentence pair
+48	101	122	n	dissimilar components
+48	123	125	p	of
+48	126	136	n	every word
+48	137	145	p	to model
+48	150	177	n	dissimilar parts explicitly
+49	46	55	p	performed
+49	15	42	n	two - channel CNN operation
+49	56	66	p	to compose
+49	71	104	n	similar and dissimilar components
+49	105	109	p	into
+49	112	126	n	feature vector
+50	41	49	p	utilized
+50	14	37	n	composed feature vector
+50	50	60	p	to predict
+50	65	84	n	sentence similarity
+2	0	28	n	Sentence Similarity Learning
+4	18	37	n	sentence similarity
+202	0	14	n	QASent dataset
+214	46	49	p	got
+214	54	62	n	best MAP
+214	63	68	p	among
+214	69	86	n	all previous work
+214	95	109	n	comparable MRR
+214	110	114	p	than
+214	115	118	n	dos
+215	0	15	n	Wiki QA dataset
+224	40	59	p	more effective than
+224	64	76	n	other models
+225	0	12	n	MSRP dataset
+237	59	67	p	obtained
+237	70	92	n	comparable performance
+237	113	126	p	without using
+237	127	146	n	any sparse features
+237	149	174	n	extra annotated resources
+237	179	207	n	specific training strategies

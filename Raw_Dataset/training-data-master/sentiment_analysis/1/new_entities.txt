@@ -1,0 +1,187 @@
+349	4	21	n	two major designs
+349	22	24	p	in
+349	29	47	n	adjacency matrix A
+349	50	54	p	i.e.
+349	57	113	n	global connection and symmetric adjacency matrix designs
+349	120	130	p	helpful in
+349	131	151	n	recognizing emotions
+350	4	21	n	global connection
+350	22	28	p	models
+350	33	54	n	asymmetric difference
+350	55	62	p	between
+350	63	82	n	neuronal activities
+350	83	85	p	in
+350	90	116	n	left and right hemispheres
+350	131	146	p	shown to reveal
+350	147	163	n	certain emotions
+352	4	23	n	NodeDAT regularizer
+352	30	56	n	noticeable positive impact
+352	57	59	p	on
+352	64	75	n	performance
+352	76	78	p	of
+352	79	88	n	our model
+357	0	14	n	DL regularizer
+357	15	23	p	improves
+357	24	35	n	performance
+357	36	38	p	of
+357	39	48	n	our model
+357	49	51	p	by
+357	52	62	n	around 3 %
+357	63	65	p	in
+357	66	74	n	accuracy
+357	75	77	p	on
+357	78	91	n	both datasets
+355	14	16	p	if
+355	17	24	n	NodeDAT
+355	25	27	p	is
+355	28	35	n	removed
+355	42	53	n	performance
+355	54	56	p	of
+355	57	66	n	our model
+355	73	89	n	greater variance
+312	8	12	n	RGNN
+312	37	48	p	empirically
+312	49	52	n	set
+312	57	63	n	number
+312	64	66	p	of
+312	67	93	n	convolutional layers L = 2
+312	96	108	n	dropout rate
+312	109	111	p	of
+312	112	115	n	0.7
+312	116	118	p	at
+312	123	153	n	output fully - connected layer
+312	160	170	n	batch size
+312	171	173	p	of
+312	174	176	n	16
+313	3	6	p	use
+313	7	24	n	Adam optimization
+313	25	29	p	with
+313	30	44	n	default values
+313	47	51	p	i.e.
+313	54	79	n	? 1 = 0.9 and ? 2 = 0.999
+314	8	12	p	tune
+314	17	43	n	output feature dimension d
+314	46	63	n	label noise level
+314	66	81	n	learning rate ?
+314	84	110	n	L1 regularization factor ?
+314	117	134	n	L2 regularization
+49	19	26	p	propose
+49	29	70	n	regularized graph neural network ( RGNN )
+52	19	27	p	consider
+52	28	40	n	each channel
+52	41	43	p	in
+52	44	55	n	EEG signals
+52	56	58	p	as
+52	61	65	n	node
+52	66	68	p	in
+52	69	78	n	our graph
+53	4	14	n	RGNN model
+53	15	22	p	extends
+53	27	67	n	simple graph convolution network ( SGC )
+53	72	81	p	leverages
+53	86	107	n	topological structure
+53	108	110	p	of
+53	111	122	n	EEG signals
+53	132	144	p	according to
+53	149	186	n	economy of brain network organization
+53	192	199	p	propose
+53	202	248	n	biologically supported sparse adjacency matrix
+53	249	259	p	to capture
+53	265	305	n	local and global inter-channel relations
+54	0	28	n	Local interchannel relations
+54	29	36	p	connect
+54	37	61	n	nearby groups of neurons
+54	70	76	p	reveal
+54	77	100	n	anatomical connectivity
+54	101	103	p	at
+54	104	114	n	macroscale
+55	0	30	n	Global inter-channel relations
+55	31	38	p	connect
+55	39	64	n	distant groups of neurons
+55	65	72	p	between
+55	77	103	n	left and right hemispheres
+55	108	118	p	may reveal
+55	119	160	n	emotion - related functional connectivity
+2	0	31	n	EEG - Based Emotion Recognition
+15	0	20	n	E MOTION recognition
+322	30	39	n	our model
+322	40	48	p	achieves
+322	49	69	n	superior performance
+322	70	72	p	on
+322	73	86	n	both datasets
+322	90	101	p	compared to
+322	102	115	n	all baselines
+322	116	125	p	including
+322	130	206	n	stateof - the - art BiHDM when DE features from all frequency bands are used
+323	34	42	p	improves
+323	47	55	n	accuracy
+323	56	58	p	of
+323	63	91	n	state - of - the - art model
+323	92	94	p	on
+323	95	104	n	SEED - IV
+323	105	107	p	by
+323	108	118	n	around 5 %
+324	26	34	p	performs
+324	35	41	n	better
+324	42	46	p	than
+324	47	52	n	DGCNN
+324	64	71	p	another
+324	72	89	n	GNN - based model
+324	95	104	p	leverages
+324	109	130	n	topological structure
+324	131	133	p	in
+324	134	145	n	EEG signals
+335	84	103	n	consistently better
+335	104	106	p	in
+335	107	117	n	gamma band
+335	118	122	p	than
+335	123	132	n	beta band
+329	0	2	p	In
+329	3	34	n	subject - dependent experiments
+329	35	37	p	on
+329	38	42	n	SEED
+329	45	50	n	STRNN
+329	51	59	p	achieves
+329	64	80	n	highest accuracy
+329	81	83	p	in
+329	84	113	n	delta , theta and alpha bands
+329	116	122	n	BiDANN
+329	123	131	p	performs
+329	132	136	n	best
+329	137	139	p	in
+329	140	149	n	beta band
+329	156	165	n	our model
+329	166	174	p	performs
+329	175	179	n	best
+329	180	182	p	in
+329	183	193	n	gamma band
+330	3	36	n	subject - independent experiments
+330	37	39	p	on
+330	40	44	n	SEED
+330	47	57	n	BiDANN - S
+330	58	66	p	achieves
+330	71	87	n	highest accuracy
+330	88	90	p	in
+330	91	112	n	theta and alpha bands
+330	119	128	n	our model
+330	129	137	p	performs
+330	138	142	n	best
+330	143	145	p	in
+330	146	174	n	delta , beta and gamma bands
+332	0	3	p	For
+332	9	60	n	subject - dependent and subjectindependent settings
+332	61	63	p	on
+332	64	68	n	SEED
+333	35	44	n	our model
+333	45	52	p	achieve
+333	53	71	n	better performance
+333	72	74	p	on
+333	75	95	n	beta and gamma bands
+333	96	100	p	than
+333	101	130	n	delta , theta and alpha bands
+333	133	154	p	with one exception of
+333	155	160	n	STRNN
+333	169	177	p	performs
+333	182	187	n	worst
+333	188	190	p	on
+333	191	201	n	gamma band

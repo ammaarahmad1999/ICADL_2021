@@ -1,0 +1,44 @@
+127	4	19	n	Word embeddings
+128	21	33	n	word vectors
+128	34	47	p	pretrained on
+128	48	65	n	large text corpus
+128	66	73	p	such as
+128	74	88	n	Wikipedia dump
+128	93	108	p	averaged to get
+128	113	128	n	document vector
+128	145	151	p	fed to
+128	156	176	n	sentiment classifier
+128	177	187	p	to compute
+128	192	207	n	sentiment score
+129	4	22	n	Recursive networks
+130	0	50	n	Various types of recursive neural networks ( RNN )
+130	61	71	p	applied on
+130	72	75	n	SST
+133	4	22	n	Recurrent networks
+134	0	32	n	Sophisticated recurrent networks
+134	33	40	p	such as
+134	41	89	n	left - to - right and bidrectional LSTM networks
+134	105	115	p	applied on
+134	116	119	n	SST
+135	4	26	n	Convolutional networks
+136	23	38	n	input sequences
+136	44	58	p	passed through
+136	61	105	n	1 - dimensional convolutional neural network
+136	106	108	p	as
+136	109	127	n	feature extractors
+22	19	22	p	use
+22	27	48	n	pretrained BERT model
+22	53	68	p	finetune it for
+22	73	117	n	fine - grained sentiment classification task
+22	118	120	p	on
+22	125	168	n	Stanford Sentiment Treebank ( SST ) dataset
+2	0	39	n	Fine - grained Sentiment Classification
+4	0	24	n	Sentiment classification
+145	7	15	p	see that
+145	16	25	n	our model
+145	66	74	p	performs
+145	75	81	n	better
+145	82	93	p	in terms of
+145	94	102	n	accuracy
+145	103	107	p	than
+145	108	149	n	many popular and sophisticated NLP models

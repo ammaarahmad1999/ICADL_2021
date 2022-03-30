@@ -1,0 +1,99 @@
+90	3	13	p	initialise
+90	14	23	n	our model
+90	24	28	p	with
+90	29	34	n	GloVe
+90	37	44	n	300 - D
+90	47	57	p	trained on
+90	58	82	n	42B tokens , 1.9 M vocab
+90	85	103	p	not updated during
+90	104	112	n	training
+90	123	134	p	pre-process
+90	139	145	n	corpus
+90	146	150	p	with
+90	151	163	n	tokenisation
+90	164	169	p	using
+90	170	174	n	NLTK
+90	181	193	n	case folding
+91	0	8	n	Training
+91	12	28	p	carried out over
+91	29	39	n	800 epochs
+91	40	44	p	with
+91	49	63	n	FTRL optimiser
+91	70	80	n	batch size
+91	81	83	p	of
+91	84	87	n	128
+91	92	105	n	learning rate
+91	106	108	p	of
+91	109	113	n	0.05
+93	0	7	n	Dropout
+93	11	21	p	applied to
+93	26	32	n	output
+93	38	40	p	in
+93	45	61	n	final classifier
+93	75	79	p	with
+93	82	86	n	rate
+93	33	35	p	of
+93	90	93	n	0.2
+92	3	6	p	use
+92	11	39	n	following hyper - parameters
+92	40	43	p	for
+92	44	59	n	weight matrices
+92	60	62	p	in
+92	63	78	n	both directions
+92	159	170	n	hidden size
+92	124	126	p	of
+92	178	181	n	GRU
+92	194	196	p	is
+92	149	152	n	300
+95	9	16	p	to curb
+95	17	28	n	overfitting
+95	34	44	p	regularise
+95	49	59	n	last layer
+95	73	77	p	with
+95	81	92	n	L 2 penalty
+95	93	95	p	on
+95	100	107	n	weights
+97	3	18	p	empirically set
+97	23	46	n	number of memory chains
+97	47	49	p	to
+97	50	51	n	6
+97	54	58	p	with
+97	63	82	n	keys of two of them
+97	83	89	p	set to
+97	94	109	n	same embeddings
+97	110	112	p	as
+97	117	143	n	target words LOC1 and LOC2
+26	18	25	p	propose
+26	28	52	n	novel model architecture
+26	53	56	p	for
+26	57	62	n	TABSA
+26	65	79	p	augmented with
+26	80	106	n	multiple " memory chains "
+26	113	126	p	equipped with
+26	129	160	n	delayed memory update mechanism
+26	163	179	p	to keep track of
+26	180	211	n	numerous entities independently
+2	57	99	n	Targeted Aspect - based Sentiment Analysis
+4	110	162	n	targeted aspect - based sentiment analysis ( TABSA )
+114	0	9	n	Our model
+114	10	18	p	achieves
+114	19	49	n	state - of - the - art results
+114	50	58	p	for both
+114	59	75	n	aspect detection
+114	80	104	n	sentiment classification
+115	26	40	n	proposed model
+115	43	61	p	equipped only with
+115	62	114	n	domainindependent general - purpose GloVe embeddings
+115	117	128	p	outperforms
+115	129	140	n	Sentic LSTM
+115	155	173	p	heavily reliant on
+115	174	228	n	external knowledge bases and domainspecific embeddings
+116	0	21	n	Ent Net vs. our model
+117	3	6	p	see
+117	7	35	n	consistent performance gains
+117	36	39	p	for
+117	40	49	n	our model
+117	50	57	p	in both
+117	58	103	n	aspect detection and sentiment classification
+117	106	117	p	compared to
+117	118	124	n	EntNet

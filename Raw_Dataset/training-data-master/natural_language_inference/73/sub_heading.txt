@@ -1,0 +1,17 @@
+title
+abstract
+Introduction
+Background
+Attention
+Self-Attention
+Proposed Models
+Reinforced Sequence Sampling (RSS)
+Reinforced Self-Attention (ReSA)
+Applications of the Proposed Models
+Model Training
+Experiments
+Natural Language Inference
+Semantic Relatedness
+Case Study
+Related Work
+Conclusions

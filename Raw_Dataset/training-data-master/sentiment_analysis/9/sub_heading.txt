@@ -1,0 +1,21 @@
+title
+abstract
+Introduction
+Related Works
+Aspect Term Extraction
+Aspect Polarity Classification
+Methodology
+Task Definition
+Model Architecture
+Multi-Head Self-Attention
+Local Context Focus
+Feature Interactive Learning
+Aspect Polarity Classifier
+Aspect Term Extractor
+Training Details
+Experiments
+Datasets and Hyperparameters Setting
+Compared Methods
+Results Analysis
+Overall Performance Analysis
+Conclusion

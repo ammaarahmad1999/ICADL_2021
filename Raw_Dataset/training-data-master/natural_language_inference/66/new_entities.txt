@@ -1,0 +1,125 @@
+42	2	34	n	https://github.com/shuohangwang/
+142	3	6	p	use
+142	11	22	n	Adam method
+142	48	52	p	with
+142	53	68	n	hyperparameters
+143	2	8	p	set to
+143	9	12	n	0.9
+144	15	18	p	for
+144	19	31	n	optimization
+144	9	14	n	0.999
+145	4	25	n	initial learning rate
+145	29	35	p	set to
+145	39	44	n	0.001
+145	52	63	n	decay ratio
+145	64	66	p	of
+145	67	71	n	0.95
+145	72	75	p	for
+145	76	90	n	each iteration
+146	4	14	n	batch size
+146	18	24	p	set to
+146	28	30	n	30
+147	3	18	p	experiment with
+147	19	38	n	d = 150 and d = 300
+32	19	26	p	propose
+32	29	58	n	new LSTM - based architecture
+32	59	71	p	for learning
+32	72	98	n	natural language inference
+34	13	16	p	use
+34	20	24	n	LSTM
+34	25	35	p	to perform
+34	36	61	n	word - by - word matching
+34	62	64	p	of
+34	69	79	n	hypothesis
+34	80	84	p	with
+34	89	96	n	premise
+35	0	8	n	Our LSTM
+35	9	31	p	sequentially processes
+35	36	46	n	hypothesis
+35	53	69	p	at each position
+35	75	89	n	tries to match
+35	94	106	n	current word
+35	107	109	p	in
+35	114	124	n	hypothesis
+35	125	129	p	with
+35	133	168	n	attention - weighted representation
+35	169	171	p	of
+35	176	183	n	premise
+37	3	11	p	refer to
+37	32	44	n	match - LSTM
+37	50	56	n	m LSTM
+37	57	60	p	for
+37	61	66	n	short
+2	9	35	n	Natural Language Inference
+4	0	34	n	Natural language inference ( NLI )
+6	88	91	n	NLI
+163	65	73	p	see that
+163	82	87	n	set d
+163	88	90	p	to
+163	91	94	n	300
+163	97	106	n	our model
+163	107	115	p	achieves
+163	119	127	n	accuracy
+163	49	51	p	of
+163	131	137	n	86.1 %
+163	138	140	p	on
+163	145	154	n	test data
+182	12	19	p	compare
+182	20	36	n	our m LSTM model
+182	37	41	p	with
+182	68	100	n	word - by - word attention model
+182	104	109	p	under
+182	114	126	n	same setting
+182	127	131	p	with
+182	132	133	n	d
+182	134	135	p	=
+182	136	139	n	150
+182	149	157	p	see that
+182	158	173	n	our performance
+182	174	176	p	on
+182	181	201	n	test data ( 85.7 % )
+182	202	204	p	is
+182	205	211	n	higher
+182	212	216	p	than
+182	225	247	n	their model ( 82.6 % )
+184	10	21	n	performance
+184	22	24	p	of
+184	25	30	n	mLSTM
+184	31	35	p	with
+184	36	63	n	bi - LSTM sentence modeling
+184	64	77	p	compared with
+184	82	87	n	model
+184	88	92	p	with
+184	93	124	n	standard LSTM sentence modeling
+184	125	129	p	when
+184	130	131	n	d
+184	135	141	p	set to
+184	142	145	n	150
+184	146	156	p	shows that
+184	163	172	n	bi - LSTM
+184	173	183	p	to process
+184	188	206	n	original sentences
+184	207	212	n	helps
+184	215	232	n	86.0 % vs. 85.7 %
+184	233	235	p	on
+184	240	249	n	test data
+186	30	47	p	experimented with
+186	52	64	n	m LSTM model
+186	65	70	p	using
+186	75	102	n	pre-trained word embeddings
+186	103	113	p	instead of
+186	114	141	n	LSTMgenerated hidden states
+186	142	144	p	as
+186	145	168	n	initial representations
+186	169	171	p	of
+186	176	202	n	premise and the hypothesis
+186	213	228	p	able to achieve
+186	232	240	n	accuracy
+186	241	243	p	of
+186	244	250	n	85.3 %
+186	251	253	p	on
+186	258	267	n	test data
+186	276	278	p	is
+186	285	291	n	better
+186	292	296	p	than
+186	297	333	n	previously reported state of the art

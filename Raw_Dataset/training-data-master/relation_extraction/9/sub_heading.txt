@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Related Work
+The Proposed Model
+Classification Objective
+Input Representation
+Input Attention Mechanism
+Convolutional Max-Pooling with
+Training Procedure
+Experiments
+Experimental Setup
+Experimental Results
+Detailed Analysis
+Conclusion

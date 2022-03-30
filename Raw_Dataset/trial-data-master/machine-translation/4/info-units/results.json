@@ -1,0 +1,28 @@
+{
+  "has" : {
+    "Results" : {
+      "has" : {
+        "Number of weight - sharing layers" : {
+          "achieved" : {
+            "best translation performance" : {
+              "when" : "only one layer is shared in our system"  
+            },
+            "from sentence" : "Number of weight - sharing layers
+And the best translation performance is achieved when only one layer is shared in our system ."
+
+          },
+          "When" : {
+            "all of the four layers are shared" : {
+              "get" : {
+                "poor translation performance" : {
+                  "in" : "all of the three translation tasks"
+                }
+              },
+              "from sentence" : "When all of the four layers are shared , i.e. , only one shared encoder is utilized , we get poor translation performance in all of the three translation tasks ."              
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Our Approach
+Augmented Residual Connections
+Alignment Layer
+Fusion Layer
+Prediction Layer
+Experiments
+Datasets
+Implementation Details
+Results on Natural Language Inference
+Results on Paraphrase Identification
+Results on Answer Selection
+Inference Time
+Analysis
+Related Work
+Conclusion

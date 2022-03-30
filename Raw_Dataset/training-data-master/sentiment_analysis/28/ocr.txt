@@ -1,0 +1,673 @@
+1902.09314v2 [cs.CL] 1 Apr 2019
+
+ar X1v
+
+Attentional Encoder Network for Targeted Sentiment Classification
+
+Youwei Song, Jiahai Wang ; Tao Jiang, Zhiyue Liu, Yanghui Rao
+School of Data and Computer Science
+Sun Yat-sen University
+Guangzhou, China
+{songyw5, jiangt59, liuzhy93}@mail2.sysu.edu.cn
+{wangjiah, raoyangh}@mail.sysu.edu.cn
+
+Abstract
+
+Targeted sentiment classification aims at determining the sentimental tendency towards specific targets. Most of the previous approaches
+model context and target words with RNN
+and attention. However, RNNs are difficult
+to parallelize and truncated backpropagation
+through time brings difficulty in remembering
+long-term patterns. To address this issue, this
+paper proposes an Attentional Encoder Network (AEN) which eschews recurrence and
+employs attention based encoders for the modeling between context and target. We raise
+the label unreliability issue and introduce label
+smoothing regularization. We also apply pretrained BERT to this task and obtain new stateof-the-art results. Experiments and analysis
+demonstrate the effectiveness and lightweight
+of our model. !
+
+1 Introduction
+
+Targeted sentiment classification is a fine-grained
+sentiment analysis task, which aims at determining the sentiment polarities (e.g., negative, neutral,
+or positive) of a sentence over “opinion targets”
+that explicitly appear in the sentence. For example, given a sentence “J hated their service, but
+their food was great’, the sentiment polarities for
+the target “service” and “food” are negative and
+positive respectively. A target is usually an entity
+or an entity aspect.
+
+In recent years, neural network models are
+designed to automatically learn useful lowdimensional representations from targets and contexts and obtain promising results (Dong et al.,
+2014; Tang et al., 2016a). However, these neural
+network models are still in infancy to deal with the
+fine-grained targeted sentiment classification task.
+
+“The corresponding author.
+'Source code is available at https: //github.com/
+songyouwei/ABSA-PyTorch/tree/aen.
+
+Attention mechanism, which has been successfully used in machine translation (Bahdanau et al.,
+2014), is incorporated to enforce the model to pay
+more attention to context words with closer semantic relations with the target. There are already
+some studies use attention to generate targetspecific sentence representations (Wang et al.,
+2016; Ma et al., 2017; Chen et al., 2017) or to
+transform sentence representations according to
+target words (Li et al., 2018). However, these studies depend on complex recurrent neural networks
+(RNNs) as sequence encoder to compute hidden
+semantics of texts.
+
+The first problem with previous works is that
+the modeling of text relies on RNNs. RNNs, such
+as LSTM, are very expressive, but they are hard
+to parallelize and backpropagation through time
+(BPTT) requires large amounts of memory and
+computation. Moreover, essentially every training
+algorithm of RNN is the truncated BPTT, which
+affects the model’s ability to capture dependencies over longer time scales (Werbos, 1990). AlIthough LSTM can alleviate the vanishing gradient problem to a certain extent and thus maintain
+long distance information, this usually requires a
+large amount of training data. Another problem
+that previous studies ignore is the label unreliability issue, since neutral sentiment is a fuzzy sentimental state and brings difficulty for model learning. As far as we know, we are the first to raise the
+label unreliability issue in the targeted sentiment
+classification task.
+
+This paper propose an attention based model
+to solve the problems above. Specifically, our
+model eschews recurrence and employs attention
+as a competitive alternative to draw the introspective and interactive semantics between target and
+context words. To deal with the label unreliability
+issue, we employ a label smoothing regularization
+to encourage the model to be less confident with
+fuzzy labels. We also apply pre-trained BERT
+(Devlin et al., 2018) to this task and show our
+model enhances the performance of basic BERT
+model. Experimental results on three benchmark
+datasets show that the proposed model achieves
+competitive performance and is a lightweight alternative of the best RNN based models.
+
+The main contributions of this work are presented as follows:
+
+1. We design an attentional encoder network to
+draw the hidden states and semantic interactions between target and context words.
+
+2. We raise the label unreliability issue and add
+an effective label smoothing regularization
+term to the loss function for encouraging the
+model to be less confident with the training
+labels.
+
+3. We apply pre-trained BERT to this task, our
+model enhances the performance of basic
+BERT model and obtains new state-of-the-art
+results.
+
+4. We evaluate the model sizes of the compared
+models and show the lightweight of the proposed model.
+
+2 Related Work
+
+The research approach of the targeted sentiment
+classification task including traditional machine
+learning methods and neural networks methods.
+
+Traditional machine learning methods, including rule-based methods (Ding et al., 2008) and
+statistic-based methods (Jiang et al., 2011), mainly
+focus on extracting a set of features like sentiment lexicons features and bag-of-words features
+to train a sentiment classifier (Rao and Ravichandran, 2009). The performance of these methods
+highly depends on the effectiveness of the feature
+engineering works, which are labor intensive.
+
+In recent years, neural network methods are
+getting more and more attention as they do not
+need handcrafted features and can encode sentences with low-dimensional word vectors where
+rich semantic information stained. In order to
+incorporate target words into a model, Tang et
+al. (2016a) propose TD-LSTM to extend LSTM
+by using two single-directional LSTM to model
+the left context and right context of the target
+word respectively. Tang et al. (2016b) design
+MemNet which consists of a multi-hop attention
+
+mechanism with an external memory to capture
+the importance of each context word concerning the given target. Multiple attention is paid
+to the memory represented by word embeddings
+to build higher semantic information. Wang et
+al. (2016) propose ATAE-LSTM which concatenates target embeddings with word representations
+and let targets participate in computing attention
+weights. Chen et al. (2017) propose RAM which
+adopts multiple-attention mechanism on the memory built with bidirectional LSTM and nonlinearly
+combines the attention results with gated recurrent units (GRUs). Ma et al. (2017) propose IAN
+which learns the representations of the target and
+context with two attention networks interactively.
+
+3 Proposed Methodology
+
+Given a context sequence w® = {w{, wS,..., we}
+and a target sequence w' = {wi,w5,...,w!,},
+where w* is a sub-sequence of w°. The goal of
+this model is to predict the sentiment polarity of
+the sentence w° over the target w*.
+
+Figure 1 illustrates the overall architecture
+of the proposed Attentional Encoder Network
+(AEN), which mainly consists of an embedding
+layer, an attentional encoder layer, a target-specific
+attention layer, and an output layer. Embedding
+layer has two types: GloVe embedding and BERT
+embedding. Accordingly, the models are named
+AEN-GloVe and AEN-BERT.
+
+3.1 Embedding Layer
+3.1.1 GloVe Embedding
+
+Let L € Rétemb*!V! to be the pre-trained GloVe
+(Pennington et al., 2014) embedding matrix,
+where de np iS the dimension of word vectors and
+|V| is the vocabulary size. Then we map each
+word w’ € RV! to its corresponding embedding
+vector e; € Rm! which is a column in the
+embedding matrix L.
+
+3.1.22 BERT Embedding
+
+BERT embedding uses the pre-trained BERT to
+generate word vectors of sequence. In order to
+facilitate the training and fine-tuning of BERT
+model, we transform the given context and target
+to “[CLS] + context + [SEP]” and “[CLS] + target
++ [SEP]’ respectively.
+
+3.2 Attentional Encoder Layer
+
+The attentional encoder layer is a parallelizable
+and interactive alternative of LSTM and is applied
+sentiment
+
+softmax
+
+label smoothing
+
+Output Layer
+
+     
+
+\ Ta rget-specific
+
+context
+
+Figure 1: Overall architecture of the proposed AEN.
+
+to compute the hidden states of the input embeddings. This layer consists of two submodules: the
+Multi-Head Attention (MHA) and the Point-wise
+Convolution Transformation (PCT).
+
+3.2.1 Multi-Head Attention
+
+Multi-Head Attention (MHA) is the attention that
+can perform multiple attention function in parallel. Different from Transformer (Vaswani et al.,
+2017), we use Intra-MHA for introspective context words modeling and Inter-MHA for contextperceptive target words modeling, which is more
+lightweight and target 1s modeled according to a
+given context.
+
+An attention function maps a key sequence
+k = {kj, ko,...,k,} and a query sequence q =
+{@1; 92; +++; Im} to an output sequence o:
+
+Attention(k, q) = softmax(fs(k,q))k (1)
+
+where f, denotes the alignment function which
+learns the semantic relevance between q; and k;:
+fs(ki, qj) = tanh([ki;qj]-Wate) 2)
+where W,1+ € R244 are learnable weights.
+MHA can learn n_head different scores in par
+allel child spaces and is very powerful for alignments. The npegq outputs are concatenated and
+
+! Attention Layer
+
+projected to the specified hidden dimension dpa,
+namely,
+
+MH A(k, q) = [0'; 07...; 024]
+o” = Attention’ (k, q)
+
+“Wmn (3)
+
+(4)
+
+where “;”’ denotes vector concatenation, W,,, ©
+RamdX4nid, og” — fo! of, ...,08,} is the output of
+the h-th head attention and h € [1, Nacaa]
+Intra-MHA, or multi-head self-attention, is a
+special situation for typical attention mechanism
+that q = k. Given a context embedding e°, we can
+get the introspective context representation ci™*t@
+by:
+
+cintra _ MHA(e€, e°) (5)
+
+The learned context representation c™™? —
+
+{cintra cintra’ Mra) is aware of long-term
+dependencies.
+
+Inter-MHA is the generally used form of attention mechanism that q is different from k. Given a
+context embedding e° and a target embedding e*,
+we can get the context-perceptive target representation timter py:
+
+finter _ MHA(e&, e) (6)
+
+After this interactive procedure, each given target word e will have a composed representation
+selected from context embeddings e©. Then we
+
+get the context-perceptive target words modeling
+finter _ {pmer punter jena)
+—_ 1 » 9 geeep lam °
+
+3.2.2 Point-wise Convolution Transformation
+
+A Point-wise Convolution T ransformation (PCT)
+can transform contextual information gathered by
+the MHA. Point-wise means that the kernel sizes
+are | and the same transformation is applied to every single token belonging to the input. Formally,
+given a input sequence h, PCT is defined as:
+
+PCT(h) = o(h* W,, + by.) * Wp. + 05. (7)
+
+where o stands for the ELU activation, « is the
+convolution operator, Wre E RaniaXdnia and
+Wyre € [R¢niaX4nia are the learnable weights of
+the two convolutional kernels, Dre € Rd and
+b*. € Rm are biases of the two convolutional
+kernels.
+
+Given ci™¥4 and timer, PCTs are applied to
+
+get the output hidden states of the attentional encoder layer h& = {h§,hS,...,h°} and ht =
+{hi fb, «++ Min} by:
+h° = PCT(c'™""*) (8)
+h* = PCT(t'™**") (9)
+
+3.3. Target-specific Attention Layer
+
+After we obtain the introspective context representation h® and the context-perceptive target representation ht, we employ another MHA to obtain
+the target-specific context representation h*S* =
+{ his, hES-, ..., h's°} by:
+
+h's* — MH A(h‘, h*) (10)
+
+The multi-head attention function here also has its
+independent parameters.
+
+3.4 Output Layer
+
+We get the final representations of the previous
+outputs by average pooling, concatenate them as
+the final comprehensive representation 0, and use
+a full connected layer to project the concatenated
+vector into the space of the targeted C' classes.
+
+6 = [Rougi Mavgi Rovgl (11)
+r=W, o+b, (12)
+y = softmax(x) (13)
+
+- 1 exp(x)
+
+where y € R® is the predicted sentiment polarity
+distribution, W, € IR!*° and b, € R®@ are learnable parameters.
+
+3.5 Regularization and Model Training
+
+Since neutral sentiment is a very fuzzy sentimental state, training samples which labeled neutral
+are unreliable. We employ a Label Smoothing
+Regularization (LSR) term in the loss function.
+which penalizes low entropy output distributions
+(Szegedy et al., 2016). LSR can reduce overfitting
+by preventing a network from assigning the full
+probability to each training example during training, replaces the 0 and | targets for a classifier with
+smoothed values like 0.1 or 0.9.
+
+For a training sample x with the original
+ground-truth label distribution q(k|x), we replace
+q(k|a) with
+
+q(k\a) = (1—)q(kla) +eulk) 1S)
+
+where u(k) is the prior distribution over labels ,
+and ¢« is the smoothing parameter. In this paper,
+
+we set the prior label distribution to be uniform
+u(k) = 1/C.
+
+LSR is equivalent to the KL divergence between
+the prior label distribution u(k) and the network’s
+predicted distribution pg. Formally, LSR term is
+defined as:
+
+Lisr = —Dxz(ul(k)||po) (16)
+
+The objective function (loss function) to be optimized is the cross-entropy loss with £),, and Lo
+regularization, which is defined as:
+
+C
+£0) =—_ Hf logly®) + Lise +A >, O (17)
+1=1 dEO
+
+where 7 € R® is the ground truth represented as
+a one-hot vector, y is the predicted sentiment distribution vector given by the output layer, A is the
+coefficient for £2 regularization term, and O is the
+parameter set.
+
+4 Experiments
+
+4.1 Datasets and Experimental Settings
+
+We conduct experiments on three datasets: SemEval 2014 Task 4 * (Pontiki et al., 2014) dataset
+composed of Restaurant reviews and Laptop reviews, and ACL 14 Twitter dataset gathered by
+Dong et al. (2014). These datasets are labeled
+with three sentiment polarities: positive, neutral
+and negative. Table 1 shows the number of training and test instances in each category.
+
+Word embeddings in AEN-GloVe do not get
+updated in the learning process, but we fine-tune
+pre-trained BERT ° in AEN-BERT. Embedding dimension dgj7, 18 300 for GloVe and is 768 for pretrained BERT. Dimension of hidden states d),;4 is
+set to 300. The weights of our model are initialized with Glorot initialization (Glorot and Bengio,
+2010). During training, we set label smoothing
+parameter € to 0.2 (Szegedy et al., 2016), the coefficient \ of La regularization item is 10~° and
+dropout rate is 0.1. Adam optimizer (Kingma and
+Ba, 2014) is applied to update all the parameters.
+We adopt the Accuracy and Macro-F1 metrics to
+evaluate the performance of the model.
+
+>The detailed introduction of this task can be found at
+http://alt.qcri.org/semeval2014/task4.
+
+>We use uncased BERT-base from https: //github.
+com/google-research/bert.
+Table 1: Statistics of the datasets.
+
+Positive Neural Negative
+
+Dataset
+
+ 
+
+Train Test Train Test ‘Train Test
+
+Twitter 1561 173. 3127 ©346 = »§6©.1560—s:173
+Restaurant 2164 728 637 196 807 196
+
+Laptop 994 341 464 169 ~=870 128
+
+4.2 Model Comparisons
+
+In order to comprehensively evaluate and analysis
+the performance of AEN-GloVe, we list 7 baseline
+models and design 4 ablations of AEN-GloVe. We
+also design a basic BERT-based model to evaluate
+the performance of AEN-BERT.
+
+Non-RNN based baselines:
+
+e Feature-based SVM (Kiritchenko et al.,
+2014) is a traditional support vector machine
+based model with extensive feature engineering.
+
+e Rec-NN (Dong et al., 2014) firstly uses rules
+to transform the dependency tree and put the opinion target at the root, and then learns the sentence
+representation toward target via semantic composition using Recursive NNs.
+
+e MemNet (Tang et al., 2016b) uses multi-hops
+of attention layers on the context word embeddings for sentence representation to explicitly captures the importance of each context word.
+
+RNN based baselines:
+
+e TD-LSTM (Tang et al., 2016a) extends
+LSTM by using two LSTM networks to model
+the left context with target and the right context with target respectively. The left and right
+target-dependent representations are concatenated
+for predicting the sentiment polarity of the target.
+
+e ATAE-LSTM (Wang et al., 2016) strengthens
+the effect of target embeddings, which appends
+the target embeddings with each word embeddings
+and use LSTM with attention to get the final representation for classification.
+
+e IAN (Ma et al., 2017) learns the representations of the target and context with two LSTMs
+and attentions interactively, which generates the
+representations for targets and contexts with respect to each other.
+
+e RAM (Chen et al., 2017) strengthens MemNet by representing memory with bidirectional
+LSTM and using a gated recurrent unit network
+to combine the multiple attention outputs for sentence representation.
+
+AEN-GloVe ablations:
+
+e AEN-GloVe w/o PCT ablates PCT module.
+
+e AEN-GloVe w/o MHA ablates MHA module.
+
+e AEN-GloVe w/o LSR ablates label smoothing regularization.
+
+e AEN-GloVe-BiLSTM replaces the attentional encoder layer with two bidirectional LSTM.
+
+Basic BERT-based model:
+
+e BERT-SPC feeds sequence “[CLS] + context
++ [SEP] + target + [SEP]” into the basic BERT
+model for sentence pair classification task.
+
+4.3 Main Results
+
+Table 2 shows the performance comparison of
+AEN with other models. BERTI-SPC and AENBERT obtain substantial accuracy improvements,
+which shows the power of pre-trained BERT on
+small-data task. The overall performance of AENBERT is better than BERT-SPC, which suggests
+that it is important to design a downstream network customized to a specific task. As the prior
+knowledge in the pre-trained BERT is not specific
+to any particular domain, further fine-tuning on
+the specific task is necessary for releasing the true
+power of BERT.
+
+The overall performance of TD-LSTM is not
+good since it only makes a rough treatment of the
+target words. ATAE-LSTM, IAN and RAM are attention based models, they stably exceed the TDLSTM method on Restaurant and Laptop datasets.
+RAM is better than other RNN based models, but
+it does not perform well on Twitter dataset, which
+might because bidirectional LSTM is not good at
+modeling small and ungrammatical text.
+
+Feature-based SVM is still a competitive baseline, but relying on manually-designed features.
+Rec-NN gets the worst performances among all
+neural network baselines as dependency parsing
+is not guaranteed to work well on ungrammatical
+short texts such as tweets and comments. Like
+AEN, MemNet also eschews recurrence, but its
+overall performance is not good since it does not
+model the hidden semantic of embeddings, and the
+result of the last attention is essentially a linear
+combination of word embeddings.
+
+4.4 Model Analysis
+
+As shown in Table 2, the performances of AENGloVe ablations are incomparable with AENee 99
+
+Table 2: Main results. The results of baseline models are retrieved from published papers.
+3 scores are in bold.
+
+means not reported. Top
+
+ 
+
+ 
+
+Models Twitter Restaurant Laptop
+Accuracy Macro-Fl Accuracy Macro-Fl Accuracy Macro-Fl
+
+TD-LSTM 0.7080 0.6900 0.7563 - 0.6813 
+. ATAE-LSTM - - 0.7720 - 0.6870 
+BONN IERSEAINES IAN - - 0.7860 - 0.7210 RAM 0.6936 0.6730 0.8023 0.7080 ().7449 0.7135
+
+Feature-based SVM 0.6340 0.6330 0.8016 - 0.7049 
+Non-RNN baselines Rec-NN 0.6630 0.6590 - - - MemNet 0.6850 0.6691 0.7816 0.6583 0.7033 0.6409
+
+AEN-GloVe w/o PCT 0.7066 0.6907 0.8017 0.7050 0.7272 0.6750
+AEN-GloVe w/o MHA 0.7124 0.6953 0.7919 0.7028 0.7178 0.6650
+AEN-GloVe w/o LSR 0.7080 0.6920 0.8000 0.7108 0.7288 0.6869
+AEN-GloVe-BiLSTM 0.7210 0.7042 0.7973 0.7037 0.7312 0.6980
+
+AEN-GloVe ablations
+
+AEN-GloVe 0.7283 0.6981 0.8098 0.7214 0.7351 0.6904
+Ours BERT-SPC 0.7355 0.7214 0.8446 0.7698 0.7899 0.7503
+AEN-BERT 0.7471 0.7313 0.8312 0.7376 0.7993 0.7631
+
+GloVe in both accuracy and macro-Fl measure. Table 3: Model sizes. Memory footprints are evaluated
+This result shows that all of these discarded 0% the Restaurant dataset. Lowest 2 are in bold.
+
+components are crucial for a good performance.
+
+. Model si
+Comparing the results of AEN-GloVe and AEN- Models a
+GloVe w/o LSR, we observe that the accuracy Params <1)" Memory (MR)
+of AEN-GloVe w/o LSR drops significantly on TD-LSTM 1.44 12.41
+
+ll th d WwW ld i i iy ATAE-LSTM dD 16.61
+all three datasets. We could attribute this phe- IAN 7 16 15.30
+nomenon to the unreliability of the training sam- RAM 6.13 31.18
+ples with neutral sentiment. The overall perfor- MemNet 0.36 7.82
+mance of AEN-GloVe and AEN-GloVe-BiLSTM AEN-BERT 112.93 451.84
+
+AEN-GloVe-BiLSTM 3.97 22.52
+
+is relatively close, AEN-GloVe performs better on
+the Restaurant dataset. More importantly, AENGloVe has fewer parameters and is easier to paral
+lelize. of word embeddings. AEN-GloVe’s lightweight
+
+To figure out whether the proposed AEN-GloVe _Jevel ranks second, since it takes some more pais a lightweight alternative of recurrent models, we rameters than MemNet in modeling hidden states
+study the model size of each model on the Restau- _ of sequences. As a comparison, the model size of
+rant dataset. Statistical results are reported in Ta- | AKRN-GloVe-BiLSTM is more than twice that of
+
+ble 3. We implement all the compared models = AEN-GloVe, but does not bring any performance
+base on the same source code infrastructure, use —_ improvements.
+
+the same hyperparameters, and run them on the
+same GPU *. 5 Conclusion
+
+RNN-based and BERT-based models indeed
+have larger model size. ATAE-LSTM, IAN,
+RAM, and AEN-GloVe-BiLSTM are all attention based RNN models, memory optimization
+for these models will be more difficult as the encoded hidden states must be kept simultaneously
+in memory in order to perform attention mechanisms. MemNet has the lowest model size as
+it only has one shared attention layer and two
+linear layers, it does not calculate hidden states
+
+AEN-GloVe 1.16 11.04
+
+In this work, we propose an attentional encoder
+network for the targeted sentiment classification
+task. which employs attention based encoders
+for the modeling between context and target. We
+raise the the label unreliability issue add a label
+smoothing regularization to encourage the model
+to be less confident with fuzzy labels. We also apply pre-trained BERT to this task and obtain new
+state-of-the-art results. Experiments and analysis
+demonstrate the effectiveness and lightweight of
+“NVIDIA GTX 1080ti. the proposed model.
+References
+
+Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. 2014. Neural machine translation by jointly
+learning to align and translate. arXiv preprint
+arXiv: 1409.0473.
+
+Peng Chen, Zhonggian Sun, Lidong Bing, and Wei
+Yang. 2017. Recurrent attention network on memory for aspect sentiment analysis. In Proceedings of
+the 2017 Conference on Empirical Methods in Natural Language Processing, pages 452-461.
+
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and
+Kristina Toutanova. 2018. Bert: Pre-training of deep
+bidirectional transformers for language understanding. arXiv preprint arXiv: 1810.04805.
+
+Xiaowen Ding, Bing Liu, and Philip S Yu. 2008. A
+holistic lexicon-based approach to opinion mining.
+In Proceedings of the 2008 international conference
+
+on web search and data mining, pages 231-240.
+ACM.
+
+Li Dong, Furu Wei, Chuanqi Tan, Duyu Tang, Ming
+Zhou, and Ke Xu. 2014. Adaptive recursive neural
+network for target-dependent twitter sentiment classification. In Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics
+(Volume 2: Short Papers), volume 2, pages 49-54.
+
+Xavier Glorot and Yoshua Bengio. 2010. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the thirteenth international conference on artificial intelligence and
+Statistics, pages 249-256.
+
+Long Jiang, Mo Yu, Ming Zhou, Xiaohua Liu, and
+Tiejun Zhao. 2011. Target-dependent twitter sentiment classification. In Proceedings of the 49th Annual Meeting of the Association for Computational
+Linguistics: Human Language Technologies- Volume
+I, pages 151-160. Association for Computational
+Linguistics.
+
+Diederik P Kingma and Jimmy Ba. 2014. Adam: A
+method for stochastic optimization. arXiv preprint
+arXiv: 1412.6980.
+
+Svetlana Kiritchenko, Xiaodan Zhu, Colin Cherry, and
+Saif Mohammad. 2014. Nrce-canada-2014: Detecting aspects and sentiment in customer reviews. In
+Proceedings of the 8th International Workshop on
+Semantic Evaluation (SemEval 2014), pages 437—
+442.
+
+Xin Li, Lidong Bing, Wai Lam, and Bei Shi. 2018.
+Transformation networks for target-oriented sentiment classification. In Proceedings of the 56th Annual Meeting of the Association for Computational
+Linguistics (Volume 1: Long Papers), volume 1,
+pages 946-956.
+
+Dehong Ma, Sujian Li, Xiaodong Zhang, and Houfeng
+Wang. 2017. Interactive attention networks for
+
+aspect-level sentiment classification. In Proceedings of the 26th International Joint Conference
+on Artificial Intelligence, pages 4068-4074. AAAI
+Press.
+
+Jeffrey Pennington, Richard Socher, and Christopher
+Manning. 2014. Glove: Global vectors for word
+representation. In Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP), pages 1532-1543.
+
+Maria Pontiki, Dimitris Galanis, John Pavlopoulos,
+Harris Papageorgiou, Ion Androutsopoulos, and
+Suresh Manandhar. 2014. Semeval-2014 task 4: Aspect based sentiment analysis. In Proceedings of the
+Sth International Workshop on Semantic Evaluation
+(SemEval 2014), pages 27-35.
+
+Delip Rao and Deepak Ravichandran. 2009. Semisupervised polarity lexicon induction. In Proceedings of the 12th Conference of the European Chapter of the Association for Computational Linguistics,
+pages 675-682. Association for Computational Linguistics.
+
+Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe,
+Jon Shlens, and Zbigniew Wojna. 2016. Rethinking the inception architecture for computer vision.
+In Proceedings of the IEEE conference on computer
+vision and pattern recognition, pages 2818-2826.
+
+Duyu Tang, Bing Qin, Xiaocheng Feng, and Ting Liu.
+2016a. Effective Istms for target-dependent sentiment classification. In Proceedings of COLING
+2016, the 26th International Conference on Computational Linguistics: Technical Papers, pages 32983307.
+
+Duyu Tang, Bing Qin, and Ting Liu. 2016b. Aspect
+level sentiment classification with deep memory network. In Proceedings of the 2016 Conference on
+Empirical Methods in Natural Language Processing, pages 214-224.
+
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob
+Uszkoreit, Llion Jones, Aidan N Gomez, Lukasz
+Kaiser, and Illia Polosukhin. 2017. Attention is all
+you need. In Advances in Neural Information Processing Systems, pages 5998-6008.
+
+Yequan Wang, Minlie Huang, Li Zhao, et al. 2016.
+Attention-based Istm for aspect-level sentiment classification. In Proceedings of the 2016 conference on
+empirical methods in natural language processing,
+
+pages 606-615.
+
+Paul J Werbos. 1990. Backpropagation through time:
+what it does and how to do it. Proceedings of the
+IEEE, 78(10):1550-1560.
+

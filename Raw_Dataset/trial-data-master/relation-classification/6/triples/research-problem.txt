@@ -1,0 +1,3 @@
+(Contribution||has research problem||Semantic Relation Classification)
+(Contribution||has research problem||Classifying semantic relations between entity pairs in sentences)
+(Contribution||has research problem||predicting a semantic relationship between two tagged entities in a sentence)

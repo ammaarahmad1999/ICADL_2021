@@ -1,0 +1,3 @@
+(Contribution||has research problem||NEURAL MACHINE TRANSLATION)
+(Contribution||has research problem||machine translation)
+(Contribution||has research problem||use of a fixed - length vector is a bottleneck in improving the performance of this basic encoder - decoder architecture)

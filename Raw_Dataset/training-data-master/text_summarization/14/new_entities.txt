@@ -1,0 +1,161 @@
+189	0	57	n	Does our summarization model learn entailment knowledge ?
+192	0	3	p	For
+192	8	16	n	test set
+192	26	50	n	average entailment score
+192	51	54	p	for
+192	59	68	n	reference
+192	69	71	p	is
+192	72	76	n	0.72
+192	93	112	n	basic seq2seq model
+192	119	138	p	entailment score is
+192	144	148	n	0.46
+193	8	13	p	adopt
+193	14	40	n	entailmentbased strategies
+193	47	63	n	entailment score
+193	64	72	p	rises to
+193	73	77	n	0.63
+193	78	81	p	for
+193	82	95	n	seq2seq model
+194	0	4	p	Note
+194	14	30	n	entailment score
+194	31	33	p	is
+194	34	38	n	0.57
+194	39	42	p	for
+194	43	56	n	seq2seq model
+194	57	61	p	with
+194	62	80	n	selective encoding
+194	107	126	n	selective mechanism
+194	131	141	p	filter out
+194	142	163	n	secondary information
+194	164	166	p	in
+194	171	176	n	input
+195	0	34	n	Entailment - aware selective model
+195	35	43	p	achieves
+195	46	68	n	high entailment reward
+195	69	71	p	of
+195	72	76	n	0.71
+196	26	34	p	conclude
+196	40	49	n	our model
+196	54	74	p	successfully learned
+196	75	95	n	entailment knowledge
+198	0	38	n	Is it less abstractive for our model ?
+202	0	10	p	shows that
+202	15	28	n	seq2seq model
+202	29	37	p	produces
+202	38	54	n	more novel words
+202	106	110	p	than
+202	111	120	n	our model
+202	123	133	p	indicating
+202	136	163	n	lower degree of abstraction
+203	18	25	p	exclude
+203	26	60	n	all the words not in the reference
+203	113	118	n	model
+203	119	128	p	generates
+203	129	145	n	more novel words
+203	148	163	p	suggesting that
+203	164	173	n	our model
+203	174	182	p	provides
+203	185	204	n	compromise solution
+203	205	208	p	for
+203	209	240	n	informativeness and correctness
+205	6	57	n	Could the entailment recognition also be improved ?
+208	0	5	p	shows
+208	11	34	n	our summarization model
+208	35	39	p	with
+208	40	43	n	MTL
+208	44	55	p	outperforms
+208	56	75	n	basic seq2seq model
+209	21	29	n	accuracy
+209	30	32	p	of
+209	33	55	n	entailment recognition
+151	0	3	n	ABS
+151	12	17	p	apply
+151	22	35	n	seq2seq model
+151	36	38	p	to
+151	39	73	n	abstractive sentence summarization
+153	0	5	n	ABS +
+153	7	14	p	propose
+153	17	49	n	neural machine translation model
+153	50	54	p	with
+153	55	72	n	two - layer LSTMs
+153	73	76	p	for
+153	81	98	n	encoder - decoder
+154	0	7	n	Seq2seq
+155	5	9	p	is a
+155	10	32	n	standard seq2seq model
+155	33	37	p	with
+155	38	57	n	attention mechanism
+156	0	13	n	Seq2seq + MTL
+157	27	31	p	with
+157	32	58	n	entailment - aware encoder
+157	67	74	p	applies
+157	77	114	n	multi-task learning ( MTL ) framework
+157	115	117	p	to
+157	118	131	n	seq2seq model
+158	0	31	n	Seq2seq + MTL ( Share decoder )
+159	0	7	p	propose
+159	10	49	n	multi - task learning ( MTL ) framework
+159	50	58	p	in which
+159	63	70	n	decoder
+159	71	84	p	is shared for
+159	85	140	n	summarization generation and entailment generation task
+160	0	15	n	Seq2seq + ERAML
+161	27	31	p	with
+161	32	58	n	entailment - aware decoder
+161	67	75	p	conducts
+161	79	154	n	Entailment Reward Augmented Maximum Likelihood ( ERAML ) training framework
+162	0	23	n	Seq2seq + ROUGE -2 RAML
+163	3	8	p	apply
+163	9	32	n	ROUGE - 2 RAML training
+163	33	36	p	for
+163	37	50	n	seq2seq model
+164	0	12	n	Seq2seq + RL
+165	3	12	p	implement
+165	13	49	n	Reinforcement Learning ( RL ) models
+165	70	74	p	with
+165	75	89	n	reward metrics
+165	90	92	p	of
+165	93	117	n	Entailment and ROUGE - 2
+166	0	19	n	Seq2seq + selective
+167	0	6	p	employ
+167	9	33	n	selective encoding model
+167	34	44	p	to control
+167	49	65	n	information flow
+167	66	70	p	from
+167	71	89	n	encoder to decoder
+27	79	86	p	propose
+27	103	129	n	entailment - aware encoder
+27	137	163	n	entailment - aware decoder
+29	28	92	n	entailment Reward Augmented Maximum Likelihood ( RAML ) training
+29	98	108	p	encourages
+29	113	148	n	decoder of the summarization system
+29	149	159	p	to produce
+29	160	167	n	summary
+29	168	179	p	entailed by
+29	184	190	n	source
+28	3	8	p	share
+28	13	20	n	encoder
+28	21	23	p	of
+28	28	59	n	summarization generation system
+28	60	64	p	with
+28	69	98	n	entailment recognition system
+2	78	112	n	Abstractive Sentence Summarization
+4	35	57	n	sentence summarization
+172	23	38	n	Gigaword Corpus
+176	0	9	n	Our model
+176	10	30	p	performs better than
+176	35	49	n	previous works
+177	23	31	n	DUC 2004
+181	238	240	p	on
+181	31	35	p	show
+181	40	79	n	Seq2seq + selective + MTL + ERAML model
+181	80	88	p	achieves
+181	89	113	n	significant improvements
+181	114	118	p	over
+181	119	134	n	baseline models
+181	137	147	p	surpassing
+181	148	155	n	Feats2s
+181	156	158	p	by
+181	159	215	n	0.98 % ROUGE - 1 , 0.78 % ROUGE - 2 and 0.65 % ROUGE - L
+181	216	223	p	without
+181	224	237	n	fine - tuning

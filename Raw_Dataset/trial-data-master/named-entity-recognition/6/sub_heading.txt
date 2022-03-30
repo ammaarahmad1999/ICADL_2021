@@ -1,0 +1,20 @@
+title
+abstract
+Introduction
+Motivation
+Our Method
+Embedding Words and Entity Types
+LS Representation
+Strength of the LS Representation
+Our NER System
+Bi-LSTM-CRF Model
+Features
+Experiments
+Data and Evaluation
+Training and Implementation
+Results on the Development Set
+Results on CONLL
+Results on ONTONOTES
+Ablation Results
+Related Works
+Conclusion and Future Work

@@ -1,0 +1,151 @@
+162	4	13	n	ARE model
+162	18	40	p	incorrectly classifies
+162	41	64	n	most instances of happy
+162	65	67	p	as
+162	68	87	n	neutral ( 43.51 % )
+163	22	37	n	emotion classes
+163	42	66	p	frequently confused with
+163	71	84	n	neutral class
+165	20	29	n	TRE model
+165	34	39	p	shows
+165	40	64	n	greater prediction gains
+165	65	78	p	in predicting
+165	83	94	n	happy class
+165	100	111	p	compared to
+165	116	149	n	ARE model ( 35.15 % to 75. 73 % )
+168	4	14	n	MDRE model
+168	17	32	p	compensates for
+168	37	47	n	weaknesses
+168	48	50	p	of
+168	55	90	n	previous two models ( ARE and TRE )
+168	95	108	p	benefits from
+168	115	124	n	strengths
+168	125	127	p	to
+168	130	147	n	surprising degree
+170	18	28	n	occurrence
+170	29	31	p	of
+170	36	72	n	incorrect " sad - to - happy " cases
+170	73	75	p	in
+170	80	89	n	TRE model
+170	93	105	p	reduced from
+170	106	125	n	16 . 20 % to 9.15 %
+123	44	47	p	use
+123	48	52	n	GRUs
+123	53	66	p	as they yield
+123	67	89	n	comparable performance
+123	90	100	p	to that of
+123	105	109	n	LSTM
+123	114	121	p	include
+123	124	138	n	smaller number
+123	19	21	p	of
+123	142	159	n	weight parameters
+124	9	25	n	max encoder step
+124	26	28	p	of
+124	29	32	n	750
+124	33	36	p	for
+124	41	52	n	audio input
+124	108	111	n	128
+124	112	115	p	for
+124	120	130	n	text input
+124	142	148	p	covers
+124	153	167	n	maximum length
+124	168	170	p	of
+124	175	186	n	transcripts
+134	52	72	n	released transcripts
+134	73	75	p	of
+134	80	95	n	IEMOCAP dataset
+134	96	99	p	for
+134	100	110	n	simplicity
+125	4	19	n	vocabulary size
+125	20	22	p	of
+125	27	34	n	dataset
+125	35	37	p	is
+125	38	43	n	3,747
+125	46	55	p	including
+125	60	73	n	" UNK " token
+125	82	92	p	represents
+125	93	106	n	unknown words
+125	117	130	n	" PAD " token
+125	142	158	p	used to indicate
+125	159	178	n	padding information
+125	179	200	p	added while preparing
+125	201	216	n	mini-batch data
+126	4	51	n	number of hidden units and the number of layers
+126	52	54	p	in
+126	59	62	n	RNN
+126	63	66	p	for
+126	67	108	n	each model ( ARE , TRE , MDRE and MDREA )
+126	113	130	p	selected based on
+126	131	174	n	extensive hyperparameter search experiments
+127	4	11	n	weights
+127	12	14	p	of
+127	19	31	n	hidden units
+127	36	53	p	initialized using
+127	54	64	n	orthogonal
+133	20	40	n	text embedding layer
+133	44	60	p	initialized from
+133	61	96	n	pretrained word - embedding vectors
+23	56	60	p	uses
+23	61	92	n	high - level text transcription
+23	95	105	p	as well as
+23	106	131	n	low - level audio signals
+23	134	144	p	to utilize
+23	149	160	n	information
+23	161	177	p	contained within
+23	178	201	n	low - resource datasets
+27	19	26	p	propose
+27	29	68	n	novel deep dual recurrent encoder model
+27	74	97	p	simultaneously utilizes
+27	98	117	n	audio and text data
+27	118	132	p	in recognizing
+27	133	141	n	emotions
+27	142	146	p	from
+27	147	153	n	speech
+2	11	37	n	SPEECH EMOTION RECOGNITION
+144	12	21	n	ARE model
+144	22	27	p	shows
+144	32	52	n	baseline performance
+144	64	67	p	use
+144	68	90	n	minimal audio features
+144	93	100	p	such as
+144	105	131	n	MFCC and prosodic features
+144	132	136	p	with
+144	137	157	n	simple architectures
+145	24	33	n	TRE model
+145	34	39	p	shows
+145	40	63	n	higher performance gain
+145	64	75	p	compared to
+145	80	83	n	ARE
+147	36	40	n	MDRE
+147	43	48	p	shows
+147	51	79	n	substantial performance gain
+148	8	16	p	achieves
+148	21	55	n	state - of - the - art performance
+148	56	60	p	with
+148	63	72	n	WAP value
+148	73	75	p	of
+148	76	81	n	0.718
+150	31	36	n	MDREA
+150	44	55	p	outperforms
+150	60	113	n	best existing research results ( WAP 0.690 to 0.688 )
+156	4	18	n	label accuracy
+156	19	21	p	of
+156	26	47	n	processed transcripts
+156	48	50	p	is
+156	51	61	n	5.53 % WER
+157	4	49	n	TRE - ASR , MDRE - ASR and MDREA - ASR models
+157	50	57	p	reflect
+157	58	78	n	degraded performance
+157	79	90	p	compared to
+157	103	130	n	TRE , MDRE and MDREA models
+146	22	26	p	note
+146	32	44	n	textual data
+146	45	48	p	are
+146	49	60	n	informative
+146	61	63	p	in
+146	64	88	n	emotion prediction tasks
+146	99	122	n	recurrent encoder model
+146	123	125	p	is
+146	126	135	n	effective
+146	136	152	p	in understanding
+146	159	183	n	types of sequential data

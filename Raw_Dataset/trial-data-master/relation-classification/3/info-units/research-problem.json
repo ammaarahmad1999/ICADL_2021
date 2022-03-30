@@ -1,0 +1,7 @@
+{
+  "has research problem" : [
+    ["multi-context joint entity and relation extraction", {"from sentence" : "Adversarial training for multi-context joint entity and relation extraction"}],
+    ["entity recognition and relation extraction", {"from sentence" : "We show how to use AT for the tasks of entity recognition and relation extraction ."}],
+    ["jointly extracting entities and relations", {"from sentence" : "In particular , we demonstrate that applying AT to a general purpose baseline model for jointly extracting entities and relations , allows improving the state - of - the - art effectiveness on several datasets in different contexts ( i.e. , news , biomedical , and real estate data ) and for different languages ( English and Dutch ) ."}]
+    ]
+}

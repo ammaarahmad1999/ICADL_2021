@@ -1,0 +1,16 @@
+{
+  "has" : {
+    "Experimental setup" : {
+      "has" : {
+        "experiments" : {
+          "conducted using" : {
+            "GeForce GTX 1080 GPU" : {
+              "with" : "8 GB memory"
+            }
+          },
+          "from sentence" : "All experiments are conducted using a GeForce GTX 1080 GPU with 8 GB memory ."          
+        }
+      }
+    }
+  }
+}

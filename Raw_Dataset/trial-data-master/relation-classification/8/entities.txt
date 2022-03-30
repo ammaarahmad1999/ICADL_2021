@@ -1,0 +1,84 @@
+29	27	35	proposed
+29	36	68	one - pass encoding MRE solution
+30	16	26	built upon
+30	27	31	BERT
+30	32	36	with
+30	39	66	structured prediction layer
+30	82	92	to predict
+30	93	111	multiple relations
+30	112	116	with
+30	117	133	onepass encoding
+30	143	184	entity - aware self - attention mechanism
+30	185	194	to infuse
+30	199	254	relational information with regard to multiple entities
+30	255	271	at each layer of
+30	272	285	hidden states
+76	29	43	previous works
+76	44	56	that predict
+76	59	83	single relation per pass
+77	0	7	BERT SP
+77	10	14	BERT
+77	15	19	with
+77	20	46	structured prediction only
+78	0	22	Entity - Aware BERT SP
+78	25	39	our full model
+79	0	60	BERT SP with position embedding on the final attention layer
+81	32	38	encode
+81	43	52	paragraph
+81	53	55	to
+81	60	82	last attention - layer
+82	7	10	for
+82	11	27	each entity pair
+82	33	38	takes
+82	43	56	hidden states
+82	59	63	adds
+82	68	96	relative position embeddings
+82	97	113	corresponding to
+82	118	133	target entities
+82	148	153	makes
+82	158	177	relation prediction
+2	0	45	Extracting Multiple - Relations in One - Pass
+4	41	103	extracting multiple entity - relations from an input paragraph
+5	57	118	multiple entityrelations extraction task with only one - pass
+10	0	19	Relation extraction
+10	22	24	RE
+12	38	66	multiplerelations extraction
+12	69	72	MRE
+12	88	168	recognize relations of multiple pairs of entity mentions from an input paragraph
+84	8	10	on
+84	11	19	ACE 2005
+86	4	21	first observation
+86	30	52	our model architecture
+86	53	61	achieves
+86	62	81	much better results
+86	82	93	compared to
+86	98	137	previous state - of - the - art methods
+94	0	14	Our full model
+94	17	21	with
+94	26	70	structured fine - tuning of attention layers
+94	73	79	brings
+94	80	99	further improvement
+94	100	102	of
+94	103	114	about 5.5 %
+94	117	119	in
+94	124	146	MRE one - pass setting
+116	15	34	SemEval 2018 Task 7
+117	0	26	Our Entity - Aware BERT SP
+117	27	54	gives comparable results to
+117	59	97	top - ranked system in the shared task
+117	100	104	with
+117	105	130	slightly lower Macro - F1
+118	0	48	When predicting multiple relations in one - pass
+118	59	69	0.9 % drop
+118	70	72	on
+118	73	83	Macro - F1
+120	20	31	compared to
+120	36	58	top singlemodel result
+120	61	79	which makes use of
+120	80	117	additional word and entity embeddings
+120	118	131	pretrained on
+120	132	148	in - domain data
+120	163	174	demonstrate
+120	151	162	our methods
+120	175	195	clear advantage as a
+120	196	208	single model

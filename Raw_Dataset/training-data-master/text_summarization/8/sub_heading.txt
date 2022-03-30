@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+Related Work
+Background: Neural Summarization
+Bottom-Up Attention
+Content Selection
+Bottom-Up Copy Attention
+End-to-End Alternatives
+Inference
+Data and Experiments
+Results
+Analysis and Discussion
+Conclusion

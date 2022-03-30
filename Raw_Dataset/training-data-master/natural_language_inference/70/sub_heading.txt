@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+The KeLP system: an overview
+Intra-pair similarities
+Inter-pair kernel methods
+Task Specific Features
+Ranking Features
+Heuristics
+Thread-based features
+Stacking classifiers across subtasks
+Submission and Results
+Subtask A
+Subtask B
+Subtask C

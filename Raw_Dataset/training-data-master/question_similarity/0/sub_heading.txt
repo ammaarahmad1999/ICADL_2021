@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+Methodology
+Data Preprocessing
+Data Augmentation
+Model Structure
+Experiments and Results
+Experimental Setup
+Effect of RNN Cell Type
+Effect of Data Augmentation
+Other Attempts
+Discussion
+Conclusion

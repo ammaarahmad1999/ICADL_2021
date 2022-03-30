@@ -1,0 +1,193 @@
+323	11	27	n	slight increment
+323	28	32	p	from
+323	33	37	n	RAGF
+323	38	40	p	to
+323	41	46	n	RAGFD
+323	55	67	p	demonstrates
+323	72	85	n	effectiveness
+323	86	88	p	of
+323	89	102	n	discriminator
+324	10	19	p	find that
+324	20	26	n	RAGFWD
+324	27	35	p	achieves
+324	38	55	n	4.3 % improvement
+324	56	60	p	over
+324	61	66	n	RAGFD
+324	67	78	p	in terms of
+324	79	83	n	BLEU
+324	90	94	n	PAAG
+324	95	106	n	outperforms
+324	107	113	n	RAGFWD
+324	114	119	n	4.1 %
+324	120	131	p	in terms of
+324	132	136	n	BLEU
+325	17	30	p	conclude that
+325	35	46	n	performance
+325	47	49	p	of
+325	50	54	n	PAAG
+325	55	68	p	benefits from
+325	75	122	n	Wasserstein distance based adversarial learning
+325	123	127	p	with
+325	128	144	n	gradient penalty
+325	69	74	p	using
+326	14	22	p	can help
+326	23	32	n	our model
+326	33	43	p	to achieve
+326	46	64	n	better performance
+326	65	69	p	than
+326	74	79	n	model
+326	90	114	n	vanilla GAN architecture
+269	6	10	n	S2SA
+269	13	47	n	Sequence - to - sequence framework
+269	57	69	p	proposed for
+269	70	94	n	language generation task
+272	6	11	n	S2SAR
+272	17	26	p	implement
+272	29	42	n	simple method
+272	53	64	p	incorporate
+272	69	87	n	review information
+272	88	103	p	when generating
+272	108	114	n	answer
+274	6	10	n	SNet
+274	20	22	p	is
+274	25	65	n	two - stage state - of - the - art model
+274	66	80	p	which extracts
+274	81	96	n	some text spans
+274	97	101	p	from
+274	102	128	n	multiple documents context
+274	133	142	p	synthesis
+274	147	153	n	answer
+274	154	158	p	from
+274	165	170	n	spans
+277	6	8	n	QS
+277	14	23	p	implement
+277	28	61	n	query - based summarization model
+279	6	10	n	BM25
+279	18	20	p	is
+279	23	58	n	bag - of - words retrieval function
+279	64	69	p	ranks
+279	72	86	n	set of reviews
+279	87	95	p	based on
+279	100	114	n	question terms
+279	115	127	p	appearing in
+279	128	139	n	each review
+281	6	14	n	TF - IDF
+281	17	60	n	Term Frequency - Inverse Document Frequency
+281	61	63	p	is
+281	66	85	n	numerical statistic
+281	103	113	p	to reflect
+281	114	127	n	how important
+281	130	143	n	question word
+281	147	149	p	to
+281	152	158	n	review
+284	42	61	n	randomly initialize
+284	66	84	n	network parameters
+284	85	87	p	at
+284	92	101	n	beginning
+284	102	104	p	of
+284	109	120	n	experiments
+284	0	13	p	Without using
+284	14	36	n	pre-trained embeddings
+285	0	20	n	All the RNN networks
+285	21	25	p	have
+285	26	42	n	512 hidden units
+285	51	60	n	dimension
+285	61	63	p	of
+285	64	78	n	word embedding
+285	79	81	p	is
+285	82	85	n	256
+288	0	7	n	Adagrad
+288	8	12	p	with
+288	13	26	n	learning rate
+288	27	30	n	0.1
+288	39	50	p	to optimize
+288	55	65	n	parameters
+288	70	80	n	batch size
+288	31	33	p	is
+288	84	86	n	64
+286	0	10	p	To produce
+286	11	25	n	better answers
+286	31	34	p	use
+286	35	46	n	beam search
+286	47	51	p	with
+286	52	61	n	beam size
+287	0	1	n	4
+289	3	12	p	implement
+289	13	22	n	our model
+289	23	28	p	using
+289	29	49	n	TensorFlow framework
+289	54	59	p	train
+289	60	93	n	our model and all baseline models
+289	94	96	p	on
+289	97	117	n	NVIDIA Tesla P40 GPU
+38	19	26	p	propose
+38	31	72	n	product - aware answer generator ( PAAG )
+38	77	117	n	product related question answering model
+38	124	136	p	incorporates
+38	137	153	n	customer reviews
+38	154	158	p	with
+38	159	177	n	product attributes
+41	26	72	n	recurrent neural network ( RNN ) based decoder
+41	81	89	p	combines
+41	90	142	n	product - aware review representation and attributes
+41	143	154	p	to generate
+41	159	165	n	answer
+39	35	41	p	employ
+39	45	64	n	attention mechanism
+39	65	73	p	to model
+39	74	86	n	interactions
+39	87	94	p	between
+39	97	117	n	question and reviews
+40	29	55	n	key - value memory network
+40	56	64	p	to store
+40	69	87	n	product attributes
+40	92	99	p	extract
+40	104	120	n	relevance values
+40	121	133	p	according to
+40	138	146	n	question
+42	19	28	p	to tackle
+42	44	63	n	meaningless answers
+42	69	76	p	propose
+42	80	110	n	adversarial learning mechanism
+42	111	113	p	in
+42	118	134	n	loss calculation
+42	135	149	p	for optimizing
+42	150	160	n	parameters
+2	0	33	n	Product - Aware Answer Generation
+14	46	73	n	question - answering ( QA )
+14	102	123	n	reading comprehension
+294	35	43	p	see that
+294	44	48	n	PAAG
+294	94	98	p	over
+294	103	136	n	stateof - the - art baseline SNet
+294	49	57	p	achieves
+294	60	65	n	111 %
+294	68	71	n	8 %
+294	76	93	n	62.73 % increment
+294	137	148	p	in terms of
+294	149	153	n	BLEU
+294	156	172	n	embedding greedy
+294	177	194	n	consistency score
+295	26	37	n	outperforms
+295	38	54	n	all the baseline
+295	55	68	n	significantly
+295	69	71	p	in
+295	72	89	n	semantic distance
+295	90	105	p	with respect to
+295	110	122	n	ground truth
+299	38	59	n	other baseline models
+299	60	62	p	in
+299	63	100	n	both sentence fluency and consistency
+299	101	105	p	with
+299	110	115	n	facts
+305	20	35	n	small increment
+305	36	38	p	of
+305	39	45	n	S2 SAR
+305	46	61	p	with respect to
+305	62	66	n	S2SA
+305	67	69	p	in
+305	70	81	n	all metrics
+305	93	97	p	find
+305	100	114	n	noticeable gap
+305	115	122	p	between
+305	123	137	n	S2SAR and PAAG

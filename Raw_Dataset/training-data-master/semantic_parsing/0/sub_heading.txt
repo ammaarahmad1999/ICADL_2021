@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Related Work and Existing Datasets
+Corpus Construction
+Database Collection and Creation
+Question and SQL Annotation
+SQL Review
+Question Review and Paraphrase
+Final Review
+Dataset Statistics and Comparison
+Task Definition
+Evaluation Metrics
+Methods
+Experimental Results and Discussion
+Conclusion

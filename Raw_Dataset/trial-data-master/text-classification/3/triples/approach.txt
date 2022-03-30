@@ -1,0 +1,5 @@
+(Contribution||has||Approach)
+(Approach||focus on the role of||preprocessing the input text)
+(preprocessing the input text||particularly in||how)
+(how||split into||individual ( meaning - bearing ) tokens)
+(how||affects the performance of||standard neural text classification models)

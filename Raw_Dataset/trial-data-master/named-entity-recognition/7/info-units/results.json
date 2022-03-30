@@ -1,0 +1,37 @@
+{
+  "has" : {
+    "Results" : {
+      "in terms of" : {
+        "F 1 measure" : {
+          "has" : {
+            "Our neural transition - based model" : {
+              "achieves" : {
+                "best results" : {
+                  "in" : "ACE datasets"
+                },
+                "comparable results" : {
+                  "in" : "GENIA dataset"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "Our neural transition - based model achieves the best results in ACE datasets and comparable results in GENIA dataset in terms of F 1 measure ."
+      },
+      "more significant" : {
+        "margin of improvement" : {
+          "in" : {
+            "portion of nested mentions" : {
+              "revealing" : {
+                "model 's effectiveness" : { 
+                  "in handling" : "nested mentions"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "We can observe that the margin of improvement is more significant in the portion of nested mentions , revealing our model 's effectiveness in handling nested mentions ."        
+      }
+    }
+  }
+}

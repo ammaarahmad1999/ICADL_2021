@@ -1,0 +1,7 @@
+(Contribution||has||Results)
+(Results||On||MCTest - 500)
+(MCTest - 500||has||Parallel Hierarchical model)
+(Parallel Hierarchical model||slightly outperforms||multi questions ( ? 0.3 % ))
+(Parallel Hierarchical model||slightly outperforms||over all ( ? 1 % ))
+(Parallel Hierarchical model||on||single questions)
+(single questions||( > 2 % )||significantly outperforms)

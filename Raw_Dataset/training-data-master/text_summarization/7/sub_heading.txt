@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Baseline RNN-based EncDec Model
+Word Frequency Estimation
+Definition
+Effective usage
+Calculation
+Parameter estimation (Training)
+Experiments
+Main results: comparison with baseline
+Comparison to current top systems
+Generation examples
+Performance of the WFE sub-model
+Conclusion

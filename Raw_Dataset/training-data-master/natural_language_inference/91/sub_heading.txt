@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Related work
+Our model: SPINN
+Background: Shift-reduce parsing
+Composition and representation
+The tracking LSTM
+Parsing: Predicting transitions
+Implementation issues
+TreeRNN-equivalence
+Inference speed
+NLI Experiments
+Applying SPINN to SNLI
+Models evaluated
+Results
+Discussion
+Conclusions and future work

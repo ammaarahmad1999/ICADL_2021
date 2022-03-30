@@ -1,0 +1,156 @@
+153	0	4	n	RACE
+153	11	26	n	key competitors
+153	27	30	p	are
+153	35	76	n	Stanford Attention Reader ( Stanford AR )
+153	79	108	n	Gated Attention Reader ( GA )
+153	115	146	n	Dynamic Fusion Networks ( DFN )
+157	0	9	n	Search QA
+157	16	40	n	main competitor baseline
+157	41	43	p	is
+157	48	60	n	AMANDA model
+161	0	11	n	NarrativeQA
+163	51	60	n	baselines
+163	61	64	p	are
+163	67	120	n	context - less sequence to sequence ( seq2seq ) model
+163	123	126	n	ASR
+163	131	136	n	BiDAF
+176	3	12	p	implement
+176	13	23	n	all models
+176	24	26	p	in
+176	27	37	n	TensorFlow
+177	0	15	n	Word embeddings
+177	20	36	p	initialized with
+177	37	56	n	300d Glo Ve vectors
+177	65	88	p	not fine - tuned during
+177	89	97	n	training
+178	0	12	n	Dropout rate
+178	16	29	p	tuned amongst
+178	30	49	n	{ 0.1 , 0.2 , 0.3 }
+178	50	52	p	on
+178	53	63	n	all layers
+178	64	73	p	including
+178	78	93	n	embedding layer
+186	4	14	n	batch size
+186	18	24	p	set to
+186	25	34	n	64/256/32
+187	4	28	n	maximum sequence lengths
+187	29	32	p	are
+187	33	45	n	500/200/1100
+185	3	8	p	adopt
+185	13	27	n	Adam optimizer
+185	28	32	p	with
+185	35	48	n	learning rate
+185	49	51	p	of
+185	52	71	n	0.0003/ 0.001/0.001
+185	72	75	p	for
+185	76	105	n	RACE / SearchQA / NarrativeQA
+189	54	62	p	based on
+189	65	76	n	TitanXP GPU
+189	27	49	n	all runtime benchmarks
+189	15	22	p	trained
+189	0	10	n	All models
+24	17	24	p	propose
+24	27	52	n	new compositional encoder
+24	72	90	p	used in - place of
+24	91	112	n	standard RNN encoders
+24	116	124	p	serve as
+24	127	137	n	new module
+24	146	162	p	complementary to
+24	163	192	n	existing neural architectures
+25	0	25	n	Our proposed MRU encoders
+25	26	32	p	learns
+25	33	47	n	gating vectors
+25	48	51	p	via
+25	52	91	n	multiple contract - and - expand layers
+25	92	94	p	at
+25	95	123	n	multiple dilated resolutions
+28	4	30	n	k document representations
+28	33	35	p	at
+28	36	69	n	multiple ranges and n-gram blocks
+28	81	106	p	combined and modeled with
+28	107	129	n	fully connected layers
+28	130	137	p	to form
+28	142	166	n	final compositional gate
+28	177	189	p	applied onto
+28	194	217	n	original input document
+26	18	26	p	compress
+26	31	45	n	input document
+26	49	113	n	arbitrary k times at multi-ranges ( e.g. , 1 , 2 , 4 , 10 , 25 )
+26	114	118	p	into
+26	121	170	n	neural bag - of - words ( summed ) representation
+27	29	43	p	passed through
+27	44	72	n	affine transformation layers
+27	82	96	p	re-expanded to
+27	101	125	n	original sequence length
+2	26	47	n	Machine Comprehension
+4	88	116	n	machine comprehension ( MC )
+19	90	92	n	MC
+194	21	23	p	on
+194	24	28	n	RACE
+190	21	36	n	6 % improvement
+190	37	39	p	on
+190	44	60	n	RACE - H dataset
+190	65	82	n	1.8 % improvement
+190	83	85	p	on
+190	90	106	n	RACE - M dataset
+195	112	129	n	Sim . MRU and MRU
+195	134	141	p	achieve
+195	142	164	n	comparable performance
+195	165	167	p	to
+195	168	178	n	each other
+195	187	206	n	GRU and LSTM models
+195	207	218	p	do not have
+195	221	237	n	competitive edge
+195	254	264	n	no encoder
+195	273	281	p	achieves
+195	282	306	n	comparable 1 performance
+195	307	309	p	to
+195	310	313	n	DFN
+196	13	41	n	ensemble of Sim . MRU models
+196	42	49	p	achieve
+196	50	84	n	state - of - the - art performance
+196	85	87	p	on
+196	92	104	n	RACE dataset
+196	107	116	p	achieving
+196	121	135	n	over all score
+196	136	138	p	of
+196	139	145	n	53.3 %
+198	55	77	n	Narrative QA benchmark
+199	11	23	p	observe that
+199	24	32	n	300d MRU
+199	33	44	p	can achieve
+199	45	67	n	comparable performance
+199	68	72	p	with
+199	73	78	n	BiDAF
+200	5	18	p	compared with
+200	21	27	n	BiLSTM
+200	28	30	p	of
+200	31	64	n	equal output dimensions ( 150 d )
+200	70	79	p	find that
+200	84	93	n	MRU model
+200	94	102	p	performs
+200	103	116	n	competitively
+200	119	123	p	with
+200	124	149	n	less than 1 % deprovement
+200	150	156	p	across
+200	157	168	n	all metrics
+202	4	18	p	performance of
+202	19	28	n	our model
+202	29	31	p	is
+202	32	52	n	significantly better
+202	53	57	p	than
+202	58	73	n	300d LSTM model
+202	80	90	p	also being
+202	91	111	n	significantly faster
+206	14	24	n	MRU - LSTM
+206	25	50	n	significantly outperforms
+206	51	61	n	all models
+206	64	73	p	including
+206	74	79	n	BiDAF
+207	0	23	n	Performance improvement
+207	24	28	p	over
+207	33	53	n	vanilla BiLSTM model
+207	54	65	p	ranges from
+207	66	75	n	1 % ? 3 %
+207	76	82	p	across
+207	83	94	n	all metrics

@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Related Work
+Parameterized Convolutional Neural
+Problem Definition
+Convolutional Neural Networks
+Parameterized Filters
+Parameterized Gates
+Final Classification
+Model training
+Experiments
+Experiments Setting
+Results
+Case Study & Discussion
+Conclusion

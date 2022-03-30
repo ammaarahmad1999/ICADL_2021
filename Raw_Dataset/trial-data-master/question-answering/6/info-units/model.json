@@ -1,0 +1,48 @@
+{
+  "has" : {
+    "Model" : {
+      "name" : {
+        "Query - Reduction Network" : {
+          "is a" : {
+            "single recurrent unit" : {
+              "addresses" : {
+                "long - term dependency problem of most RNN - based models" : {
+                  "by simplifying" : "recurrent update",
+                  "taking the advantage of" : {
+                    "RNN 's capability" : {
+                      "to model" : "sequential data"
+                    }
+                  }
+                }
+              }
+            },
+            "from sentence" : "Our proposed model , Query - Reduction Network 1 ( QRN ) , is a single recurrent unit that addresses the long - term dependency problem of most RNN - based models by simplifying the recurrent update , while taking the advantage of RNN 's capability to model sequential data ) ."
+          },
+          "name" : {
+            "QRN" : {
+              "considers" : {
+                "context sentences" : {
+                  "as a sequence of" : "state - changing triggers"
+                }
+              },
+              "transforms ( reduces )" : {
+                "original query" : {
+                  "to" : {
+                    "more informed query" : {
+                      "as it observes" : {
+                        "trigger" : {
+                          "through" : "time"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "from sentence" : "QRN considers the context sentences as a sequence of state - changing triggers , and transforms ( reduces ) the original query to a more informed query as it observes each trigger through time ."
+            }
+          }
+        }
+      }
+    }
+  }
+}

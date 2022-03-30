@@ -1,0 +1,6 @@
+{
+  "has research problem" : [
+    ["Statistical Machine Translation", {"from sentence": "Learning Phrase Representations using RNN Encoder - Decoder for Statistical Machine Translation"}],
+    ["SMT", "phrase - based SMT", {"from sentence" : "Along this line of research on using neural networks for SMT , this paper focuses on a novel neural network architecture that can be used as apart of the conventional phrase - based SMT system ."}]
+  ]
+}

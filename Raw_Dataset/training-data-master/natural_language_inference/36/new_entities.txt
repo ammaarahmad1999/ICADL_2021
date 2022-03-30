@@ -1,0 +1,61 @@
+168	0	18	n	Textual Entailment
+172	11	15	p	show
+172	21	34	n	SRL embedding
+172	39	44	n	boost
+172	49	66	n	ESIM + ELMo model
+172	67	69	p	by
+172	70	89	n	+ 0.7 % improvement
+173	0	4	p	With
+173	9	22	n	semantic cues
+173	29	61	n	simple sequential encoding model
+173	62	68	p	yields
+173	69	86	n	substantial gains
+173	93	120	n	our single BERT LARGE model
+173	126	134	p	achieves
+173	137	160	n	new stateof - the - art
+173	168	179	n	outperforms
+173	180	203	n	all the ensemble models
+173	204	206	p	in
+173	211	222	n	leaderboard
+181	0	29	n	Machine Reading Comprehension
+186	13	21	p	includes
+186	22	26	n	MQAN
+186	27	30	p	for
+186	31	57	n	single task and multi-task
+186	58	62	p	with
+186	63	66	n	SRL
+186	69	81	n	BiDAF + ELMo
+186	84	95	n	R.M. Reader
+186	100	104	n	BERT
+188	8	22	n	SRL embeddings
+188	23	27	p	give
+188	28	57	n	substantial performance gains
+188	58	62	p	over
+188	63	87	n	all the strong baselines
+188	90	97	p	showing
+188	109	124	n	quite effective
+188	125	128	p	for
+188	129	172	n	more complex document and question encoding
+26	93	100	p	explore
+26	101	119	n	integrative models
+26	120	123	p	for
+26	124	172	n	finer - grained text comprehension and inference
+27	18	25	p	propose
+27	28	59	n	semantics enhancement framework
+27	60	63	p	for
+27	64	72	n	TC tasks
+28	3	12	p	implement
+28	16	40	n	easy and feasible scheme
+28	41	53	p	to integrate
+28	54	70	n	semantic signals
+28	71	73	p	in
+28	74	98	n	downstream neural models
+28	99	101	p	in
+28	102	123	n	end - to - end manner
+28	124	132	p	to boost
+28	150	161	n	effectively
+28	133	149	n	strong baselines
+2	34	52	n	Text Comprehension
+12	31	56	n	text comprehension ( TC )
+12	65	102	n	machine reading comprehension ( MRC )
+12	107	132	n	textual entailment ( TE )

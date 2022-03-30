@@ -1,0 +1,42 @@
+{
+  "has" : {
+    "Hyperparameters" : {
+      "set" : {
+        "dimension of word embedding" : {
+          "as" : "512"
+        },
+        "dropout rate" : {
+          "as" : "0.1"
+        },
+        "head number" : {
+          "as" : "8"
+        },
+        "from sentence" : "Following the base model in , we set the dimension of word embedding as 512 , dropout rate as 0.1 and the head number as 8 ."
+      },
+      "use" : {
+        "beam search" : {
+          "with" : {
+            "beam size" : {
+              "of" : "4"
+            },
+            "length penalty" : {
+              "? =" : "0.6"
+            }
+          }
+        },
+        "from sentence" : "We use beam search with a beam size of 4 and length penalty ? = 0.6 ."
+      },
+      "implemented in" : "TensorFlow",
+      "trained on" : {
+        "up to four K80 GPUs" : {
+          "in" : {
+            "multi - GPU setup" : {
+              "on" : "single machine"
+            }
+          }
+        },
+        "from sentence" : "The model is implemented in TensorFlow and trained on up to four K80 GPUs synchronously in a multi - GPU setup on a single machine ."
+      }
+    }
+  }
+}

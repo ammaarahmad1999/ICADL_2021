@@ -1,0 +1,72 @@
+27	37	51	application of
+27	52	72	dilated convolutions
+27	73	76	for
+27	77	94	sequence labeling
+29	47	57	operate on
+29	60	85	sliding window of context
+29	86	90	over
+29	95	103	sequence
+30	3	11	stacking
+30	12	18	layers
+30	19	21	of
+30	22	42	dilated convolutions
+30	43	45	of
+30	46	85	exponentially increasing dilation width
+30	95	110	expand the size
+30	118	139	effective input width
+30	140	148	to cover
+30	153	184	entire length of most sequences
+33	13	59	iterated dilated CNN architecture ( ID - CNN )
+33	71	78	applies
+33	83	117	same block of dilated convolutions
+33	118	120	to
+33	121	149	token - wise representations
+34	23	31	prevents
+34	32	43	overfitting
+34	53	78	provides opportunities to
+34	79	140	inject supervision on intermediate activations of the network
+35	77	88	two methods
+35	89	92	for
+35	93	114	performing prediction
+35	124	131	predict
+35	132	165	each token 's label independently
+35	171	181	by running
+35	182	199	Viterbi inference
+35	200	202	in
+35	205	237	chain structured graphical model
+162	32	61	strong LSTM and CNN baselines
+162	66	123	Bi - LSTM with local decoding , and one with CRF decoding
+163	26	54	non-dilated CNN architecture
+163	125	138	4 - layer CNN
+163	258	271	5 - layer CNN
+2	0	36	Fast and Accurate Entity Recognition
+7	22	62	faster alternative to Bi - LSTMs for NER
+12	12	113	democratize large - scale NLP and information extraction while minimizing our environmental footprint
+169	4	28	CoNLL - 2003 English NER
+169	35	62	Sentence - level prediction
+171	4	77	Viterbi - decoding Bi - LSTM - CRF and ID - CNN - CRF and greedy ID - CNN
+171	78	84	obtain
+171	89	111	highest average scores
+172	4	19	greedy ID - CNN
+172	20	31	outperforms
+172	36	67	Bi - LSTM and the 4 - layer CNN
+174	40	48	ID - CNN
+174	0	16	When paired with
+174	17	33	Viterbi decoding
+174	49	69	performs on par with
+174	74	83	Bi - LSTM
+174	86	93	showing
+174	103	146	ID - CNN is also an effective token encoder
+174	147	150	for
+174	151	171	structured inference
+186	0	27	Document - level prediction
+187	69	71	on
+187	72	84	CoNLL - 2003
+187	16	22	adding
+187	23	47	document - level context
+187	48	56	improves
+187	57	68	every model
+194	0	25	OntoNotes 5.0 English NER
+200	4	16	greedy model
+200	20	38	out - performed by
+200	43	96	Bi - LSTM - CRF reported in Chiu and Nichols ( 2016 )

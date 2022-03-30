@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+Related Work
+Approach
+Attend
+Compare
+Aggregate
+Intra-Sentence Attention (Optional)
+Computational Complexity
+Experiments
+Implementation Details
+Results
+Conclusion

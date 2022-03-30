@@ -1,0 +1,35 @@
+{
+  "has" : {
+    "Results" : {
+      "observe" : {
+        "our model" : {
+          "outperforms" : {
+            "all previous models" : {
+              "that do not rely on" : "complex hand - crafted features",
+              "by a large margin" : "> 4 % for both tasks"
+            }
+          }
+        },
+        "from sentence" : "We observe that our model outperforms all previous models that do not rely on complex hand - crafted features by a large margin ( > 4 % for both tasks ) ."        
+      },
+      "for" : {
+        "DREC dataset" : {
+          "use" : "boundaries and the strict settings",
+          "has" : {
+            "boundaries evaluation" : {
+              "achieve" : {
+                "? 3 % improvement" : {
+                  "for" : "both tasks"
+                }                
+              }
+            }            
+          },
+          "from sentence" : "We also report results for the DREC dataset , with two different evaluation settings .
+Specifically , we use the boundaries and the strict settings .
+In the boundaries evaluation , we achieve ? 3 % improvement for both tasks ."
+
+        }
+      }
+    }
+  }
+}

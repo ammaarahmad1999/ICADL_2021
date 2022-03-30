@@ -1,0 +1,2 @@
+(Contribution||has research problem||Text Classification)
+(Contribution||has research problem||assign predefined categories to free - text documents)

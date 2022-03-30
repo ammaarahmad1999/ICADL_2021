@@ -1,0 +1,119 @@
+23	27	31	p	take
+23	36	44	n	approach
+23	45	47	p	of
+23	48	68	n	converting questions
+23	69	71	p	to
+23	72	117	n	( uninterpretable ) vectorial representations
+23	124	134	p	require no
+23	135	167	n	pre-defined grammars or lexicons
+23	172	175	p	can
+23	176	181	n	query
+23	182	188	p	any KB
+23	189	200	n	independent
+23	201	203	p	of
+23	208	214	n	schema
+24	15	23	p	focus on
+24	24	33	n	answering
+24	34	58	n	simple factual questions
+24	59	61	p	on
+24	64	85	n	broad range of topics
+31	16	24	p	based on
+31	25	33	n	learning
+31	34	69	n	low - dimensional vector embeddings
+31	70	72	p	of
+31	73	78	n	words
+31	86	96	n	KB triples
+31	97	104	p	so that
+31	105	120	n	representations
+31	83	85	p	of
+31	124	159	n	questions and corresponding answers
+31	160	166	p	end up
+31	173	180	n	similar
+31	181	183	p	in
+31	188	203	n	embedding space
+33	113	124	p	make use of
+33	125	141	n	weak supervision
+34	29	34	n	model
+34	38	45	p	able to
+34	46	60	n	take advantage
+34	61	63	p	of
+34	64	94	n	noisy and indirect supervision
+34	95	97	p	by
+34	104	128	n	automatically generating
+34	129	138	n	questions
+34	139	143	p	from
+34	144	154	n	KB triples
+34	159	175	p	treating this as
+34	176	189	n	training data
+34	203	216	n	supplementing
+34	222	226	p	with
+34	229	250	n	data set of questions
+34	251	276	p	collaboratively marked as
+34	277	288	n	paraphrases
+34	293	300	p	with no
+34	301	319	n	associated answers
+35	3	18	p	end up learning
+35	19	55	n	meaningful vectorial representations
+35	56	59	p	for
+35	60	69	n	questions
+35	70	85	p	involving up to
+35	86	97	n	800 k words
+35	106	113	n	triples
+35	114	116	p	of
+35	120	151	n	mostly automatically created KB
+35	152	156	p	with
+35	157	171	n	2.4 M entities
+35	176	195	n	600 k relationships
+2	0	23	n	Open Question Answering
+12	48	80	n	open - domain question answering
+16	0	18	n	Question answering
+201	15	23	p	see that
+201	24	36	n	multitasking
+201	37	41	p	with
+201	42	57	n	paraphrase data
+201	58	60	p	is
+201	61	70	n	essential
+201	80	88	p	improves
+201	89	91	n	F1
+201	92	96	p	from
+201	97	101	n	0.60
+201	102	104	p	to
+201	105	109	n	0.68
+207	0	13	n	Fine - tuning
+207	18	33	n	embedding model
+207	34	36	p	is
+207	37	52	n	very beneficial
+207	53	64	p	to optimize
+207	69	84	n	top of the list
+207	89	95	p	grants
+207	98	102	n	bump
+207	103	105	p	of
+207	106	114	n	5 points
+207	115	117	p	of
+207	118	120	n	F1
+208	0	26	n	All versions of our system
+208	27	45	n	greatly outperform
+208	46	53	n	paralex
+208	60	78	n	fine - tuned model
+208	79	87	p	improves
+208	92	102	n	F1 - score
+208	103	105	p	by
+208	106	122	n	almost 20 points
+231	14	29	n	string matching
+231	30	46	n	greatly improves
+231	47	54	n	results
+231	57	61	p	both
+231	65	85	n	precision and recall
+231	97	118	n	significantly reduces
+231	119	134	n	evaluation time
+232	4	12	n	final F1
+232	13	24	p	obtained by
+232	25	47	n	our fine - tuned model
+232	48	50	p	is
+232	51	62	n	even better
+232	63	67	p	then
+232	72	78	n	result
+232	79	81	p	of
+232	82	89	n	paralex
+232	90	92	p	in
+232	93	102	n	reranking

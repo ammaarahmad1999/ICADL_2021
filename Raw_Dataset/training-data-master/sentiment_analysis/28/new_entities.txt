@@ -1,0 +1,269 @@
+169	0	24	p	Comparing the results of
+169	25	63	n	AEN - GloVe and AEN - Glo Ve w / o LSR
+169	69	76	p	observe
+169	86	94	n	accuracy
+169	95	97	p	of
+169	98	120	n	AEN - Glo Ve w / o LSR
+169	121	126	p	drops
+169	127	140	n	significantly
+169	141	143	p	on
+169	144	162	n	all three datasets
+171	4	24	n	over all performance
+171	25	27	p	of
+171	28	65	n	AEN - GloVe and AEN - Glo Ve - BiLSTM
+171	66	68	p	is
+171	69	85	n	relatively close
+171	88	100	n	AEN - Glo Ve
+171	101	109	p	performs
+171	110	116	n	better
+171	117	119	p	on
+171	124	142	n	Restaurant dataset
+172	19	31	n	AEN - Glo Ve
+172	36	52	n	fewer parameters
+172	60	69	p	easier to
+172	70	81	n	parallelize
+179	0	33	n	AEN - Glo Ve 's lightweight level
+179	34	39	p	ranks
+179	40	46	n	second
+180	22	32	n	model size
+180	33	35	p	of
+180	36	57	n	AEN - Glo Ve - BiLSTM
+180	61	70	p	more than
+180	71	76	n	twice
+180	82	84	p	of
+180	85	96	n	AEN - GloVe
+180	103	117	p	does not bring
+180	118	146	n	any performance improvements
+136	8	14	p	design
+136	17	41	n	basic BERT - based model
+136	42	53	p	to evaluate
+136	58	69	n	performance
+136	70	72	p	of
+136	73	83	n	AEN - BERT
+137	0	25	n	Non - RNN based baselines
+138	0	19	n	Feature - based SVM
+138	20	22	p	is
+138	25	71	n	traditional support vector machine based model
+138	72	76	p	with
+138	77	106	n	extensive feature engineering
+139	0	8	n	Rec - NN
+139	17	21	p	uses
+139	22	27	n	rules
+139	28	40	p	to transform
+139	45	60	n	dependency tree
+139	65	68	p	put
+139	73	87	n	opinion target
+139	88	90	p	at
+139	95	99	n	root
+139	111	117	p	learns
+139	122	145	n	sentence representation
+139	146	152	p	toward
+139	153	159	n	target
+139	160	163	p	via
+139	164	184	n	semantic composition
+139	185	190	p	using
+139	191	204	n	Recursive NNs
+140	0	6	n	MemNet
+140	7	11	p	uses
+140	12	42	n	multi-hops of attention layers
+140	43	45	p	on
+140	50	73	n	context word embeddings
+140	74	77	p	for
+140	78	101	n	sentence representation
+140	102	124	p	to explicitly captures
+140	129	139	n	importance
+140	140	142	p	of
+140	143	160	n	each context word
+141	0	19	n	RNN based baselines
+142	0	9	n	TD - LSTM
+142	10	17	p	extends
+142	18	22	n	LSTM
+142	23	31	p	by using
+142	32	49	n	two LSTM networks
+142	50	58	p	to model
+142	63	75	n	left context
+142	76	80	p	with
+142	81	87	n	target
+142	96	109	n	right context
+142	110	114	p	with
+142	115	121	n	target
+144	0	11	n	ATAE - LSTM
+145	23	34	p	strengthens
+145	39	66	n	effect of target embeddings
+145	69	82	p	which appends
+145	87	104	n	target embeddings
+145	105	109	p	with
+145	110	130	n	each word embeddings
+145	135	138	p	use
+145	139	143	n	LSTM
+145	144	148	p	with
+145	149	158	n	attention
+145	159	165	p	to get
+145	170	190	n	final representation
+145	191	194	p	for
+145	195	209	n	classification
+146	0	3	n	IAN
+146	4	10	p	learns
+146	15	30	n	representations
+146	31	33	p	of
+146	38	56	n	target and context
+146	57	61	p	with
+146	62	86	n	two LSTMs and attentions
+146	103	118	p	which generates
+146	123	138	n	representations
+146	139	142	p	for
+146	143	163	n	targets and contexts
+146	164	179	p	with respect to
+146	180	190	n	each other
+147	0	3	n	RAM
+147	4	15	p	strengthens
+147	16	25	n	Mem - Net
+147	26	41	p	by representing
+147	42	48	n	memory
+147	49	53	p	with
+147	54	72	n	bidirectional LSTM
+147	77	82	p	using
+147	85	113	n	gated recurrent unit network
+147	114	124	p	to combine
+147	129	155	n	multiple attention outputs
+147	156	159	p	for
+147	160	183	n	sentence representation
+148	0	22	n	AEN - Glo Ve ablations
+149	0	20	n	AEN - GloVe w/ o PCT
+149	21	28	p	ablates
+149	29	39	n	PCT module
+150	0	20	n	AEN - GloVe w/ o MHA
+150	21	28	p	ablates
+150	29	39	n	MHA module
+151	0	20	n	AEN - GloVe w/ o LSR
+151	21	28	p	ablates
+151	29	59	n	label smoothing regularization
+152	0	16	n	AEN-GloVe-BiLSTM
+152	17	25	p	replaces
+152	30	55	n	attentional encoder layer
+152	56	60	p	with
+152	61	83	n	two bidirectional LSTM
+153	0	24	n	Basic BERT - based model
+154	0	10	n	BERT - SPC
+154	11	16	p	feeds
+154	17	76	n	sequence " [ CLS ] + context + [ SEP ] + target + [ SEP ] "
+154	77	81	p	into
+154	86	102	n	basic BERT model
+154	103	106	p	for
+154	107	140	n	sentence pair classification task
+126	0	5	p	shows
+126	10	47	n	number of training and test instances
+126	48	50	p	in
+126	51	64	n	each category
+127	0	15	n	Word embeddings
+127	16	18	p	in
+127	19	31	n	AEN - Glo Ve
+127	32	53	p	do not get updated in
+127	58	74	n	learning process
+127	84	95	p	fine - tune
+127	96	112	n	pre-trained BERT
+127	115	117	p	in
+127	118	128	n	AEN - BERT
+128	0	25	n	Embedding dimension d dim
+128	26	28	p	is
+128	29	32	n	300
+128	33	36	p	for
+128	37	42	n	GloVe
+128	50	53	n	768
+128	54	57	p	for
+128	58	73	n	pretrained BERT
+129	0	9	n	Dimension
+129	10	12	p	of
+129	13	32	n	hidden states d hid
+129	36	42	p	set to
+129	43	46	n	300
+130	4	11	n	weights
+130	12	14	p	of
+130	15	24	n	our model
+130	29	45	p	initialized with
+130	46	67	n	Glorot initialization
+132	0	39	n	Adam optimizer ( Kingma and Ba , 2014 )
+132	43	53	p	applied to
+132	54	60	n	update
+132	61	79	n	all the parameters
+131	0	6	p	During
+131	7	15	n	training
+131	21	24	p	set
+131	25	50	n	label smoothing parameter
+131	51	53	p	to
+131	54	57	n	0.2
+131	64	104	n	coefficient ? of L 2 regularization item
+131	105	107	p	is
+131	108	114	n	10 ? 5
+131	119	131	n	dropout rate
+131	132	134	p	is
+131	135	138	n	0.1
+26	11	18	p	propose
+26	22	43	n	attention based model
+27	15	24	n	our model
+27	25	32	p	eschews
+27	33	43	n	recurrence
+27	48	55	p	employs
+27	56	65	n	attention
+27	66	68	p	as
+27	71	94	n	competitive alternative
+27	95	102	p	to draw
+27	107	146	n	introspective and interactive semantics
+27	147	154	p	between
+27	155	179	n	target and context words
+28	0	12	p	To deal with
+28	17	42	n	label unreliability issue
+28	48	54	p	employ
+28	57	87	n	label smoothing regularization
+28	88	100	p	to encourage
+28	105	110	n	model
+28	111	116	p	to be
+28	117	131	n	less confident
+28	132	136	p	with
+28	137	149	n	fuzzy labels
+29	8	13	p	apply
+29	14	30	n	pre-trained BERT
+2	32	65	n	Targeted Sentiment Classification
+12	39	72	n	fine - grained sentiment analysis
+16	76	124	n	fine - grained targeted sentiment classification
+160	4	24	n	over all performance
+160	25	27	p	of
+160	28	37	n	TD - LSTM
+160	38	40	p	is
+160	41	49	n	not good
+160	64	69	p	makes
+160	72	87	n	rough treatment
+160	88	90	p	of
+160	95	107	n	target words
+161	0	25	n	ATAE - LSTM , IAN and RAM
+161	26	29	p	are
+161	30	52	n	attention based models
+161	60	73	p	stably exceed
+161	78	94	n	TD - LSTM method
+161	95	97	p	on
+161	98	128	n	Restaurant and Laptop datasets
+162	0	3	n	RAM
+162	7	18	p	better than
+162	19	41	n	other RNN based models
+162	51	67	p	does not perform
+162	68	72	n	well
+162	73	75	p	on
+162	76	91	n	Twitter dataset
+163	0	19	n	Feature - based SVM
+163	23	28	p	still
+163	31	51	n	competitive baseline
+163	58	68	p	relying on
+163	69	97	n	manually - designed features
+164	0	8	n	Rec - NN
+164	9	13	p	gets
+164	18	36	n	worst performances
+164	37	42	p	among
+164	43	71	n	all neural network baselines
+165	0	4	p	Like
+165	5	8	n	AEN
+165	11	18	n	Mem Net
+165	24	31	p	eschews
+165	32	42	n	recurrence
+165	53	73	n	over all performance
+165	74	76	p	is
+165	77	85	n	not good

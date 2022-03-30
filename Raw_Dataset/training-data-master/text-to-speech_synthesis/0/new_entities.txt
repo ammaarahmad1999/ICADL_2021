@@ -1,0 +1,141 @@
+145	9	14	p	study
+145	19	67	n	effect of distilling from unlabeled source words
+146	47	52	p	boost
+146	57	65	n	accuracy
+146	66	68	p	by
+146	69	83	n	nearly 1 % WER
+146	86	120	p	demonstrating the effectiveness by
+146	121	156	n	introducing abundant unlabeled data
+146	157	161	p	into
+146	162	184	n	knowledge distillation
+152	27	85	n	effect of ensemble teacher model in knowledge distillation
+153	45	50	p	boost
+153	55	63	n	accuracy
+153	64	66	p	by
+153	67	84	n	more than 1 % WER
+153	87	100	p	compared with
+153	105	194	n	single teacher model ( a Transformer model with 6 - layer encoder and 6 - layer decoder )
+154	13	20	p	compare
+154	21	32	n	Transformer
+154	33	37	p	with
+154	38	62	n	RNN and CNN based models
+154	65	78	p	without using
+154	79	120	n	knowledge distillation and unlabeled data
+155	34	45	p	outperforms
+155	50	74	n	RNN and CNN based models
+22	110	117	p	propose
+22	122	157	n	token - level ensemble distillation
+22	158	161	p	for
+22	162	176	n	G2P conversion
+23	11	14	p	use
+23	15	37	n	knowledge distillation
+23	38	49	p	to leverage
+23	54	85	n	large amount of unlabeled words
+24	18	23	p	train
+24	26	39	n	teacher model
+24	40	51	p	to generate
+24	56	72	n	phoneme sequence
+24	73	83	p	as well as
+24	88	112	n	probability distribution
+24	113	118	p	given
+24	119	146	n	unlabeled grapheme sequence
+25	12	17	p	train
+25	20	67	n	variety of models ( CNN , RNN and Transformer )
+25	68	71	p	for
+25	72	80	n	ensemble
+25	81	87	p	to get
+25	88	103	n	higher accuracy
+25	110	118	p	transfer
+25	123	155	n	knowledge of the ensemble models
+25	156	158	p	to
+25	161	181	n	light - weight model
+25	190	202	p	suitable for
+25	203	220	n	online deployment
+26	13	18	p	adopt
+26	19	30	n	Transformer
+26	31	41	p	instead of
+26	42	52	n	RNN or CNN
+26	53	55	p	as
+26	60	99	n	basic encoder - decoder model structure
+110	0	14	n	Ensemble Model
+112	3	6	p	use
+112	7	27	n	4 Transformer models
+112	30	42	n	3 CNN models
+112	47	65	n	3 Bi - LSTM models
+113	4	24	n	4 Transformer models
+113	25	30	p	share
+113	35	59	n	same hidden size ( 256 )
+113	64	71	p	vary in
+113	76	114	n	number of the encoder - decoder layers
+114	8	20	n	3 CNN models
+114	28	33	p	share
+114	38	62	n	same hidden size ( 256 )
+114	67	74	p	vary in
+114	79	189	n	number of encoder - decoder layers ( 10 - 10 , 10 - 10 , 8 - 8 ) and convolutional kernel widths ( 3 , 2 , 2 )
+115	8	26	n	3 Bi - LSTM models
+115	34	39	p	share
+115	44	93	n	same number of encoder - decoder layers ( 1 - 1 )
+115	100	114	p	with different
+115	115	149	n	hidden sizes ( 256 , 384 and 512 )
+116	0	13	n	Student Model
+117	3	9	p	choose
+117	10	21	n	Transformer
+117	47	50	p	use
+117	55	135	n	default configurations ( 256 hidden size and 6 - 6 layers of encoder - decoder )
+120	3	29	p	implement experiments with
+120	34	68	n	fairseq - py 4 library in Py-Torch
+121	3	6	p	use
+121	7	21	n	Adam optimizer
+121	22	25	p	for
+121	26	36	n	all models
+121	41	47	p	follow
+121	52	74	n	learning rate schedule
+126	7	18	n	beam search
+126	19	25	p	during
+126	26	35	n	inference
+126	40	43	p	set
+126	44	59	n	beam size to 10
+127	7	61	n	WER ( word error rate ) and PER ( phoneme error rate )
+127	62	72	p	to measure
+127	77	103	n	accuracy of G2P conversion
+122	4	11	n	dropout
+122	12	14	p	is
+122	15	18	n	0.3
+122	19	22	p	for
+122	23	47	n	Bi - LSTM and CNN models
+122	60	113	n	residual dropout , attention dropout and ReLU dropout
+122	114	117	p	for
+122	118	136	n	Transformer models
+122	137	139	p	is
+122	140	155	n	0.2 , 0.4 , 0.4
+124	3	8	p	train
+124	9	19	n	each model
+124	20	22	p	on
+124	23	40	n	8 NVIDIA M40 GPUs
+125	9	17	p	contains
+125	18	37	n	roughly 4000 tokens
+125	38	40	p	in
+125	41	55	n	one mini-batch
+2	40	74	n	Grapheme - to - Phoneme Conversion
+4	0	42	n	Grapheme - to - phoneme ( G2P ) conversion
+132	48	50	p	on
+132	51	58	n	CMUDict
+136	3	14	p	can be seen
+136	20	85	n	our method on 6 - layer encoder and 6 - layer decoder Transformer
+136	86	94	p	achieves
+136	99	132	n	new state - of - the - art result
+136	133	135	p	of
+136	136	147	n	19.88 % WER
+136	150	163	p	outperforming
+136	164	168	n	NSGD
+136	169	171	p	by
+136	172	182	n	4.22 % WER
+157	119	135	n	internal dataset
+157	63	76	n	CNN with NSGD
+157	99	101	p	by
+158	11	22	p	outperforms
+158	40	50	n	3.52 % WER
+158	59	71	p	demonstrates
+158	76	103	n	effectiveness of our method
+158	104	107	p	for
+158	108	122	n	G2P conversion

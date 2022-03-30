@@ -1,0 +1,10 @@
+title
+abstract
+Introduction
+Talman, Ylh-Jyra and Tiedemann
+Model Architecture
+Talman, Ylh-Jyra and Tiedemann
+Talman, Ylh-Jyra and Tiedemann
+Error Analysis of NLI Predictions
+Evaluation of Linguistic Abstractions
+Conclusion

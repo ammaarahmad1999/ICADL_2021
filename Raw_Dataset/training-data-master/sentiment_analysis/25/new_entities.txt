@@ -1,0 +1,184 @@
+155	0	12	n	NRC - Canada
+155	13	15	p	is
+155	20	30	n	top method
+155	31	33	p	in
+155	34	53	n	SemEval 2014 Task 4
+155	54	57	p	for
+155	58	76	n	ACSA and ATSA task
+158	0	3	n	CNN
+158	7	21	p	widely used on
+158	22	46	n	text classification task
+161	0	9	n	TD - LSTM
+161	10	14	p	uses
+161	15	32	n	two LSTM networks
+161	33	41	p	to model
+161	46	78	n	preceding and following contexts
+161	79	81	p	of
+161	86	92	n	target
+161	93	104	p	to generate
+161	105	138	n	target - dependent representation
+161	139	142	p	for
+161	143	163	n	sentiment prediction
+162	0	11	n	ATAE - LSTM
+162	12	14	p	is
+162	18	40	n	attention - based LSTM
+162	41	44	p	for
+162	45	54	n	ACSA task
+164	0	3	n	IAN
+164	4	14	p	stands for
+164	15	44	n	interactive attention network
+164	45	48	p	for
+164	49	58	n	ATSA task
+164	75	83	p	based on
+164	84	113	n	LSTM and attention mechanisms
+165	0	3	n	RAM
+165	4	6	p	is
+165	9	36	n	recurrent attention network
+165	37	40	p	for
+165	41	50	n	ATSA task
+165	59	63	p	uses
+165	64	102	n	LSTM and multiple attention mechanisms
+166	0	3	n	GCN
+166	4	14	p	stands for
+166	15	49	n	gated convolutional neural network
+166	52	60	p	in which
+166	61	65	n	GTRU
+166	66	79	p	does not have
+166	84	100	n	aspect embedding
+166	101	103	p	as
+166	107	123	n	additional input
+148	21	43	n	word embedding vectors
+148	48	64	p	initialized with
+148	65	94	n	300 - dimension GloVe vectors
+148	105	119	p	pre-trained on
+148	120	134	n	unlabeled data
+148	135	137	p	of
+148	138	156	n	840 billion tokens
+149	0	27	n	Words out of the vocabulary
+149	28	30	p	of
+149	31	37	n	Glo Ve
+149	38	41	p	are
+149	42	62	n	randomly initialized
+149	63	67	p	with
+149	70	110	n	uniform distribution U ( ? 0.25 , 0.25 )
+152	4	17	n	neural models
+152	22	36	p	implemented in
+152	37	44	n	PyTorch
+150	3	6	p	use
+150	7	14	n	Adagrad
+150	15	19	p	with
+150	22	32	n	batch size
+150	33	35	p	of
+150	36	48	n	32 instances
+150	51	72	n	default learning rate
+150	73	75	p	of
+150	76	83	n	1 e ? 2
+150	90	104	n	maximal epochs
+150	105	107	p	of
+150	108	110	n	30
+151	8	17	p	fine tune
+151	18	32	n	early stopping
+151	33	37	p	with
+151	38	63	n	5 - fold cross validation
+151	64	66	p	on
+151	67	84	n	training datasets
+33	19	26	p	propose
+33	29	62	n	fast and effective neural network
+33	63	66	p	for
+33	67	80	n	ACSA and ATSA
+33	81	89	p	based on
+33	90	124	n	convolutions and gating mechanisms
+34	0	3	p	For
+34	4	13	n	ACSA task
+34	16	25	n	our model
+34	30	63	n	two separate convolutional layers
+34	64	77	p	on the top of
+34	82	97	n	embedding layer
+34	100	105	p	whose
+34	106	113	n	outputs
+34	114	129	p	are combined by
+34	130	148	n	novel gating units
+40	4	13	n	ATSA task
+40	70	76	p	extend
+40	77	86	n	our model
+40	87	97	p	to include
+40	98	125	n	another convolutional layer
+40	126	129	p	for
+40	134	152	n	target expressions
+36	4	12	p	proposed
+36	13	25	n	gating units
+36	26	30	p	have
+36	31	50	n	two nonlinear gates
+36	70	82	p	connected to
+36	83	106	n	one convolutional layer
+2	0	31	n	Aspect Based Sentiment Analysis
+4	0	40	n	Aspect based sentiment analysis ( ABSA )
+5	53	98	n	aspect - category sentiment analysis ( ACSA )
+5	103	144	n	aspect - term sentiment analysis ( ATSA )
+18	43	47	n	ABSA
+19	12	16	n	ACSA
+20	32	36	n	ATSA
+172	0	28	n	LSTM based model ATAE - LSTM
+172	37	54	n	worst performance
+172	55	57	p	of
+172	58	77	n	all neural networks
+177	0	4	n	GCAE
+177	5	13	p	improves
+177	18	29	p	performance
+177	30	32	p	by
+177	33	47	n	1.1 % to 2.5 %
+177	48	61	p	compared with
+177	62	73	n	ATAE - LSTM
+189	0	4	n	GCAE
+189	5	13	p	achieves
+189	14	33	n	4 % higher accuracy
+189	34	38	p	than
+189	39	50	n	ATAE - LSTM
+189	51	53	p	on
+189	54	72	n	Restaurant - Large
+189	77	87	n	5 % higher
+189	88	90	p	on
+189	91	118	n	SemEval - 2014 on ACSA task
+190	10	13	n	GCN
+190	63	75	n	higher score
+190	76	80	p	than
+190	81	85	n	GCAE
+190	86	88	p	on
+190	93	120	n	original restaurant dataset
+184	0	27	p	Without the large amount of
+184	28	46	n	sentiment lexicons
+184	49	52	n	SVM
+184	53	60	p	perform
+184	61	66	n	worse
+184	67	71	p	than
+184	72	86	n	neural methods
+185	39	50	p	performance
+185	54	63	n	increased
+185	64	66	p	by
+185	67	72	n	7.6 %
+192	0	4	n	ATSA
+197	0	3	n	IAN
+197	8	26	n	better performance
+197	27	31	p	than
+197	32	57	n	TD - LSTM and ATAE - LSTM
+198	0	3	n	RAM
+198	9	17	p	achieves
+198	18	31	n	good accuracy
+198	32	44	p	by combining
+198	45	64	n	multiple attentions
+198	65	69	p	with
+198	72	96	n	recurrent neural network
+201	81	85	n	GCAE
+201	86	97	p	outperforms
+201	98	131	n	other neural models and basic SVM
+199	0	2	p	On
+199	7	24	n	hard test dataset
+199	27	31	n	GCAE
+199	36	55	n	1 % higher accuracy
+199	56	60	p	than
+199	61	64	n	RAM
+199	65	67	p	on
+199	68	83	n	restaurant data
+199	88	100	n	1.7 % higher
+199	101	103	p	on
+199	104	115	n	laptop data

@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+Related Works
+Skip-Thought Generative
+Skip-Thought Vectors
+Generative Adversarial Networks
+Model Architecture
+Improving Training and Loss
+Results and Discussion
+Conditional Generation of Sentences.
+Language Generation.
+Proposed Oracle Experiment.
+Further Work

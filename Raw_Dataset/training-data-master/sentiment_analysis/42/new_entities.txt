@@ -1,0 +1,161 @@
+25	29	36	p	develop
+25	37	56	n	deep memory network
+25	57	60	p	for
+25	61	98	n	aspect level sentiment classification
+26	13	15	p	is
+26	16	29	n	data - driven
+26	32	57	n	computationally efficient
+27	13	24	p	consists of
+27	25	54	n	multiple computational layers
+27	55	59	p	with
+27	60	77	n	shared parameters
+28	0	10	n	Each layer
+28	11	13	p	is
+28	16	62	n	content - and location - based attention model
+28	71	83	p	first learns
+28	88	107	n	importance / weight
+28	108	110	p	of
+28	111	128	n	each context word
+28	138	146	p	utilizes
+28	152	163	n	information
+28	164	176	p	to calculate
+28	177	207	n	continuous text representation
+29	4	23	n	text representation
+29	24	26	p	in
+29	31	41	n	last layer
+29	45	56	p	regarded as
+29	61	68	n	feature
+29	69	72	p	for
+29	73	97	n	sentiment classification
+30	3	18	n	every component
+30	19	21	p	is
+30	22	36	n	differentiable
+30	43	55	n	entire model
+30	56	84	p	could be efficiently trained
+30	85	96	n	end - toend
+30	97	101	p	with
+30	102	118	n	gradient descent
+30	121	126	p	where
+30	131	144	n	loss function
+30	145	147	p	is
+30	152	173	n	cross - entropy error
+30	174	176	p	of
+30	177	201	n	sentiment classification
+158	6	14	n	Majority
+158	15	17	p	is
+158	20	41	n	basic baseline method
+158	50	57	p	assigns
+158	62	86	n	majority sentiment label
+158	87	89	p	in
+158	90	102	n	training set
+158	103	110	p	to each
+158	111	119	n	instance
+158	120	122	p	in
+158	127	135	n	test set
+159	6	25	n	Feature - based SVM
+159	26	34	p	performs
+159	35	57	n	state - of - the - art
+159	58	60	p	on
+159	61	98	n	aspect level sentiment classification
+161	22	39	n	three LSTM models
+162	0	2	p	In
+162	3	7	n	LSTM
+162	12	38	n	LSTM based recurrent model
+162	42	54	p	applied from
+162	59	64	n	start
+162	65	67	p	to
+162	72	75	n	end
+162	76	78	p	of
+162	81	89	n	sentence
+162	100	118	n	last hidden vector
+162	122	129	p	used as
+162	134	157	n	sentence representation
+163	0	6	n	TDLSTM
+163	7	14	p	extends
+163	15	19	n	LSTM
+163	20	42	p	by taking into account
+163	50	56	n	aspect
+163	63	67	p	uses
+163	68	85	n	two LSTM networks
+163	90	120	n	forward one and a backward one
+163	123	130	p	towards
+163	135	141	n	aspect
+164	0	12	n	TDLSTM + ATT
+164	13	20	p	extends
+164	21	27	n	TDLSTM
+164	28	44	p	by incorporating
+164	48	67	n	attention mechanism
+164	95	99	p	over
+164	104	118	n	hidden vectors
+165	3	6	p	use
+165	11	34	n	same Glove word vectors
+165	35	38	p	for
+165	39	54	n	fair comparison
+166	14	23	p	implement
+166	24	34	n	ContextAVG
+166	39	57	n	simplistic version
+166	58	60	p	of
+166	61	73	n	our approach
+2	0	37	n	Aspect Level Sentiment Classification
+12	76	94	n	sentiment analysis
+171	7	16	p	find that
+171	17	36	n	feature - based SVM
+171	37	39	p	is
+171	43	69	n	extremely strong performer
+171	74	99	p	substantially outperforms
+171	100	122	n	other baseline methods
+178	26	37	n	performance
+178	38	40	p	of
+178	41	54	n	Contex - tAVG
+178	55	57	p	is
+178	58	67	n	very poor
+202	23	52	n	multiple computational layers
+202	59	79	p	consistently improve
+202	84	107	n	classification accuracy
+202	108	110	p	in
+202	111	127	n	all these models
+172	0	5	p	Among
+172	6	28	n	three recurrent models
+172	31	37	n	TDLSTM
+172	38	46	p	performs
+172	47	53	n	better
+172	54	58	p	than
+172	59	63	n	LSTM
+179	59	71	n	observe that
+179	72	77	p	using
+179	78	103	n	more computational layers
+179	120	127	p	lead to
+179	128	146	n	better performance
+179	149	164	p	especially when
+179	169	183	n	number of hops
+179	184	186	p	is
+179	187	200	n	less than six
+175	3	11	p	consider
+175	17	35	n	each hidden vector
+175	36	38	p	of
+175	39	45	n	TDLSTM
+175	46	53	p	encodes
+175	58	67	n	semantics
+175	68	70	p	of
+175	71	84	n	word sequence
+175	85	90	p	until
+175	95	111	n	current position
+180	4	21	n	best performances
+180	26	39	p	achieved when
+180	44	49	n	model
+180	50	58	p	contains
+180	59	78	n	seven and nine hops
+203	0	16	n	All these models
+203	17	24	p	perform
+203	25	35	n	comparably
+203	36	40	p	when
+203	45	59	n	number of hops
+203	60	62	p	is
+203	63	79	n	larger than five
+181	0	2	p	On
+181	3	16	n	both datasets
+181	23	40	n	proposed approach
+181	41	53	p	could obtain
+181	54	73	n	comparable accuracy
+181	74	85	p	compared to
+181	90	133	n	state - of - art feature - based SVM system

@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Related Work
+System architecture
+Temporal Relation Extraction System
+Temporal Relation Identification
+Temporal Relation Type Classification
+Causal Relation Extraction System
+Causal Relation Identification
+Causal Rule-Based Sieve
+Causal Supervised Classifier
+Evaluation
+Temporal and Causal Relation evaluation
+Available at https: //www.cs.york.ac.uk/semeval-2013/taskl/index.php\%3Fid=data.html.

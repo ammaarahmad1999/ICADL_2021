@@ -1,0 +1,9 @@
+{
+  "has research problem" : [
+    ["pre-trained biomedical language representation", {"from sentence" : "Data and text mining BioBERT : a pre-trained biomedical language representation model for biomedical text mining"}],
+    ["extracting valuable information from biomedical literature", {"from sentence" : "With the progress in natural language processing ( NLP ) , extracting valuable information from biomedical literature has gained popularity among researchers , and deep learning has boosted the development of effective biomedical text mining models ."}],
+    ["pre-trained language model BERT can be adapted for biomedical corpora", {"from sentence" : "In this article , we investigate how the recently introduced pre-trained language model BERT can be adapted for biomedical corpora ."}],    
+    ["biomedical text mining often yields unsatisfactory results due to a word distribution shift from general domain corpora to biomedical corpora", {"from sentence" : "However , directly applying the advancements in NLP to biomedical text mining often yields unsatisfactory results due to a word distribution shift from general domain corpora to biomedical corpora ."}],
+    ["word distributions of general and biomedical corpora are quite different", {"from sentence" : "Also , the word distributions of general and biomedical corpora are quite different , which can often be a problem for biomedical text mining models ."}]
+  ]
+}

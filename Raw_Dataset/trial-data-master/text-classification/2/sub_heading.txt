@@ -1,0 +1,10 @@
+title
+abstract
+Introduction
+Model architecture
+Hierarchical softmax
+N-gram features
+Experiments
+Sentiment analysis
+Tag prediction
+Discussion and conclusion

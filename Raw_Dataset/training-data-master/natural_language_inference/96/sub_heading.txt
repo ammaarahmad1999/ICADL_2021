@@ -1,0 +1,21 @@
+title
+abstract
+Introduction
+A solution to annotation artifacts
+Formal definition
+Adversarial filtering (AF) algorithm
+Generating candidate endings
+Stylistic models for adversarial filtering
+Human verification
+Experiments
+Unary models
+Binary models
+Other models
+Results
+Analysis
+Swac versus existing NLI datasets
+Error analysis
+Qualitative examples
+Where to go next?
+Related Work
+Conclusion

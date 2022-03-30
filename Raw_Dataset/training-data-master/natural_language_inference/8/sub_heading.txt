@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Related work
+Model description
+Bag-of-words model
+Bigram model
+Experiments
+TREC Answer Selection Dataset
+Experimental setup
+Results
+Discussion
+Conclusion

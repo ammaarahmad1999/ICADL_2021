@@ -1,0 +1,9 @@
+title
+abstract
+Introduction
+Related Work
+Dynamic Meta-Embeddings
+Natural Language Inference
+Sentiment
+Image-Caption Retrieval
+Discussion & Analysis

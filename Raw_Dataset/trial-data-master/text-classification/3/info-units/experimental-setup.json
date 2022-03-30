@@ -1,0 +1,47 @@
+{
+  "has" : {
+    "Experimental setup" : {
+      "tried" : {
+        "two classification models" : {
+          "first one is" : {
+            "standard CNN model" : {
+              "similar to" : "using ReLU as non-linear activation function"
+            },
+            "from sentence" : "We tried with two classification models .
+The first one is a standard CNN model similar to that of , using ReLU as non-linear activation function ."
+
+          },
+          "second" : {
+            "model" : {
+              "add" : {
+                "recurrent layer" : {
+                  "specifically an" : "LSTM",
+                  "before passing" : {
+                    "pooled features" : {
+                      "directly to" : "fully connected softmax layer"  
+                    }
+                  }
+                }
+              }
+            },
+            "from sentence" : "In the second model , we add a recurrent layer ( specifically an LSTM ) before passing the pooled features directly to the fully connected softmax layer ."
+          }
+        }
+      },
+      "has" : {
+        "embedding layer" : {
+          "initialized using" : {
+            "300 - dimensional CBOW Word2vec embeddings" : {
+              "trained on" : {
+                "3B - word UMBC WebBase corpus" : {
+                  "with" : "standard hyperparameters"
+                }
+              }
+            }
+          },
+          "from sentence" : "The embedding layer was initialized using 300 - dimensional CBOW Word2vec embeddings trained on the 3B - word UMBC WebBase corpus with standard hyperparameters"          
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,870 @@
+1710.02772v1 [cs.CL] 8 Oct 2017
+
+ar X1V
+
+Smarnet: Teaching Machines to Read and Comprehend Like Human
+
+Zheqian Chen*,, Rongqin Yang*,Bin Cao‘, Zhou Zhao’, Deng Cai*
+*State Key Lab of CAD&CG, College of Computer Science, Zhejiang University, Hangzhou, China
+‘College of Computer Science, Zhejiang University, Hangzhou, China
+‘Rigen Technologies, Hangzhou, China
+{zheqianchen, rongqin.yrq, dengcai} @gmail.com, bincao @aidigger.com, zhaozhou @zju.edu.cn
+
+Abstract
+
+Machine Comprehension (MC) is a challenging task in Natural Language Processing field, which aims to guide the machine to comprehend a passage and answer the given question. Many existing approaches on MC task are suffering the
+inefficiency in some bottlenecks, such as insufficient lexical
+understanding, complex question-passage interaction, incorrect answer extraction and so on. In this paper, we address
+these problems from the viewpoint of how humans deal with
+reading tests in a scientific way. Specifically, we first propose
+a novel lexical gating mechanism to dynamically combine the
+words and characters representations. We then guide the machines to read in an interactive way with attention mechanism and memory network. Finally we add a checking layer
+to refine the answer for insurance. The extensive experiments
+on two popular datasets SQUAD and TriviaQA show that our
+method exceeds considerable performance than most stateof-the-art solutions at the time of submission.
+
+Introduction
+
+Teaching machines to learn reading comprehension is one
+of the core tasks in NLP field. Recently machine comprehension task accumulates much concern among NLP researchers. We have witnessed significant progress since the
+release of large-scale datasets like SQUAD (Rajpurkar et al.
+2016), MS-MARCO (Nguyen et al. 2016), TriviaQA (Joshi
+et al. 2017), CNN/Daily Mail (Hermann et al. 2015) and
+Children’s Book Test (Hill et al. 2015). The essential problem of machine comprehension is to predict the correct answer referring to a given passage with relevant question. If
+a machine can obtain a good score from predicting the right
+answer, we can say the machine is capable of understanding
+the given context.
+
+Many previous approaches (Seo et al. 2016) (Gong and’
+Bowman 2017) (Wang et al. 2017) adopt attention mecha
+nisms along with deep neural network tactics and pointer
+network to establish interactions between the question and
+the passage. The superiority of these frameworks are to enable questions focus on more relevant targeted areas within
+passages. Although these works have achieved promising
+performance for MC task, most of them still suffer from the
+
+ 
+  
+     
+  
+
+ 
+
+   
+
+   
+
+A\ The majority of the work was done while the first author was
+interning at the Eigen Technologies .
+
+Read the question
+Skim the passage
+
+Verify the question
+Scan the passage
+
+Refine the answer
+Check the answer
+
+ 
+
+  
+
+ 
+
+    
+  
+
+   
+ 
+ 
+ 
+
+Figure |: A scientific reading flow method
+
+inefficiency in three perspectives: (1) Comprehensive understanding on the lexical and linguistic level. (2) Complex interactions among questions and passages in a scientific reading procedure. (3) Precise answer refining over the passage.
+
+For all the time through, we consider a philosophy question: What will people do when they are having a reading
+comprehension test? Recall how our teacher taught us may
+shed some light. As a student, we recite words with relevant
+properties such as part-of-speech tag, the synonyms, entity
+type and so on. In order to promote answer’s accuracy, we iteratively and interactively read the question and the passage
+to locate the answer’s boundary. Sometimes we will check
+the answer to ensure the refining accuracy. Here we draw a
+flow path to depict what on earth the scientific reading skills
+are in the Figure 1. As we see, basic word understanding, iterative reading interaction and attentive checking are crucial
+in order to guarantee the answer accuracy.
+
+In this paper, we propose the novel framework named
+Smarnet with the hope that it can become as smart as humans. We design the structure in the view point of imitating
+how humans take the reading comprehension test. Specifically, we first introduce the Smarnet framework that exploits fine-grained word understanding with various attribution discriminations, like humans recite words with corresponding properties. We then develop the interactive attention with memory network to mimic human reading procedure. We also add a checking layer on the answer refining in
+order to ensure the accuracy. The main contributions of this
+paper are as follows:
+ 
+
+Figure 2: Fine-grained gating on lexical attributions of words and characters. “POS, NER, TF, EM, Surprisal, QType” refer to
+part-of-speech tags, named entity tags, term frequency, exact match, surprisal extent, question type.
+
+e We enrich the word representation with detailed lexical
+properties. We adopt a fine-grained gating mechanism to
+dynamically control the amount of word level and character level representations based on the properties of words.
+
+e We guide the machine to read by imitating human’s behavior in the reading procedure. We apply the Interactive attention to comprehensively model the question and
+passage representation. We adopt memory network to enhance the comprehending capacity and accuracy.
+
+e We utilize a checking mechanism with passage self alignment on the revised pointer network. This helps to locate
+the answer boundary and promote the prediction accuracy
+for insurance.
+
+Task Description
+
+The goal of open-domain MC task is to infer the proper
+answer from the given text. For notation, given a passage
+P= {P1,P2, 5 Dm} and a question Q — {G1 25 +++) In}
+where m and n are the length of the passage and the question. Each token is denoted as (w;,C;), where w,; is the
+word embedding extracts from pre-trained word embedding
+lookups, C;; is the char-level matrix representing one-hot encoding of characters. The model should read and comprehend the interactions between P and Q, and predict an answer A based on a continuous sub-span of P.
+
+Smarnet Structure
+The general framework of MC task can be coarsely summarized as a three-layer hierarchical process: Input embedding
+layer, Interaction modeling layer, answer refining layer. We
+then introduce our model from these three perspectives.
+
+Input Embedding Layer
+
+Familiar with lexical and linguistic properties is crucial in
+text understanding. We try to enrich the lexical factors to en
+hance the word representation. Inspired by Yang et al.
+
+et al. 2016) (Monsalve, Frank, and Vigliocco 2012) (Liu
+et al. 2017) and (Chen et al. 2017), we adopt a more fine
+grained dynamic gating mechanism to model the lexical
+
+ 
+
+properties related to the question and the passage. Here we
+indicate our embedding method in Figure 2. We design two
+gates adopted as valves to dynamically control the flowing
+amount of word-level and character-level representations.
+
+For the passage word E£,,,, we use the concatenation of
+part-of-speech tag, named entity tag, term frequency tag,
+exact match tag and the surprisal tag. The exact match denote as fem(p:) = I(p; € q) in three binary forms: original,
+lower-case and lemma forms, which indicates whether token
+‘p; in the passage can be exactly matched to a question word
+in gq. The surprisal tag measures the amount of information conveyed by a particular word from Surprisal(w;) =
+—log(P(w;,|w1, we, ..., Wr-1)). The less occurrence of a
+word, the more information it carries.
+
+For the question word £,,,, we take the question type in
+place of the exact match information and remain the other
+features. The type of a question provides significant clue for
+the answer selection process. For example, the answer for
+a ’when” type question prefers tokens about time or dates
+while a ’’why” type question requires longer inference. Here
+we Select the top 11 common question types as illustrated in
+the diagram. If the model recognize a question’s type, then
+all the words in this question will be assigned with the same
+QType feature.
+
+The gates of the passage and the question are computed
+as follows:
+
+Ip = O(Wp Lup + bp)
+
+9q = O(WqEug + bq) (1)
+where W,, 6», Wg, bg are the parameters and odenotes an
+element-wise sigmoid function.
+
+Using the fine-grained gating mechanism conditioned on
+the lexical features, we can accurately control the information flows between word-level and char-level. Intuitively, the
+formulation is as follows:
+
+hy = g( Ew, Ec) = Gp 0 Ew + (1 — gp) ° Ee
+
+hg = g( Ew, Ec) = gq ° Ew + (1 — gq) ° Ec (2)
+where o is the element-wise multiplication operator. when
+the gate has high value, more information flows from the
+ 
+
+ 
+
+ 
+
+Question Passage
+
+Figure 3: The overview of Smarnet structure.
+
+word-level representation; otherwise, char-level will take the
+dominating place. It is practical in real scenarios. For example, for unfamiliar noun entities, the gates tend to bias towards char-level representation in order to care richer morphological structure. Besides, we not only utilize the lexical
+properties as the gating feature, we also concatenate them
+as a supplement of lexical information. Therefore, the final
+representation of words are computed as follows:
+
+Ey — [Ap, Eyp|
+Eq — [hg Eyq| (3)
+
+where [h, E] is the concatenation function.
+
+Interaction Modeling Layer
+
+Recall how people deal with reading comprehension test.
+When we get a reading test paper, we read the question first
+to have a preliminary focal point. Then we skim the passage
+to refine the answer. Sometimes we may not directly ensure
+the answer’s boundary, we go back and confirm the question. After confirming, we scan the passage and refine the
+right answer we thought. We also check the answer for insurance. Inspired by such a scientific reading procedure, we
+design the Smarnet with three components: contextual encoding, interactive attention with memory network, answer
+refining with checking insurance. As is shown in figure 3.
+
+Contextual Encoding We use Gated Recurrent Unit
+
+et al. 2014) with bi-directions to model the contextual representations. Here, It is rather remarkable that we do not 1m
+mediately put the Bi-GRU on the passage words. Instead, we
+
+first encode the question and then apply a gate to control the
+question influence on each passage word, as is shown in the
+structure (a) and (b). Theoretically, when human do the reading comprehension, they often first read the question to have
+a rough view and then skim the passage with the impression
+of the question. No one can simultaneously read both the
+question and the passage without any overlap. Vice versa,
+after skimming the passage to get the preliminary comprehension, the whole passage representation is also applied to
+attend the question again with another gating mechanism, as
+is shown in the structure (c). This can be explained that people often reread the question to confirm whether they have
+thoroughly understand it. The outputs of the three steps (a)
+(b) (c) are calculated as follows:
+
+uf = BiGRU,(uj_,, E/)
+
+<—
+
+Q1 = [wha] (4)
+where E? ¢€ R? is the lexical representation from the input layer. u? € R® is the hidden state of GRU for the tth
+question word. Q,; € R7¢ is the original question seman
+tic embedding obtained from the concatenation of the last
+hidden states of two GRUs.
+
+Jql = a(WaQi + bai)
+
+Fini = Gqi 9 BQ + (1 — 9q1) 0 Ey
+up = GRU, (up_y, Ep”)
+—
+P= |ub uw (5)
+
+where gi € R®@ is a question gate controlling the question
+influence on the passage. The larger the gyi is, the more impact the question takes on the passage word. We reduce the
+@, dimension through multi-layer perceptron 6 since Q1
+and £,,; are not in the same dimension. We then put the
+bi-GRU on top of each passage word to get the semantic
+representation of the whole passage P.
+
+Gp1 = O(Woyi Pi + bp1)
+FEq2 = Gp 0 BP, + (1 — Gp) out
+uy! = GRU, (uj! 1, BP)
+
+ad 4]
+
+Qo = [wp Un
+
+(6)
+
+where gi iS a passage gate similar to ggi. (2 is the multilayer perceptron to reduce dimension. @2 represents the
+confirmed question with the knowledge of the context.
+
+Interactive Attention with Iterative Reasoning The essential point in answer refining lies on comprehensive understanding of the passage content under the guidance of the
+question. We build the interactive attention module to capture the mutual information between the question and the
+passage. From human’s perspective, people repeatedly and
+interactively read the question and the passage, narrow the
+answer’s boundary and put more attention on some passage
+parts where are more relevant to the question.
+
+We construct a shared similarity matrix S € R™”*” to
+attend the relevance between the passage P and the question
+@. Each element s;; 1s computed by the similarity of the th
+passage word and the jth question word.
+
+We signify relevant question words into an attended question vector to collaborate with each context word. Let a; €
+IR” represent the normalized attention distribution on the
+question words by tth passage word. The attention weight is
+calculated by a; = softmax(S.;) € R”. Hence the attend
+
+question vector for all passage words Q € R?@ is obtained
+by Q = Yo, a; - Q.;, where Q.; € eee
+
+We further utilize @ to form the question-aware passage
+representation. In order to comprehensively model the mutual information between the question and passage, we adopt
+a heuristic combining strategy to yield the extension as follows:
+
+Pt = BiGRU(v(h!,Q,hf0Q,ht+Q)) (7)
+
+where Pf € R24 denotes the ith question-aware passage
+word under the ¢th hop, the v function is a concatenation
+function that fuses four input vectors. h? denotes the hidden state of former 2th passage word obtained from BiGRU.
+o denotes element-wise multiplication and + denotes the
+element-wise plus. Notice that after the concatenation of v,
+the dimension can reaches to 8d. We feed the concatenation
+vector into a BiGRU to reduce the hidden state dimension
+into 2d. Using BiGRU to reduce dimension provides an efficient way to facilitate the passage semantic information and
+enable later semantic parsing.
+
+Naive one-hop comprehension may fail to comprehensively understand the mutual question-passage information.
+Therefore, we propose a multi-hop memory network which
+allows to reread the question and answer. In our model, we
+totally apply two-hops memory network, as is depicted in
+the structure (c to e) and (f to h). In our experiment we found
+the two-hops can reach the best performance. In detail, the
+memory vector stores the question-aware passage representations, the old memory’s output is updated through a repeated interaction attention.
+
+Answer Selection with Checking Mechanism
+
+The goal of open-domain MC task is to refine the sub-phrase
+from the passage as the final answer. Usually the answer
+span (i, 7) is derived by predicting the start p’, and the end
+Pe(j|t) indices of the phrase in the paragraph. In our model,
+we use two answer refining strategies from different levels of linguistic understanding: one is from original interaction output module and the other is from self-matching
+alignment. The two extracted answers are then applied into
+a checking component to final ensure the decision.
+
+For the original interaction output in structure (h), we directly aggregate the passage vectors through BiGRU. We
+compute the p’ and p.(j|i) probability distribution under
+
+the instruction of (Wang and Jiang 2016) and pointer network (Vinyals, Fortunato, and Jaitly 2015) by
+
+Det = softmax(w!, P!)
+
+Pel = softmax(w2, P!) (8)
+
+where P; is the output of the original interaction. w? € R24
+and w € R74 are trainable weight vectors.
+
+For the self-alignment in structure (j), we align the two
+hops outputs P;; with P;2 in structure (e) and (h). The purpose of self-alignment aims to analysis the new insights on
+the passage as the comprehension gradually become clear
+after iterative hops. For each hop, the reader dynamically
+collects evidence from former passage representation and
+encodes the evidence to the new iteration. From human’s
+perspective, each time we reread the passage, we get some
+new ideas or more solid comprehension on the basis of the
+former understanding. The self-alignment is computed by
+
+—“~
+
+P, = P}
+o( pPi t+ bp)
+
+IP,
+EB; = gp. 0 Pi + (1—gp-) oP?
+P;? = BiGRU(P2.,, Ep-) (9)
+where P, € R°¢ is the first hop whole passage vector in the
+
+structure (e). We apply a gate mechanism with P, to control
+
+the evidence flow to the next hop Po € R*¢. The output of
+self-alignment is computed by
+
+052 = softmax(w,P?)
+
+Pe2 = softmax(w2,P?) (10)
+
+where p.,2 and pez are the predicted start and end indices
+after the self-alignment.
+
+For insurance, we obtain two groups of predicted answer
+span P,; ~ Pe, and Pg ~ Peg. We then apply a checking strategy to compare the twice answer. This process is
+quite similar to human’s behavior, people often reread the
+passage and may draw some different answers. Thus they
+need to compare the alternative answers and finally consider
+a best one. Here we employ the weighted sum of twice answer prediction indices to make the final decision:
+
+Ds = Psi + APs2
+De = Pe1 + APe2
+1,2
+s = argmax(p,,Pe5--P. )
+1,2
+e = argmax(pz., Po, --+; DP.) (11)
+where a > 1 is a weighted scalar controlling the proportion
+of the two predicted answers. We set the a > 1 as in most
+cases the latter predicted answer 1s more accurate comparing
+
+to the former one. The final s and e is then judged by the max
+value through the argmax operator.
+
+Training and Optimization
+We choose the training loss as the sum of the negative log
+
+probabilities of the true start and end position by the predicted distributions to train our model:
+
+N
+1
+L(0) =—= > loops (yi) + logpe (yi) 12)
+where © denotes all the model coefficients including the
+neural network parameters and the input gating function parameters, N is the number dataset examples, p’ and p¥ are
+the predicted distributions of the output, y? and y* are the
+true start and end indices of the 7th example. The objective
+function in our learning process is given by:
+
+min£(@) = L(@) + ||O|? (13)
+
+where A is the trade-off parameter between the training loss
+and regularization. To optimize the objective, we employ the
+stochastic gradient descent (SGD) with the diagonal variant
+
+of AdaDelta (Zeiler 2012).
+
+Experiments
+Datasets
+
+In this section we evaluate our model on the task of machine comprehension using the recently released large-scale
+datasets SQUAD and TriviaQA
+et al. 2017). SQUAD published by Stanford has obtained a
+huge attention over the past two years. It is composed of over
+100K questions manually annotated by crowd workers on
+536 Wikipedia articles. TriviaQA is a newly released opendomain MC dataset which consists of over 650K questionanswer-evidence triples. It 1s derived by combining 95K
+Trivia enthusiast authored question-answer pairs with on average Six supporting evidence documents per question. The
+length of contexts in TriviaQA is much longer than SQUAD
+and models trained on TriviaQA require more cross sentence
+reasoning to find answers.
+
+There are some similar settings between these two
+datasets. Each answer to the question is a segment of text
+from the corresponding reading context. Two metrics are
+used to evaluate models: Exact Match (EM) measures the
+percentage of predictions that match the ground truth answer
+exactly. Fl score measures the average overlap between the
+prediction and ground truth answer. Both datasets are randomly partitioned into training set (80%), dev set (10%) and
+test set (10%).
+
+Implemental Details
+We preprocess each passage and question using the library
+
+of nltk (Loper and Bird 2002) and exploit the popular pre
+trained word embedding GloVe with 100-dimensional vectors for both ques.
+tions and passages. The size of char-level embedding is also
+set as 100-dimensional and is obtained by CNN filters under the instruction of (Kim 2014). The Gated Recurrent
+
+Unit (Cho et al. 2014) which is variant from LSTM
+iter and Schmidhuber 1997) is employed throughout our
+model. We adopt the AdaDelta (Zeiler 2012) optimizer for
+
+training with an initial learning rate of 0.0005. The batch
+size is set to be 48 for both the SQuAD and TriviaQA
+datasets. We also apply dropout between layers with a dropout rate of 0.2. For the multi-hop
+reasoning, we set the number of hops as 2 which is imitating
+human reading procedure on skimming and scanning. During training, we set the moving averages of all weights as the
+
+exponential decay rate of 0.999 (Lucas and Saccucci 2000).
+
+Model EM Fl
+
+Match-LSTM with Bi-Ans-Ptr (single) 64.744 73.743
+DCN (single) 66.233 75.896
+BIDAF (single) 67.974 77.323
+SEDT (single) 68.163 77.527
+RaSoR (single) 70.849 78.741
+Multi-Perspective Matching (single) 70.387 78.784
+FastQAExt (single) 70.849 78.857
+Document Reader (single) 70.333 = 79.353
+ReasoNet (single) 70.555 79.364
+Ruminating Reader (single) 70.639 79.456
+jNet (single) 70.607 79.821
+Mnemonic Reader (single) 70.995 80.146
+Smarnet (single) 71.415 80.160
+r-net (single) 74.614 82.458
+Human Performance 82.304 91.221
+
+Table 1: Performance of single Smarnet model against other
+strong competitors on the SQuAD. The results are recorded
+on the submission date on July 14th, 2017.
+
+Model EM Fl
+
+Match-LSTM with Ans-Ptr (ensemble) 67.901 77.022
+DCN (ensemble) 71.625 80.383
+Multi-Perspective Matching (ensemble) 73.765 81.257
+jNet (ensemble) 73.010 81.517
+BIDAF (ensemble) 73.744 81.525
+SEDT (ensemble) 74.090 81.761
+Mnemonic Reader (ensemble) 74.268 82.371
+ReasoNet (ensemble) 75.034 82.552
+MEMEN (ensemble) 75.370 82.658
+Smarnet (ensemble) 75.989 83.475
+r-net (ensemble) 77.688 84.666
+Human Performance 82.304 91.221
+
+Table 2: Performance of ensemble Smarnet model against
+other strong competitors on the SQuAD. The results are
+recorded on the submission date on July 14th, 2017.
+
+The whole training process takes approximately 14 hours on
+a single 1080Ti GPU. Furthermore, as the SQUAD and Triv1aQA are competitive MC benchmark, we train an ensemble
+model consisting of 16 training runs with the same architecture but identical hyper-parameters. The answer with the
+highest sum of the confidence score is chosen for each query.
+
+Overall Results
+
+We evaluate the performance of our proposed method based
+on two evaluation criteria EM and F1 for the MC tasks. We
+compare our model with other strong competitive methods
+on the SQuAD leaderboard and TriviaQA leaderboard.
+Table 1 and Table 2 respectively show the performance
+of single and ensemble models on the SQuAD leaderboard.
+The SQuAD leaderboard is very competitive among top
+NLP researchers from all over the world. We can see the
+Full Verified
+
+Model Domain EM EM FI
+Random 12.74 15.41 | 25.44
+Classifier Wiki 22.45 27.23 | 31.37
+
+BiDAF 40.32 44.86 | 50.71
+Smarnet 42.41 50.51 | 55.90
+Classifier 24.00 30.17 | 34.67
+
+BiDAF Web 40.74 49.54 | 55.80
+Smarnet 40.87 51.11 | 55.98
+
+ 
+
+ 
+
+ 
+
+ 
+
+Table 3: Performance of single Smarnet model against other
+strong competitors on the TriviaQA. The results are recorded
+on the submission date on September 3th, 2017.
+
+Features EM Fl
+Full 71.362 80.183
+No fpos 68.632 78.911
+
+No fer 70.804 79.257
+No fem 68.486 78.589
+No feurprisal 70.972 79.021
+No fis 70.617 79.701
+NO forype 68.913 78.151
+
+No toos and tner 67.352 77.239
+
+Table 4: Lexical feature ablations on SQUAD dev set.
+
+Model EM Fl
+Full 71.362 80.183
+
+Input concatenation 69.077 78.531
+Passage direct encoding 70.012 78.907
+Memory network 68.774 77.323
+
+Self-alignment checking 69.395 79,227
+
+Table 5: Component ablations on SQuAD dev set.
+
+top record has been frequently broken in order to reach the
+human’s level. Our model was submitted by July 14, 2017,
+thus we compare our model on the single and ensemble performance against other competitor at that time.
+
+From the tables 1 and 2 we can see our single model
+achieves an EM score of 71.415% and a FI score of
+80.160% and the ensemble model improves to EM 75.989%
+and Fl 83.475%, which are both only after the r-net
+method at the time of submission. These
+results sufficiently prove the significant superiority of our
+proposed model.
+
+We also compare our models on the recently proposed
+dataset TriviaQA. Table 3 shows the performance comparison on the test set of TriviaQA. We can see our Smarnet
+model outperforms the other baselines on both wikipedia domain and web domain.
+
+Ablation Results
+
+We respectively evaluate the individual contribution of the
+proposed module in our model. We conduct thorough abla
+Performance across different number of hops
+
+ 
+
+Figure 4: Performance across different number of hops
+
+Performance across different value of a
+
+ 
+
+0.8 1.0 1.2 1.4 1.6 1.8 2.0
+weight value of a
+
+Figure 5: Performance across different weight of a
+
+tion experiments on the SQuAD dev set, which are recorded
+on the table 4 and table 5.
+
+Table 4 shows the different effect of the lexical features.
+We see the full features integration obtain the best performance, which demonstrates the necessity of combining all
+the features into consideration. Among all the feature ablations, the Part-Of-Speech, Exact Match, Qtype features drop
+much more than the other features, which shows the importance of these three features. As the POS tag provides the
+critical lexical information, Exact Match and Qtype help to
+guide the attention in the interaction procedure. As for the
+final ablation of POS and NER, we can see the performance
+decays over 3% point, which clearly proves the usefulness
+of the comprehensive lexical information.
+
+Table 5 shows the ablation results on the different levels of
+components. We first replace our input gate mechanism into
+simplified feature concatenation strategy, the performance
+drops nearly 2.3% on the EM score, which proves the effectiveness of our proposed dynamic input gating mechanism. We then compare two methods which directly encode
+the passage words or use the question influence. The result
+proves that our modification of employing question influence on the passage encoding can boost the result up to 1.3%
+on the EM score. In our model, we apply two-hops memory
+network to further comprehend the passage. In the ablation
+test, we remove the iterative hops of memory network and
+only remain one interaction round. The result drops 2.6%
+point on the EM score, which indicate the significance of using memory network mechanism. Finally, we compare the
+last module of our proposed self-alignment checking with
+original pointer network. The final result shows the superiority of our proposed method.
+
+Parameters Tuning
+
+We conduct two parameters tuning experiments in order to
+get the optimal performance. Figure 4 shows the results on
+different hops of memory network. We see the number of
+hops set to 2 can get the best performance comparing to
+other number of hops. In addition, as the number of hops
+enlarges, the model is easily to get overfitting on the training set, hence the performance is decrease rather than increase. In figure 5, we set different weight of a into five
+groups {1.0, 1.25, 1.5, 1.75, 2.0}. The final results show that
+the proportion of the first answer prediction and the last one
+reaches to 2:3 can get the most confident answer judgement.
+The value of a which is greater than 1, indicating that the
+latter answer refining takes more insurance on the prediction
+decision.
+
+Related Work
+
+Machine Comprehension Dataset. Benchmark datasets
+play a vital role in the research advance. Previous humanlabeled datasets on MC task are too small to train
+
+data-intensive models (Richardson, Burges, and Renshaw
+(Berant et al. 2014) (Yu et al. 2016). Recently, Largescale datasets become available. CNN/Daily Mail (Hermann|
+and Children’s Book Test (Hill et al. 2015) generated in cloze style offer the availability to train more expressive neural models. The SQUAD (Rajpurkar et al. 2016),
+TriviaQA and MS-MARCO (Nguyen et
+datasets provide large and high-quality datasets
+which extract answers from text spans instead of single entities in cloze style. The open-domain style of MC tasks
+are more challenging and require different levels of reasoning from multiple sentences. In this paper, we evaluate our
+Smarnet framework on SQuAD and TriviaQA datasets.
+
+Machine Comprehension Models Previous works in MC
+task adopt deep neural modeling strategies with attention
+mechanisms, both on cloze style and open domain tasks.
+Along with cloze style datasets, Chen et al.
+prove that computing the attention
+weights with a bilinear term instead of simple dot-product
+significantly improves the accuracy. Kadlec et al. (Kadlec et
+sum attention over candidate answer words in the
+document. Dhingra et al. iteratively in
+teract between the query and document by a multiplicative
+
+gating function. Cui et al. (Cui et al. 2016) compute a simi
+larity matrix with two-way attention between the query and
+passage mutually. Sordoni et al. exploit
+an iterative alternating neural attention to model the connections between the question and the passage.
+
+Open-domain machine comprehension tasks are more
+
+   
+    
+
+challenging and have attracted plenty of teams to pursue for higher performance on the leaderboard. Wang et
+al. present match-LSTM and use
+pointer network to generate answers from the passage.
+Chen et al. (Chen et al. 2017) tackle the problem by using
+wikipedia as the unique knowledge source. Shen (Shen et
+adopt memory networks with reinforcement learning so as to dynamically control the number of hops. Seo et
+al. use bi-directional attention flow mechanism and a multi-stage hierarchical process to represent
+the context. Xiong et al. (Xiong, Zhong, and Socher 2016)
+propose dynamic coattention networks to iteratively infer
+the answer. Yang et al. present a finegrained gating mechanism to dynamically combine wordlevel and character-level representations. Wang et al.
+introduce self-matching attention to refine the
+
+gated representation by aligning the passage against itself.
+
+Reasoning by Memory Network Multi-hop reasoning
+combines with Memory networks have shown powerful
+
+competence on MC task (Shen et al. 2017
+al. 2017) (Sordoni et al. 2016) (Xiong, Zhong, and Socher
+
+2016) (Hu, Peng, and Qiu 2017) (Gong and Bowman 2017)
+Kumar et al. 2016). Theoretically, multi-hop memory net
+works can repeat computing the attention biases between the
+query and the context through multiple layers. The memory
+networks typically maintain memory states which incorporate the information of current reasoning with the previous
+storage in the memory. Hu et al.
+utilize a multi-hop answer pointer which allows the network to continue refining the predicted answer span. Gong
+
+et al. (Gong and Bowman 2017) adapt the BIDAF
+al. 2016) with multi-hop attention mechanisms and achieve
+substantial performance. Pan et al. introduce multi-layer embedding with memory network for full
+orientation matching on MC task. In our paper, we also
+adopt the memory network to mimic human behaviors on
+increasing their understanding by reread the context and
+the query multi times. We also apply a multi-hop checking
+mechanism to better refine the true answer.
+
+   
+  
+      
+   
+
+    
+ 
+
+   
+
+Conclusions
+
+In this paper, we tackle the problem of machine comprehension from the viewpoint of imitating human’s ways in
+having reading comprehension examinations. We propose
+the Smarnet framework with the hope that it can become
+as smart as human for the reading comprehension problem.
+We first introduce a novel gating method with detailed word
+attributions to fully exploit prior knowledge of word semantic understanding. We then adopt a scientific procedure to
+guide machines to read and comprehend by using interactive attention and matching mechanisms between questions
+and passages. Furthermore, we employ the self-alignment
+with checking strategy to ensure the answer is refined after careful consideration. We evaluate the performance of
+our method on two large-scale datasets SQUAD and TriviaQA. The extensive experiments demonstrate the superiority
+of our Smarnet framework.
+References
+
+[Berant et al. 2014] Berant, J.; Srikumar, V.; Chen, P.-C.;
+Linden, A. V.; Harding, B.; Huang, B.; Clark, P.; and Manning, C. D. 2014. Modeling biological processes for reading
+comprehension. In EMNLP.
+
+[Chen et al. 2017] Chen, D.; Fisch, A.; Weston, J.; and Bordes, A. 2017. Reading wikipedia to answer open-domain
+questions. arXiv preprint arXiv: 1704.00051.
+
+[Chen, Bolton, and Manning 2016] Chen, D.; Bolton, J.; and
+Manning, C. D. 2016. A thorough examination of the
+cnn/daily mail reading comprehension task.
+
+[Cho et al. 2014] Cho, K.; Merrienboer, B. V.; Gulcehre, C.;
+Bahdanau, D.; Bougares, F.; Schwenk, H.; and Bengio, Y.
+2014. Learning phrase representations using rnn encoderdecoder for statistical machine translation. Computer Science.
+
+[Cui et al. 2016] Cui, Y.; Chen, Z.; Wei, S.; Wang, S.; Liu, T.;
+and Hu, G. 2016. Attention-over-attention neural networks
+for reading comprehension.
+
+[Dhingra et al. 2017] Dhingra, B.; Liu, H.; Yang, Z.; Cohen,
+W. W.; and Salakhutdinov, R. 2017. Gated-attention readers
+for text comprehension.
+
+[Gong and Bowman 2017] Gong, Y., and Bowman, S. R.
+2017. Ruminating reader: Reasoning with gated multi-hop
+attention.
+
+[Hermann et al. 2015] Hermann, K. M.; Kocisky, T.; Grefenstette, E.; Espeholt, L.; Kay, W.; Suleyman, M.; and Blunsom, P. 2015. Teaching machines to read and comprehend.
+In NIPS.
+
+[Hill et al. 2015] Hill, F; Bordes, A.; Chopra, S.; and Weston, J. 2015. The goldilocks principle: Reading children’s
+books with explicit memory representations. Computer Science.
+
+[Hochreiter and Schmidhuber 1997] Hochreiter, S., and
+Schmidhuber, J. 1997. Long short-term memory. Neural
+Computation 9(8):1735—1780.
+
+[Hu, Peng, and Qiu 2017] Hu, M.; Peng, Y.; and Qiu, X.
+2017. Mnemonic reader: Machine comprehension with iterative aligning and multi-hop answer pointing.
+
+[Joshi et al. 2017] Joshi, M.; Choi, E.; Weld, D. S.; and
+Zettlemoyer, L. S. 2017. Triviaga: A large scale distantly
+supervised challenge dataset for reading comprehension. In
+ACL.
+
+[Kadlec et al. 2016] Kadlec, R.; Schmid, M.; Bajgar, O.; and
+Kleindienst, J. 2016. Text understanding with the attention
+sum reader network. 908-918.
+
+[Kim 2014] Kim, Y. 2014. Convolutional neural networks
+for sentence classification. In EMNLP.
+
+[Kumar et al. 2016] Kumar, A.; Irsoy, O.; Ondruska, P.;
+Iyyer, M.; Bradbury, J.; Gulrajani, I.; Zhong, V.; Paulus, R.;
+and Socher, R. 2016. Ask me anything: Dynamic memory
+networks for natural language processing. In ICML.
+
+[Liu et al. 2017] Liu, R.; Hu, J.; Wei, W.; Yang, Z.; and Nyberg, E. 2017. Structural embedding of syntactic trees for
+machine comprehension.
+
+[Loper and Bird 2002] Loper, E., and Bird, S. 2002. Nitk:
+The natural language toolkit. CoRR cs.CL/0205028.
+
+[Lucas and Saccucci 2000] Lucas, J. M., and Saccucci, M. S.
+2000. Exponentially weighted moving average control
+schemes: Properties and enhancements.
+
+[Monsalve, Frank, and Vigliocco 2012] Monsalve, I. EF;
+Frank, S. L.; and Vigliocco, G. 2012. Lexical surprisal as
+a general predictor of reading time. In Conference of the
+European Chapter of the Association for Computational
+Linguistics, 398-408.
+
+[Nguyen et al. 2016] Nguyen, T.; Rosenberg, M.; Song, X.;
+Gao, J.; Tiwary, S.; Majumder, R.; and Deng, L. 2016. Ms
+marco: A human generated machine reading comprehension
+dataset.
+
+[Pan et al. 2017] Pan, B.; Li, H.; Zhao, Z.; Cao, B.; Cai, D.;
+and He, X. 2017. Memen: Multi-layer embedding with
+memory networks for machine comprehension.
+
+[Pennington, Socher, and Manning 2014] Pennington, J.;
+Socher, R.; and Manning, C. D. 2014. Glove: Global
+vectors for word representation. In EMNLP.
+
+[Rajpurkar et al. 2016] Rajpurkar, P.; Zhang, J.; Lopyrev, K.;
+and Liang, P. 2016. Squad: 100,000+ questions for machine
+comprehension of text. arXiv preprint arXiv: 1606.05250.
+
+[Richardson, Burges, and Renshaw 2013] Richardson, M.;
+Burges, C. J. C.; and Renshaw, E. 2013. Mctest: A challenge
+dataset for the open-domain machine comprehension of
+text. In EMNLP.
+
+[Seo et al. 2016] Seo, M.; Kembhavi, A.; Farhadi, A.; and
+Hajishirzi, H. 2016. Bidirectional attention flow for machine comprehension. arXiv preprint arXiv: 1611.01603.
+
+[Shen et al. 2017] Shen, Y.; Huang, P.-S.; Gao, J.; and Chen,
+W. 2017. Reasonet: Learning to stop reading in machine comprehension. In Proceedings of the 23rd ACM
+SIGKDD International Conference on Knowledge Discovery and Data Mining, 1047-1055. ACM.
+
+[Sordoni et al. 2016] Sordoni, A.; Bachman, P.; Trischler, A.;
+and Bengio, Y. 2016. Iterative alternating neural attention
+for machine reading. arXiv preprint arXiv: 1606.02245.
+
+[Srivastava et al. 2014] Srivastava, N.; Hinton, G.;
+Krizhevsky, A.; Sutskever, I.; and Salakhutdinov, R.
+2014. Dropout: a simple way to prevent neural networks
+from overfitting. Journal of Machine Learning Research
+15(1):1929-1958.
+
+[Vinyals, Fortunato, and Jaitly 2015] Vinyals, O.; Fortunato,
+M.; and Jaitly, N. 2015. Pointer networks. In NIPS.
+
+[Wang and Jiang 2016] Wang, S., and Jiang, J. 2016. Machine comprehension using match-lstm and answer pointer.
+
+[Wang et al. 2017] Wang, W.; Yang, N.; Wei, F.; Chang, B.;
+and Zhou, M. 2017. Gated self-matching networks for reading comprehension and question answering. In ACL.
+
+[Xiong, Zhong, and Socher 2016] Xiong, C.; Zhong, V.; and
+Socher, R. 2016. Dynamic coattention networks for question
+answering. arXiv preprint arXiv: 1611.01604.
+
+[Yang et al. 2016] Yang, Z.; Dhingra, B.; Yuan, Y.; Hu, J.;
+Cohen, W. W.; and Salakhutdinov, R. 2016. Words or characters? fine-grained gating for reading comprehension.
+
+[Yu et al. 2016] Yu, Y.; Zhang, W.; Hasan, K.; Yu, M.; Xiang,
+B.; and Zhou, B. 2016. End-to-end reading comprehension
+with dynamic answer chunk ranking.
+
+[Zeiler 2012] Zeiler, M. D. 2012. Adadelta: An adaptive
+learning rate method. Computer Science.
+

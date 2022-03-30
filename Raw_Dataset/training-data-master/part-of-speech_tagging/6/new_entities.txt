@@ -1,0 +1,80 @@
+7	78	117	n	https://github.com/ datquocnguyen/jPTDP
+75	4	9	n	jPTDP
+75	13	30	p	implemented using
+75	31	42	n	DYNET v 2.0
+76	3	11	p	optimize
+76	16	34	n	objective function
+76	35	40	p	using
+76	41	70	n	Adam ( Kingma and Ba , 2014 )
+76	71	75	p	with
+76	76	108	n	default DYNET parameter settings
+78	55	60	p	apply
+78	63	80	n	word dropout rate
+78	81	83	p	of
+78	84	88	n	0.25
+78	93	107	n	Gaussian noise
+78	108	112	p	with
+78	113	120	n	? = 0.2
+79	18	25	p	run for
+79	26	35	n	30 epochs
+80	3	10	p	perform
+80	13	32	n	minimal grid search
+80	33	35	p	of
+80	36	54	n	hyper - parameters
+80	55	57	p	on
+80	58	65	n	English
+84	0	8	p	compares
+84	13	55	n	POS tagging and dependency parsing results
+84	56	58	p	of
+84	59	74	n	our model jPTDP
+19	19	26	p	propose
+19	29	54	n	novel neural architecture
+19	55	58	p	for
+19	59	113	n	joint POS tagging and graph - based dependency parsing
+20	10	16	p	learns
+20	17	47	n	latent feature representations
+20	48	58	p	shared for
+20	64	104	n	POS tagging and dependency parsing tasks
+20	108	113	p	using
+20	114	142	n	BiLSTMthe bidirectional LSTM
+2	33	87	n	Joint POS Tagging and Graph - based Dependency Parsing
+90	0	11	p	In terms of
+90	12	30	n	dependency parsing
+90	49	64	n	our model jPTDP
+90	65	76	p	outperforms
+90	77	96	n	Stack - propagation
+91	41	49	p	produces
+91	50	84	n	about 7 % absolute lower LAS score
+91	85	89	p	than
+91	90	109	n	Stack - propagation
+91	110	112	p	on
+91	113	125	n	Dutch ( nl )
+94	0	14	p	Without taking
+94	17	19	n	nl
+94	22	26	p	into
+94	27	34	n	account
+94	41	59	n	averaged LAS score
+94	60	64	p	over
+94	65	88	n	all remaining languages
+94	89	91	p	is
+94	92	113	n	1.1 % absolute higher
+94	114	118	p	than
+94	119	141	n	Stack - propagation 's
+96	16	21	p	shows
+96	25	49	n	absolute LAS improvement
+96	50	52	p	of
+96	53	58	n	4.4 %
+96	59	61	p	on
+96	62	69	n	average
+96	184	214	n	morphologically rich languages
+96	215	218	p	get
+96	222	242	n	averaged improvement
+96	123	125	p	of
+96	246	251	n	9.3 %
+98	9	14	n	jPDTP
+98	31	39	p	good for
+98	40	70	n	morphologically rich languages
+98	73	77	p	with
+98	78	103	n	1.7 % higher averaged LAS
+98	104	108	p	than
+98	109	128	n	Stack - propagation

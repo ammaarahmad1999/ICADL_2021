@@ -1,0 +1,38 @@
+135	43	54	p	built using
+135	55	60	n	Moses
+135	61	65	p	with
+135	66	82	n	default settings
+16	13	40	n	neural network architecture
+16	57	68	p	refer to as
+16	72	93	n	RNN Encoder - Decoder
+16	96	107	p	consists of
+16	108	145	n	two recurrent neural networks ( RNN )
+16	151	157	p	act as
+16	161	168	n	encoder
+16	175	182	n	decoder
+17	12	16	p	maps
+17	17	79	n	a variable - length source sequence to a fixed - length vector
+17	98	102	p	maps
+17	103	172	n	the vector representation back to a variable - length target sequence
+18	21	28	p	trained
+18	29	36	n	jointly
+18	37	48	p	to maximize
+18	53	76	n	conditional probability
+18	77	79	p	of
+18	80	123	n	the target sequence given a source sequence
+19	18	25	p	propose
+19	42	67	n	sophisticated hidden unit
+19	77	87	p	to improve
+19	88	137	n	both the memory capacity and the ease of training
+2	64	95	n	Statistical Machine Translation
+15	57	60	n	SMT
+15	167	185	n	phrase - based SMT
+159	71	95	p	improves the performance
+159	14	29	n	adding features
+159	30	41	p	computed by
+159	42	57	n	neural networks
+159	96	125	n	over the baseline performance
+160	4	33	p	best performance was achieved
+160	42	78	n	used both CSLM and the phrase scores
+160	79	83	p	from
+160	88	109	n	RNN Encoder - Decoder

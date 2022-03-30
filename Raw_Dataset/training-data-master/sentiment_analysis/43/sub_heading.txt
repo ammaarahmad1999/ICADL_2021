@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Related Work
+Our Approach
+Task Definition
+Input Embedding Layer
+Contextual Layer
+Miulti-grained Attention Layer
+Output Layer
+Model Training
+Experiments
+Experiment Setting
+Compared Methods
+Overall Performance Comparison
+Analysis of MGAN model
+Case Study
+Conclusion

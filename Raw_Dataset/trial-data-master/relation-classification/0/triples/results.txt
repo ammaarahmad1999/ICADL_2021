@@ -1,0 +1,3 @@
+(Contribution||has||Results)
+(Results||has||our model)
+(our model||performs better than||state - of - the - art model)

@@ -1,0 +1,36 @@
+{
+  "has" : {
+    "Approach" : {
+      "introduce" : {
+        "BioBERT" : {
+          "is" : {
+          "pre-trained language representation model" : {
+            "for" : "biomedical domain"
+          }
+        },
+        "from sentence" : "In this article , we introduce BioBERT , which is a pre-trained language representation model for the biomedical domain ."
+        }
+      },
+      "initialize" : {
+        "BioBERT" : {
+          "with" : {
+            "weights" : {
+              "from" : {
+                "BERT" : {
+                  "pretrained on" : "general domain corpora ( English Wikipedia and Books Corpus )"
+                }
+              }
+            }
+          },
+          "from sentence" : "First , we initialize BioBERT with weights from BERT , which was pretrained on general domain corpora ( English Wikipedia and Books Corpus ) ."          
+        }
+      },
+      "has" : {
+        "BioBERT" : {
+          "pre-trained on" : ["biomedical domain corpora ( PubMed abstracts and PMC full - text articles )", {"from sentence" : "Then , BioBERT is pre-trained on biomedical domain corpora ( PubMed abstracts and PMC full - text articles ) ."}],
+          "fine - tuned and evaluated on" : ["three popular biomedical text mining tasks", {"from sentence" : "To show the effectiveness of our approach in biomedical text mining , BioBERT is fine - tuned and evaluated on three popular biomedical text mining tasks ."}]
+        }
+      }
+    }
+  }
+}

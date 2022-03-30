@@ -1,0 +1,115 @@
+143	95	134	n	https://github.com / stanfordnlp/spinn.
+143	67	77	n	full SPINN
+143	0	31	n	Our optimized C ++/ CUDA models
+143	40	58	n	Theano source code
+144	3	6	n	fix
+144	62	64	p	at
+144	65	68	n	300
+144	11	28	n	model dimension D
+144	37	61	n	word embedding dimension
+145	11	31	n	CPU performance test
+145	32	34	p	on
+145	37	82	n	2.20 GHz 16 core Intel Xeon E5-2660 processor
+145	83	87	p	with
+145	88	102	n	hyperthreading
+146	58	60	p	on
+146	64	82	n	NVIDIA Titan X GPU
+146	3	7	p	test
+146	12	39	n	thin - stack implementation
+146	48	57	n	RNN model
+21	11	21	p	introduces
+21	69	122	n	Stack - augmented Parser - Interpreter Neural Network
+21	128	133	n	SPINN
+22	0	5	n	SPINN
+22	6	14	p	executes
+22	19	31	n	computations
+22	32	34	p	of
+22	37	60	n	tree - structured model
+22	61	63	p	in
+22	66	85	n	linearized sequence
+22	96	107	p	incorporate
+22	110	131	n	neural network parser
+22	132	145	p	that produces
+22	150	174	n	required parse structure
+23	12	25	p	improves upon
+23	30	50	n	TreeRNN architecture
+24	0	2	p	At
+24	3	12	n	test time
+24	18	36	p	can simultaneously
+24	37	42	n	parse
+24	47	56	n	interpret
+24	57	75	n	unparsed sentences
+24	78	86	p	removing
+24	91	101	n	dependence
+24	102	104	p	on
+24	108	123	n	external parser
+25	14	22	p	supports
+25	23	42	n	batched computation
+25	43	46	p	for
+25	52	81	n	parsed and unparsed sentences
+25	84	92	p	yielding
+25	93	110	n	dramatic speedups
+25	111	115	p	over
+25	116	133	n	standard TreeRNNs
+26	24	65	n	novel tree - sequence hybrid architecture
+26	66	78	p	for handling
+26	79	99	n	local linear context
+26	100	102	p	in
+26	103	126	n	sentence interpretation
+2	25	32	n	Parsing
+2	37	59	n	Sentence Understanding
+189	3	12	p	find that
+189	17	43	n	bare SPINN - PI - NT model
+189	44	52	p	performs
+189	53	66	n	little better
+189	67	71	p	than
+189	76	88	n	RNN baseline
+189	100	110	n	SPINN - PI
+189	111	115	p	with
+189	120	139	n	added tracking LSTM
+189	140	148	p	performs
+189	149	153	n	well
+191	4	20	n	full SPINN model
+191	21	25	p	with
+191	30	61	n	relatively weak internal parser
+191	62	70	p	performs
+191	71	89	n	slightly less well
+191	108	124	n	robustly exceeds
+191	129	140	n	performance
+191	141	143	p	of
+191	148	160	n	RNN baseline
+192	5	34	n	SPINN - PI and the full SPINN
+192	35	59	n	significantly outperform
+192	64	99	n	previous sentence - encoding models
+193	28	38	n	outperform
+193	43	59	n	tree - based CNN
+193	76	80	p	uses
+193	81	110	n	tree - structured composition
+193	111	114	p	for
+193	115	139	n	local feature extraction
+193	151	177	n	simpler pooling techniques
+193	178	186	p	to build
+193	187	204	n	sentence features
+195	4	14	n	full SPINN
+195	15	24	p	performed
+195	25	40	n	moderately well
+195	41	55	p	at reproducing
+195	60	85	n	Stanford Parser 's parses
+195	86	88	p	of
+195	93	102	n	SNLI data
+195	103	105	p	at
+195	108	142	n	transition - by - transition level
+195	145	149	p	with
+195	150	165	n	92.4 % accuracy
+195	166	168	p	at
+195	169	178	n	test time
+194	12	21	p	show that
+194	24	29	n	model
+194	30	39	p	that uses
+194	40	85	n	tree - structured composition fully ( SPINN )
+194	86	100	n	outper - forms
+194	119	154	n	only partially ( tree - based CNN )
+194	171	182	n	outperforms
+194	101	104	n	one
+194	105	110	p	which
+194	198	223	n	not use it at all ( RNN )

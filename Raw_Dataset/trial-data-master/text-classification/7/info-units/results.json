@@ -1,0 +1,12 @@
+{
+  "has" : {
+    "Results" : {
+      "observe that" : {
+        "capsule networks" : {
+          "achieve best results on" : "4 out of 6 benchmarks"
+        },
+        "from sentence" : "From the results , we observe that the capsule networks achieve best results on 4 out of 6 benchmarks , which verifies the effectiveness of the capsule networks ."        
+      }
+    }
+  }
+}

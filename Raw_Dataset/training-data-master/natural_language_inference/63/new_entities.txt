@@ -1,0 +1,109 @@
+161	11	14	p	add
+161	15	19	n	ELMo
+161	126	128	p	to
+161	26	28	p	is
+162	5	11	p	helped
+162	12	38	n	our model ( MAMCN + ELMo )
+162	39	49	p	to improve
+162	50	52	n	F1
+162	56	61	n	85.13
+162	66	68	n	EM
+162	53	55	p	to
+162	72	77	n	77.44
+162	89	93	n	best
+162	94	99	p	among
+162	104	110	n	models
+162	111	120	p	only with
+162	125	156	n	additional feature augmentation
+168	3	10	p	replace
+168	19	30	n	BiGRU units
+168	31	35	p	with
+168	41	56	n	embedding block
+168	57	63	p	except
+168	68	84	n	controller layer
+168	85	87	p	in
+168	88	119	n	our model ( MAMCN + ELMo + DC )
+169	3	10	p	achieve
+169	15	43	n	state of the art performance
+169	46	67	n	86.73 F1 and 79.69 EM
+137	3	10	p	develop
+137	11	16	n	MAMCN
+137	17	22	p	using
+137	23	59	n	Tensorflow 1 deep learning framework
+137	64	80	n	Sonnet 2 library
+138	0	3	p	For
+138	8	30	n	word - level embedding
+138	36	44	p	tokenize
+138	49	58	n	documents
+138	59	64	p	using
+138	65	77	n	NLTK toolkit
+138	82	92	p	substitute
+138	93	98	n	words
+138	99	103	p	with
+138	104	112	n	GloVe 6B
+139	0	2	p	In
+139	7	24	n	memory controller
+139	30	33	p	use
+139	34	54	n	100 x 36 size memory
+139	55	71	p	initialized with
+139	72	77	n	zeros
+139	80	81	n	4
+139	82	92	n	read heads
+139	97	98	n	1
+139	99	109	n	write head
+140	4	13	n	optimizer
+140	14	16	p	is
+140	17	43	n	AdaDelta ( Zeiler , 2012 )
+140	44	48	p	with
+140	52	73	n	initial learning rate
+140	74	76	p	of
+140	77	80	n	0.5
+141	39	49	n	batch size
+141	53	59	p	set to
+141	60	62	n	30
+141	3	8	p	train
+141	13	18	n	model
+141	19	22	p	for
+141	23	32	n	12 epochs
+142	0	6	p	During
+142	11	19	n	training
+142	25	29	p	keep
+142	34	60	n	exponential moving average
+142	61	63	p	of
+142	64	71	n	weights
+142	72	76	p	with
+142	77	88	n	0.001 decay
+142	93	96	p	use
+142	103	111	n	averages
+142	112	114	p	at
+142	115	124	n	test time
+24	18	23	p	build
+24	26	34	n	QA model
+24	44	54	p	understand
+24	55	69	n	long documents
+24	70	82	p	by utilizing
+24	83	125	n	Memory Augmented Neural Networks ( MANNs )
+25	29	38	p	decouples
+25	43	58	n	memory capacity
+25	59	63	p	from
+25	68	94	n	number of model parameters
+2	52	81	n	Machine Reading Comprehension
+4	0	28	n	Reading Comprehension ( RC )
+5	91	93	n	RC
+12	57	111	n	answer span prediction style Question Answering ( QA )
+13	81	83	n	QA
+147	0	10	n	QUASAR - T
+150	88	118	n	our proposed memory controller
+150	119	124	p	gives
+150	125	153	n	more performance improvement
+151	3	10	p	achieve
+151	11	32	n	68.13 EM and 70.32 F1
+151	33	36	p	for
+151	37	52	n	short documents
+151	57	72	n	63.44 and 65.19
+151	73	76	p	for
+151	77	91	n	long documents
+152	0	8	n	TriviaQA
+156	0	9	n	Our model
+156	10	18	p	achieves
+156	23	51	n	state of the art performance

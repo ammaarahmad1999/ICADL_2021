@@ -1,0 +1,22 @@
+title
+abstract
+Introduction
+Related work
+Aspect-level sentiment classification
+Graph convolutional network
+Methodology
+Input embedding layer
+Bidirectional Long Short-Term Memory (Bi-LSTM)
+Position encoding
+Bidirectional attention mechanism
+Graph convolutional network
+Output layer
+Model training
+Experiments
+Data sets and experimental settings
+Comparative methods
+Overall results
+The effect of GCN module
+Impact of GCN layer number
+Case study
+Conclusion

@@ -1,0 +1,52 @@
+{
+  "has" : {
+    "Hyperparameters" : {
+      "use" : {
+        "Glo Ve word embeddings" : {
+          "with" : {
+            "K = 300" : {
+              "as" : {
+                "initialization" : {
+                  "for" : "all our models"
+                }
+              }
+            }
+          },
+          "from sentence" : "We use Glo Ve word embeddings with K = 300 as initialization for all our models ."
+        }
+      },
+      "has" : {
+        "Out - Of - Vocabulary ( OOV ) words" : {
+          "initialized from" : {
+            "uniform distribution" : {
+              "with range" : "[ ? 0.01 , 0.01 ]"
+            }
+          },
+          "from sentence" : "Out - Of - Vocabulary ( OOV ) words are initialized from a uniform distribution with range [ ? 0.01 , 0.01 ] ."          
+        },
+        "Glo Ve embeddings" : {
+          "employed in" : {
+            "two ways" : {
+              "to learn" : "refined word embeddings",
+              "updating" : {
+                "each word embedding" : {
+                  "during" : "training"
+                }
+              },
+              "training" : {
+                "300 dimensional Multilayer Perceptron ( MLP ) layer" : {
+                  "with" : ["ReLU activation", {"Glo Ve embeddings" : {
+                    "as input to" : "MLP",
+                    "output" : "refined word embeddings"
+                  }}]
+                }
+              }              
+            }
+          },
+          "from sentence" : "The Glo Ve embeddings are employed in two ways to learn refined word embeddings : ( i ) directly updating each word embedding during training ; and ( ii ) training a 300 dimensional Multilayer Perceptron ( MLP ) layer with ReLU activation , with Glo Ve embeddings as input to the MLP and with output defining the refined word embeddings ."          
+        }
+      },
+      "Adam" : ["optimize all models", {"from sentence" : "Adam ) is used to optimize all models , with learning rate selected from ."}]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+title
+abstract
+INTRODUCTION
+RELATED WORKS
+EXPERIMENTAL SETUP
+MODELS
+Speech Based Emotion Detection
+Text based Emotion Recognition
+MoCap based Emotion Detection
+RESULTS
+Combined Multi-Modal Emotion Detection
+CONCLUSION
+REFERENCES

@@ -1,0 +1,19 @@
+{
+  "has" : {
+    "Model" : {
+      "present" : ["multi-head joint model", {"from sentence" : "In this section , we present our multi-head joint model illustrated in ."}],
+      "input" : {
+        "sequence of tokens ( i.e. , words of the sentence )" : {
+          "represented as" : "word vectors ( i.e. , word embeddings )"
+        },
+        "from sentence" : "The input of our model is a sequence of tokens ( i.e. , words of the sentence ) which are then represented as word vectors ( i.e. , word embeddings ) ."
+      },
+      "outputs for" : {
+        "each token" : {
+          "are twofold" : ["entity recognition label", {"set of tuples" : {"comprising" : "head tokens of the entity and the types of relations between them"}}]
+        },
+        "from sentence" : "The outputs for each token ( e.g. , Smith ) are twofold : ( i ) an entity recognition label ( e.g. , I - PER , denoting the token is inside a named entity of type PER ) and ( ii ) a set of tuples comprising the head tokens of the entity and the types of relations between them ( e.g. , {( Center , Works for ) , ( Atlanta , Lives in ) } ) ."        
+      }
+    }
+  }
+}

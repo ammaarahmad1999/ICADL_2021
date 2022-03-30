@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Related Works
+Problem Setting
+Methodology
+Multimodal Feature Extraction
+SIM: Self-Influence Module
+DGIM: Dynamic Global Influence
+Multi-hop Memory
+Experiments
+Datasets
+Training Details
+Baselines
+Results
+Ablation Study
+Dependency on distant history
+Lets just go home. [ang]

@@ -1,0 +1,8 @@
+(Contribution||has||Results)
+(Results||has||proposed model)
+(proposed model||achieves||F1-score)
+(F1-score||of||85.2 %)
+(proposed model||outperforms||all competing state - of - theart approaches)
+(all competing state - of - theart approaches||except||depLCNN + NS)
+(all competing state - of - theart approaches||except||DRNNs)
+(all competing state - of - theart approaches||except||Attention - CNN)

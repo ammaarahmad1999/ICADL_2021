@@ -1,0 +1,55 @@
+71	4	27	n	majority class baseline
+71	28	30	p	is
+71	31	37	n	61.5 %
+71	44	58	p	corresponds to
+71	59	102	n	all queries being classified non-wellformed
+72	4	26	n	question word baseline
+72	32	42	p	classifies
+72	43	52	n	any query
+72	53	66	p	starting with
+72	69	82	n	question word
+20	3	33	p	construct and publicly release
+20	36	61	n	dataset of 25,100 queries
+20	62	76	p	annotated with
+20	81	92	n	probability
+20	93	101	p	of being
+20	104	143	n	well - formed natural language question
+24	16	41	p	available for download at
+24	42	86	n	http://goo.gl/language/ query-wellformedness
+19	40	50	p	to predict
+19	61	72	n	given query
+19	73	75	p	is
+19	78	117	n	well - formed natural language question
+21	8	13	p	train
+21	16	56	n	feed - forward neural network classifier
+21	62	66	p	uses
+21	71	101	n	lexical and syntactic features
+21	102	116	p	extracted from
+21	121	126	n	query
+21	127	129	p	on
+21	135	139	n	data
+2	0	52	n	Identifying Well - formed Natural Language Questions
+58	4	20	n	best performance
+58	21	29	p	obtained
+58	33	39	n	70.7 %
+58	40	51	p	while using
+58	52	72	n	word - 1 , 2 - grams
+58	77	100	n	POS - 1 , 2 , 3 - grams
+60	9	32	n	character - 3 , 4 grams
+60	33	54	p	gave improvement over
+60	55	80	n	word unigrams and bigrams
+60	115	119	p	when
+60	120	128	n	combined
+60	129	133	p	with
+60	134	142	n	POS tags
+60	87	98	n	performance
+60	103	106	p	not
+60	107	114	n	sustain
+59	0	5	p	Using
+59	6	17	n	POS n-grams
+59	18	22	p	gave
+59	25	37	n	strong boost
+59	38	40	p	of
+59	41	51	n	5.2 points
+59	52	56	p	over
+59	57	82	n	word unigrams and bigrams

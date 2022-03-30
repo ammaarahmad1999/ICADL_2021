@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+Related Work
+Methodology
+Sub-Tree Parser
+Entity-Wise Neural Extractor
+Parameter-Transfer Initializer
+Experiments
+Dataset and Evaluation Metrics
+Experimental Settings
+Effect of Various Model Parts
+Comparison with Baselines
+Conclusion

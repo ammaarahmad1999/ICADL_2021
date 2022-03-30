@@ -1,0 +1,59 @@
+176	3	6	p	use
+176	7	22	n	word embeddings
+176	28	33	p	GloVe
+176	34	57	n	to initialize the model
+180	7	13	n	ADAMAX
+180	14	18	p	with
+180	23	61	n	coefficients ? 1 = 0.9 and ? 2 = 0.999
+180	62	73	p	to optimize
+180	78	83	n	model
+179	4	20	p	dimensionality l
+179	28	41	n	hidden layers
+179	45	48	p	set
+179	55	65	n	150 or 300
+181	5	11	n	update
+181	15	31	p	computed through
+181	34	43	n	minibatch
+181	44	46	p	of
+181	47	59	n	30 instances
+38	19	26	p	propose
+38	33	67	n	end - to - end neural architecture
+38	68	78	p	to address
+38	83	112	n	machine comprehension problem
+38	113	126	p	as defined in
+38	131	144	n	SQuAD dataset
+41	11	28	p	two ways to apply
+41	33	48	n	Ptr - Net model
+41	66	80	n	sequence model
+41	87	101	n	boundary model
+42	42	46	p	with
+42	49	65	n	search mechanism
+39	123	128	p	adopt
+39	131	149	n	match - LSTM model
+39	95	99	p	from
+39	104	117	n	original text
+40	21	52	n	Pointer Net ( Ptr - Net ) model
+40	74	81	p	enables
+40	86	107	n	predictions of tokens
+40	117	131	n	input sequence
+40	202	210	p	generate
+40	211	218	n	answers
+40	224	234	p	consist of
+40	235	250	n	multiple tokens
+40	108	112	p	from
+2	0	21	n	MACHINE COMPREHENSION
+4	0	29	n	Machine comprehension of text
+191	0	12	p	outperformed
+191	17	42	n	logistic regression model
+191	54	63	p	relies on
+191	64	91	n	carefully designed features
+192	54	68	n	sequence model
+192	18	32	n	boundary model
+192	71	80	p	achieving
+192	84	111	n	exact match score of 61.1 %
+192	116	137	n	an F1 score of 71.2 %
+200	6	8	p	by
+200	9	15	p	adding
+200	16	70	n	Bi - Ans - Ptr with bi-directional pre-processing LSTM
+200	80	83	p	get
+200	84	107	n	1.2 % improvement in F1

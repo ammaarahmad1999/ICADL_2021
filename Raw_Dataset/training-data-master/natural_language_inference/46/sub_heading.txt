@@ -1,0 +1,19 @@
+title
+abstract
+Introduction
+Review of Reading Comprehension
+NarrativeQA: A New Dataset
+Desiderata
+Data Collection Method
+Core Statistics
+Tasks
+Baselines and Oracles
+Simple IR Baselines
+Neural Benchmarks
+Neural Benchmarks on Stories
+Experiments
+Data Preparation
+Reading Summaries Only
+Reading Full Stories Only
+Qualitative Analysis and Challenges
+Related Work

@@ -1,0 +1,19 @@
+{
+  "has" : {
+    "Results" : {
+      "improves the performance" : [
+        {"adding features" : {
+          "computed by" : "neural networks"
+        }},
+        "over the baseline performance",
+        {"from sentence" : "As expected , adding features computed by neural networks consistently improves the performance over the baseline performance ."}
+      ],
+      "best performance was achieved" : {
+        "used both CSLM and the phrase scores" : {
+          "from" : "RNN Encoder - Decoder"
+        },
+        "from sentence" : "The best performance was achieved when we used both CSLM and the phrase scores from the RNN Encoder - Decoder ."
+      }
+    }
+  }
+}

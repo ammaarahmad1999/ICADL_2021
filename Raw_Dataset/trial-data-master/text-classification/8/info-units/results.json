@@ -1,0 +1,130 @@
+{
+  "has" : {
+    "Results" : {
+      "on" : {
+        "topic prediction tasks" : {
+          "has" : {
+            "SWEM model" : {
+              "exhibits" : {
+                "stronger performances" : {
+                  "relative to both" : {
+                    "LSTM and CNN compositional architectures" : {
+                      "by leveraging both" : {
+                        "average and max - pooling features" : {
+                          "from" : "word embeddings"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "from sentence" : "Surprisingly , on topic prediction tasks , our SWEM model exhibits stronger performances , relative to both LSTM and CNN compositional architectures , this by leveraging both the average and max - pooling features from word embeddings ."
+        }
+      },
+      "On" : {
+        "ontology classification problem" : {
+          "observe" : {
+            "SWEM" : {
+              "exhibits" : {
+                "comparable or even superior results" : {
+                  "relative to" : "CNN or LSTM models"
+                }
+              }
+            },
+            "from sentence" : "On the ontology classification problem ( DBpedia dataset ) , we observe the same trend , that SWEM exhibits comparable or even superior results , relative to CNN or LSTM models ."
+          }
+        }
+      },
+      "for" : {
+        "sentiment analysis" : {
+          "both" : {
+            "CNN and LSTM compositional functions" : {
+              "perform better than" : "SWEM"
+            }
+          },
+          "from sentence" : "Interestingly , for the sentiment analysis tasks , both CNN and LSTM compositional functions perform better than SWEM , suggesting that wordorder information maybe required for analyzing sentiment orientations ."
+        }
+      },
+      "has" : {
+        "Text Sequence Matching" : {
+          "on" : {
+            "most of the datasets considered ( except WikiQA )" : {
+              "has" : {
+                "SWEM" : {
+                  "demonstrates" : {
+                    "best results" : {
+                      "compared with" : "CNN or the LSTM encoder"
+                    }
+                  }
+                }
+              },
+              "from sentence" : "Text Sequence Matching
+Surprisingly , on most of the datasets considered ( except WikiQA ) , SWEM demonstrates the best results compared with those with CNN or the LSTM encoder ."
+
+            },
+            "SNLI dataset" : {
+              "observe that" : {
+                "SWEM - max" : {
+                  "performs the best" : "among all SWEM variants"
+                }
+              },
+              "from sentence" : "Notably , on SNLI dataset , we observe that SWEM - max performs the best among all SWEM variants , consistent with the findings in Nie and Bansal ( 2017 ) ; , that max - pooling over BiLSTM hidden units outperforms average pooling operation on SNLI dataset ."
+            }
+          }
+        },
+        "SWEM - hier for sentiment analysis" : {
+          "has" : {
+            "word - order information" : {
+              "plays a vital role for" : "sentiment analysis tasks",
+              "from sentence" : "SWEM - hier for sentiment analysis
+As demonstrated in Section 4.2.1 , word - order information plays a vital role for sentiment analysis tasks ."
+
+            }
+          },
+          "most important features for" : {
+            "sentiment prediction" : {
+              "maybe" : "some key n-gram phrase / words"  
+            },
+            "from sentence" : "However , according to the case study above , the most important features for sentiment prediction maybe some key n-gram phrase / words from Negative :"
+          },
+          "greatly outperforms" : {
+            "other three SWEM variants" : {
+              "has" : {
+                "corresponding accuracies" : {
+                  "comparable to" : "results of CNN or LSTM"
+                }
+              }
+            },
+            "from sentence" : "SWEM - hier greatly outperforms the other three SWEM variants , and the corresponding accuracies are comparable to the results of CNN or LSTM ) ."
+          }          
+        },
+        "Short Sentence Processing" : {
+          "has" : {
+            "SWEM" : {
+              "yields" : {
+                "inferior accuracies" : {
+                  "on" : "sentiment analysis datasets",
+                  "from sentence" : "Short Sentence Processing
+Compared with CNN / LSTM compositional functions , SWEM yields inferior accuracies on sentiment analysis datasets , consistent with our observation in the case of document categorization ."
+
+                }
+              },
+              "exhibits" : {
+                "comparable performance" : {
+                  "on" : {
+                    "other two tasks" : {
+                      "with" : "much less parameters and faster training"
+                    }
+                  }
+                },
+                "from sentence" : "However , SWEM exhibits comparable performance on the other two tasks , again with much less parameters and faster training ."                
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "has" : {
+    "Results" : {
+      "For" : {
+        "ACE04" : {
+          "has" : {
+            "baseline" : {
+              "outperforms by" : "? 2 %",
+              "in" : "both tasks"
+            }
+          },
+          "from sentence" : "For ACE04 , the baseline outperforms by ? 2 % in both tasks ."
+        },
+        "CoNLL04 dataset" : {
+          "has" : {
+            "baseline model" : {
+              "outperforms" : {
+                "state - of - the - art models that do not rely on manually extracted features" : {
+                  "has" : {
+                    "> 4 % improvement" : {
+                      "for" : "both tasks"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "from sentence" : "For the CoNLL04 dataset , we use two evaluation settings .
+The baseline model outperforms the state - of - the - art models that do not rely on manually extracted features ( > 4 % improvement for both tasks ) , since we directly model the whole sentence , instead of just considering pairs of entities ."
+
+        },
+        "DREC dataset" : {
+          "In" : {
+            "boundaries evaluation" : {
+              "has" : {
+                "baseline" : {
+                  "has an improvement of" : {
+                    "? 3 %" : {
+                      "on" : "both tasks"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "from sentence" : "For the DREC dataset , we use two evaluation methods .
+In the boundaries evaluation , the baseline has an improvement of ? 3 % on both tasks compared to , whose quadratic scoring layer complicates NER ."
+
+        }
+      },
+      "In" : {
+        "all of the experiments" : {
+          "has" : {
+            "AT" : {
+              "improves" : {
+                "predictive performance" : {
+                  "of" : {
+                    "baseline model" : {
+                      "in" : "joint setting"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "In all of the experiments , AT improves the predictive performance of the baseline model in the joint setting ."        
+      },
+      "show" : {
+        "adversarial training on top of the baseline model" : {
+          "for" : {
+            "ACE04" : {
+              "improvement in" : ["both tasks", "over all F 1 performance ( 0.4 % )"],
+              "from sentence" : "and show the effectiveness of the adversarial training on top of the baseline model .
+Specifically , for ACE04 , there is an improvement in both tasks as well as in the over all F 1 performance ( 0.4 % ) ."
+
+            },
+            "ADE" : {
+              "has" : {
+                "AT model" : {
+                  "beats" : {
+                    "baseline F 1" : {
+                      "by" : "0.7 %"
+                    }
+                  }
+                }
+              },
+              "from sentence" : "Finally , for ADE , our AT model beats the baseline F 1 by 0.7 % ."
+            }
+          },
+          "For" : {
+            "CoNLL04" : {
+              "note an improvement" : {
+                "over all F 1 of 0.4 %" : {
+                  "for" : "EC"
+                },
+                "0.8 %" : {
+                  "for" : "NER tasks"
+                }
+              },
+              "from sentence" : "For CoNLL04 , we note an improvement in the over all F 1 of 0.4 % for the EC and 0.8 % for the NER tasks , respectively ."              
+            },
+            "DREC dataset" : {
+              "there is" : "over all improvement of ? 1 %",
+              "from sentence" : "For the DREC dataset , in both settings , there is an over all improvement of ? 1 % ."
+            }
+          }
+        }
+      }
+    }  
+  }
+}

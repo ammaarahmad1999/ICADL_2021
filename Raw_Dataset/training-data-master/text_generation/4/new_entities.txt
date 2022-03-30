@@ -1,0 +1,27 @@
+14	34	79	n	https://github.com/enigmaeth/skip-thought-gan
+71	4	26	n	Skip - Thought encoder
+71	41	48	p	encodes
+71	49	58	n	sentences
+71	59	63	p	with
+71	64	70	n	length
+71	71	80	p	less than
+71	81	89	n	30 words
+71	90	95	p	using
+71	96	110	n	2400 GRU units
+71	111	115	p	with
+71	116	127	n	word vector
+71	128	145	p	dimensionality of
+71	146	149	n	620
+71	150	160	p	to produce
+71	161	199	n	4800 - dimensional combineskip vectors
+72	4	26	n	combine - skip vectors
+72	29	33	p	with
+72	38	59	n	first 2400 dimensions
+72	60	65	p	being
+72	66	80	n	uni-skip model
+72	89	112	n	last 2400 bi-skip model
+72	142	153	p	found to be
+72	158	192	n	best performing in the experiments
+2	0	15	n	Generating Text
+7	68	83	n	text generation
+11	48	80	n	natural language text generation

@@ -1,0 +1,129 @@
+229	0	3	n	AMN
+229	8	45	n	state - of - the - art memory network
+229	46	54	p	used for
+229	55	58	n	ASC
+231	0	7	n	BL - MN
+231	10	34	n	Our basic memory network
+231	66	78	p	does not use
+231	83	102	n	proposed techniques
+231	103	116	p	for capturing
+231	117	146	n	target - sensitive sentiments
+232	0	9	n	AE - LSTM
+233	8	20	p	compare with
+233	23	68	n	state - of - the - art attention - based LSTM
+233	69	72	p	for
+233	73	76	n	ASC
+234	0	11	n	ATAE - LSTM
+235	8	30	n	attention - based LSTM
+235	31	34	p	for
+235	35	38	n	ASC
+236	0	43	n	Target - sensitive Memory Networks ( TMNs )
+237	4	27	n	six proposed techniques
+237	30	32	n	NP
+237	35	38	n	CNP
+237	41	43	n	IT
+237	46	48	n	CI
+237	51	54	n	JCI
+237	61	64	n	JPI
+237	65	69	p	give
+237	70	108	n	six target - sensitive memory networks
+247	3	6	p	use
+247	11	40	n	open - domain word embeddings
+247	43	46	p	for
+247	51	65	n	initialization
+247	66	68	p	of
+247	69	81	n	word vectors
+248	3	13	p	initialize
+248	14	36	n	other model parameters
+248	37	41	p	from
+248	44	84	n	uniform distribution U ( - 0.05 , 0.05 )
+249	4	13	n	dimension
+249	70	73	p	are
+249	74	77	n	300
+249	14	16	p	of
+249	21	35	n	word embedding
+249	44	69	n	size of the hidden layers
+250	4	17	n	learning rate
+250	21	27	p	set to
+250	28	32	n	0.01
+250	41	53	n	dropout rate
+250	57	63	p	set to
+250	64	67	n	0.1
+251	0	27	n	Stochastic gradient descent
+251	31	38	p	used as
+251	39	52	n	our optimizer
+253	8	15	p	compare
+253	20	35	n	memory networks
+253	36	38	p	in
+253	45	107	n	multiple computational layers version ( i.e. , multiple hops )
+253	116	130	n	number of hops
+253	134	140	p	set to
+253	141	142	n	3
+254	3	14	p	implemented
+254	15	25	n	all models
+254	26	28	p	in
+254	33	55	n	TensorFlow environment
+254	56	61	p	using
+254	62	123	n	same input , embedding size , dropout rate , optimizer , etc.
+51	29	36	p	propose
+51	37	80	n	target - sensitive memory networks ( TMNs )
+51	89	100	p	can capture
+51	105	126	n	sentiment interaction
+51	127	134	p	between
+51	135	155	n	targets and contexts
+2	39	70	n	Aspect Sentiment Classification
+4	0	39	n	Aspect sentiment classification ( ASC )
+4	65	83	n	sentiment analysis
+8	79	82	n	ASC
+265	0	9	p	Comparing
+265	14	37	n	1 - hop memory networks
+265	63	66	p	see
+265	67	96	n	significant performance gains
+265	97	108	p	achieved by
+265	109	133	n	CNP , CI , JCI , and JPI
+265	134	136	p	on
+265	137	150	n	both datasets
+265	159	175	p	each of them has
+265	176	184	n	p < 0.01
+265	185	189	p	over
+265	194	224	n	strongest baseline ( BL - MN )
+265	225	229	p	from
+265	230	244	n	paired t- test
+265	245	250	p	using
+265	251	261	n	F1 - Macro
+272	14	22	n	all TMNs
+272	28	36	p	see that
+272	37	40	n	JCI
+272	41	46	p	works
+272	51	55	n	best
+268	4	6	p	In
+268	11	26	n	3 - hop setting
+268	29	33	n	TMNs
+268	34	41	p	achieve
+268	42	61	n	much better results
+268	62	64	p	on
+268	65	75	n	Restaurant
+269	0	17	n	JCI , IT , and CI
+269	18	25	p	achieve
+269	30	41	n	best scores
+269	44	57	p	outperforming
+269	62	84	n	strongest baseline AMN
+269	85	87	p	by
+269	88	116	n	2.38 % , 2.18 % , and 2.03 %
+270	0	2	p	On
+270	3	9	n	Laptop
+270	12	33	n	BL - MN and most TMNs
+270	57	64	p	perform
+270	65	74	n	similarly
+273	0	10	n	CI and JPI
+273	16	23	p	perform
+273	24	28	n	well
+273	29	31	p	in
+273	32	42	n	most cases
+274	0	17	n	IT , NP , and CNP
+274	22	29	p	achieve
+274	30	46	n	very good scores
+274	47	49	p	in
+274	50	60	n	some cases
+274	65	68	p	are
+274	69	80	n	less stable

@@ -1,0 +1,14 @@
+title
+abstract
+Introduction and Background
+Model
+Sentence Encoder
+Entailment Classifier
+Experimental Setup
+Datasets
+Parameter Settings
+Results and Analysis
+Ablation Analysis Results
+Multi-NLI and SNLI Test Results
+Conclusion
+Addendum: Shortcut vs. Residual

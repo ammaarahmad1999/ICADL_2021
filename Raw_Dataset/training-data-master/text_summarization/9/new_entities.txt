@@ -1,0 +1,101 @@
+96	3	14	p	implemented
+96	15	25	n	our models
+96	26	28	p	in
+96	33	46	n	Torch library
+97	7	15	p	optimize
+97	16	24	n	our loss
+97	43	47	p	used
+97	48	75	n	stochastic gradient descent
+97	76	80	p	with
+97	81	93	n	mini-batches
+97	94	101	p	of size
+97	102	104	n	32
+98	0	6	p	During
+98	7	15	n	training
+98	19	26	p	measure
+98	31	41	n	perplexity
+98	42	44	p	of
+98	49	58	n	summaries
+98	59	61	p	in
+98	66	80	n	validation set
+98	85	91	p	adjust
+98	96	114	n	hyper - parameters
+98	117	124	p	such as
+98	129	142	n	learning rate
+99	0	3	p	For
+99	8	15	n	decoder
+99	19	36	p	experimented with
+99	46	55	n	Elman RNN
+99	64	110	n	Long - Short Term Memory ( LSTM ) architecture
+100	3	8	p	chose
+100	9	27	n	hyper - parameters
+100	28	36	p	based on
+100	39	50	n	grid search
+100	55	80	p	picked the one which gave
+100	85	100	n	best perplexity
+100	101	103	p	on
+100	108	122	n	validation set
+104	4	44	n	final Elman architecture ( RAS - Elman )
+104	45	49	p	uses
+104	52	64	n	single layer
+104	65	69	p	with
+104	70	108	n	H = 512 , ? = 0.5 , ? = 2 , and ? = 10
+105	4	29	n	LSTM model ( RAS - LSTM )
+105	41	53	n	single layer
+105	54	58	p	with
+105	59	97	n	H = 512 , ? = 0.1 , ? = 2 , and ? = 10
+16	84	95	p	consists of
+16	98	134	n	conditional recurrent neural network
+16	143	150	p	acts as
+16	153	160	n	decoder
+16	161	172	p	to generate
+16	177	184	n	summary
+16	185	187	p	of
+16	191	205	n	input sentence
+17	37	44	n	decoder
+17	50	55	p	takes
+17	58	76	n	conditioning input
+17	14	16	p	at
+17	17	32	n	every time step
+17	90	99	p	output of
+17	103	117	n	encoder module
+18	48	55	n	encoder
+18	56	76	p	computes scores over
+18	81	86	n	words
+18	87	89	p	in
+18	94	108	n	input sentence
+24	21	25	p	uses
+24	28	49	n	convolutional network
+24	50	59	p	to encode
+24	60	71	n	input words
+20	9	28	n	decoder and encoder
+20	33	51	p	jointly trained on
+20	54	62	n	data set
+20	63	76	p	consisting of
+20	77	101	n	sentence - summary pairs
+2	0	34	n	Abstractive Sentence Summarization
+10	85	103	n	text summarization
+112	0	5	p	shows
+112	20	53	n	RAS - Elman and RAS - LSTM models
+112	54	61	p	achieve
+112	62	78	n	lower perplexity
+112	79	83	p	than
+112	84	87	n	ABS
+113	4	14	n	RAS - LSTM
+113	15	43	p	performs slightly worse than
+113	44	55	n	RAS - Elman
+115	4	17	n	ROUGE results
+115	18	22	p	show
+115	28	38	n	our models
+115	39	61	p	comfortably outperform
+115	67	80	n	ABS and ABS +
+115	81	83	p	by
+115	86	97	n	wide margin
+115	98	100	p	on
+115	101	112	n	all metrics
+118	0	2	p	On
+118	3	13	n	DUC - 2004
+119	24	28	p	show
+119	34	44	n	our models
+119	49	60	p	better than
+119	61	66	n	ABS +

@@ -1,0 +1,202 @@
+286	11	15	p	test
+286	16	27	n	performance
+286	28	31	p	for
+286	36	60	n	content - based CNN only
+287	13	21	p	provides
+287	26	52	n	worst relative performance
+287	53	57	p	with
+287	58	85	n	almost 10 % lesser accuracy
+287	86	90	p	than
+287	91	98	n	optimal
+288	10	17	p	include
+288	18	37	n	contextual features
+289	11	17	n	effect
+289	18	20	p	of
+289	21	39	n	discourse features
+289	43	60	p	primarily seen in
+289	65	76	n	Pol dataset
+289	77	84	p	getting
+289	88	96	n	increase
+289	97	99	p	of
+289	100	109	n	3 % in F1
+290	95	105	p	introduced
+290	75	90	n	user embeddings
+290	32	40	p	observed
+290	2	13	n	major boost
+290	14	16	p	in
+290	17	28	n	performance
+292	10	17	n	CASCADE
+292	18	31	p	consisting of
+292	32	35	n	CNN
+292	36	40	p	with
+292	41	90	n	user embeddings and contextual discourse features
+292	91	98	p	provide
+292	103	119	n	best performance
+292	120	122	p	in
+292	123	141	n	all three datasets
+293	17	23	p	use of
+293	24	27	n	CCA
+293	28	31	p	for
+293	36	46	n	generation
+293	47	49	p	of
+293	50	65	n	user embeddings
+293	75	90	p	replace it with
+293	91	111	n	simple concatenation
+294	13	19	p	causes
+294	22	38	n	significant drop
+294	39	41	p	in
+294	42	53	n	performance
+258	0	16	n	Bag - of - Words
+259	11	15	p	uses
+259	18	28	n	comment 's
+259	29	42	n	word - counts
+259	43	45	p	as
+259	46	54	n	features
+259	55	57	p	in
+259	60	66	n	vector
+261	0	3	n	CNN
+261	37	59	n	individual CNN version
+264	0	9	n	CNN - SVM
+265	23	34	p	consists of
+265	37	40	n	CNN
+265	41	44	p	for
+265	45	61	n	content modeling
+265	66	88	n	other pre-trained CNNs
+265	89	103	p	for extracting
+265	104	148	n	sentiment , emotion and personality features
+265	149	153	p	from
+265	158	171	n	given comment
+267	0	9	n	CUE - CNN
+268	29	35	p	models
+268	36	51	n	user embeddings
+268	59	73	p	method akin to
+268	74	89	n	ParagraphVector
+247	3	10	p	holdout
+247	11	15	n	10 %
+247	16	18	p	of
+247	23	36	n	training data
+247	37	40	p	for
+247	41	51	n	validation
+249	0	11	p	To optimize
+249	16	26	n	parameters
+249	29	43	n	Adam optimizer
+249	79	92	p	starting with
+249	96	117	n	initial learning rate
+249	118	120	p	of
+249	121	127	n	1e ? 4
+251	0	20	n	Training termination
+251	24	37	p	decided using
+251	38	62	n	early stopping technique
+251	63	67	p	with
+251	70	78	n	patience
+251	79	81	p	of
+251	82	84	n	12
+252	0	3	p	For
+252	8	26	n	batched - modeling
+252	27	29	p	of
+252	30	38	n	comments
+252	39	41	p	in
+252	42	46	n	CNNs
+252	49	61	n	each comment
+252	62	64	p	is
+252	72	92	n	restricted or padded
+252	93	95	p	to
+252	96	105	n	100 words
+252	106	109	p	for
+252	110	120	n	uniformity
+25	18	25	p	propose
+25	28	42	n	hybrid network
+25	45	50	p	named
+25	51	58	n	CASCADE
+25	66	74	p	utilizes
+25	80	116	n	content and contextual - information
+25	117	129	p	required for
+25	130	147	n	sarcasm detection
+27	11	19	p	performs
+27	20	34	n	user profiling
+27	35	44	p	to create
+27	45	60	n	user embeddings
+27	61	73	p	that capture
+27	74	102	n	indicative behavioral traits
+27	103	106	p	for
+27	107	114	n	sarcasm
+34	12	30	n	content - modeling
+34	31	36	p	using
+34	39	75	n	Convolutional Neural Network ( CNN )
+34	76	86	p	to extract
+34	91	109	n	syntactic features
+29	3	15	p	makes use of
+29	16	40	n	users ' historical posts
+29	41	49	p	to model
+29	56	111	n	writing style ( stylometry ) and personality indicators
+29	129	139	p	fused into
+29	140	169	n	comprehensive user embeddings
+29	170	175	p	using
+29	178	204	n	multi-view fusion approach
+29	207	245	n	Canonical Correlation Analysis ( CCA )
+30	12	20	p	extracts
+30	21	43	n	contextual information
+30	44	48	p	from
+30	53	62	n	discourse
+30	63	65	p	of
+30	66	74	n	comments
+30	75	77	p	in
+30	82	99	n	discussion forums
+31	8	15	p	done by
+31	16	33	n	document modeling
+31	34	36	p	of
+31	43	64	n	consolidated comments
+31	65	77	p	belonging to
+31	82	92	n	same forum
+33	0	5	p	After
+33	10	35	n	contextual modeling phase
+33	38	45	n	CASCADE
+33	49	62	p	provided with
+33	65	72	n	comment
+33	73	76	p	for
+33	77	94	n	sarcasm detection
+35	5	23	n	CNN representation
+35	32	49	p	concatenated with
+35	54	100	n	relevant user embedding and discourse features
+35	101	107	p	to get
+35	112	132	n	final representation
+35	142	150	p	used for
+35	151	165	n	classification
+2	10	38	n	Contextual Sarcasm Detection
+4	18	45	n	automated sarcasm detection
+6	149	166	n	sarcasm detection
+273	0	7	n	CASCADE
+273	19	26	p	achieve
+273	27	44	n	major improvement
+273	45	51	p	across
+273	52	64	n	all datasets
+273	65	69	p	with
+273	70	94	n	statistical significance
+276	8	25	p	comfortably beats
+276	30	66	n	state - of - the - art neural models
+276	67	76	n	CNN - SVM
+276	81	90	n	CUE - CNN
+274	4	22	n	lowest performance
+274	26	37	p	obtained by
+274	42	67	n	Bag - of - words approach
+277	4	24	n	improved performance
+277	25	27	p	on
+277	32	55	n	Main imbalanced dataset
+277	61	69	p	reflects
+277	74	84	n	robustness
+277	85	92	p	towards
+277	93	108	n	class imbalance
+277	113	130	p	establishes it as
+277	133	164	n	real - world deployable network
+279	6	15	n	CUE - CNN
+279	16	25	p	generates
+279	30	45	n	user embeddings
+279	46	51	p	using
+279	54	60	n	method
+279	61	71	p	similar to
+279	76	91	n	ParagraphVector
+275	0	7	p	Amongst
+275	12	27	n	neural networks
+275	34	46	n	CNN baseline
+275	47	55	p	receives
+275	60	77	n	least performance

@@ -1,0 +1,8 @@
+(Contribution||has||Model)
+(Model||input||sequence of tokens ( i.e. , words of the sentence ))
+(sequence of tokens ( i.e. , words of the sentence )||represented as||word vectors ( i.e. , word embeddings ))
+(Model||outputs for||each token)
+(each token||are twofold||entity recognition label)
+(each token||are twofold||set of tuples)
+(set of tuples||comprising||head tokens of the entity and the types of relations between them)
+(Model||present||multi-head joint model)

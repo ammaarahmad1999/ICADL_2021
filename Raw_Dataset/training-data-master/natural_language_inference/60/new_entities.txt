@@ -1,0 +1,10 @@
+18	18	25	p	explore
+18	30	49	n	supervised learning
+18	50	52	p	of
+18	53	94	n	task - specific , dynamic meta-embeddings
+18	101	106	p	apply
+18	124	148	n	sentence representations
+22	11	13	p	is
+22	14	34	n	embedding - agnostic
+2	30	63	n	Improved Sentence Representations
+18	124	148	n	sentence representations

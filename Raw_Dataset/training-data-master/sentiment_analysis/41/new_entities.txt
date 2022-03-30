@@ -1,0 +1,133 @@
+146	3	8	p	apply
+146	13	27	n	proposed model
+146	28	30	p	to
+146	31	70	n	aspect - level sentiment classification
+147	0	2	p	In
+147	3	18	n	our experiments
+147	21	37	n	all word vectors
+147	38	41	p	are
+147	42	53	n	initialized
+147	54	56	p	by
+147	57	62	n	Glove
+148	4	26	n	word embedding vectors
+148	31	45	p	pre-trained on
+148	49	65	n	unlabeled corpus
+148	66	71	p	whose
+148	72	76	n	size
+148	77	79	p	is
+148	80	97	n	about 840 billion
+149	4	20	n	other parameters
+149	25	39	p	initialized by
+149	40	48	n	sampling
+149	49	53	p	from
+149	56	88	n	uniform distribution U (?? , ? )
+150	4	13	n	dimension
+150	79	82	p	are
+150	83	86	n	300
+150	14	16	p	of
+150	17	29	n	word vectors
+150	32	49	n	aspect embeddings
+150	58	78	n	size of hidden layer
+151	4	10	n	length
+151	11	13	p	of
+151	14	31	n	attention weights
+151	39	46	p	same as
+151	51	57	n	length
+151	58	60	p	of
+151	61	69	n	sentence
+152	0	6	n	Theano
+152	10	18	p	used for
+152	19	31	n	implementing
+152	36	57	n	neural network models
+153	3	10	p	trained
+153	11	21	n	all models
+153	22	26	p	with
+153	29	39	n	batch size
+153	40	42	p	of
+153	43	54	n	25 examples
+153	63	71	n	momentum
+153	72	74	p	of
+153	75	78	n	0.9
+153	81	108	n	L 2 - regularization weight
+153	109	111	p	of
+153	112	117	n	0.001
+153	122	143	n	initial learning rate
+153	144	146	p	of
+153	147	151	n	0.01
+153	152	155	p	for
+153	156	163	n	AdaGrad
+24	19	26	p	propose
+24	30	49	n	attention mechanism
+24	50	60	p	to enforce
+24	65	70	n	model
+24	71	80	p	to attend
+24	88	116	n	important part of a sentence
+25	3	9	p	design
+25	13	52	n	aspect - tosentence attention mechanism
+25	58	76	p	can concentrate on
+25	81	89	n	key part
+25	90	92	p	of
+25	95	103	n	sentence
+25	104	109	p	given
+25	114	120	n	aspect
+26	3	10	p	explore
+26	15	36	n	potential correlation
+26	37	39	p	of
+26	40	69	n	aspect and sentiment polarity
+26	70	72	p	in
+26	73	112	n	aspect - level sentiment classification
+27	9	19	p	to capture
+27	20	41	n	important information
+27	42	56	p	in response to
+27	59	71	n	given aspect
+27	77	83	p	design
+27	87	106	n	attentionbased LSTM
+2	27	66	n	Aspect - level Sentiment Classification
+4	65	83	n	sentiment analysis
+15	29	68	n	aspect - level sentiment classification
+176	0	4	n	LSTM
+176	7	20	n	Standard LSTM
+176	21	36	p	can not capture
+176	41	59	n	aspect information
+176	60	62	p	in
+176	63	71	n	sentence
+182	9	34	p	can not take advantage of
+182	39	57	n	aspect information
+182	91	108	n	worst performance
+183	0	9	n	TD - LSTM
+183	22	33	p	can improve
+183	38	49	n	performance
+183	50	52	p	of
+183	53	73	n	sentiment classifier
+183	74	85	p	by treating
+183	89	95	n	aspect
+183	96	98	p	as
+183	101	107	n	target
+184	6	17	p	there is no
+184	18	37	n	attention mechanism
+184	38	40	p	in
+184	41	50	n	TD - LSTM
+184	56	63	p	can not
+184	66	70	n	know
+184	73	78	p	which
+184	79	84	n	words
+184	85	88	p	are
+184	89	98	n	important
+184	99	102	p	for
+184	105	117	n	given aspect
+186	24	33	n	TC - LSTM
+186	34	42	p	performs
+186	43	48	n	worse
+186	49	53	p	than
+186	54	72	n	LSTM and TD - LSTM
+190	0	11	n	ATAE - LSTM
+190	21	30	p	addresses
+190	35	46	n	shortcoming
+190	47	49	p	of
+190	54	66	n	unconformity
+190	67	74	p	between
+190	75	109	n	word vectors and aspect embeddings
+190	125	132	p	capture
+190	137	163	n	most important information
+190	164	178	p	in response to
+190	181	193	n	given aspect

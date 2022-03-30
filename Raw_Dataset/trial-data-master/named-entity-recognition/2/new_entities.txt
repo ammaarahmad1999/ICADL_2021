@@ -1,0 +1,72 @@
+27	37	51	p	application of
+27	52	72	n	dilated convolutions
+27	73	76	p	for
+27	77	94	n	sequence labeling
+29	47	57	p	operate on
+29	60	85	n	sliding window of context
+29	86	90	p	over
+29	95	103	n	sequence
+30	3	11	p	stacking
+30	12	18	n	layers
+30	19	21	p	of
+30	22	42	n	dilated convolutions
+30	43	45	p	of
+30	46	85	n	exponentially increasing dilation width
+30	95	110	p	expand the size
+30	118	139	n	effective input width
+30	140	148	p	to cover
+30	153	184	n	entire length of most sequences
+33	13	59	n	iterated dilated CNN architecture ( ID - CNN )
+33	71	78	p	applies
+33	83	117	n	same block of dilated convolutions
+33	118	120	p	to
+33	121	149	n	token - wise representations
+34	23	31	p	prevents
+34	32	43	n	overfitting
+34	53	78	p	provides opportunities to
+34	79	140	n	inject supervision on intermediate activations of the network
+35	77	88	n	two methods
+35	89	92	p	for
+35	93	114	n	performing prediction
+35	124	131	p	predict
+35	132	165	n	each token 's label independently
+35	171	181	p	by running
+35	182	199	n	Viterbi inference
+35	200	202	p	in
+35	205	237	n	chain structured graphical model
+162	32	61	p	strong LSTM and CNN baselines
+162	66	123	n	Bi - LSTM with local decoding , and one with CRF decoding
+163	26	54	p	non-dilated CNN architecture
+163	125	138	n	4 - layer CNN
+163	258	271	n	5 - layer CNN
+2	0	36	n	Fast and Accurate Entity Recognition
+7	22	62	n	faster alternative to Bi - LSTMs for NER
+12	12	113	n	democratize large - scale NLP and information extraction while minimizing our environmental footprint
+169	4	28	n	CoNLL - 2003 English NER
+169	35	62	n	Sentence - level prediction
+171	4	77	n	Viterbi - decoding Bi - LSTM - CRF and ID - CNN - CRF and greedy ID - CNN
+171	78	84	p	obtain
+171	89	111	n	highest average scores
+172	4	19	n	greedy ID - CNN
+172	20	31	p	outperforms
+172	36	67	n	Bi - LSTM and the 4 - layer CNN
+174	40	48	n	ID - CNN
+174	0	16	p	When paired with
+174	17	33	n	Viterbi decoding
+174	49	69	p	performs on par with
+174	74	83	n	Bi - LSTM
+174	86	93	p	showing
+174	103	146	n	ID - CNN is also an effective token encoder
+174	147	150	p	for
+174	151	171	n	structured inference
+186	0	27	n	Document - level prediction
+187	69	71	p	on
+187	72	84	n	CoNLL - 2003
+187	16	22	p	adding
+187	23	47	n	document - level context
+187	48	56	p	improves
+187	57	68	n	every model
+194	0	25	n	OntoNotes 5.0 English NER
+200	4	16	n	greedy model
+200	20	38	p	out - performed by
+200	43	96	n	Bi - LSTM - CRF reported in Chiu and Nichols ( 2016 )

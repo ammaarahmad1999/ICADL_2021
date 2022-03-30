@@ -1,0 +1,4 @@
+(Contribution||has||Ablation analysis)
+(Ablation analysis||has||all three proposed dynamic routing strategies)
+(all three proposed dynamic routing strategies||contribute to||effectiveness of Capsule - B)
+(effectiveness of Capsule - B||by alleviating||disturbance of some noise capsules)

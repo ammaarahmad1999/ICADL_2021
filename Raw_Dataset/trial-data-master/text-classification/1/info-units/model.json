@@ -1,0 +1,55 @@
+{
+  "has" : {
+    "Model" : {
+      "consider" : {
+        "more general framework" : {
+          "subsuming" : "one - hot CNN",
+          "jointly trains" : {
+            "feature generator and a linear model" : {
+              "where" : {
+                "feature generator" : {
+                  "consists of" : "region embedding + pooling"
+                }
+              }              
+            }
+          }
+        },
+        "from sentence" : "In this work , we consider a more general framework ( subsuming one - hot CNN ) which jointly trains a feature generator and a linear model , where the feature generator consists of ' region embedding + pooling ' ."        
+      },
+      "build on" : {
+        "general framework of ' region embedding + pooling '" : {
+          "explore" : {
+            "more sophisticated region embedding" : {
+              "via" : "Long Short - Term Memory ( LSTM )"
+            }
+          }
+        },
+        "from sentence" : "In this work , we build on the general framework of ' region embedding + pooling ' and explore a more sophisticated region embedding via Long Short - Term Memory ( LSTM ) , seeking to overcome the shortcomings above , in the supervised and semi-supervised settings ."
+      },
+      "pursue" : {
+        "best use of LSTM" : {
+          "compare" : {
+            "the resulting model" : {
+              "with" : {
+                "previous best methods" : {
+                  "including" : "one - hot CNN and previous LSTM"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "We pursue the best use of LSTM for our purpose , and then compare the resulting model with the previous best methods including one - hot CNN and previous LSTM ."
+      },
+      "strategy" : {
+        "simplify the model as much as possible" : {
+          "including elimination of" : {
+            "word embedding layer" : {
+              "routinely used to produce" : "input to LSTM"
+            }
+          }
+        },
+        "from sentence" : "Our strategy is to simplify the model as much as possible , including elimination of a word embedding layer routinely used to produce input to LSTM ."
+      }
+    }
+  }
+}

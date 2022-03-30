@@ -1,0 +1,55 @@
+7	39	76	n	https://github.com/soskek/der-network
+76	0	3	p	For
+76	4	17	n	preprocessing
+76	23	30	p	segment
+76	31	40	n	sentences
+76	44	61	n	punctuation marks
+76	64	65	n	.
+76	72	73	n	!
+76	84	85	n	?
+78	3	8	p	train
+78	13	18	n	model
+78	21	25	p	with
+78	26	44	n	hyper - parameters
+78	45	58	n	lightly tuned
+78	59	61	p	on
+78	66	80	n	validation set
+23	49	58	p	implement
+23	61	67	n	reader
+23	73	91	p	dynamically builds
+23	92	115	n	meaning representations
+23	116	119	p	for
+23	120	131	n	each entity
+23	134	163	p	by gathering and accumulating
+23	164	175	n	information
+23	176	178	p	on
+23	184	190	n	entity
+23	191	202	p	as it reads
+23	205	213	n	document
+2	58	73	n	Machine Reading
+80	14	27	n	Max - pooling
+80	53	73	n	drastically improves
+80	74	85	n	performance
+103	4	29	n	99 % confidence intervals
+103	30	32	p	of
+103	37	44	n	results
+103	45	47	p	of
+103	48	100	n	full DER Network and the one initialized by word2vec
+103	101	103	p	on
+103	108	116	n	test set
+103	117	121	p	were
+103	122	139	n	[ 0.700 , 0.740 ]
+103	144	161	n	[ 0.708 , 0.749 ]
+100	13	22	p	note that
+100	23	35	n	initializing
+100	36	45	n	our model
+100	46	50	p	with
+100	51	75	n	pre-trained word vectors
+100	79	81	p	is
+100	82	89	n	helpful
+102	23	32	n	our model
+102	35	51	n	full DER Network
+102	54	59	p	shows
+102	64	76	n	best results
+102	77	88	p	compared to
+102	89	119	n	several previous reader models

@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Talman, Ylh-Jyra and Tiedemann
+Model Architecture
+Talman, Ylh-Jyra and Tiedemann
+Talman, Ylh-Jyra and Tiedemann
+SNLI
+MultiNLI
+SciTail
+Error Analysis of NLI Predictions
+Evaluation of Linguistic Abstractions
+Linguistic Error Analysis of NLI Classifications
+Tests with the Breaking NLI dataset
+Transfer Learning
+Conclusion

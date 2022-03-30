@@ -1,0 +1,147 @@
+118	32	54	n	three baseline systems
+118	57	84	n	BRNN , the bi-direction RNN
+118	87	115	n	BLSTM , the bidirection LSTM
+118	122	170	n	BLSTM - CNNs , the combination of BLSTM with CNN
+118	171	179	p	to model
+118	180	206	n	characterlevel information
+97	0	22	n	Parameter optimization
+97	26	40	p	performed with
+97	41	86	n	minibatch stochastic gradient descent ( SGD )
+97	87	91	p	with
+97	92	102	n	batch size
+97	103	105	n	10
+97	110	118	n	momentum
+97	119	122	n	0.9
+104	4	23	n	" best " parameters
+104	24	33	p	appear at
+104	34	50	n	around 50 epochs
+98	3	9	p	choose
+98	13	34	n	initial learning rate
+98	35	37	p	of
+98	50	54	n	0.01
+98	55	58	p	for
+98	59	70	n	POS tagging
+98	77	82	n	0.015
+98	83	86	p	for
+98	87	90	n	NER
+98	140	150	p	updated on
+98	151	161	n	each epoch
+98	162	164	p	of
+98	165	173	n	training
+100	3	9	p	reduce
+100	14	21	n	effects
+100	22	24	p	of
+100	27	45	n	gradient exploding
+100	53	56	p	use
+100	59	76	n	gradient clipping
+100	77	79	p	of
+100	80	83	n	5.0
+103	3	6	p	use
+103	7	21	n	early stopping
+103	22	30	p	based on
+103	31	42	n	performance
+103	43	45	p	on
+103	46	61	n	validation sets
+106	0	11	p	For each of
+106	16	26	n	embeddings
+106	32	43	p	fine - tune
+106	44	62	n	initial embeddings
+106	65	86	p	modifying them during
+106	87	103	n	gradient updates
+106	104	106	p	of
+106	111	131	n	neural network model
+106	132	134	p	by
+106	135	163	n	back - propagating gradients
+109	0	11	p	To mitigate
+109	12	23	n	overfitting
+109	29	34	p	apply
+109	39	53	n	dropout method
+109	83	96	p	to regularize
+109	101	106	n	model
+110	23	28	p	apply
+110	29	36	n	dropout
+110	37	39	p	on
+110	40	60	n	character embeddings
+110	61	80	p	before inputting to
+110	81	84	n	CNN
+110	103	127	n	input and output vectors
+110	128	130	p	of
+110	131	136	n	BLSTM
+111	3	6	p	fix
+111	7	19	n	dropout rate
+111	20	22	p	at
+111	23	26	n	0.5
+111	27	30	p	for
+111	31	49	n	all dropout layers
+21	19	26	p	propose
+21	29	56	n	neural network architecture
+21	57	60	p	for
+21	61	78	n	sequence labeling
+22	3	5	p	is
+22	14	31	n	endto - end model
+22	32	44	p	requiring no
+22	45	70	n	task - specific resources
+22	73	92	n	feature engineering
+22	98	117	n	data pre-processing
+22	118	124	p	beyond
+22	125	152	n	pre-trained word embeddings
+22	153	155	p	on
+22	156	173	n	unlabeled corpora
+23	24	41	p	easily applied to
+23	44	54	n	wide range
+23	55	57	p	of
+23	58	81	n	sequence labeling tasks
+23	82	84	p	on
+23	85	116	n	different languages and domains
+24	3	12	p	first use
+24	13	51	n	convolutional neural networks ( CNNs )
+24	52	61	p	to encode
+24	62	91	n	character - level information
+24	92	94	p	of
+24	95	101	n	a word
+24	102	106	p	into
+24	107	143	n	its character - level representation
+25	8	15	p	combine
+25	16	60	n	character - and word - level representations
+25	65	79	p	feed them into
+25	80	109	n	bi-directional LSTM ( BLSTM )
+25	110	118	p	to model
+25	119	138	n	context information
+25	139	141	p	of
+25	142	151	n	each word
+26	0	9	p	On top of
+26	10	15	n	BLSTM
+26	21	24	p	use
+26	27	41	n	sequential CRF
+26	42	59	p	to jointly decode
+26	60	66	n	labels
+26	67	70	p	for
+26	75	89	n	whole sentence
+2	0	32	n	End - to - end Sequence Labeling
+4	23	40	n	sequence labeling
+10	0	28	n	Linguistic sequence labeling
+123	13	19	p	adding
+123	20	29	n	CRF layer
+123	30	33	p	for
+123	34	48	n	joint decoding
+123	52	59	p	achieve
+123	60	84	n	significant improvements
+123	85	89	p	over
+123	90	108	n	BLSTM - CNN models
+123	109	112	p	for
+123	118	137	n	POS tagging and NER
+127	0	14	p	Comparing with
+127	15	45	n	traditional statistical models
+127	48	58	n	our system
+127	59	67	p	achieves
+127	68	99	n	state - of - the - art accuracy
+127	102	111	p	obtaining
+127	112	130	n	0.05 % improvement
+127	131	135	p	over
+127	140	172	n	previously best reported results
+133	45	54	n	our model
+133	55	63	p	achieves
+133	64	88	n	significant improvements
+133	89	93	p	over
+133	94	99	n	Senna
+133	108	133	n	other three neural models

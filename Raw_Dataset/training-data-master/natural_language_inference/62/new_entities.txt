@@ -1,0 +1,104 @@
+198	37	46	p	replacing
+198	51	87	n	knowledge aided attention mechanisms
+198	88	92	p	with
+198	97	113	n	mutual attention
+198	134	148	n	self attention
+198	178	187	p	find that
+198	192	201	n	F 1 score
+198	202	204	p	of
+198	205	208	n	KAR
+198	209	217	p	drops by
+198	218	221	n	4.2
+198	222	224	p	on
+198	229	244	n	development set
+198	247	250	n	7.8
+198	251	253	p	on
+198	254	261	n	AddSent
+198	268	271	n	9.1
+198	272	274	p	on
+198	275	285	n	AddOneSent
+41	21	28	p	propose
+41	31	53	n	data enrichment method
+41	56	66	p	which uses
+41	67	74	n	WordNet
+41	75	85	p	to extract
+41	86	117	n	inter-word semantic connections
+41	118	120	p	as
+41	121	138	n	general knowledge
+41	139	143	p	from
+41	144	178	n	each given passage - question pair
+42	34	58	n	end - to - end MRC model
+42	59	64	p	named
+42	68	98	n	Knowledge Aided Reader ( KAR )
+42	107	122	p	explicitly uses
+42	133	160	n	extracted general knowledge
+42	161	170	p	to assist
+42	175	195	n	attention mechanisms
+181	3	11	p	tokenize
+181	16	27	n	MRC dataset
+181	28	32	p	with
+181	33	46	n	spa Cy 2.0.13
+181	49	59	p	manipulate
+181	60	71	n	WordNet 3.0
+181	72	76	p	with
+181	77	85	n	NLTK 3.3
+181	92	101	p	implement
+181	102	105	n	KAR
+181	106	110	p	with
+181	111	128	n	TensorFlow 1.11.0
+183	0	3	p	For
+183	8	36	n	dense layers and the BiLSTMs
+183	42	45	p	set
+183	50	71	n	dimensionality unit d
+183	72	74	p	to
+183	75	78	n	600
+184	4	22	n	model optimization
+184	28	33	p	apply
+184	38	77	n	Adam ( Kingma and Ba , 2014 ) optimizer
+184	78	82	p	with
+184	85	98	n	learning rate
+184	99	101	p	of
+184	102	108	n	0.0005
+184	115	129	n	minibatch size
+184	130	132	p	of
+184	133	135	n	32
+186	0	8	p	To avoid
+186	9	20	n	overfitting
+186	26	31	p	apply
+186	32	39	n	dropout
+186	40	42	p	to
+186	47	59	n	dense layers
+186	68	75	n	BiLSTMs
+186	76	80	p	with
+186	83	95	n	dropout rate
+186	96	98	p	of
+186	99	102	n	0.3
+187	0	8	p	To boost
+187	13	24	n	performance
+187	30	35	p	apply
+187	36	62	n	exponential moving average
+187	63	67	p	with
+187	70	80	n	decay rate
+187	81	83	p	of
+187	84	89	n	0.999
+2	45	74	n	Machine Reading Comprehension
+4	26	63	n	Machine Reading Comprehension ( MRC )
+4	236	239	n	MRC
+199	56	59	n	KAR
+199	116	118	p	on
+199	123	138	n	development set
+199	68	76	p	achieves
+199	80	82	n	EM
+199	42	44	p	of
+199	86	90	n	71.9
+199	98	107	n	F 1 score
+199	83	85	p	of
+199	111	115	n	80.8
+199	150	161	n	even better
+199	162	166	p	than
+199	171	188	n	final performance
+199	108	110	p	of
+199	192	216	n	several strong baselines
+199	219	226	p	such as
+199	227	256	n	DCN ( EM / F1 : 65.4 / 75.6 )
+199	261	292	n	BiDAF ( EM / F1 : 67.7 / 77.3 )

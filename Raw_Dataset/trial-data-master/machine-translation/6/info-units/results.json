@@ -1,0 +1,69 @@
+{
+  "has" : {
+    "Results" : {
+      "Tasks" : {
+        "Language Modeling" : {
+          "outperforms" : ["two baselines", {"from sentence" : "Language Modeling
+		  In all these settings , our method outperforms the two baselines ."
+		  
+		  }],
+          "on" : {
+            "PTB dataset" : {
+              "improves" : {
+                "AWD - LSTM and AWD - LSTM - MoS baseline" : {
+                  "by" : "0.8/1.2/1.0 and 0.76/1.13/1.15 points"
+                }
+              },
+              "from sentence" : "On PTB dataset , our method improves the AWD - LSTM and AWD - LSTM - MoS baseline by 0.8/1.2/1.0 and 0.76/1.13/1.15 points in test set at different checkpoints ."   
+            },
+            "WT2 dataset" : {
+              "achieves" : "larger improvements",
+              "from sentence" : "On WT2 dataset , which contains more rare words , our method achieves larger improvements ."
+            }
+          },
+          "improve the results of" : {
+            "AWD - LSTM and AWD - LSTM - MoS" : {
+              "by" : {
+                "2.3/2.4/2.7 and 1.15/1.72/1.54" : {
+                  "in terms of" : "test perplexity"
+                }
+              }
+            },
+            "from sentence" : "We improve the results of AWD - LSTM and AWD - LSTM - MoS by 2.3/2.4/2.7 and 1.15/1.72/1.54 in terms of test perplexity , respectively ."
+          }
+        },
+        "Machine Translation" : {
+          "outperform" : {
+            "baselines" : {
+              "for" : "1.06/0.71",
+              "in the term of" : "BLEU"
+            },
+            "from sentence" : "Machine Translation
+We outperform the baselines for 1.06/0.71 in the term of BLEU in transformer_base and transformer_big settings in WMT14 English - German : BLEU scores on test set on WMT2014 English - German and IWSLT German - English tasks ."
+
+          },
+          "outperforms" : {
+            "model" : {
+              "learned from" : "adversarial training"
+            },
+            "original one in IWSLT14 German - English task" : {
+              "by" : "0.85"
+            },
+            "from sentence" : "The model learned from adversarial training also outperforms original one in IWSLT14 German - English task by 0.85 ."
+          }
+        },
+        "Text Classification" : {
+          "outperforms" : {
+            "baseline" : {
+              "for" : "1.26%/0.66%/0.44 %",
+              "on" : "three different datasets"
+            },
+            "from sentence" : "Text Classification
+Our method outperforms the baseline method for 1.26%/0.66%/0.44 % on three different datasets ."
+
+          }
+        }
+      }
+    }
+  }
+}

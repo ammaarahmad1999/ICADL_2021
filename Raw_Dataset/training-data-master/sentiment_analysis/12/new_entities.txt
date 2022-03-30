@@ -1,0 +1,101 @@
+30	19	26	p	propose
+30	29	92	n	novel progressive self - supervised attention learning approach
+30	93	96	p	for
+30	97	114	n	neural ASC models
+31	14	58	p	able to automatically and incrementally mine
+31	59	92	n	attention supervision information
+31	93	97	p	from
+31	100	115	n	training corpus
+31	131	149	p	exploited to guide
+31	154	162	n	training
+31	163	165	p	of
+31	166	186	n	attention mechanisms
+31	187	189	p	in
+31	190	200	n	ASC models
+32	35	43	p	roots in
+32	69	81	n	context word
+32	82	86	p	with
+32	91	115	n	maximum attention weight
+32	124	139	n	greatest impact
+32	140	142	p	on
+32	147	167	n	sentiment prediction
+32	168	170	p	of
+32	174	188	n	input sentence
+150	3	7	p	used
+150	8	34	n	pre-trained Glo Ve vectors
+150	35	48	p	to initialize
+150	53	68	n	word embeddings
+150	69	73	p	with
+150	74	90	n	vector dimension
+150	91	94	n	300
+151	0	3	p	For
+151	4	31	n	out - of - vocabulary words
+151	37	53	p	randomly sampled
+151	60	70	n	embeddings
+151	71	75	p	from
+151	80	100	n	uniform distribution
+153	0	12	p	To alleviate
+153	13	24	n	overfitting
+153	30	38	p	employed
+153	39	80	n	dropout strategy ( Hinton et al. , 2012 )
+153	81	83	p	on
+153	88	109	n	input word embeddings
+153	110	112	p	of
+153	117	121	n	LSTM
+154	0	29	n	Adam ( Kingma and Ba , 2015 )
+154	34	41	p	adopted
+154	49	58	n	optimizer
+154	59	63	p	with
+154	68	81	n	learning rate
+154	82	87	n	0.001
+156	0	22	n	All hyper - parameters
+156	28	36	p	tuned on
+156	37	75	n	20 % randomly held - out training data
+155	0	17	p	When implementing
+155	18	30	n	our approach
+155	36	51	p	empirically set
+155	56	82	n	maximum iteration number K
+155	83	85	p	as
+155	86	87	n	5
+155	109	112	n	0.1
+155	113	115	p	on
+155	116	131	n	LAPTOP data set
+155	134	137	n	0.5
+155	138	140	p	on
+155	141	154	n	REST data set
+155	159	162	n	0.1
+155	163	165	p	on
+155	166	182	n	TWITTER data set
+2	53	86	n	Aspect - Level Sentiment Analysis
+4	3	50	n	aspect - level sentiment classification ( ASC )
+6	91	101	n	neural ASC
+13	0	47	n	Aspect - level sentiment classification ( ASC )
+13	78	96	n	sentiment analysis
+18	46	49	n	ASC
+174	8	45	n	both of our reimplemented MN and TNet
+174	50	63	p	comparable to
+174	70	85	n	original models
+176	62	72	n	TNet - ATT
+176	8	15	p	replace
+176	20	23	n	CNN
+176	24	26	p	of
+176	27	31	n	TNet
+176	32	36	p	with
+176	40	59	n	attention mechanism
+176	76	96	p	slightly inferior to
+176	97	101	n	TNet
+177	19	26	p	perform
+177	27	53	n	additional K+1 - iteration
+177	54	56	p	of
+177	57	65	n	training
+177	66	68	p	on
+177	221	238	n	neural ASC models
+177	90	101	p	performance
+177	106	131	n	not changed significantly
+183	18	21	p	use
+183	22	69	n	both kinds of attention supervision information
+183	101	112	n	MN ( + AS )
+183	113	135	p	remarkably outperforms
+183	136	138	n	MN
+183	139	141	p	on
+183	142	155	n	all test sets

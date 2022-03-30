@@ -1,0 +1,96 @@
+183	16	18	p	on
+183	19	43	n	both CONLL and ONTONOTES
+183	3	10	p	observe
+183	50	61	n	SSKIP model
+183	62	73	p	outperforms
+183	74	101	n	our feature vector approach
+183	102	104	p	by
+183	105	130	n	0.65 F1 points on average
+174	8	15	p	observe
+174	21	54	n	models that use both feature sets
+174	55	79	p	significantly outperform
+174	80	100	n	other configurations
+139	0	8	n	Training
+139	12	26	p	carried out by
+139	27	73	n	mini-batch stochastic gradient descent ( SGD )
+139	74	78	p	with
+139	81	96	n	momentum of 0.9
+139	103	127	n	gradient clipping of 5.0
+140	4	14	n	mini-batch
+140	15	17	p	is
+140	18	20	n	10
+140	21	24	p	for
+140	25	38	n	both datasets
+140	45	59	n	learning rates
+140	60	63	p	are
+140	64	79	n	0.009 and 0.013
+140	80	83	p	for
+140	84	103	n	CONLL and ONTONOTES
+147	3	9	p	varied
+147	10	17	n	dropout
+147	29	41	n	hidden units
+147	46	60	n	capitalization
+147	67	94	n	char ) embedding dimensions
+147	97	110	n	learning rate
+147	113	130	n	[ 0.001 , 0.015 ]
+147	131	133	p	by
+147	134	144	n	step 0.002
+148	3	14	p	implemented
+148	19	25	n	system
+148	26	31	p	using
+148	36	54	n	Tensorflow library
+148	61	64	p	ran
+148	69	75	n	models
+148	76	78	p	on
+148	81	105	n	GeForce GTX TITAN Xp GPU
+24	76	83	p	propose
+24	87	121	n	alternative lexical representation
+24	131	138	p	trained
+24	139	146	n	offline
+24	163	171	p	added to
+24	172	193	n	any neural NER system
+25	19	24	p	embed
+25	25	47	n	words and entity types
+25	48	52	p	into
+25	55	73	n	joint vector space
+25	74	87	p	by leveraging
+25	88	94	n	WiFiNE
+2	37	78	n	Neural Network Named - Entity Recognition
+4	0	55	n	Neural network approaches to Named - Entity Recognition
+14	0	26	n	Named - Entity Recognition
+14	29	32	n	NER
+171	8	10	p	on
+171	11	16	n	CONLL
+155	34	59	p	significantly outperforms
+155	60	66	n	models
+155	72	75	p	use
+155	76	114	n	extensive sets of handcrafted features
+156	19	30	p	outperforms
+156	39	54	n	other NN models
+156	55	68	p	that only use
+156	69	93	n	standard word embeddings
+156	102	111	p	indicates
+156	117	188	n	our lexical feature vector is complementary to standard word embeddings
+157	19	26	p	matches
+157	27	62	n	state - of - the - art performances
+157	63	65	p	of
+157	66	72	n	models
+157	73	81	p	that use
+157	89	115	n	more complex architectures
+157	119	142	n	more elaborate features
+172	11	20	n	ONTONOTES
+167	27	52	p	significantly outperforms
+167	57	116	n	Bi - LSTM - CNN - CRF models of ( Chiu and Nichols , 2016 )
+167	121	123	p	by
+167	124	140	n	an absolute gain
+167	141	143	p	of
+167	144	177	n	1.68 and 0.96 points respectively
+168	23	32	p	surpasses
+168	33	69	n	systems with hand - crafted features
+168	72	81	p	including
+168	87	101	n	use gazetteers
+168	112	155	n	system of which uses coreference annotation
+168	156	158	p	in
+168	159	168	n	ONTONOTES
+168	169	185	p	to jointly model
+168	186	241	n	NER , entity linking , and coreference resolution tasks

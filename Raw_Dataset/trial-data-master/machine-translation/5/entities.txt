@@ -1,0 +1,35 @@
+25	57	66	submitted
+25	67	113	both constrained and unconstrained NMT systems
+26	19	56	list of the five MT systems submitted
+27	0	65	Constrained English - Estonian and Estonian - English NMT systems
+28	16	29	trained using
+28	30	97	parallel data and back - translated data in a 1 - to - 1 proportion
+29	0	67	Unconstrained English - Estonian and Estonian - English NMT systems
+30	23	36	trained using
+30	37	59	back - translated data
+30	170	178	were not
+30	179	187	factored
+31	2	43	constrained Estonian - English NMT system
+31	76	80	is a
+31	81	132	system combination of six factored data NMT systems
+32	0	65	Constrained English - Estonian and Estonian - English NMT systems
+33	16	29	trained using
+33	30	118	two sets of back - translated data in a 1 - to - 1 proportion to the clean parallel data
+2	9	28	Machine Translation
+4	60	63	NMT
+4	124	140	news translation
+9	0	26	Neural machine translation
+129	53	61	achieved
+129	62	76	better results
+129	77	81	than
+129	86	106	MLSTM - based models
+131	83	95	best results
+131	11	18	evident
+131	28	48	unconstrained models
+130	0	3	For
+130	8	29	constrained scenarios
+130	66	74	achieved
+130	32	65	both ensembles of averaged models
+130	75	88	higher scores
+130	89	93	than
+130	94	124	each individual averaged model

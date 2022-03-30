@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Global Encoding
+Attention-based seq2seq
+Convolutional Gated Unit
+Training
+Experiment Setup
+Datasets
+Experiment Settings
+Baseline Models
+Analysis
+Results
+Discussion
+Related Work
+Conclusion

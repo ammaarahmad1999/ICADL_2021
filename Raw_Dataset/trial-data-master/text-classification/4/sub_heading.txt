@@ -1,0 +1,15 @@
+title
+abstract
+NEC Laboratories America
+Related Work
+Model
+Basic CNN for text representations
+Learning context-sensitive filters
+Extension to text sequence matching
+Connections to attention mechanism
+Experimental Setup
+Experimental Results
+Document Classification
+Answer Sentence Selection
+Discussion
+Conclusions

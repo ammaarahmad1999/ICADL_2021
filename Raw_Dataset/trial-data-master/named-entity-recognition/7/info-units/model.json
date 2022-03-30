@@ -1,0 +1,73 @@
+{
+  "has" : {
+    "Model" : {
+      "design" : {
+        "transition - based system" : {
+          "To achieve" : {
+            "scalable and effective solution" : {
+              "for recognizing" : "nested mentions"
+            }
+          }
+        },
+        "from sentence" : "To achieve a scalable and effective solution for recognizing nested mentions , we design a transition - based system which is inspired by the recent success of employing transition - based methods for constituent parsing ) and named entity recognition , especially when they are paired with neural networks ."        
+      },
+      "mapped" : {
+        "each sentence with nested mentions" : {
+          "to" : "forest where each outermost mention forms a tree consisting of its inner mentions"
+        },
+        "from sentence" : "Generally , each sentence with nested mentions is mapped to a forest where each outermost mention forms a tree consisting of its inner mentions ."
+      },
+      "learns to construct" : {
+        "this forest" : {
+          "through" : "sequence of shift - reduce actions"
+        },
+        "from sentence" : "Then our transition - based system learns to construct this forest through a sequence of shift - reduce actions ."
+      },
+      "employ" : {
+        "Stack - LSTM" : {
+          "to represent" : {
+            "system 's state" : {
+              "consists of" : {
+                "states of input , stack and action history" : {
+                  "in" : "continuous space incrementally"
+                }
+              }
+            },
+            "from sentence" : "Following , we employ Stack - LSTM to represent the system 's state , which consists of the states of input , stack and action history , in a continuous space incrementally ."
+          },
+          "has" : {
+            "( partially ) processed nested mentions" : {
+              "encoded with" : {
+                "recursive neural networks" : {
+                  "where" : {
+                    "composition functions" : {
+                      "are used to capture" : {
+                        "dependencies" : {
+                          "between" : "nested mentions"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "from sentence" : "The ( partially ) processed nested mentions in the stack are encoded with recursive neural networks where composition functions are used to capture dependencies between nested mentions ."            
+          },
+          "incorporate" : {
+            "characterlevel LSTM" : {
+              "to capture" : "morphological information",
+              "help deal with" : {
+                "out - of - vocabulary problem" : {
+                  "of" : "neural models"
+                }
+              }
+            },
+            "from sentence" : "Based on the observation that letter - level patterns such as capitalization and prefix can be beneficial in detecting mentions , we incorporate a characterlevel LSTM to capture such morphological information . 
+Meanwhile , this character - level component can also help deal with the out - of - vocabulary problem of neural models ."
+          
+          }
+        }
+      }
+    }
+  }
+}

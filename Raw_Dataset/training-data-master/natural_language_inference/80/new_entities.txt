@@ -1,0 +1,155 @@
+195	7	15	p	see that
+195	16	33	n	all modifications
+195	34	41	p	lead to
+195	44	53	n	new model
+197	0	5	p	Among
+197	6	20	n	all components
+197	23	36	n	three of them
+197	37	41	p	have
+197	42	63	n	noticeable influences
+197	66	77	n	max pooling
+197	80	113	n	difference in the attention stage
+197	120	137	n	dependent reading
+199	5	15	p	illustrate
+199	20	30	n	importance
+199	31	33	p	of
+199	34	73	n	our proposed dependent reading strategy
+199	80	88	p	leads to
+199	89	112	n	significant improvement
+199	128	130	p	in
+199	135	149	n	encoding stage
+203	0	12	p	demonstrates
+203	33	49	n	best performance
+203	50	54	p	with
+203	55	80	n	450 - dimensional BiLSTMs
+128	3	6	p	use
+128	7	45	n	pre-trained 300 - D Glove 840B vectors
+128	46	59	p	to initialize
+128	60	86	n	our word embedding vectors
+134	9	32	n	fairly small batch size
+134	33	35	p	of
+134	36	38	n	32
+129	0	17	n	All hidden states
+129	18	20	p	of
+129	21	28	n	BiLSTMs
+129	29	35	p	during
+129	36	64	n	input encoding and inference
+129	65	69	p	have
+129	70	84	n	450 dimensions
+130	4	11	n	weights
+130	16	26	p	learned by
+130	27	37	n	minimizing
+130	42	52	n	log - loss
+130	53	55	p	on
+130	60	73	n	training data
+130	74	77	p	via
+130	82	96	n	Adam optimizer
+131	4	25	n	initial learning rate
+131	26	28	p	is
+131	29	35	n	0.0004
+132	0	8	p	To avoid
+132	9	20	n	overfitting
+132	26	29	p	use
+132	30	37	n	dropout
+132	38	42	p	with
+132	47	51	n	rate
+132	52	54	p	of
+132	55	58	n	0.4
+132	59	62	p	for
+132	63	77	n	regularization
+132	89	99	p	applied to
+132	100	127	n	all feedforward connections
+133	0	6	p	During
+133	7	15	n	training
+133	22	37	n	word embeddings
+133	42	58	p	updated to learn
+133	59	84	n	effective representations
+133	85	88	p	for
+133	93	101	n	NLI task
+30	3	10	p	propose
+30	13	71	n	dependent reading bidirectional LSTM ( DR - BiLSTM ) model
+31	49	62	p	first encodes
+31	8	36	n	premise u and a hypothesis v
+31	68	79	p	considering
+31	80	90	n	dependency
+31	91	93	p	on
+31	94	104	n	each other
+32	17	24	p	employs
+32	27	51	n	soft attention mechanism
+32	52	62	p	to extract
+32	63	83	n	relevant information
+32	84	88	p	from
+32	89	104	n	these encodings
+33	4	38	n	augmented sentence representations
+33	48	57	p	passed to
+33	62	77	n	inference stage
+33	86	90	p	uses
+33	93	127	n	similar dependent reading strategy
+33	128	130	p	in
+33	131	146	n	both directions
+34	12	20	n	decision
+34	24	36	p	made through
+34	39	71	n	multi - layer perceptron ( MLP )
+34	72	80	p	based on
+34	85	107	n	aggregated information
+2	54	80	n	Natural Language Inference
+4	61	95	n	natural language inference ( NLI )
+12	12	15	n	NLI
+174	0	22	n	DR - BiLSTM ( Single )
+174	23	31	p	achieves
+174	32	47	n	88.5 % accuracy
+174	48	50	p	on
+174	55	63	n	test set
+174	70	72	p	is
+174	88	108	n	best reported result
+174	109	114	p	among
+174	119	141	n	existing single models
+177	123	130	p	obtains
+177	38	46	n	accuracy
+177	47	49	p	of
+177	147	153	n	88.5 %
+177	162	186	n	considerably outperforms
+177	191	219	n	previous non-ensemble models
+177	0	24	n	DR - BiLSTM ( Ensemble )
+177	25	33	p	achieves
+177	135	143	n	accuracy
+177	144	146	p	of
+177	50	56	n	89.3 %
+177	63	74	n	best result
+177	75	86	p	observed on
+177	87	91	n	SNLI
+183	4	18	n	ensemble model
+183	19	43	n	considerably outperforms
+183	48	78	n	current state - of - the - art
+183	79	91	p	by obtaining
+183	92	107	n	89.3 % accuracy
+186	20	43	n	preprocessing mechanism
+186	44	52	p	leads to
+186	53	73	n	further improvements
+186	74	76	p	of
+186	77	92	n	0.4 % and 0.3 %
+186	93	95	p	on
+186	100	113	n	SNLI test set
+186	114	117	p	for
+186	118	148	n	our single and ensemble models
+187	10	26	n	our single model
+187	31	63	n	DR - BiLSTM ( Single ) + Process
+187	68	75	p	obtains
+187	80	114	n	state - of - the - art performance
+187	115	119	p	over
+187	125	160	n	reported single and ensemble models
+187	161	174	p	by performing
+187	177	202	n	simple preprocessing step
+188	16	49	n	DR - BiLSTM ( Ensem . ) + Process
+188	52	63	n	outperforms
+188	68	99	n	existing state - of - the - art
+188	100	110	n	remarkably
+188	113	130	n	0.7 % improvement
+178	7	16	p	utilizing
+178	19	45	n	trivial preprocessing step
+178	46	55	p	yields to
+178	56	76	n	further improvements
+178	77	79	p	of
+178	80	95	n	0.4 % and 0.3 %
+178	96	99	p	for
+178	100	138	n	single and ensemble DR - BiLSTM models

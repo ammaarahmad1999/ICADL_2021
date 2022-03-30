@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Related Work
+Neural Networks
+Aspect based Sentiment Analysis
+Gated Convolutional Network with
+Gating Mechanisms
+GCAE on ATSA
+Experiments
+Datasets and Experiment Preparation
+Compared Methods
+Results and Analysis
+Training Time
+Gating Mechanisms
+Visualization

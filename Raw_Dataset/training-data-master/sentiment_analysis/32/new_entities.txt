@@ -1,0 +1,192 @@
+133	0	8	n	Majority
+133	9	11	p	is
+133	14	35	n	basic baseline method
+133	44	51	p	assigns
+133	56	82	n	largest sentiment polarity
+133	83	85	p	in
+133	90	102	n	training set
+133	103	105	p	to
+133	106	117	n	each sample
+133	118	120	p	in
+133	125	133	n	test set
+134	0	4	n	LSTM
+134	10	14	p	uses
+134	15	31	n	one LSTM network
+134	32	40	p	to model
+134	45	52	n	context
+134	57	60	p	get
+134	65	77	n	hidden state
+134	78	80	p	of
+134	81	90	n	each word
+136	0	9	n	TD - LSTM
+136	10	16	p	adopts
+136	17	63	n	two long short - term memory ( LSTM ) networks
+136	64	72	p	to model
+136	77	89	n	left context
+136	90	94	p	with
+136	95	101	n	target
+136	110	123	n	right context
+136	124	128	p	with
+136	129	135	n	target
+138	0	9	n	AE - LSTM
+138	10	20	p	represents
+138	21	28	n	targets
+138	29	33	p	with
+138	34	51	n	aspect embeddings
+140	0	11	n	ATAE - LSTM
+140	25	33	p	based on
+140	34	43	n	AE - LSTM
+125	21	40	n	all word embeddings
+125	41	45	p	from
+125	46	64	n	context and target
+125	69	83	p	initialized by
+125	84	89	n	GloVe
+125	98	129	n	all out - of - vocabulary words
+125	134	148	p	initialized by
+125	149	157	n	sampling
+125	158	162	p	from
+125	167	204	n	uniform distribution U ( ?0.1 , 0.1 )
+126	4	19	n	weight matrices
+126	24	35	p	given their
+126	36	50	n	initial values
+126	54	67	p	sampling from
+126	68	105	n	uniform distribution U ( ?0.1 , 0.1 )
+126	116	122	n	biases
+126	127	133	p	set to
+126	134	139	n	zeros
+127	4	14	n	dimensions
+127	15	17	p	of
+127	18	76	n	word embeddings , attention vectors and LSTM hidden states
+127	81	87	p	set to
+127	88	91	n	300
+129	4	15	n	coefficient
+129	16	18	p	of
+129	19	36	n	L 2 normalization
+129	37	39	p	in
+129	44	62	n	objective function
+129	66	72	p	set to
+129	73	78	n	10 ?5
+129	89	101	n	dropout rate
+129	105	111	p	set to
+129	112	115	n	0.5
+128	3	8	p	train
+128	13	23	n	parameters
+128	24	26	p	of
+128	27	30	n	IAN
+128	36	42	p	employ
+128	47	55	n	Momentum
+128	64	68	p	adds
+128	71	79	n	fraction
+128	82	84	p	of
+128	89	102	n	update vector
+128	103	105	p	in
+128	110	120	n	prior step
+128	121	123	p	to
+128	128	149	n	current update vector
+42	44	51	p	propose
+42	55	98	n	interactive attention network ( IAN ) model
+42	108	116	p	based on
+42	117	159	n	long - short term memory networks ( LSTM )
+42	164	183	n	attention mechanism
+43	0	3	n	IAN
+43	4	12	p	utilizes
+43	17	36	n	attention mechanism
+43	37	52	p	associated with
+43	55	61	n	target
+43	62	68	p	to get
+43	69	90	n	important information
+43	91	95	p	from
+43	100	107	n	context
+43	112	119	p	compute
+43	120	142	n	context representation
+43	143	146	p	for
+43	147	171	n	sentiment classification
+44	14	26	p	makes use of
+44	31	54	n	interactive information
+44	55	59	p	from
+44	60	67	n	context
+44	68	80	p	to supervise
+44	85	93	n	modeling
+44	94	96	p	of
+44	101	107	n	target
+45	88	96	p	predicts
+45	101	119	n	sentiment polarity
+45	120	123	p	for
+45	128	134	n	target
+45	135	141	p	within
+45	142	153	n	its context
+45	10	14	p	with
+45	15	81	n	both target representation and context representation concatenated
+2	35	74	n	Aspect - Level Sentiment Classification
+5	63	87	n	sentiment classification
+143	0	21	n	All the other methods
+143	26	34	p	based on
+143	35	46	n	LSTM models
+143	51	62	p	better than
+143	67	82	n	Majority method
+144	4	15	n	LSTM method
+144	16	20	p	gets
+144	25	42	n	worst performance
+144	43	45	p	of
+144	46	85	n	all the neural network baseline methods
+146	0	9	n	TD - LSTM
+146	10	21	p	outperforms
+146	22	26	n	LSTM
+146	27	31	p	over
+146	32	55	n	1 percent and 2 percent
+146	56	58	p	on
+146	63	93	n	Restaurant and Laptop category
+148	10	40	n	both AE - LSTM and ATAE - LSTM
+148	41	54	p	stably exceed
+148	59	75	n	TD - LSTM method
+151	26	37	n	ATAE - LSTM
+151	0	13	p	Compared with
+151	14	23	n	AE - LSTM
+151	38	56	p	especially enhance
+151	61	72	n	interaction
+151	73	80	p	between
+151	85	109	n	context words and target
+151	125	143	n	better performance
+151	144	148	p	than
+151	149	158	n	AE - LSTM
+159	4	19	n	more attentions
+159	24	31	p	paid to
+159	32	39	n	targets
+159	73	81	p	achieves
+159	46	61	n	higher accuracy
+149	0	3	p	For
+149	4	29	n	AE - LSTM and ATAE - LSTM
+149	37	44	p	capture
+149	45	66	n	important information
+149	67	69	p	in
+149	74	81	n	context
+149	82	86	p	with
+149	91	102	n	supervision
+149	103	105	p	of
+149	106	112	n	target
+149	117	125	p	generate
+149	126	157	n	more reasonable representations
+149	158	161	p	for
+149	162	201	n	aspect - level sentiment classification
+150	12	15	p	see
+150	21	46	n	AE - LSTM and ATAE - LSTM
+150	55	64	p	emphasize
+150	69	77	n	modeling
+150	78	80	p	of
+150	81	88	n	targets
+150	89	92	p	via
+150	97	129	n	addition of the aspect embedding
+153	16	19	n	IAN
+153	20	28	p	achieves
+153	33	49	n	best performance
+153	50	55	p	among
+153	56	69	n	all baselines
+154	0	13	p	Compared with
+154	14	31	n	ATAE - LSTM model
+154	34	37	n	IAN
+154	38	46	p	improves
+154	51	62	n	performance
+154	63	68	p	about
+154	69	84	n	1.4 % and 3.2 %
+154	85	87	p	on
+154	92	124	n	Restaurant and Laptop categories

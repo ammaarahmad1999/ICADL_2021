@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Methodology
+Structural Embedding of Syntactic
+Syntactic Sequence Extraction
+Syntactic Sequence Encoding
+Experiments
+Preprocessing
+Experiment Setting
+Predictive Performance
+Contribution of Syntactic Sequence
+Window Size Analysis
+Overlapping Analysis
+Related Work
+Conclusion

@@ -1,0 +1,19 @@
+title
+abstract
+Introduction
+Background
+Sentence Encoding
+Attention
+Self-Attention
+Two Proposed Attention Mechanisms
+Miulti-dimensional Attention
+Two types of Multi-dimensional Self-attention
+Directional Self-Attention
+Directional Self-Attention Network
+Experiments
+Natural Language Inference
+Sentiment Analysis
+Experiments on Other NLP Tasks
+Case Study
+Conclusion
+Acknowledgments

@@ -1,0 +1,12 @@
+title
+abstract
+Introduction
+Previous Work
+Corpora
+Proposed Joint Model
+Learning Text Embeddings
+Neural Net Models
+Joining Neural Nets
+Training and Evaluating the Models
+Comparison With Previous Work
+Conclusion

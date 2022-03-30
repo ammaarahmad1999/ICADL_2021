@@ -1,0 +1,100 @@
+79	0	9	n	MSA Model
+156	4	11	p	size of
+156	16	31	n	embedding layer
+156	32	34	p	is
+156	35	38	n	300
+156	49	64	n	LSTM layers 150
+157	3	6	p	add
+157	7	21	n	Gaussian noise
+157	22	26	p	with
+157	27	34	n	? = 0.2
+157	39	46	n	dropout
+157	47	49	p	of
+157	50	53	n	0.3
+157	54	56	p	at
+157	61	76	n	embedding layer
+157	90	93	n	0.5
+157	94	96	p	at
+157	101	112	n	LSTM layers
+157	128	132	n	0.25
+157	133	135	p	at
+157	140	161	n	recurrent connections
+157	87	89	p	of
+157	169	173	n	LSTM
+158	17	35	n	L 2 regularization
+158	36	38	p	of
+158	39	45	n	0.0001
+158	46	48	p	at
+158	53	66	n	loss function
+103	0	9	n	TSA Model
+160	4	11	p	size of
+160	16	31	n	embedding layer
+160	32	34	p	is
+160	35	38	n	300
+160	49	60	n	LSTM layers
+160	61	63	n	64
+161	3	9	p	insert
+161	10	24	n	Gaussian noise
+161	25	29	p	with
+161	30	37	n	? = 0.2
+161	38	40	p	at
+161	45	60	n	embedding layer
+161	61	63	p	of
+161	64	75	n	both inputs
+161	80	87	n	dropout
+161	88	90	p	of
+161	91	94	n	0.3
+161	95	97	p	at
+161	102	117	n	embedding layer
+161	118	120	p	of
+161	125	132	n	message
+161	146	149	n	0.2
+161	150	152	p	at
+161	157	167	n	LSTM layer
+161	176	196	n	recurrent connection
+161	143	145	p	of
+161	204	214	n	LSTM layer
+161	230	233	n	0.3
+161	234	236	p	at
+161	241	277	n	attention layer and the Maxout layer
+162	13	16	p	add
+162	17	35	n	L 2 regularization
+162	36	38	p	of
+162	39	44	n	0.001
+162	45	47	p	at
+162	52	65	n	loss function
+17	19	26	p	present
+17	27	54	n	two deep - learning systems
+17	60	71	p	competed at
+17	72	93	n	SemEval - 2017 Task 4
+18	4	15	n	first model
+18	19	42	p	designed for addressing
+18	47	89	n	problem of messagelevel sentiment analysis
+19	3	9	p	employ
+19	12	40	n	2 - layer Bidirectional LSTM
+19	43	56	p	equipped with
+19	60	79	n	attention mechanism
+20	0	3	p	For
+20	8	46	n	topic - based sentiment analysis tasks
+20	52	59	p	propose
+20	62	88	n	Siamese Bidirectional LSTM
+20	89	93	p	with
+20	96	128	n	contextaware attention mechanism
+2	66	118	n	Message - level and Topic - based Sentiment Analysis
+4	94	123	n	Sentiment Analysis in Twitter
+12	0	18	n	Sentiment analysis
+165	0	20	n	Our official ranking
+165	21	23	p	is
+165	24	36	n	1/38 ( tie )
+165	37	39	p	in
+165	40	49	n	Subtask A
+165	52	56	n	2/24
+165	57	59	p	in
+165	60	69	n	Subtask B
+165	72	76	n	2/16
+165	77	79	p	in
+165	80	89	n	Subtask C
+165	100	109	n	Subtask D
+165	114	119	n	11/12
+165	97	99	p	in
+165	123	132	n	Subtask E

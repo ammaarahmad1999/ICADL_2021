@@ -1,0 +1,52 @@
+{
+  "has" : {
+    "Hyperparameters" : {
+      "For" : {
+        "word vectors" : {
+          "use" : {
+            "Google 's publicly available embeddings" : {
+              "trained with" : {
+                "word2vec" : {
+                  "on" : "100 - billion - word News corpus"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "For word vectors we use Google 's publicly available embeddings , trained with word2vec on the 100 - billion - word News corpus ."
+      },
+      "found" : {
+        "dropout" : {
+          "effective at improving" : "generalization from the training to the test set",
+          "used" : {
+            "0.5" : {
+              "as" : "dropout probability"
+            }
+          }
+        },
+        "from sentence" : "We found dropout to be particularly effective at improving generalization from the training to the test set , and used 0.5 as the dropout probability ."
+      },
+      "used" : {
+        "Adam optimizer" : {
+          "with" : "standard settings ( Kingma and Ba , 2014 )",
+          "learning rate" : "0.003"
+        },
+        "from sentence" : "We used the Adam optimizer with the standard settings ( Kingma and Ba , 2014 ) and a learning rate of 0.003 ."
+      },
+      "To determine" : {
+        "best hyperparameters" : {
+          "performed" : {
+            "grid search" : {
+              "over" : {
+                "150 settings" : {
+                  "based on" : "validation - set accuracy"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "To determine the best hyperparameters we performed a grid search over 150 settings based on validation - set accuracy ."
+      }
+    }
+  }
+}

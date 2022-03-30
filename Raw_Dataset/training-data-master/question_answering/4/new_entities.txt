@@ -1,0 +1,207 @@
+213	29	31	p	on
+213	36	60	n	New s QA development set
+221	108	115	p	observe
+221	118	133	n	significant gap
+221	10	12	p	in
+221	137	148	n	performance
+221	149	156	p	between
+221	157	177	n	DECAPROP and R - NET
+226	20	31	n	superiority
+226	32	34	p	of
+226	35	43	n	DECAPROP
+226	44	48	p	over
+226	49	56	n	R - NET
+226	57	59	p	is
+226	60	92	n	consistent and relatively stable
+223	14	25	n	key insight
+223	26	28	p	is
+223	34	54	n	all model components
+223	55	69	p	are crucial to
+223	70	78	n	DECAPROP
+224	14	21	n	DECAENC
+224	22	41	p	seems to contribute
+224	46	50	n	most
+224	51	53	p	to
+224	58	78	n	over all performance
+152	0	6	n	NewsQA
+156	22	37	n	key competitors
+156	38	41	p	are
+156	42	47	n	BiDAF
+156	50	62	n	Match - LSTM
+156	65	87	n	FastQA / Fast QA - Ext
+156	90	99	n	R2-BiLSTM
+156	102	108	n	AMANDA
+157	0	9	n	Quasar -T
+159	4	19	n	key competitors
+159	36	39	p	are
+159	40	45	n	BiDAF
+159	54	88	n	Reinforced Ranker - Reader ( R 3 )
+161	0	8	n	SearchQA
+165	4	24	n	competitor baselines
+165	41	44	p	are
+165	45	73	n	Attention Sum Reader ( ASR )
+165	76	114	n	Focused Hierarchical RNNs ( FH - RNN )
+165	117	123	n	AMANDA
+165	126	131	n	BiDAF
+165	134	137	n	AQA
+165	146	180	n	Reinforced Ranker - Reader ( R 3 )
+166	0	12	n	Narrative QA
+168	3	15	p	compare with
+168	20	29	n	baselines
+168	54	60	p	namely
+168	61	68	n	Seq2Seq
+168	71	91	n	Attention Sum Reader
+168	96	101	n	BiDAF
+169	25	55	n	recent BiAttention + MRU model
+178	4	9	n	model
+178	13	27	p	implemented in
+178	28	38	n	Tensorflow
+179	4	20	n	sequence lengths
+179	25	34	p	capped at
+179	35	52	n	800/700/1500/1100
+179	53	56	p	for
+179	57	106	n	News QA , Search QA , Quasar - T and Narrative QA
+183	0	10	n	Batch size
+183	14	27	p	tuned amongst
+183	28	44	n	{ 16 , 32 , 64 }
+184	0	12	n	Dropout rate
+184	16	29	p	tuned amongst
+184	30	49	n	{ 0.1 , 0.2 , 0.3 }
+184	54	64	p	applied to
+184	65	101	n	all RNN and fully - connected layers
+187	4	8	n	size
+187	9	11	p	of
+187	16	36	n	character embeddings
+187	40	46	p	set to
+187	47	48	n	8
+187	57	70	n	character RNN
+187	74	80	p	set to
+187	97	122	n	word - level RNN encoders
+188	4	31	n	maximum characters per word
+188	35	41	p	set to
+188	42	44	n	16
+189	4	20	n	number of layers
+189	21	23	p	in
+189	24	31	n	DECAENC
+189	35	41	p	set to
+189	42	43	n	3
+189	52	69	n	number of factors
+189	70	72	p	in
+189	77	97	n	factorization kernel
+189	101	107	p	set to
+189	108	110	n	64
+180	3	6	p	use
+180	7	15	n	Adadelta
+180	16	20	p	with
+180	21	28	n	? = 0.5
+180	29	32	p	for
+180	33	40	n	News QA
+180	43	47	n	Adam
+180	48	52	p	with
+180	53	62	n	? = 0.001
+180	63	66	p	for
+180	67	76	n	Search QA
+180	79	89	n	Quasar - T
+180	94	106	n	Narrative QA
+182	11	31	n	CUDNN implementation
+182	32	34	p	of
+182	39	50	n	RNN encoder
+190	9	35	n	learning rate decay factor
+190	36	38	p	of
+190	39	40	n	2
+190	45	53	n	patience
+190	54	56	p	of
+190	57	65	n	3 epochs
+181	4	13	p	choice of
+181	18	29	n	RNN encoder
+181	33	46	p	tuned between
+181	47	65	n	GRU and LSTM cells
+181	74	85	n	hidden size
+181	89	102	p	tuned amongst
+181	103	124	n	{ 32 , 50 , 64 , 75 }
+185	3	8	p	apply
+185	9	28	n	variational dropout
+185	29	41	p	in - between
+185	42	52	n	RNN layers
+186	3	13	p	initialize
+186	18	33	n	word embeddings
+186	34	38	p	with
+186	39	61	n	300D Glo Ve embeddings
+186	70	82	p	fixed during
+186	83	91	n	training
+31	14	21	n	network
+31	22	24	p	is
+31	25	42	n	densely connected
+39	4	23	n	propagated features
+39	28	52	p	collectively passed into
+39	53	70	n	prediction layers
+39	79	98	p	effectively connect
+39	99	113	n	shallow layers
+39	114	116	p	to
+39	117	130	n	deeper layers
+37	17	24	p	propose
+37	25	77	n	efficient Bidirectional Attention Connectors ( BAC )
+37	78	80	p	as
+37	83	102	n	base building block
+37	103	113	p	to connect
+37	114	127	n	two sequences
+37	128	130	p	at
+37	131	147	n	arbitrary layers
+41	21	73	n	DECAPROP ( Densely Connected Attention Propagation )
+41	78	96	n	novel architecture
+41	97	100	p	for
+41	101	122	n	reading comprehension
+38	13	15	p	is
+38	19	27	p	compress
+38	32	49	n	attention outputs
+38	67	69	p	be
+38	70	75	n	small
+38	16	18	p	to
+38	86	95	n	propagate
+2	44	65	n	Reading Comprehension
+4	114	142	n	reading comprehension ( RC )
+9	53	55	n	RC
+192	82	90	n	DECAPROP
+192	91	99	p	achieves
+192	100	134	n	state - of - the - art performance
+192	137	139	p	on
+192	140	157	n	all four datasets
+194	27	38	p	outperforms
+194	43	74	n	existing state - of - the - art
+194	77	81	p	i.e.
+194	88	107	n	recent AMANDA model
+194	108	110	p	by
+194	113	123	n	+ 4.7 % EM
+194	126	136	n	+ 2.6 % F1
+196	11	29	n	our proposed model
+196	35	46	p	outperforms
+196	47	75	n	well - established baselines
+196	76	83	p	such as
+196	84	124	n	Match - LSTM ( + 18 % EM / + 16.3 % F1 )
+196	129	160	n	BiDAF ( + 16 % EM / + 14 % F1 )
+197	20	22	p	on
+197	23	33	n	Quasar - T
+198	0	9	n	Our model
+198	10	18	p	achieves
+198	19	53	n	state - of - the - art performance
+198	72	85	p	outperforming
+198	90	145	n	state - of - the - art R 3 ( Reinforced Ranker Reader )
+198	146	148	p	by
+198	151	170	n	considerable margin
+198	171	173	p	of
+198	174	195	n	+ 4.4 % EM / + 6 % F1
+202	26	35	n	our model
+202	36	47	p	outperforms
+202	48	54	n	AMANDA
+202	55	57	p	by
+202	58	103	n	+ 15.4 % EM and + 14.2 % in terms of F1 score
+203	53	56	n	AQA
+203	59	82	n	+ 18.1 % EM / + 18 % F1
+203	89	113	n	Reinforced Reader Ranker
+203	116	139	n	+ 7.8 % EM / + 8.3 % F1
+209	85	108	n	popular SQuAD benchmark
+209	30	39	n	our model
+210	16	32	p	does not achieve
+210	33	67	n	state - of - the - art performance
+210	80	94	p	can outperform
+210	99	111	n	base R - NET

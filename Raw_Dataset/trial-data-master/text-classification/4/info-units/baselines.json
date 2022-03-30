@@ -1,0 +1,54 @@
+{
+  "has" : {
+    "Baselines" : {
+      "For" : {
+        "document classification" : {
+          "consider" : {
+            "several baseline models" : {
+              "name" : [{"ngrams" : {
+                "has" : {
+                  "bag - of - means method" : {
+                    "based on" : {
+                      "TFIDF representations" : {
+                        "built by" : {
+                          "choosing the 500,000 most frequent n-grams ( up to 5 - grams )" : {
+                            "from" : "training set"
+                          }
+                        },
+                        "use" : {
+                          "corresponding counts" : {
+                            "as" : "features"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }},
+              {"small / large word CNN" : {
+                "has" : {
+                  "6 layer word - based convolutional networks" : {
+                    "with" : {
+                      "256/1024 features" : {
+                        "at" : "each layer"
+                      }
+                    }
+                  }
+                }
+              }},
+              {"deep CNN" : {
+                "has" : {
+                  "deep convolutional neural networks" : {
+                    "with" : "9/17 /29 layers"
+                  }  
+                }
+              }}
+              ]
+            }
+          }
+        }
+      },
+      "from sentence" : "For document classification , we consider several baseline models : ( i ) ngrams , a bag - of - means method based on TFIDF representations built by choosing the 500,000 most frequent n-grams ( up to 5 - grams ) from the training set and use their corresponding counts as features ; ( ii ) small / large word CNN : 6 layer word - based convolutional networks , with 256/1024 features at each layer , denoted as small / large , respectively ; ( iii ) deep CNN : deep convolutional neural networks with 9/17 /29 layers ."
+    }
+  }
+}

@@ -1,0 +1,8 @@
+title
+abstract
+Introduction
+MRC with Reattention
+Dynamic-critical Reinforcement Learning
+End-to-end Architecture
+Experiments
+Conclusion

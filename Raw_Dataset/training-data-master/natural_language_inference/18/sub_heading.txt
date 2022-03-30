@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+Neural Variational Inference Framework
+Neural Variational Document Model
+Neural Answer Selection Model
+Experiments
+Dataset & Setup for Document Modelling
+Experiments on Document Modelling
+Dataset & Setup for Answer Sentence Selection
+Experiments on Answer Sentence Selection
+Discussion
+Related Work
+Conclusion

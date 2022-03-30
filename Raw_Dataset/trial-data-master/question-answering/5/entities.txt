@@ -1,0 +1,103 @@
+118	0	8	To train
+118	9	18	our model
+118	24	28	used
+118	29	56	stochastic gradient descent
+118	57	61	with
+118	66	80	ADAM optimizer
+118	116	137	initial learning rate
+118	138	140	of
+118	141	146	0.001
+119	3	6	set
+119	11	21	batch size
+119	22	24	to
+119	25	27	32
+119	35	40	decay
+119	45	58	learning rate
+119	59	61	by
+119	62	65	0.8
+120	3	13	initialize
+120	18	38	weights of our model
+120	39	55	by sampling from
+120	60	94	normal distribution N ( 0 , 0.05 )
+121	38	53	are initialized
+121	16	37	GRU recurrent weights
+121	54	59	to be
+121	60	70	orthogonal
+121	75	81	biases
+121	98	100	to
+121	101	105	zero
+122	9	21	to stabilize
+122	26	34	learning
+122	40	44	clip
+122	49	58	gradients
+122	59	61	if
+122	68	72	norm
+122	76	88	greater than
+122	89	90	5
+125	13	27	implemented in
+125	28	34	Theano
+125	37	42	using
+125	47	60	Keras library
+19	79	86	propose
+19	89	135	novel neural attention - based inference model
+19	136	155	designed to perform
+19	156	191	machine reading comprehension tasks
+20	16	21	reads
+20	26	48	document and the query
+20	49	54	using
+20	57	81	recurrent neural network
+21	10	17	deploys
+21	21	48	iterative inference process
+21	49	59	to uncover
+21	64	81	inferential links
+21	93	100	between
+21	101	154	the missing query word , the query , and the document
+22	11	19	involves
+22	22	59	novel alternating attention mechanism
+22	71	81	attends to
+22	82	105	some parts of the query
+22	113	118	finds
+22	125	146	corresponding matches
+22	147	162	by attending to
+22	167	175	document
+23	4	10	result
+23	11	13	of
+23	19	37	alternating search
+23	41	54	fed back into
+23	59	86	iterative inference process
+23	87	94	to seed
+23	99	115	next search step
+25	0	5	After
+25	8	34	fixed number of iterations
+25	47	51	uses
+25	54	86	summary of its inference process
+25	87	97	to predict
+25	102	108	answer
+2	43	58	Machine Reading
+4	59	80	machine comprehension
+4	97	155	answering Cloze - style queries with respect to a document
+133	0	3	CBT
+135	52	54	on
+135	21	25	sets
+135	26	51	a new stateof - the - art
+135	59	79	common noun category
+135	80	90	by gaining
+135	91	109	3.6 and 5.6 points
+135	110	112	in
+135	113	132	validation and test
+135	133	137	over
+135	142	165	best baseline AS Reader
+149	0	3	CNN
+151	43	51	improves
+151	52	83	state - of - the - art accuracy
+151	84	86	by
+151	87	135	4 percent absolute on validation and 3.4 on test
+151	136	151	with respect to
+151	156	198	most recent published result ( AS Reader )
+159	51	58	achieve
+159	59	98	state - of - the - art test performance
+159	41	50	ensembles
+159	99	101	of
+159	102	151	75.2 and 76.1 on validation and test respectively
+159	154	167	outperforming
+159	168	196	previously published results

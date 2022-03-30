@@ -1,0 +1,143 @@
+67	3	10	propose
+67	13	33	novel tagging scheme
+67	41	57	end -toend model
+67	58	62	with
+67	63	88	biased objective function
+67	89	107	to jointly extract
+67	108	136	entities and their relations
+72	0	9	Tag " O "
+72	10	20	represents
+72	25	38	" Other " tag
+72	47	52	means
+72	62	120	corresponding word is independent of the extracted results
+99	55	62	produce
+99	67	80	tags sequence
+97	4	24	End - to - end Model
+100	3	11	contains
+100	14	71	bi-directional Long Short Term Memory ( Bi - LSTM ) layer
+100	72	81	to encode
+100	86	100	input sentence
+100	107	134	LSTM - based decoding layer
+100	135	139	with
+100	140	151	biased loss
+101	20	27	enhance
+101	32	56	relevance of entity tags
+74	3	6	use
+74	13	17	BIES
+74	22	51	Begin , Inside , End , Single
+74	63	72	represent
+74	77	97	position information
+74	98	102	of a
+74	103	107	word
+74	108	110	in
+74	115	121	entity
+169	87	99	divided into
+169	131	148	pipelined methods
+169	155	181	jointly extracting methods
+169	190	212	end - to - end methods
+170	8	25	pipelined methods
+173	6	17	DS-logistic
+173	20	24	is a
+173	25	68	distant supervised and feature based method
+173	77	85	combines
+173	90	146	advantages of supervised IE and unsupervised IE features
+173	155	159	LINE
+173	160	164	is a
+173	165	189	network embedding method
+173	201	213	suitable for
+173	214	253	arbitrary types of information networks
+174	6	9	FCM
+174	12	16	is a
+174	17	36	compositional model
+174	42	50	combines
+174	51	101	lexicalized linguistic context and word embeddings
+174	102	105	for
+174	106	125	relation extraction
+175	4	30	jointly extracting methods
+175	80	90	DS - Joint
+175	93	97	is a
+175	98	115	supervised method
+175	124	140	jointly extracts
+175	141	163	entities and relations
+175	164	169	using
+175	170	191	structured perceptron
+175	192	194	on
+175	195	220	human - annotated dataset
+175	229	235	MultiR
+175	236	240	is a
+175	241	274	typical distant supervised method
+175	275	283	based on
+175	284	318	multi-instance learning algorithms
+175	319	328	to combat
+175	333	352	noisy training data
+175	361	367	CoType
+175	370	374	is a
+175	375	403	domain independent framework
+175	404	424	by jointly embedding
+175	425	524	entity mentions , relation mentions , text features and type labels into meaningful representations
+176	60	89	end - to - end tagging models
+176	92	101	LSTM- CRF
+176	106	117	LSTM - LSTM
+177	14	26	proposed for
+177	27	45	entity recognition
+177	46	54	by using
+177	57	75	bidirectional LSTM
+177	76	85	to encode
+177	86	100	input sentence
+177	107	132	conditional random fields
+177	133	143	to predict
+177	148	167	entity tag sequence
+178	40	44	uses
+178	47	57	LSTM layer
+178	58	67	to decode
+178	72	99	tag sequence instead of CRF
+154	4	19	word embeddings
+154	20	27	used in
+154	32	45	encoding part
+154	50	62	initialed by
+154	63	81	running word2vec 3
+154	82	84	on
+154	85	104	NYT training corpus
+155	4	13	dimension
+155	40	47	d = 300
+156	3	13	regularize
+156	18	25	network
+156	26	31	using
+156	32	39	dropout
+156	40	42	on
+156	43	58	embedding layer
+156	75	83	ratio is
+156	84	87	0.5
+157	4	13	number of
+157	14	24	lstm units
+157	25	42	in encoding layer
+157	46	49	300
+157	65	82	in decoding layer
+157	86	89	600
+158	4	20	bias parameter ?
+159	35	37	10
+2	0	42	Joint Extraction of Entities and Relations
+10	49	148	detect entity mentions and recognize their semantic relations simultaneously from unstructured text
+17	70	131	extract entities together with relations using a single model
+182	33	51	LSTM - LSTM - Bias
+182	54	65	outperforms
+182	66	83	all other methods
+182	84	86	in
+182	87	96	F 1 score
+182	101	109	achieves
+182	112	127	3 % improvement
+182	128	130	in
+182	131	134	F 1
+182	135	139	over
+182	144	162	best method CoType
+191	22	39	LSTM - LSTM model
+191	40	54	is better than
+191	55	71	LSTM - CRF model
+191	72	80	based on
+191	81	99	our tagging scheme
+186	5	18	compared with
+186	23	42	traditional methods
+186	93	115	significantly improved
+186	49	59	precisions
+186	60	62	of
+186	67	88	end - to - end models

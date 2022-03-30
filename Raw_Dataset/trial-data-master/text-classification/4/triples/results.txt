@@ -1,0 +1,5 @@
+(Contribution||has||Results)
+(Results||has||Answer Sentence Selection)
+(Answer Sentence Selection||has||our model)
+(our model||yields||significantly better results)
+(significantly better results||than||attentive pooling network and ABCNN ( attention - based CNN ) baselines)

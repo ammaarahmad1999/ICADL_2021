@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Related Work
+Proposed Model
+Architecture
+Negative Sampling
+Experiments
+Optimal Hyperparameters
+Results
+Discussion
+Feature Combination
+Conclusion and Future Work

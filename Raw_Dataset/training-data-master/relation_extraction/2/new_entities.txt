@@ -1,0 +1,100 @@
+124	3	10	p	observe
+124	20	33	n	three methods
+124	38	45	p	perform
+124	46	51	n	worse
+124	52	56	p	than
+124	57	65	n	R - BERT
+125	17	43	n	BERT - NO - SEP - NO - ENT
+125	44	52	p	performs
+125	53	58	n	worst
+125	61	65	p	with
+125	70	93	n	F1 8.16 absolute points
+125	94	104	p	worse than
+125	105	113	n	R - BERT
+128	0	4	n	BERT
+128	5	12	p	without
+128	13	36	n	special separate tokens
+128	37	51	p	can not locate
+128	56	71	n	target entities
+126	20	32	p	demonstrates
+126	47	100	n	special separate tokens and the hidden entity vectors
+126	101	105	p	make
+126	106	129	n	important contributions
+130	20	33	p	incorporating
+130	38	44	n	output
+130	45	47	p	of
+130	52	73	n	target entity vectors
+130	74	90	p	further enriches
+130	95	106	n	information
+130	117	124	p	to make
+130	125	149	n	more accurate prediction
+100	140	143	n	SVM
+100	146	149	n	RNN
+100	152	157	n	MVRNN
+100	160	173	n	CNN + Softmax
+100	176	179	n	FCM
+100	182	190	n	CR - CNN
+100	193	208	n	Attention - CNN
+100	211	235	n	Entity Attention Bi-LSTM
+95	3	6	p	add
+95	7	14	n	dropout
+95	15	21	p	before
+95	22	41	n	each add - on layer
+96	0	3	p	For
+96	8	30	n	pre-trained BERT model
+96	36	39	p	use
+96	44	63	n	uncased basic model
+25	19	24	p	apply
+25	29	50	n	pretrained BERT model
+25	51	54	p	for
+25	55	78	n	relation classification
+26	3	9	p	insert
+26	10	24	n	special tokens
+26	25	41	p	before and after
+26	46	61	n	target entities
+26	123	134	p	to identify
+26	139	148	n	locations
+26	149	151	p	of
+26	156	175	n	two target entities
+26	180	188	p	transfer
+26	193	204	n	information
+26	205	209	p	into
+26	214	224	n	BERT model
+26	62	76	p	before feeding
+26	81	85	n	text
+26	86	88	p	to
+26	89	93	n	BERT
+26	94	97	p	for
+26	98	111	n	fine - tuning
+27	8	14	p	locate
+27	19	28	n	positions
+27	29	31	p	of
+27	36	55	n	two target entities
+27	56	58	p	in
+27	63	79	n	output embedding
+27	80	84	p	from
+27	85	95	n	BERT model
+28	121	136	p	as the input to
+28	139	167	n	multi - layer neural network
+28	168	171	p	for
+28	172	186	n	classification
+28	3	6	p	use
+28	13	23	n	embeddings
+28	39	56	n	sentence encoding
+28	59	68	n	embedding
+28	69	71	p	of
+28	76	95	n	special first token
+28	96	113	p	in the setting of
+28	114	118	n	BERT
+2	65	88	n	Relation Classification
+103	7	15	p	see that
+103	16	24	n	R - BERT
+103	25	44	p	significantly beats
+103	53	69	n	baseline methods
+104	4	18	n	MACRO F1 value
+104	19	21	p	of
+104	22	30	n	R - BERT
+104	31	33	p	is
+104	34	40	n	89. 25
+104	52	68	p	much better than
+104	73	95	n	previous best solution

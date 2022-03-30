@@ -1,0 +1,2239 @@
+arXiv:1802.05577v2 [cs.CL] 11 Apr 2018
+
+DR-BiLSTM: Dependent Reading Bidirectional LSTM for
+Natural Language Inference
+
+Reza Ghaeini'*, Sadid A. Hasan’, Vivek Datla’, Joey Liu”, Kathy Lee”, Ashequl Qadir’,
+Yuan Ling’, Aaditya Prakash’, Xiaoli Z. Fern! and Oladimeji Farri?
+‘Oregon State University, Corvallis, OR, USA
+? Artificial Intelligence Laboratory, Philips Research North America, Cambridge, MA, USA
+{ ghaeinim,xfern } @eecs.oregonstate.edu
+{ sadid.hasan, vivek.datla,joey.liu,kathy.lee_1,ashequl.qadir} @philips.com
+{ yuan. ling aaditya.prakash,dimeji.farri} @ philips.com
+
+Abstract
+
+We present a novel deep learning architecture to address the natural language inference (NLI) task. Existing approaches
+mostly rely on simple reading mechanisms for independent encoding of the
+premise and hypothesis. Instead, we propose a novel dependent reading bidirectional LSTM network (DR-BiLSTM) to
+efficiently model the relationship between
+a premise and a hypothesis during encoding and inference. We also introduce a
+sophisticated ensemble strategy to combine our proposed models, which noticeably improves final predictions. Finally,
+we demonstrate how the results can be
+improved further with an additional preprocessing step. Our evaluation shows
+that DR-BiLSTM obtains the best single
+model and ensemble model results achieving the new state-of-the-art scores on the
+Stanford NLI dataset.
+
+1 Introduction
+
+Natural Language Inference (NLI; a.k.a. Recognizing Textual Entailment, or RTE) is an important
+and challenging task for natural language understanding (MacCartney and Manning, 2008). The
+goal of NLI is to identify the logical relationship
+(entailment, neutral, or contradiction) between a
+premise and a corresponding hypothesis. Table 1
+shows few example relationships from the Stanford Natural Language Inference (SNLI) dataset
+(Bowman et al., 2015).
+
+Recently, NLI has received a lot of attention
+from the researchers, especially due to the availability of large annotated datasets like SNLI (Bow
+“This work was conducted as part of an internship program at Philips Research.
+
+A senior is waiting at the
+window of a restaurant Relationship
+that serves sandwiches.
+
+A person waits to be
+served his food.
+A man is looking to order
+
+Entailment
+
+Neutral
+
+a grilled cheese sandwich.
+A man is waiting in line
+for the bus.
+nines Premise.
+nines Hypothesis.
+
+ 
+
+Contradiction
+
+ 
+
+Table 1: Examples from the SNLI dataset.
+
+man et al., 2015). Various deep learning models
+have been proposed that achieve successful results
+for this task (Gong et al., 2017; Wang et al., 2017;
+Chen et al., 2017; Yu and Munkhdalai, 2017a;
+Parikh et al., 2016; Zhao et al., 2016; Sha et al.,
+2016). Most of these existing NLI models use attention mechanism to jointly interpret and align
+the premise and hypothesis. Such models use simple reading mechanisms to encode the premise and
+hypothesis independently. However, such a complex task require explicit modeling of dependency
+relationships between the premise and the hypothesis during the encoding and inference processes
+to prevent the network from the loss of relevant,
+contextual information. In this paper, we refer to
+such strategies as dependent reading.
+
+There are some alternative reading mechanisms available in the literature (Sha et al., 2016;
+Rocktaschel et al., 2015) that consider dependency
+aspects of the premise-hypothesis relationships.
+However, these mechanisms have two major limitations:
+
+e So far, they have only explored dependency
+aspects during the encoding stage, while ignoring its benefit during inference.
+
+e Such models only consider encoding a hypothesis depending on the premise, disreAccepted as a long paper at NAACL HLT 2018
+
+ 
+
+garding the dependency aspects in the opposite direction.
+
+We propose a dependent reading bidirectional
+LSTM (DR-BiLSTM) model to address these limitations. Given a premise wu and a hypothesis v, our
+model first encodes them considering dependency
+on each other (u|v and v|u). Next, the model employs a soft attention mechanism to extract relevant information from these encodings. The augmented sentence representations are then passed
+to the inference stage, which uses a similar dependent reading strategy in both directions, i.e. u > v
+and v — u. Finally, a decision is made through a
+multi-layer perceptron (MLP) based on the aggregated information.
+
+Our experiments on the SNLI dataset show that
+DR-BiLSTM achieves the best single model and
+ensemble model performance obtaining improvements of a considerable margin of 0.4% and 0.3%
+over the previous state-of-the-art single and ensemble models, respectively.
+
+Furthermore, we demonstrate the importance
+of a simple preprocessing step performed on the
+SNLI dataset. Evaluation results show that such
+preprocessing allows our single model to achieve
+the same accuracy as the state-of-the-art ensemble
+model and improves our ensemble model to outperform the state-of-the-art ensemble model by a
+remarkable margin of 0.7%. Finally, we perform
+an extensive analysis to clarify the strengths and
+weaknesses of our models.
+
+2 Related Work
+
+Early studies use small datasets while leveraging lexical and syntactic features for NLI (MacCartney and Manning, 2008). The recent availability of large-scale annotated datasets (Bowman
+et al., 2015; Williams et al., 2017) has enabled researchers to develop various deep learning-based
+architectures for NLI.
+
+Parikh et al. (2016) propose an attention-based
+model (Bahdanau et al., 2014) that decomposes
+the NLI task into sub-problems to solve them in
+parallel. They further show the benefit of adding
+intra-sentence attention to input representations.
+Chen et al. (2017) explore sequential inference
+models based on chain LSTMs with attentional input encoding and demonstrate the effectiveness of
+syntactic information. We also use similar attention mechanisms. However, our model is distinct
+
+from these models as they do not benefit from dependent reading strategies.
+
+Rocktaschel et al. (2015) use a word-by-word
+neural attention mechanism while Sha et al. (2016)
+propose re-read LSTM units by considering the
+dependency of a hypothesis on the information
+of its premise (v|u) to achieve promising results.
+However, these models suffer from weak inferencing methods by disregarding the dependency aspects from the opposite direction (u|v). Intuitively,
+when a human judges a premise-hypothesis relationship, s/he might consider back-and-forth reading of both sentences before coming to a conclusion. Therefore, it is essential to encode
+the premise-hypothesis dependency relations from
+both directions to optimize the understanding of
+their relationship.
+
+Wang et al. (2017) propose a bilateral multiperspective matching (BiMPM) model, which resembles the concept of matching a premise and
+hypothesis from both directions. Their matching strategy is essentially similar to our attention
+mechanism that utilizes relevant information from
+the other sentence for each word sequence. They
+use similar methods as Chen et al. (2017) for encoding and inference, without any dependent reading mechanism.
+
+Although NLI is well studied in the literature,
+the potential of dependent reading and interaction
+between a premise and hypothesis is not rigorously explored. In this paper, we address this gap
+by proposing a novel deep learning model (DRBiLSTM). Experimental results demonstrate the
+effectiveness of our model.
+
+3 Model
+
+Our proposed model (DR-BiLSTM) is composed
+of the following major components: input encoding, attention, inference, and classification. Figure 1 demonstrates a high-level view of our proposed NLI framework.
+
+Let u = [ui,--- ,Un| and v = [v1,--- , Um
+be the given premise with length n and hypothesis
+with length m respectively, where u;,v; € R" is
+an word embedding of r-dimensional vector. The
+task is to predict a label y that indicates the logical
+relationship between premise wu and hypothesis v.
+
+3.1 Input Encoding
+
+RNNs are the natural solution for variable length
+sequence modeling, consequently, we utilize a
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+
+Premise
+
+Hypothesis
+
+Figure 1: A high-level view of DR-BiLSTM. The
+data (premise wu and hypothesis v, depicted with
+cyan and red tensors respectively) flows from bottom to top. Relevant tensors are shown with the
+same color and elements with the same colors
+share parameters.
+
+bidirectional LSTM (BiLSTM) (Hochreiter and
+Schmidhuber, 1997) for encoding the given sentences. For ease of presentation, we only describe
+how we encode wu depending on v. The same procedure is utilized for the reverse direction (v|w).
+
+To dependently encode u, we first process v using the BiLSTM. Then we read wu through the BiLSTM that is initialized with previous reading final
+states (memory cell and hidden state). Here we
+represent a word (e.g. u;) and its context depending on the other sentence (e.g. v). Equations | and
+2 formally represent this component.
+
+U, Sy = BiLSTM(v, 0)
+
+— = BiLSTM(u, sy) a
+
+U, Sy = BiLSTM(u, 0)
+
+. (2)
+— = BiLSTM(v, sy)
+
+ 
+
+where {a € R"*24,G € R745) and {a €
+R™*2¢ 6 € R™*2¢ 5} are the independent reading sequences, dependent reading sequences, and
+BiLSTM final state of independent reading of wu
+and vu respectively. Note that, “—” in these equations means that we do not care about the associated variable and its value. BiLSTM inputs are the
+word embedding sequences and initial state vectors. w& and 0 are passed to the next layer as the
+output of the input encoding component.
+
+The proposed encoding mechanism yields a
+richer representation for both premise and hypothesis by taking the history of each other into account. Using a max or average pooling over the
+independent and dependent readings does not further improve our model. This was expected since
+dependent reading produces more promising and
+relevant encodings.
+
+3.2 Attention
+
+We employ a soft alignment method to associate
+the relevant sub-components between the given
+premise and hypothesis. In deep learning models,
+such purpose is often achieved with a soft attention mechanism. Here we compute the unnormalized attention weights as the similarity of hidden
+states of the premise and hypothesis with Equation 3 (energy function).
+
+5 [l,m], 7 S [l,m] (3)
+
+where wu; and v; are the dependent reading hidden
+representations of wu and v respectively which are
+computed earlier in Equations | and 2. Next, for
+each word in either premise or hypothesis, the relevant semantics in the other sentence is extracted
+and composed according to e;;. Equations 4 and
+5 provide formal and specific details of this procedure.
+
+exp( —_exp(eij) ‘
+= E |l,n (4)
+-D 4 ke 1 ©XP (ein) J | 2
+5 = So ot) ng, Ge ftym] ©)
+
+=] kel exp(€x;)
+
+where w,; represents the extracted relevant information of v by attending to u; while v; represents
+the extracted relevant information of u by attending to v;.
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+
+To further enrich the collected attentional information, a trivial next step would be to pass the concatenation of the tuples (t;, w;) or (6;, 0;) which
+provides a linear relationship between them. However, the model would suffer from the absence of
+similarity and closeness measures. Therefore, we
+calculate the difference and element-wise product
+for the tuples (t;,u;) and (0;,0;) that represent
+the similarity and closeness information respectively (Chen et al., 2017; Kumar et al., 2016).
+
+The difference and element-wise product are
+then concatenated with the computed vectors,
+(aj, Ui) or (0;,0;), respectively. Finally, a feedforward neural layer with ReLU activation function projects the concatenated vectors from 8ddimensional vector space into a d-dimensional
+vector space (Equations 6 and 7). This helps the
+model to capture deeper dependencies between the
+sentences besides lowering the complexity of vector representations.
+
+a, = [;, Uj, Uj — Uj, U; © Uy|
+
+6
+pi = ReLU(W pa; + bp) es
+b; = [6;,0;,0; — 0;,0; ©;
+
+j 9 Uj) Uj — U5, Vj V5 (7)
+
+qj = ReLU(W,b; + bp)
+
+Here © stands for element-wise product while
+W, € R®°@*¢ and b) € R® are the trainable
+weights and biases of the projector layer respectively.
+
+3.3 Inference
+
+During this phase, we use another BiLSTM to aggregate the two sequences of computed matching
+vectors, p and q from the attention stage (Section 3.2). This aggregation is performed in a sequential manner to avoid losing effect of latent
+variables that might rely on the sequence of matching vectors.
+
+Instead of aggregating the sequences of matching vectors individually, we propose a similar dependent reading approach for the inference stage.
+We employ a BiLSTM reading process (Equations 8 and 9) similar to the input encoding step
+discussed in Section 3.1. But rather than passing
+just the dependent reading information to the next
+step, we feed both independent reading (p and q)
+and dependent reading (p and q) to a max pooling layer, which selects maximum values from
+
+each sequence of independent and dependent readings (p; and p;) as shown in Equations 10 and 11.
+The main intuition behind this architecture is to
+maximize the inferencing ability of the model by
+considering both independent and dependent readings.
+
+G, Sq = BiLSTM(q, 0)
+
+p, — = BiLSTM(p, sq) 8)
+DP, 8p = BiLSTM(p, 0) 0)
+qd, — = BiLSTM(q, 8p)
+
+p = MaxPooling(p, p) (10)
+q = MaxPooling(@, q) (11)
+
+Here {p € R"**4,.6 © R"*24 5,1 and {q@ €
+R™*2¢ ¢ € R™*24 5, } are the independent reading sequences, dependent reading sequences, and
+BiLSTM final state of independent reading of p
+and q respectively. BiLSTM inputs are the word
+embedding sequences and initial state vectors.
+
+Finally, we convert p € R”*?4 and g € R™*?¢4
+to fixed-length vectors with pooling, U € R*¢ and
+V € R*. As shown in Equations 12 and 13,
+we employ both max and average pooling and describe the overall inference relationship with concatenation of their outputs.
+
+U = [MaxPooling(p), AvgPooling(p)| (12)
+
+V = |MaxPooling(q), AvgPooling(q)| (13)
+
+3.4 Classification
+
+Here, we feed the concatenation of U and V
+({U, V]) into a multilayer perceptron (MLP) classifier that includes a hidden layer with tanh activation and softmax output layer. The model is trained
+in an end-to-end manner.
+
+Output = MLP(|U, V]) (14)
+
+4 Experiments and Evaluation
+
+4.1 Dataset
+
+The Stanford Natural Language Inference (SNLI)
+dataset contains 570A human annotated sentence pairs. The premises are drawn from the
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+
+Flickr30k (Plummer et al., 2015) corpus, and then
+the hypotheses are manually composed for each
+relationship class (entailment, neutral, contradiction, and -). The “-” class indicates that there
+is no consensus decision among the annotators,
+consequently, we remove them during the training and evaluation following the literature. We
+use the same data split as provided in Bowman
+et al. (2015) to report comparable results with
+other models.
+
+4.2 Experimental Setup
+
+We use pre-trained 300-D Glove 8405 vectors
+(Pennington et al., 2014) to initialize our word embedding vectors. All hidden states of BiLSTMs
+during input encoding and inference have 450 dimensions (r = 300 and d = 450). The weights are
+learned by minimizing the log-loss on the training data via the Adam optimizer (Kingma and Ba,
+2014). The initial learning rate is 0.0004. To
+avoid overfitting, we use dropout (Srivastava et al.,
+2014) with the rate of 0.4 for regularization, which
+is applied to all feedforward connections. During
+training, the word embeddings are updated to learn
+effective representations for the NLI task. We use
+a fairly small batch size of 32 to provide more exploration power to the model. Our observation indicates that using larger batch sizes hurts the performance of our model.
+
+ured),
+
+ 
+
+nog
+
+ 
+
+ 
+
+1so]
+
+ 
+
+ 
+
+ 
+
+ 
+
+Number of Models
+
+Figure 2: Performance of n ensemble models reported for training (red, top), development (blue,
+middle), and test (green, bottom) sets of SNLI.
+For n number of models, the best performance on
+the development set is used as the criteria to determine the final ensemble. The best performance
+on development set (89.22%) is observed using 6
+models and is henceforth considered as our final
+DR-BiLSTM (Ensemble) model.
+
+4.3. Ensemble Strategy
+
+Ensemble methods use multiple models to obtain
+better predictive performance. Previous works
+typically utilize trivial ensemble strategies by e1ther using majority votes or averaging the probability distributions over the same model with different initialization seeds (Wang et al., 2017; Gong
+et al., 2017).
+
+By contrast, we use weighted averaging of the
+probability distributions where the weight of each
+model is learned through its performance on the
+SNLI development set. Furthermore, the differences between our models in the ensemble originate from: 1) variations in the number of dependent readings (i.e. 1 and 3 rounds of dependent
+reading), 2) projection layer activation (tanh and
+ReLU in Equations 6 and 7), and 3) different initialization seeds.
+
+The main intuition behind this design is that
+the effectiveness of a model may depend on the
+complexity of a premise-hypothesis instance. For
+a simple instance, a simple model could perform
+better than a complex one, while a complex instance may need further consideration toward disambiguation. Consequently, using models with
+different rounds of dependent readings in the encoding stage should be beneficial.
+
+Figure 2 demonstrates the observed performance of our ensemble method with different
+number of models. The performance of the models are reported based on the best obtained accuracy on the development set. We also study the
+effectiveness of other ensemble strategies e.g. majority voting, and averaging the probability distributions. But, our ensemble strategy performs the
+best among them (see Section A in the Appendix
+for additional details).
+
+4.4 Preprocessing
+
+We perform a trivial preprocessing step on SNLI
+to recover some out-of-vocabulary words found in
+the development set and test set. Note that our
+vocabulary contains all words that are seen in the
+training set, so there is no out-of-vocabulary word
+in it. The SNLI dataset is not immune to human
+errors, specifically, misspelled words. We noticed
+that misspelling 1s the main reason for some of the
+observed out-of-vocabulary words. Consequently,
+we simply fix the unseen misspelled words using Microsoft spell-checker (other approaches like
+edit distance can also be used). Moreover, while
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+
+dealing with an unseen word during evaluation, we
+try to: 1) replace it with its lower case, or 2) split
+the word when it contains a “-” (e.g. “marsh-like’’)
+or starts with “un” (e.g. “unloading’”’). If we still
+could not find the word in our vocabulary, we consider it as an unknown word. In the next subsection, we demonstrate the importance and impact
+of such trivial preprocessing (see Section B in the
+Appendix for additional details).
+
+4.5 Results
+
+Table 2 shows the accuracy of the models on training and test sets of SNLI. The first row represents a baseline classifier presented by Bowman
+et al. (2015) that utilizes handcrafted features. All
+other listed models are deep-learning based. The
+gap between the traditional model and deep learning models demonstrates the effectiveness of deep
+learning methods for this task. We also report
+the estimated human performance on the SNLI
+dataset, which is the average accuracy of five annotators in comparison to the gold labels (Gong
+et al., 2017). It is noteworthy that recent deep
+learning models surpass the human performance
+in the NLI task.
+
+As shown in Table 2, previous deep learning
+models (rows 2-19) can be divided into three categories: 1) sentence encoding based models (rows
+2-7), 2) single inter-sentence attention-based models (rows 8-16), and 3) ensemble inter-sentence
+attention-based models (rows 17-19). We can
+see that inter-sentence attention-based models perform better than sentence encoding based models, which supports our intuition. Natural language inference requires a deep interaction between the premise and hypothesis. Inter-sentence
+attention-based approaches can provide such interaction while sentence encoding based models fail
+to do so.
+
+To further enhance the modeling of interaction
+between the premise and hypothesis for efficient
+disambiguation of their relationship, we introduce
+the dependent reading strategy in our proposed
+DR-BiLSTM model. The results demonstrate the
+effectiveness of our model. DR-BiLSTM (Single)
+achieves 88.5% accuracy on the test set which is
+noticeably the best reported result among the existing single models for this task. Note that the
+difference between DR-BiLSTM and Chen et al.
+(2017) is statistically significant with a p-value of
+
+ 
+
+ 
+
+Accuracy
+
+Mosiel Train Test
+
+(Bowman et al., 2015) (Feature) 99.7% 78.2%
+(Bowman et al., 2015) 83.9% 80.6%
+(Vendrov et al., 2015) 98.8% 81.4%
+(Mot et al., 2016) 83.3% 82.1%
+(Bowman et al., 2016) 89.2% 83.2%
+(Liu et al., 2016b) 84.5% 84.2%
+(Yu and Munkhdalai, 2017a) 86.2% 84.6%
+(Rocktaschel et al., 2015) 85.3% 83.5%
+(Wang and Jiang, 2016) 92.0% 86.1%
+(Liu et al., 2016a) 88.5% 86.3%
+(Parikh et al., 2016) 90.5% 86.8%
+(Yu and Munkhdalai, 2017b) 88.5% 87.3%
+(Sha et al., 2016) 90.7% 87.5%
+(Wang et al., 2017) (Single) 90.9% 87.5%
+(Chen et al., 2017) (Single) 92.6% 88.0%
+(Gong et al., 2017) (Single) 91.2% 88.0%
+(Chen et al., 2017) (Ensemble) 93.5% 88.6%
+(Wang et al., 2017) (Ensemble) 93.2% 88.8%
+(Gong et al., 2017) (Ensemble) 92.3% 88.9%
+Human Performance (Estimated) 97.2% 87.7%
+DR-BiLSTM (Single) 94.1% 88.5%
+DR-BiLSTM (Single)+Process 94.1% 88.9%
+DR-BiLSTM (Ensemble) 94.8% 89.3%
+DR-BiLSTM (Ensem.)+Process 94.8% 89.6%
+
+Table 2: Accuracies of the models on the training
+set and test set of SNLI. DR-BiLSTM (Ensemble)
+achieves the accuracy of 89.3%, the best result observed on SNLI, while DR-BiLSTM (Single) obtains the accuracy of 88.5%, which considerably
+outperforms the previous non-ensemble models.
+Also, utilizing a trivial preprocessing step yields to
+further improvements of 0.4% and 0.3% for single
+and ensemble DR-BiLSTM models respectively.
+
+< 0.001 over the Chi-square test'.
+
+To further improve the performance of NLI
+systems, researchers have built ensemble models.
+Previously, ensemble systems obtained the best
+performance on SNLI with a huge margin. Table 2
+shows that our proposed single model achieves
+competitive results compared to these reported ensemble models. Our ensemble model considerably
+outperforms the current state-of-the-art by obtaining 89.3% accuracy.
+
+Up until this point, we discussed the performance of our models where we have not considered preprocessing for recovering the out-ofvocabulary words. In Table 2, “DR-BiLSTM (Single) + Process”, and “DR-BiLSTM (Ensem.) +
+Process” represent the performance of our models on the preprocessed dataset. We can see that
+
+‘Chi-square test (x7 test) is used to determine if there is a
+significant difference between two categorical variables (i.e.
+models’ outputs).
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+
+our preprocessing mechanism leads to further improvements of 0.4% and 0.3% on the SNLI test
+set for our single and ensemble models respectively. In fact, our single model (“DR-BiLSTM
+(Single) + Process’) obtains the state-of-the-art
+performance over both reported single and ensemble models by performing a simple preprocessing
+step. Furthermore, “DR-BiLSTM (Ensem.) +
+Process” outperforms the existing state-of-the-art
+remarkably (0.7% improvement). For more comparison and analyses, we use “DR-BiLSTM (Single)” and “DR-BiLSTM (Ensemble)” as our single
+and ensemble models in the rest of the paper.
+
+4.6 Ablation and Configuration Study
+
+We conducted an ablation study on our model to
+examine the importance and effect of each major
+component. Then, we study the impact of BiLSTM dimensionality on the performance of the
+development set and training set of SNLI. We investigate all settings on the development set of the
+SNLI dataset.
+
+Model Dev Acc” p-value
+DR-BiLSTM 88.69 % DR-BiLSTM - hidden MLP 88.45% <0.001
+DR-BiLSTM - average pooling 88.50% <0.001
+DR-BiLSTM - max pooling 88.39% <0.001
+
+DR-BiLSTM - elem. prd? 88.51% <0.001
+
+ 
+
+DR-BiLSTM - difference 88.24% <0.001
+DR-BiLSTM - diff© & elem. prd 87.96% <0.001
+DR-BiLSTM - inference pooling 88.46% <0.001
+DR-BiLSTM - dep. infer” 88.43%  <0.001
+DR-BiLSTM - dep. enc® 88.26% <0.001
+DR-BiLSTM - dep. enc & infer 88.20% <0.001
+
+“Dev Acc, Development Accuracy.
+°elem. prd, element-wise product.
+
+“diff, difference.
+
+“dep. infer, dependent reading inference.
+“dep. enc, dependent reading encoding.
+
+ 
+
+Table 3: Ablation study results. Performance of
+different configurations of the proposed model on
+the development set of SNLI along with their pvalues in comparison to DR-BiLSTM (Single).
+
+Table 3 shows the ablation study results on the
+development set of SNLI along with the statistical significance test results in comparison to the
+proposed model, DR-BiLSTM. We can see that all
+modifications lead to a new model and their differences are statistically significant with a p-value of
+< 0.001 over Chi square test.
+
+Table 3 shows that removing any part from our
+model hurts the development set accuracy which
+indicates the effectiveness of these components.
+
+Among all components, three of them have noticeable influences: max pooling, difference in the
+attention stage, and dependent reading.
+
+Most importantly, the last four study cases in
+Table 3 (rows 8-11) verify the main intuitions
+behind our proposed model. They illustrate the
+importance of our proposed dependent reading
+strategy which leads to significant improvement,
+specifically in the encoding stage. We are convinced that the importance of dependent reading in
+the encoding stage originates from its ability to focus on more important and relevant aspects of the
+sentences due to its prior knowledge of the other
+sentence during the encoding procedure.
+
+ 
+
+95.0 7
+
+~
+ured
+
+Accuracy
+oO
+=
+ol
+~N
+7
+
+94.0+/
+
+ 
+ 
+
+ 
+
+ 
+
+  
+  
+
+ 
+
+ 
+
+T T = i T T
+250 300 350 400 450 500 550 600
+Dimensionality of BILSTMs
+
+Figure 3: Impact of BiLSTM dimensionality in the
+proposed model on the training set (red, top) and
+development set (blue, bottom) accuracies of the
+SNLI dataset.
+
+Figure 3 shows the behavior of the proposed
+model accuracy on the training set and development set of SNLI. Since the models are selected
+based on the best observed development set accuracy during the training procedure, the training accuracy curve (red, top) is not strictly increasing.
+Figure 3 demonstrates that we achieve the best
+performance with 450-dimensional BiLSTMs. In
+other words, using BiLSTMs with lower dimensionality causes the model to suffer from the lack
+of space for capturing proper information and dependencies. On the other hand, using higher dimensionality leads to overfitting which hurts the
+performance on the development set. Hence, we
+use 450-dimensional BiLSTM in our proposed
+model.
+
+4.7 Analysis
+
+We first investigate the performance of our models
+categorically. Then, we show a visualization of the
+Accepted as a long paper at NAACL HLT 2018
+
+energy function in the attention stage (Equation 3)
+for an instance from the SNLI test set.
+
+To qualitatively evaluate the performance of our
+models, we design a set of annotation tags that can
+be extracted automatically. This design is inspired
+by the reported annotation tags in Williams et al.
+(2017). The specifications of our annotation tags
+are as follows:
+
+e High Overlap: premise and hypothesis sentences share more than 70% tokens.
+
+e Regular Overlap: sentences share between
+30% and 70% tokens.
+
+e Low Overlap: sentences share less than 30%
+tokens.
+
+e Long Sentence: either sentence is longer
+than 20 tokens.
+
+Regular Sentence: premise or hypothesis
+length is between 5 and 20 tokens.
+
+Short Sentence: either sentence is shorter
+than 5 tokens.
+
+Negation: negation is present in a sentence.
+
+Quantifier: either of the sentences contains one of the following quantifiers: much,
+enough, more, most, less, least, no, none,
+some, any, many, few, several, almost, nearly.
+
+Belief: either of the sentences contains one
+of the following belief verbs: know, believe,
+understand, doubt, think, suppose, recognize,
+forget, remember, imagine, mean, agree, disagree, deny, promise.
+
+Table 4 shows the frequency of aforementioned
+annotation tags in the SNLI test set along with
+the performance (accuracy) of ESIM (Chen et al.,
+2017), DR-BiLSTM (Single), and DR-BiLSTM
+(Ensemble). Table 4 can be divided into four major categories: 1) gold label data, 2) word overlap,
+3) sentence length, and 4) occurrence of special
+words. We can see that DR-BiLSTM (Ensemble)
+performs the best in all categories which matches
+our expectation. Moreover, DR-BiLSTM (Single)
+performs noticeably better than ESIM in most of
+the categories except “Entailment’, “High Overlap”, and “Long Sentence’, for which our model
+is not far behind (gaps of 0.2%, 0.5%, and 0.9%,
+respectively). It is noteworthy that DR-BiLSTM
+
+ 
+
+ 
+
+Annotation Tag Freq? ESIM DR(S)® DR(E)°
+Entailment 34.3% 90.0% 89.8% 90.9%
+Neutral 32.8% 83.7% 85.1% 85.6%
+Contradiction 32.9% 90.0% 90.5% 91.4%
+High Overlap 24.3% 91.2% 90.7% 92.1%
+Reg. Overlap 33.7% 87.1% 87.9% 88.8%
+Low Overlap A5.4% 87.0% 87.8% 88.4%
+Long Sentence 6.4% 92.2% 91.3% 91.9%
+Reg. Sentence 74.9% 87.8% 884% 89.2%
+Short Sentence 19.9% 87.6% 88.1% 89.3%
+Negation 2.1% 82.2% 85.7% 87.1%
+Quantifier 8.7% 85.5% 874% 87.6%
+Belief 0.2% 78.6% 78.6% 78.6%
+
+“Freq, Frequency.
+’DR(S), DR-BiLSTM (Single).
+“DR(E), DR-BiLSTM (Ensemble).
+
+Table 4: Categorical performance analyses (accuracy) of ESIM (Chen et al., 2017), DR-BiLSTM
+(DR(S)) and Ensemble DR-BiLSTM (DR(E)) on
+the SNLI test set.
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Fou_-| |
+grass
+the
+on+ smite
+n ing 4
+D rolling 0.75
+s is3 0.50
+= yellow + oe 0.25
+in 0.00
+ow)
+The FOL_|| =
+. - 9 © SN @ & .
+Vg SF 7 WF EP OP BMG Sv’
+Oo ss ” & e e ©
+
+Premise
+
+Figure 4: Normalized attention weights for a sample from the SNLI test set. Darker color illustrates
+higher attention.
+
+(Single) performs better than ESIM in more frequent categories. Specifically, the performance of
+our model in “Neutral”, “Negation”, and “Quantifier’” categories (improvements of 1.4%, 3.5%,
+and 1.9%, respectively) indicates the superiority
+of our model in understanding and disambiguating complex samples. Our investigations indicate
+that ESIM generates somewhat uniform attention
+for most of the word pairs while our model could
+effectively attend to specific parts of the given sentences and provide more meaningful attention. In
+other words, the dependent reading strategy enables our model to achieve meaningful representations, which leads to better attention to obtain
+further gains on such categories like Negation and
+Quantifier sentences (see Section C in the Appendix for additional details).
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+
+Finally, we show a visualization of the normalized attention weights (energy function, Equation 3) of our model in Figure 4. We show a
+sentence pair, where the premise is “Male in a
+blue jacket decides to lay the grass.”, and the hypothesis is “The guy in yellow is rolling on the
+grass.”, and its logical relationship is contradiction. Figure 4 indicates the model’s ability in
+attending to critical pairs of words like <Male,
+guy>, <decides, rolling>, and <lay, rolling>.
+Finally, high attention between {decides, lay} and
+{rolling}, and {Male} and {guy} leads the model
+to correctly classify the sentence pair as contradiction (for more samples with attention visualizations, see Section D of the Appendix).
+
+5 Conclusion
+
+We propose a novel natural language inference
+model (DR-BiLSTM) that benefits from a dependent reading strategy and achieves the state-of-theart results on the SNLI dataset. We also introduce
+a sophisticated ensemble strategy and illustrate its
+effectiveness through experimentation. Moreover,
+we demonstrate the importance of a simple preprocessing step on the performance of our proposed models. Evaluation results show that the
+preprocessing step allows our DR-BiLSTM (single) model to outperform all previous single and
+ensemble methods. Similar superior performance
+is also observed for our DR-BiLSTM (ensemble)
+model. We show that our ensemble model outperforms the existing state-of-the-art by a considerable margin of 0.7%. Finally, we perform an extensive analysis to demonstrate the strength and
+weakness of the proposed model, which would
+pave the way for further improvements in this domain.
+
+References
+
+Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua
+Bengio. 2014. | Neural machine translation by
+jointly learning to align and translate. CoRR
+abs/1409.0473. http://arxiv.org/abs/1409.0473.
+
+Samuel R. Bowman, Gabor Angeli, Christopher Potts,
+and Christopher D. Manning. 2015. A large
+annotated corpus for learning natural language
+inference. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing, EMNLP 2015, Lisbon, Portugal, September 17-21, 2015. pages 632-642.
+http://aclweb.org/anthology/D/D15/D15-1075.pdf.
+
+Samuel R. Bowman, Jon Gauthier, Abhinav Rastogi, Raghav Gupta, Christopher D. Manning, and
+Christopher Potts. 2016. A fast unified model for
+parsing and sentence understanding. In Proceedings of the 54th Annual Meeting of the Association
+for Computational Linguistics, ACL 2016, August 712, 2016, Berlin, Germany, Volume 1: Long Papers.
+http://aclweb.org/anthology/P/P16/P16-1139.pdf.
+
+Qian Chen, Xiaodan Zhu, Zhen-Hua Ling, Si Wei, Hui
+Jiang, and Diana Inkpen. 2017. Enhanced LSTM for
+natural language inference. In Proceedings of the
+55th Annual Meeting of the Association for Computational Linguistics, ACL 2017, Vancouver, Canada,
+July 30 - August 4, Volume 1: Long Papers. pages
+1657-1668. https://doi.org/10.18653/v1/P17-1152.
+
+Yichen Gong, Heng Luo, and Jian Zhang. 2017. Natural language inference over interaction space. CoRR
+abs/1709.04348. http://arxiv.org/abs/1709.04348.
+
+Sepp Hochreiter and Jurgen Schmidhuber. 1997. Long short-term memory.
+Neural Computation 9(8):1735-1780.
+
+https://doi.org/10.1162/neco.1997.9.8.1735.
+
+Diederik P. Kingma and Jimmy Ba. 2014. Adam:
+A method for stochastic optimization. CoRR
+abs/1412.6980. http://arxiv.org/abs/1412.6980.
+
+Ankit Kumar, Ozan Irsoy, Peter Ondruska, Mohit
+Iyyer, James Bradbury, Ishaan Gulrajani, Victor
+Zhong, Romain Paulus, and Richard Socher.
+2016. Ask me anything: Dynamic memory
+networks for natural language processing. In
+Proceedings of the 33nd International Conference
+on Machine Learning, ICML 2016, New York
+City, NY, USA, June 19-24, 2016. pages 1378-1387.
+http://jmlr.org/proceedings/papers/v48/kumar16.html.
+
+Pengfei Liu, Xipeng Qiu, Jifan Chen, and Xuanjing Huang. 2016a. Deep fusion Istms for
+text semantic matching. In Proceedings of the
+54th Annual Meeting of the Association for Computational Linguistics, ACL 2016, August 7-12,
+2016, Berlin, Germany, Volume I: Long Papers.
+http://aclweb.org/anthology/P/P16/P16-1098.pdf.
+
+Yang Liu, Chengjie Sun, Lei Lin, and Xiaolong
+Wang. 2016b. Learning natural language
+inference using bidirectional LSTM model
+and inner-attention. CoRR _ abs/1605.09090.
+http://arxiv.org/abs/1605.09090.
+
+Bill MacCartney and Christopher D. Manning. 2008.
+Modeling semantic containment and exclusion in
+natural language inference. In COLING 2008,
+22nd International Conference on Computational
+Linguistics, Proceedings of the Conference, 1822 August 2008, Manchester, UK. pages 521-528.
+http://www.aclweb.org/anthology/C08- 1066.
+
+Lili Mou, Rui Men, Ge Li, Yan Xu, Lu Zhang,
+Rui Yan, and Zhi Jin. 2016. Natural language inference by tree-based convolution and
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+
+heuristic matching. In Proceedings of the 54th
+Annual Meeting of the Association for Computational Linguistics, ACL 2016, August 7-12,
+2016, Berlin, Germany, Volume 2: Short Papers.
+http://aclweb.org/anthology/P/P16/P16-2022.pdf.
+
+Ankur P. Parikh, Oscar Tackstrom, Dipanjan Das,
+and Jakob Uszkoreit. 2016. A decomposable attention model for natural language inference. In Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing, EMNLP 2016, Austin, Texas,
+USA, November 1-4, 2016. pages 2249-2255.
+http://aclweb.org/anthology/D/D 16/D 16-1244. pdf.
+
+Jeffrey Pennington, Richard Socher, and Christopher D. Manning. 2014. Glove: Global vectors for
+word representation. In Empirical Methods in Natural Language Processing (EMNLP). pages 1532-—
+1543. http://www.aclweb.org/anthology/D 14-1162.
+
+Bryan A. Plummer, Liwei Wang, Chris M. Cervantes,
+Juan C. Caicedo, Julia Hockenmaier, and Svetlana
+Lazebnik. 2015.  Flickr30k entities: Collecting
+region-to-phrase correspondences for richer imageto-sentence models. In 20/5 IEEE International
+Conference on Computer Vision, ICCV 2015, Santiago, Chile, December 7-13, 2015. pages 2641-2649.
+https://doi.org/10.1109/ICCV.2015.303.
+
+Tim Rocktadschel, Edward Grefenstette, Karl Moritz
+Hermann, Tomas Kocisky, and Phil Blunsom. 2015. Reasoning about  entailment
+with neural attention. CoRR_ abs/1509.06664.
+http://arxiv.org/abs/1509.06664.
+
+Lei Sha, Baobao Chang, Zhifang Sui, and Sujian Li. 2016. Reading and thinking:  Reread LSTM unit for textual entailment recognition. In COLING 2016, 26th International Conference on Computational Linguistics, Proceedings of the Conference: Technical Papers, December 11-16, 2016, Osaka, Japan. pages 2870-2879.
+http://aclweb.org/anthology/C/C16/C16-1270.pdf.
+
+Nitish Srivastava, Geoffrey E. Hinton, Alex
+Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. 2014. Dropout: a simple way to prevent
+neural networks from overfitting. Journal of
+Machine’ Learning Research 15(1):1929-1958.
+http://dl.acm.org/citation.cfm?id=2670313.
+
+Ivan Vendrov, Ryan _ Kiros,
+Raquel Urtasun. 2015. Order-embeddings of
+images and language. CoRR _ abs/1511.06361.
+http://arxiv.org/abs/1511.06361.
+
+Sanja Fidler, and
+
+Shuohang Wang and Jing Jiang. 2016. Learning natural language inference with LSTM. In NAACL HLT
+2016, The 2016 Conference of the North American
+Chapter of the Association for Computational Linguistics: Human Language Technologies, San Diego
+California, USA, June 12-17, 2016. pages 14421451. http://aclweb.org/anthology/N/N 16/N 161170.pdf.
+
+Zhiguo Wang, Wael Hamza, and Radu Florian. 2017.
+Bilateral multi-perspective matching for natural language sentences. In Proceedings of the TwentySixth International Joint Conference on Artificial Intelligence, IJCAI 2017, Melbourne, Australia, August 19-25, 2017. pages 4144-4150.
+https://doi.org/10.24963/ijcai.2017/579.
+
+Adina Williams, Nikita Nangia, and Samuel R. Bowman. 2017. coverage challenge corpus for sentence understanding through inference. CoRR
+abs/1704.05426. http://arxiv.org/abs/1704.05426.
+
+Hong Yu and Tsendsuren Munkhdalai. 2017a.
+Neural semantic encoders. In Proceedings of
+the I5th Conference of the European Chapter
+of the Association for Computational Linguistics, EACL 2017, Valencia, Spain, April 3-7,
+2017, Volume 1: Long Papers. pages 397-407.
+http://aclanthology.info/papers/E17-1038/neuralsemantic-encoders.
+
+Hong Yu and Tsendsuren Munkhdalai. 2017b. Neural tree indexers for text understanding. In Proceedings of the I5th Conference of the European Chapter of the Association for Computational Linguistics, EACL 2017, Valencia, Spain,
+April 3-7, 2017, Volume 1: Long Papers.
+pages 11-21. http://aclanthology.info/papers/E171002/neural-tree-indexers-for-text-understanding.
+
+Kai Zhao, Liang Huang, and Mingbo Ma. 2016. Textual entailment with structured attentions and composition. In COLING 2016, 26th International
+Conference on Computational Linguistics, Proceedings of the Conference: Technical Papers, December 11-16, 2016, Osaka, Japan. pages 2248-2258.
+http://aclweb.org/anthology/C/C16/C16-1212.pdf.
+
+A Ensemble Strategy Study
+
+We use the following configurations in our ensemble model study:
+
+e DR-BiLSTM (with different initialization
+seeds): here, we consider 6 DR-BiLSTMs
+with different initialization seeds.
+
+e tanh-Projection: same configuration as DRBiLSTM, but we use tanh instead of ReLU
+as the activation function in Equations 6 and
+7 in the paper:
+
+pi = tanh(W,a; + bp) (15)
+
+qj = tanh(W,,b; + bp) (16)
+
+e DR-BiLSTM (with 1 round of dependent reading): same configuration as DRBiLSTM, but we do not use dependent reading during the inference process. In other
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+
+words, we use p = p and g = g instead of
+Equations 10 and 11 in the paper respectively.
+
+e DR-BiLSTM (with 3 rounds of dependent
+reading): same configuration as the above,
+but we use 3 rounds of dependent reading.
+Formally, we replace Equations 1 and 2 in the
+paper with the following equations respectively:
+
+—, 8, = BiLSTM
+—, Sy, = BiLSTM
+—, Syuy = BiLSTM
+a, — = BiLSTM(u, Suu)
+
+(v,
+: ~) an
+(
+
+—, 8, = BiLSTM(u, 0)
+= BiLSTM(v, 8)
+
+—, Syvy = BiLSTM(u, Suy)
+(
+
+0, — = BiLSTM(v, swvu)
+
+(18)
+
+Our final ensemble model, DR-BiLSTM (Ensemble) is the combination of the following 6
+models: tanh-Projection, DR-BiLSTM (with 1
+round of dependent reading), DR-BiLSTM (with
+3 rounds of dependent reading), and 3 DRBiLSTMs with different initialization seeds.
+
+We also experiment with majority voting and
+averaging the probability distribution strategies for
+ensemble models using the same set of models as
+our weighted averaging ensemble method (as described above). Figure 5 shows the behavior of
+the majority voting strategy with different number of models. Interestingly, the best development accuracy is also observed using 6 individual
+models including tanh-Projection, DR-BiLSTM
+(with | round of dependent reading), DR-BiLSTM
+(with 3 rounds of dependent reading), and 3 DRBiLSTMs with varying initialization seeds that
+are different from our DR-BiLSTM (Ensemble)
+model.
+
+We should note that our weighted averaging ensemble strategy performs better than the majority
+voting method in both development set and test set
+of SNLI, which indicates the effectiveness of our
+approach. Furthermore, our method could show
+more consistent behavior for training and test sets
+when we increased the number of models (see Figure 2 in Section 4.3 of the paper). According to
+
+94.5 a =
+94.4, |
+94.3 + a \, 4 I Fe
+94.2 4 oe WJ Wo
+94.1
+89.1 5 1
+z 89.0 - at I
+& 88.94 a !
+I
+
+ured
+
+nog
+
+3 88.8; fo
+2 88.7/
+
+88.8 | os
+
+1so)
+
+88.6 7 a
+
+ 
+
+ 
+
+5 6
+Number of Models
+
+Figure 5: Performance of n ensemble models using majority voting on natural language inference
+reported for training set (red, top), development
+set (blue, middle), and test set (green, bottom) of
+SNLI. The best performance on development set
+is used as the criteria to determine the final ensemble. The best performance on development set
+is observed using 6 models.
+
+our observations, averaging the probability distributions fails to improve the development set accuracy using two and three models, so we did not
+study it further.
+
+B_ Preprocessing Study
+
+Table 5 shows some erroneous sentences from the
+SNLI test set along with their corrected equivalents (after preprocessing). Furthermore, we show
+the energy function (Equation 3 in the paper) visualizations of 6 examples from the aforementioned
+data samples in Figures 6, 7, 8, 9, 10, and 11. Each
+figure presents the visualization of an original erroneous sample along its corrected version. These
+figures clearly illustrate that fixing the erroneous
+words leads to producing correct attentions over
+the sentences. This can be observed by comparing
+the attention for the erroneous words and corrected
+words, e.g. “daschunds” and “dachshunds” in the
+premise of Figures 6 and 7. Note that we add two
+dummy notations (i.e. -FOL_, and -EOL_) to all
+sentences which indicate their beginning and end.
+
+C Category Study
+
+Here we investigate the normalized attention
+weights of DR-BiLSTM and ESIM for four samples that belong to Negation and/or Quantifier categories (Figures 12 - 15). Each figure illustrates
+the normalized energy function of DR-BiLSTM
+(left diagram) and ESIM (right diagram) respec
+ 
+Accepted as a long paper at NAACL HLT 2018
+
+Original Sentence
+
+Froends ride in an open top vehicle together.
+
+A middle easten store.
+
+A woman is looking at a phtographer
+
+The mother and daughter are fighitn.
+
+Two kiled men hold bagpipes
+
+A woman escapes a from a hostile enviroment
+Two daschunds play with a red ball
+
+A black dog is running through a marsh-like area.
+a singer wearing a jacker performs on stage
+
+There is a sculture
+
+Taking a neverending break
+
+The woman has sounds emanting from her mouth.
+the lady is shpping
+
+A Bugatti and a Lambourgini compete in a road race.
+
+Table 5:
+
+Corrected Sentence
+
+Friends ride in an open top vehicle together.
+
+A middle eastern store.
+
+A woman is looking at a photographer
+
+The mother and daughter are fighting.
+
+Two killed men hold bagpipes
+
+A woman escapes a from a hostile environment
+Two dachshunds play with a red ball
+
+A black dog is running through a marsh like area.
+
+a singer wearing a jacket performs on stage
+
+There is a sculpture
+
+Taking a never ending break
+
+The woman has sounds emanating from her mouth.
+the lady is shopping
+
+A Bugatti and a Lamborghini compete in a road race.
+
+Examples of original sentences that contain erroneous words (misspelled) in the test set of
+
+SNLI along with their corrected counterparts. Erroneous words are shown in bold and italic.
+
+ 
+
+Attention
+together 5 1.00
+
+0.75
+
+playing 5 0.50
+
+Hypothesis
+
+dogs 7 0.25
+
+0.00
+Two ] LJ
+
+° e © ° 5 s
+ww vw * * oP ov
+7 & 7
+
+se
+
+ 
+
+ 
+
+ 
+
+Premise
+
+(a) Erroneous sample (daschunds in premise).
+
+ 
+
+_EOL_
+
+Attention
+together 5 .00
+
+1
+: 0.75
+0.50
+
+0.25
+
+playing 5
+
+Hypothesis
+
+dogs 5
+0.00
+Two +
+
+ 
+
+ 
+
+° S A aS 2 > SS
+or’ xs RS < * eS ov’
+; & ,
+
+e)
+
+se
+Premise
+
+(b) Fixed sample (dachshunds in premise).
+
+Figure 6: Visualization of the energy function for one erroneous sample (a) and the fixed sample (b).
+The gold label is Entailment. Our model returns Contradiction for the erroneous sample, but correctly
+
+classifies the fixed sample.
+
+tively. Provided figures indicate that ESIM assigns
+somewhat similar attention to most of the pairs
+while DR-BiLSTM focuses on specific parts of the
+given premise and hypothesis.
+
+D_ Attention Study
+
+In this section, we show visualizations of 18 samples of normalized attention weights (energy function, see Equation 3 in the paper). Each column
+in Figures 16, 17, and 18, represents three data
+samples that share the same premise but differ in
+hypothesis. Also, each row is allocated to a specific logical relationship (Top: Entailment, Middle: Neutral, and Bottom: Contradiction). DRBiLSTM classifies all data samples reported in
+these figures correctly.
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+o— of
+Attention Attention
+»  fetchy 1.00 ao fetch} 1.00
+8 0.75 3 0.75
+= playing ; 0.50 S playing | 0.50
+& >
+7 dogs 5 0.25 7 dogs 5 0.25
+0.00 0.00
+Two + Two7
+, © @ & © %&F PSP SF L yw Se & SS F£ 7 © SF LW
+7 eS 7 Ss
+e ve
+Premise Premise
+(a) Erroneous sample (daschunds in premise). (b) Fixed sample (dachshunds in premise).
+
+Figure 7: Visualization of the energy function for one erroneous sample (a) and the fixed sample (b). The
+gold label is Neutral. Our model returns Contradiction for the erroneous sample, but correctly classifies
+
+the fixed sample.
+
+ 
+
+ 
+
+ 
+
+       
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+_EOL_ { _EOL_ f
+together | together +
+vehicle + eertien vehicle + ATT
+” w
+B top 7 075 «68 top 0.75
+= open "al S open =
+g os «8 0.50
+<= an) 0.25 < an* 0.25
+in 6.08 In 0.00
+ride 5 ride+
+Froends + Friends 4
+_FOL_;
+(a) Erroneous sample (Froends in hypothesis). (b) Fixed sample (Friends in hypothesis).
+
+Figure 8: Visualization of the energy function for one erroneous sample (a) and the fixed sample (b).
+The gold label is Neutral. Our model returns Entailment for the erroneous sample, but correctly classifies
+
+the fixed sample.
+
+ 
+
+ 
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+co._// EOL_Attention Attention
+» Store + 1.00 » store 4 1.00
+3 0.75 8 0.78
+S easten 5 0.50 S eastern 5 0.50
+r 7
+middle 4 0.25 middle + 0.25
+0.00 0.00
+A> A-4
+FOL_+ _FOL_+
+wr FY Se SS oe oe * £§ &€ "sy
+? ¢ & ? / ¢ & & 7
+* *
+< <
+Premise Premise
+(a) Erroneous sample (easten in hypothesis). (b) Fixed sample (eastern in hypothesis).
+
+Figure 9: Visualization of the energy function for one erroneous sample (a) and the fixed sample (b).
+The gold label is Entailment. Our model returns Contradiction for the erroneous sample, but correctly
+
+classifies the fixed sample.
+Accepted as a long paper at NAACL HLT 2018
+
+ 
+
+ 
+
+ 
+
+_EOL_+
+stage {
+on+ Attention
+1.00
+& performs +
+2 0.75
+= jacker
+S 0.50
+> .
+<I wearing 5 0.25
+singer + 0.00
+1 O
+_FOL_4
+rd. DS Pe LO SK LM O.0 © >
+S & @ ‘ef ve vv ¥
+Premise
+
+(a) Erroneous sample (jacker in hypothesis).
+
+ 
+
+ 
+
+ 
+
+_EOL_+
+stage 5
+on; Attention
+1.00
+” performs +
+B 0.75
+<= .
+3 jacket 5 0.50
+>
+<I wearing 5 0.25
+singer + 0.00
+1 a
+FOL_RSD PHS SCS LSM OO ev
+ov’ RS More ° oes ss & eo
+S * ¢ @ ‘e wees 7
+Premise
+(b) Fixed sample (jacket in hypothesis).
+
+Figure 10: Visualization of the energy function for one erroneous sample (a) and the fixed sample (b).
+The gold label is Entailment. Our model returns Neutral for the erroneous sample, but correctly classifies
+
+the fixed sample.
+
+ 
+
+sculture -;
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Attention
+1.00
+a
+® ay 0.75
+s
+oS 0.50
+a> is-+
+= 0.25
+0.00
+There _FOL_e 0 39 09 OD LS & S Ss
+7 oO 7
+Sg
+Premise
+
+(a) Erroneous sample (sculture in hypothesis).
+
+ 
+
+so. {il
+
+sculpture +
+
+Hypothesis
+
+There +
+
+_FOL_4
+
+ 
+
+ov”
+
+7
+
+(b)
+
+Attention
+1.00
+0.75
+0.50
+
+0.25
+0.00
+
+ 
+
+ 
+
+TEP PS CF PLY SS Ny
+es PPLE TTP
+@ ~ »
+s oO 7
+9
+Premise
+
+Fixed sample (sculpture in hypothesis).
+
+Figure 11: Visualization of the energy function for one erroneous sample (a) and the fixed sample (b).
+The gold label is Entailment. Our model returns Neutral for the erroneous sample, but correctly classifies
+
+the fixed sample.
+
+ 
+
+_EOL_+
+grass +
+the;
+
+through 5
+gallantly 5
+
+Hypothesis
+
+riding 5
+
+ 
+
+ 
+
+S oS 1D D:9 SD ANS «
+V7 FXAE SF Sh Fg LAMAR CXS FF VOR O Cv’
+Oo PS VEO OLS ~ Oo
+s e PP? os wee 7) & <
+
+Premise
+
+(a) Normalized attention of DR-BiLSTM.
+
+Attention
+1.00
+0.75
+0.50
+
+0.25
+0.00
+
+ 
+
+ 
+
+ 
+
+ 
+
+_EOL_+4
+grass 4
+the; airing
+n
+‘@ through; 0.75
+%
+= gallantly +
+3 _ 0.50
+= riding + 0.25
+is7
+0.00
+horse 5 L|
+The 5 |
+_FOL_+
+‘ ‘ Ss.
+V7 FP EEL EPL PPAR EQLEFOSSEF gy
+MF SP PS EON NS €
+7 N ~ 7
+Premise
+
+(b) Normalized attention of ESIM
+
+Figure 12: Visualization of the normalized attention weights of DR-BiLSTM (a) and ESIM (b) models
+for one sample from the SNLI test set. This sample belongs to the Negation category. The gold label is
+Contradiction. Our model returns Contradiction while ESIM returns Entailment.
+Accepted as a long paper at NAACL HLT 2018
+
+_EOL_4
+
+   
+
+rock +
+
+a;
+
+on
+Hypothesis
+
+tripped 5
+
+ 
+
+horse +
+
+The +
+
+ 
+
+ 
+
+ 
+
+_FOL_+
+
+ 
+
+" r S sh
+APE OSE F Bye LF “ ADR 2S 2 FO NS J Ny7
+x SAS VE EHS SSG OK oe
+7
+Premise
+
+(a) Normalized attention of DR-BiLSTM.
+
+Attention
+1.00
+0.75
+0.50
+
+0.25
+0.00
+
+_EOL_+
+
+rock + | }
+
+" il Attention
+1.00
+a
+0.75
+[a
+
+0.50
+
+Hypothesis
+
+ 
+
+ 
+
+ 
+
+tripped 5 0.25
+horse + | 0.00
+The 5 [|
+_FOL_4
+rT Ct Tt ct tt if Ft it Ft it ir ct Tt : T T T T T T ~ & T : T
+V7 FP EEL OPS PPAR LALFOSESEF Bw’
+SF PLS FSH GOT SS €
+
+Premise
+
+(b) Normalized attention of ESIM
+
+Figure 13: Visualization of the normalized attention weights of DR-BiLSTM (a) and ESIM (b) models
+for one sample from the SNLI test set. This sample belongs to the Negation category. The gold label is
+Contradiction. Our model returns Contradiction while ESIM returns Entailment.
+
+_EOL_ =
+display 5
+on4
+
+it
+
+that 7
+
+mad 5
+
+are 4
+people +
+and 4
+offensive +
+is
+
+statue |
+The 4
+_FOL_+
+
+Hypothesis
+
+ 
+
+ 
+
+ 
+
+Premise
+
+(a) Normalized attention of DR-BiLSTM.
+
+ 
+
+Attention
+1.00
+
+  
+
+0.75
+
+0.50
+
+_EOL_+
+
+display 5
+on
+
+it
+
+that 5
+mad are
+people -;
+and 4
+offensive is 5
+statue 7
+The 5
+_FOL_¥4
+
+Attention
+1.00
+0.75
+0.50
+
+Hypothesis
+
+0.25
+0.00
+
+ 
+
+ 
+
+ 
+
+ 
+
+Premise
+
+(b) Normalized attention of ESIM
+
+Figure 14: Visualization of the normalized attention weights of DR-BiLSTM (a) and ESIM (b) models
+for one sample from the SNLI test set. This sample belongs to both Negation and Quantifier categories.
+The gold label is Neutral. Our model returns Neutral while ESIM returns Contradiction.
+
+ 
+
+clothes 
+Hypothesis
+
+any 5
+wearing not;
+human 5
+all
+_FOL_{
+
+ 
+
+Premise
+
+(a) Normalized attention of DR-BiLSTM.
+
+ 
+
+ 
+
+Attention
+1.00
+
+  
+
+0.75
+0.50
+0.25
+0.00
+
+ 
+
+Attention
+1.00
+
+  
+
+0.75
+
+clothes - 0.50
+
+any 5
+0.25
+
+Hypothesis
+
+wearing +
+not - 0.00
+human 5
+A_FOL_{
+
+ 
+
+ 
+
+ 
+
+Premise
+
+(b) Normalized attention of ESIM
+
+Figure 15: Visualization of the normalized attention weights of DR-BiLSTM (a) and ESIM (b) models
+for one sample from the SNLI test set. This sample belongs to both Negation and Quantifier categories.
+The gold label is Entailment. Our model returns Entailment while ESIM returns Contradiction.
+Accepted as a long paper at NAACL HLT 2018
+
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+
+      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+   
+
+  
+ 
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+      
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Eot_+| _EOL_
+1 people +
+snow | other 5
+Attention near 4 eiention
+the + 1.00 0 street J
+2 O 4
+2 in | 0.75 o the 0.75
+2 & oni.
+3 Qo. 0.50
+Q plays 0.50 > instrument +
+a . 0.25 any 028
+outside mT playing 4 0.00
+; 0.00 is 4 P
+girl - man 4
+A+ A |
+FOL
+_FOL_; a
+DB One® BP DL 2S 1 DP WP OS,
+PS >PHE LPR SPMD “a HF PE ESHOP ORE gw’
+& / & & Oe eo es we ss ow ? 9 a 2 Qg 9 7
+7 ¢ 7 9
+Premise Premise
+(a) Instance 1 - Entailment relationship. (b) Instance 2 - Entailment relationship.
+= a 06Us
+ome | street +
+time 4 the
+first + on4
+Thier Attention people » sientGs
+for-5 1.00 » _ other; .
+2 angel + @ for 0.75
+8 snow | 0.75 © playing +
+s 9 by; 0.50
+3 makes 5 pao S money +
+= coat + = <= earn + 0.25
+0.25
+red 5 to;
+a4 0.00 trying 4 0.00
+in- = man |
+girl 5 A+
+Ay FOL_{
+FOL_+ |
+T x ~ a T & T T s ° T > > > x x T T ov”
+2 . @. >:
+es S e & aS & Ro eS ’ we ” oe’ ‘
+7 < 7
+Premise
+(c) Instance 1 - Neutral relationship.
+_EOL_+|
+enc gw
+the 5 ‘
+i Attention
+from + ; ateion itor
+. wn
+2  away+ B
+o 0.75 2 07
+= indoors ; 5 0.50
+3 stays 5 0.50 §
+= coat 5 0.25 0.25
+black { 0.00 0.00
+a
+in;
+Girl FOL_- ||
+SS GO 2 Oo 2 VDSS OD é oo Oe Ro eS \ we s eo’
+7 < 7
+Premise Premise
+(e) Instance 1 - Contradiction relationship. (f) Instance 2 - Contradiction relationship.
+
+Figure 16: Normalized attention weights for 6 data samples from the test set of SNLI dataset. (a,c,e)
+and (b,d,f) represent the normalized attention weights for Entailment, Neutral, and Contradiction logical
+relationships of two premises (Instance 1 and 2) respectively. Darker color illustrates higher attention.
+Accepted as a long paper at NAACL HLT 2018
+
+   
+  
+  
+  
+
+   
+  
+ 
+ 
+  
+  
+  
+
+   
+  
+
+   
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+    
+  
+  
+  
+  
+  
+ 
+
+   
+   
+  
+ 
+   
+
+ 
+
+ 
+
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+  
+ 
+  
+ 
+ 
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+covering 5 Attention motorcycle - Attention
+1.00 1.00
+2 ay 2 ay
+8 0.75 8 0.75
+3 underneath -; 0.50 3 riding 5 0.50
+> >
+x= talking + ~ 0.25 a is} 0.25
+are + 0.00 man + 0.00
+People - Av
+so. tn vee Go
+SM © D&D F&F FF GD SCS SS + Vy , F&F SS . % SMS BS SKF /
+Or FS CFP FS & os en a ee
+7 @ 3” o Zw x ee 7
+& <
+Premise Premise
+(a) Instance 3 - Entailment relationship. (b) Instance 4 - Entailment relationship.
+ce o._ =
+a it}
+lawn 4 buy 7 iz
+the- will 4
+Attention he 5 Attention
+on4 1.00 not+ = 1.00
+2 dinner 5 2 or +
+@ for 0.75 ® whether + 0.75
+s = decide 5
+S seated + 0.50 S to-4 0.50
+= are 7 0.25 = motorcycle + | 025
+Z ay
+Panty 0.00 driving ; 0.00
+ay test +
+at is;
+4 manPeople The
+FOL_+ FOL_;
+7S & &D & %F OD S&S SMS SS . Z vy & SS © S& SF @ wy
+Or * se wv s & & ov & & ¥ &
+7 @ RY o Ua 7 3° A
+& <
+Premise Premise
+(c) Instance 3 - Neutral relationship. (d) Instance 4 - Neutral relationship.
+EOL o
+friend 5
+match . his 5 _ .
+Attention for-+ Attention
+o boxing 1.00 ° waiting - 1.00
+8 a 0.75 @ motorcycle + 0.75
+x x
+= = parked 5
+8 at 0.50 g a, 0.50
+screaming — (0.25 on- ~ 0.25
+0.00 sitting | 0.00
+are is 4]
+People man
+A_FOL_ FOL_+ ||
+e SS XS 6
+oe” S & oo er
+7 se 7
+¢
+Premise Premise
+(e) Instance 3 - Contradiction relationship. (f) Instance 4 - Contradiction relationship.
+
+Figure 17: Normalized attention weights for 6 data samples from the test set of SNLI dataset. (a,c,e)
+and (b,d,f) represent the normalized attention weights for Entailment, Neutral, and Contradiction logical
+relationships of two premises (Instance 3 and 4) respectively. Darker color illustrates higher attention.
+Accepted as a long paper at NAACL HLT 2018
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+   
+ 
+  
+
+ 
+
+ 
+
+ 
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+    
+  
+
+ 
+
+ 
+
+ 
+
+co! co._{)
+A repairs Attention
+7 ttention 7 1-00
+together tio a
+3 ® — bike4 —
+@ walking 5 axe 2
+3 2 0.50
+8 0.50 S watches 5
+S is5 = oe
+. 0.25 man -4
+0.00
+couple +
+0.00 ad
+Ac
+ro z
+= a
+oe rT SH FF KF ML GO Ww @ .
+s eo” < S & Ss 4 RS Xe & oe’
+vr Se Ss s ¢ ® Cu . 7 ¢ RS 2 7
+ov’ s Se s & ow ¢ é
+$ es << e e © S &
+Premise Premise
+(a) Instance 5 - Entailment relationship. (b) Instance 6 - Entailment relationship.
+= Z of
+i Attention
+Attention maintenance + ater
+married + 1.00 2
+3 o bike - 0.75
+® 0.75 =
+3 2 0.50
+8 = 0.50 = learns +
+r + 0.25
+4 0.25 man +
+couple a mn
+0.00 AA Bo
+The
+= Z
+_FOL_; > T T T 2 < 5 T T T T
+eS L 2% ee , Ne e@ i
+a a aa as ES NE RNS
+V% Xx > © ‘S RY & 7 Os 7 x & ,
+sve J = ¢ a
+PEBnISE Premise
+(c) Instance 5 - Neutral relationship. (d) Instance 6 - Neutral relationship.
+ft of
+| A bike Attention
+1 ttention 7 +L
+together tio a
+8 & | 0.75
+$ walking 5 a5 g
+3 3 0.50
+8 0.50 S destroys 5
+= * . 0.25
+. 0.25 man-4
+0.00
+couple +
+0.00 ad
+Ac
+my :
+ms z
+oe rT £ OH FF S&F LK O Ww *
+5 c ov” < N e& s 5 RS wT & or’
+a NS © gL 2% : < re 3
+SF TSK TS sv ge Ro s 4
+7 G : é
+Premise Premise
+
+(e) Instance 5 - Contradiction relationship.
+
+(f) Instance 6 - Contradiction relationship.
+
+Figure 18: Normalized attention weights for 6 data samples from the test set of SNLI dataset. (a,c,e)
+and (b,d,f) represent the normalized attention weights for Entailment, Neutral, and Contradiction logical
+relationships of two premises (Instance 5 and 6) respectively. Darker color illustrates higher attention.
+

@@ -1,0 +1,72 @@
+{
+  "has" : {
+    "Hyperparameters" : {
+      "use" : {
+        "stochastic gradient descent" : {
+          "for" : "optimization of models",
+          "from sentence" : "In other words , We use stochastic gradient descent for the optimization of models ."          
+        },
+        "50 - dimensional word embedding" : {
+          "trained with" : "Word2 Vec",
+          "from sentence" : "We use 50 - dimensional word embedding trained with the Word2 Vec : the embedding for English words ( Section 5.2 & 5.4 ) is learnt on Wikipedia ( ?1B words ) , while that for Chinese words ( Section 5.3 ) is learnt on Weibo data (? 300 M words ) ."          
+        },
+        "ReLu" : {
+          "as" : {
+            "activation function" : {
+              "for" : {
+                "all of models ( convolution and MLP )" : {
+                  "yields" : {
+                    "comparable or better results" : {
+                      "to" : "sigmoid - like functions"
+                    }
+                  },
+                  "converges" : "faster"
+                }
+              }
+            }
+          },
+          "from sentence" : "We use ReLu as the activation function for all of models ( convolution and MLP ) , which yields comparable or better results to sigmoid - like functions , but converges faster ."
+        },
+        "3 - word window" : {
+          "throughout" : "all experiments"
+        }		
+      },
+      "test" : {
+        "various numbers of feature maps" : {
+          "typically from" : {
+            "200 to 500" : {
+              "for" : "optimal performance"
+            }
+          }
+        },
+        "from sentence" : "We use 3 - word window throughout all experiments 2 , but test various numbers of feature maps ( typically from 200 to 500 ) , for optimal performance ."    
+      },
+      "perform better with" : {
+        "mini-batch ( 100 ? 200 in sizes )" : {
+          "can be" : {
+            "parallelized" : {
+              "on" : {
+                "single machine" : { 
+                  "with" : "multi-cores"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "All the proposed models perform better with mini-batch ( 100 ? 200 in sizes ) which can be easily parallelized on single machine with multi-cores ."
+      },
+      "For regularization" : {
+        "early stopping" : {
+          "for" : {
+            "models" : {
+              "with" : ["medium size", {"large training sets" : {
+                "with" : "over 500K instances"
+              }}]
+            }
+          }
+        },
+        "from sentence" : "For regularization , we find that for both architectures , early stopping is enough for models with medium size and large training sets ( with over 500K instances ) ."
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "has" : {
+    "Model" : {
+      "propose" : {
+        "end - to - end neural architecture" : {
+          "to address" : {
+            "machine comprehension problem" : {
+              "as defined in" : "SQuAD dataset"
+            }
+          },
+          "from sentence" : "In this paper , we propose a new end - to - end neural architecture to address the machine comprehension problem as defined in the SQuAD dataset ."          
+      }},
+      "two ways to apply" : {
+        "Ptr - Net model" : {
+          "has" : ["sequence model", {"boundary model" : {"with" : "search mechanism"}}]
+        },
+        "from sentence" : "We propose two ways to apply the Ptr - Net model for our task : a sequence model and a boundary model .
+We also further extend the boundary model with a search mechanism ."
+
+      },
+      "adopt" : ["match - LSTM model", 
+        {"Pointer Net ( Ptr - Net ) model" : {
+          "enables" : {"predictions of tokens" : {"from" : "input sequence"}}, 
+          "generate" : {"answers" : {"consist of" : {"multiple tokens" : {"from" : "original text"}}}}}},
+        {"from sentence" : "Specifically , observing that in the SQuAD dataset many questions are paraphrases of sentences from the original text , we adopt a match - LSTM model that we developed earlier for textual entailment .
+We further adopt the Pointer Net ( Ptr - Net ) model developed by , which enables the predictions of tokens from the input sequence only rather than from a larger fixed vocabulary and thus allows us to generate answers that consist of multiple tokens from the original text ."
+
+        }
+      ]
+    }
+  }
+}

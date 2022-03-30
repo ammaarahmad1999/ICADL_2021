@@ -1,0 +1,20 @@
+title
+abstract
+Introduction
+Related Work
+Dynamic Meta-Embeddings
+Natural Language Inference
+Implementation Details
+Results
+Sentiment
+Implementation Details
+Results
+Image-Caption Retrieval
+Implementation Details
+Results
+Discussion & Analysis
+Visualizing Attention
+Linguistic Analysis
+Multi-domain Embeddings
+Specialization
+Examining Contextualization

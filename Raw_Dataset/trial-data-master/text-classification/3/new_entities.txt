@@ -1,0 +1,71 @@
+23	17	37	p	focus on the role of
+23	38	66	n	preprocessing the input text
+23	69	84	p	particularly in
+23	85	88	n	how
+23	95	105	p	split into
+23	106	145	n	individual ( meaning - bearing ) tokens
+23	157	183	p	affects the performance of
+23	184	226	n	standard neural text classification models
+32	94	141	n	github.com/pedrada88/preproc-textclassification
+63	3	8	p	tried
+63	14	39	n	two classification models
+64	4	16	p	first one is
+64	19	37	n	standard CNN model
+64	38	48	p	similar to
+64	59	103	n	using ReLU as non-linear activation function
+65	7	13	p	second
+65	14	19	n	model
+65	25	28	p	add
+65	31	46	n	recurrent layer
+65	49	64	p	specifically an
+65	65	69	n	LSTM
+65	72	86	p	before passing
+65	91	106	n	pooled features
+65	107	118	p	directly to
+65	123	152	n	fully connected softmax layer
+68	4	19	n	embedding layer
+68	24	41	p	initialized using
+68	42	84	n	300 - dimensional CBOW Word2vec embeddings
+68	85	95	p	trained on
+68	100	129	n	3B - word UMBC WebBase corpus
+68	130	134	p	with
+68	135	159	n	standard hyperparameters
+2	15	65	n	Text Preprocessing in Neural Network Architectures
+4	0	18	n	Text preprocessing
+94	0	35	n	Experiment 1 : Preprocessing effect
+95	19	25	p	use of
+95	26	63	n	more complex preprocessing techniques
+95	64	71	p	such as
+95	72	108	n	lemmatization and multiword grouping
+95	109	117	p	does not
+95	118	122	n	help
+97	0	34	n	Experiment 2 : Cross-preprocessing
+100	22	29	p	observe
+100	32	80	n	different trend , with multiwordenhanced vectors
+100	81	91	p	exhibiting
+100	94	112	n	better performance
+100	113	120	p	both on
+100	125	141	n	single CNN model
+100	144	172	p	best over all performance in
+100	173	199	n	seven of the nine datasets
+100	213	229	n	CNN + LSTM model
+100	232	251	p	best performance in
+100	252	265	n	four datasets
+100	277	293	p	same ballpark as
+100	298	310	n	best results
+100	311	321	p	in four of
+100	326	349	n	remaining five datasets
+109	16	21	p	using
+109	22	49	n	multiword - wise embeddings
+109	50	52	p	on
+109	57	72	n	vanilla setting
+109	73	81	p	leads to
+109	82	109	n	consistently better results
+109	110	128	p	than using them on
+109	133	175	n	same multiwordgrouped preprocessed dataset
+109	176	178	p	in
+109	179	205	n	eight of the nine datasets
+111	50	56	p	use of
+111	61	71	n	embeddings
+111	72	82	p	trained on
+111	85	125	n	simple tokenized corpus ( i.e. vanilla )

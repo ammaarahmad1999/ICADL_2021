@@ -1,0 +1,110 @@
+197	0	5	p	shows
+197	10	21	n	performance
+197	22	24	p	of
+197	27	52	n	logistic regression model
+197	53	60	n	trained
+197	61	66	p	using
+197	67	91	n	all the features ( All )
+197	107	134	n	individual feature - groups
+198	7	15	p	see that
+198	20	28	n	features
+198	29	43	p	extracted from
+198	48	54	n	aspect
+198	55	64	p	analyzing
+198	69	85	n	event - sequence
+198	86	90	p	have
+198	95	121	n	strongest predictive power
+198	124	135	p	followed by
+198	142	156	n	characterizing
+198	157	179	n	Sentiment - trajectory
+199	4	12	n	features
+199	13	22	p	measuring
+199	23	45	n	top - ical consistency
+199	46	55	p	result in
+199	56	71	n	lowest accuracy
+199	87	101	n	perform better
+199	102	106	p	than
+199	107	113	n	random
+173	0	4	n	DSSM
+173	10	16	p	trains
+173	17	41	n	two deep neural networks
+173	42	52	p	to project
+173	57	89	n	context and the ending - options
+173	90	94	p	into
+173	99	116	n	same vector space
+175	0	4	n	Msap
+177	3	9	p	trains
+177	12	31	n	logistic regression
+177	32	40	p	based on
+177	41	83	n	stylistic and languagemodel based features
+178	0	2	n	LR
+178	23	25	p	is
+178	28	60	n	simple logistic regression model
+178	70	81	p	agnostic to
+178	106	131	n	multiple types of aspects
+180	0	13	n	Majority Vote
+181	5	20	n	ensemble method
+181	21	25	p	uses
+181	30	38	n	features
+181	39	52	p	extracted for
+181	65	78	n	K = 3 aspects
+181	81	89	p	to train
+181	90	127	n	K separate logistic regression models
+183	0	11	n	Soft Voting
+184	19	25	p	learns
+184	26	67	n	K different aspect - specific classifiers
+189	0	23	n	Aspect - aware Ensemble
+190	45	51	p	trains
+190	52	90	n	K different aspectspecific classifiers
+35	17	24	p	explore
+35	25	47	n	three semantic aspects
+35	48	50	p	of
+35	51	70	n	story understanding
+35	83	101	n	sequence of events
+35	102	114	p	described in
+35	119	124	n	story
+35	138	147	n	evolution
+35	148	150	p	of
+35	151	187	n	sentiment and emotional trajectories
+35	202	221	n	topical consistency
+36	4	16	n	first aspect
+36	20	34	p	motivated from
+36	49	74	n	semantic script induction
+36	81	93	p	evaluates if
+36	94	100	n	events
+36	101	113	p	described in
+36	117	137	n	ending - alternative
+36	142	151	p	likely to
+36	152	157	n	occur
+36	158	164	p	within
+36	169	187	n	sequence of events
+36	188	200	p	described in
+36	205	222	n	preceding context
+42	27	40	p	evaluating if
+42	45	54	n	sentiment
+42	55	67	p	described in
+42	71	84	n	ending option
+42	85	96	n	makes sense
+42	97	108	p	considering
+42	113	120	n	context
+42	121	123	p	of
+42	128	133	n	story
+45	31	43	p	analyzing if
+45	48	53	n	topic
+45	54	56	p	of
+45	60	73	n	ending option
+45	77	92	p	consistent with
+45	97	114	n	preceding context
+46	3	10	p	present
+46	13	31	n	log - linear model
+46	40	47	p	used to
+46	48	53	n	weigh
+46	58	73	n	various aspects
+46	74	76	p	of
+46	81	86	n	story
+46	87	92	p	using
+46	95	110	n	hidden variable
+2	0	19	n	Story Comprehension
+4	0	29	n	Automatic story comprehension
+14	20	55	n	automatically understanding stories
+29	26	39	n	story - cloze

@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Model Overview
+An End-to-End Implementation
+Semantic Matching Functions
+Decomposition Functions
+Composition Functions
+Similarity Assessment Function
+Training
+Experiment
+Experimental Setting
+Model Properties
+Comparing with State-of-the-art Models
+Related Work
+Conclusion

@@ -1,0 +1,86 @@
+62	35	50	n	some parameters
+62	61	69	p	fixed to
+62	70	101	n	reasonable and empirical values
+62	104	111	p	such as
+62	116	169	n	size of convolutions ( 5 5 pixels , 32 feature maps )
+62	178	231	n	size of subsamplings ( 2 2 pixels using max pooling )
+63	0	10	n	All layers
+63	11	14	p	use
+63	15	25	n	ReLU units
+63	28	37	p	except of
+63	38	45	n	softmax
+63	52	59	p	used in
+63	64	76	n	output layer
+64	4	17	n	learning rate
+64	21	29	p	fixed to
+64	30	38	n	? = 0.01
+64	43	57	p	not subject to
+64	58	73	n	model selection
+66	4	19	n	entire database
+66	29	48	p	randomly split into
+66	51	103	n	60% / 20 % / 20 % training / validation / test ratio
+72	0	27	n	Stochastic gradient descent
+72	28	32	p	with
+72	35	45	n	batch size
+72	46	48	p	of
+72	49	52	n	500
+76	5	10	n	model
+76	15	26	p	trained for
+76	27	36	n	50 epochs
+76	37	39	p	in
+76	44	59	n	model selection
+65	24	32	p	apply to
+65	37	45	n	momentum
+65	57	65	p	fixed to
+65	66	71	n	= 0.9
+71	13	30	p	implemented using
+71	31	38	n	Lasagne
+71	49	58	p	generated
+71	59	68	n	CUDA code
+71	72	83	p	executed on
+71	86	96	n	Tesla K40c
+73	0	8	p	contains
+73	13	28	n	four parameters
+73	29	34	p	to be
+73	35	44	n	optimized
+73	51	73	n	number of convolutions
+73	80	103	n	number of hidden layers
+73	110	142	n	number of units per hidden layer
+73	151	165	n	dropout factor
+56	4	16	n	input images
+56	21	29	p	fed into
+56	32	43	n	convolution
+56	44	54	p	comprising
+56	57	94	n	convolutional and a subsampling layer
+57	5	16	n	convolution
+57	23	34	p	followed by
+57	35	52	n	more convolutions
+57	53	62	p	to become
+57	73	87	n	more invariant
+57	88	90	p	to
+57	91	102	n	distortions
+57	103	105	p	in
+57	110	115	n	input
+60	4	11	n	novelty
+60	29	31	p	is
+60	41	121	n	exact number of convolutions , number of hidden layers and size of hidden layers
+60	122	125	p	are
+60	126	135	n	not fixed
+60	140	150	p	subject to
+60	161	176	n	model selection
+58	0	2	p	In
+58	7	19	n	second stage
+58	24	46	n	regular neural network
+58	47	54	p	follows
+58	59	71	n	convolutions
+58	81	96	p	to discriminate
+58	101	109	n	features
+58	110	120	p	learned by
+58	125	137	n	convolutions
+59	4	16	n	output layer
+59	17	28	p	consists of
+59	29	38	n	two units
+59	39	42	p	for
+59	43	60	n	smile or no smile
+2	18	35	n	Smile Recognition
+4	139	168	n	facial expression recognition

@@ -1,0 +1,65 @@
+{
+  "has" : {
+    "Experiments" : {
+      "Tasks" : {
+        "Word Similarity" : {
+          "use" : {
+            "skip - gram model" : {
+              "as" : "baseline model"
+            },
+            "from sentence" : "Word Similarity evaluates the performance of the learned word embeddings by calculating the word similarity : it evaluates whether the most similar words of a given word in the embedding space are consistent with the ground - truth , in terms of Spearman 's rank correlation .
+We use the skip - gram model as our baseline model , and train the embeddings using Enwik9 6 ."
+			
+          },
+          "test" : {
+            "baseline and our method" : {
+              "on" : "three datasets : RG65 , WS and RW"
+            },
+            "from sentence" : "We test the baseline and our method on three datasets : RG65 , WS and RW ."
+          }
+        },
+        "Language Modeling" : {
+          "goal" : {
+            "predict the next word" : {
+              "conditioned on" : "previous words"
+            }
+          },
+          "evaluated by" : ["perplexity", {"from sentence" : "Language Modeling is a basic task in natural language processing .
+		  The goal is to predict the next word conditioned on previous words and the task is evaluated by perplexity ."
+		  
+		  }],
+          "experiments on" : ["two widely used datasets , Penn Treebank ( PTB ) and WikiText - 2 ( WT2 )", {"from sentence" : "We do experiments on two widely used datasets , Penn Treebank ( PTB ) and WikiText - 2 ( WT2 ) ."}],
+          "choose" : {
+            "two recent works" : {
+              "as" : "our baselines : the AWD - LSTM model and the AWD - LSTM - MoS model"
+            },
+            "from sentence" : "We choose two recent works as our baselines : the AWD - LSTM model and the AWD - LSTM - MoS model , which achieves state - of - the - art performance ."
+          }
+        },
+        "Machine Translation" : {
+          "choose" : {
+            "two datasets : WMT14 English - German and IWSLT14 German - English datasets" : {
+              "evaluated in terms of" : "score"
+            },
+            "from sentence" : "Machine Translation is a popular task in both deep learning and natural language processing .
+We choose two datasets : WMT14 English - German and IWSLT14 German - English datasets , which are evaluated in terms of BLEU score ."
+
+          },
+          "use" : {
+            "Transformer" : {
+              "as" : "baseline model"
+            },
+            "from sentence" : "We use Transformer as the baseline model , which achieves state - of - the - art accuracy on multiple translation datasets ."
+          }
+        },
+        "Text Classification" : {
+          "implement" : "Recurrent CNN - based model",
+          "test it on" : "AG 's news corpus ( AGs ) , IMDB movie review dataset ( IMDB ) and 20 Newsgroups ( 20 NG )",
+          "from sentence" : "Text Classification is a conventional machine learning task and is evaluated by accuracy .
+Following the setting in , we implement a Recurrent CNN - based model and test it on AG 's news corpus ( AGs ) , IMDB movie review dataset ( IMDB ) and 20 Newsgroups ( 20 NG ) ."
+		  
+        }
+      }
+    }
+  }
+}

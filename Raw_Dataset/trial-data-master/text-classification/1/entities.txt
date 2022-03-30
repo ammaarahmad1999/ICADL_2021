@@ -1,0 +1,70 @@
+21	18	26	consider
+21	29	51	more general framework
+21	54	63	subsuming
+21	64	77	one - hot CNN
+21	86	100	jointly trains
+21	103	139	feature generator and a linear model
+21	142	147	where
+21	152	169	feature generator
+21	170	181	consists of
+21	184	210	region embedding + pooling
+31	18	26	build on
+31	31	82	general framework of ' region embedding + pooling '
+31	87	94	explore
+31	97	132	more sophisticated region embedding
+31	133	136	via
+31	137	170	Long Short - Term Memory ( LSTM )
+37	3	9	pursue
+37	14	30	best use of LSTM
+37	58	65	compare
+37	66	85	the resulting model
+37	86	90	with
+37	95	116	previous best methods
+37	117	126	including
+37	127	158	one - hot CNN and previous LSTM
+38	4	12	strategy
+38	19	57	simplify the model as much as possible
+38	60	84	including elimination of
+38	87	107	word embedding layer
+38	108	133	routinely used to produce
+38	134	147	input to LSTM
+2	0	51	Supervised and Semi- Supervised Text Categorization
+4	82	101	text categorization
+124	0	26	Experiments ( supervised )
+139	0	9	Comparing
+139	14	31	two types of LSTM
+139	40	48	see that
+139	53	94	one - hot bidirectional LSTM with pooling
+139	97	109	oh - 2 LSTMp
+139	112	123	outperforms
+139	124	142	word - vector LSTM
+139	145	154	wv - LSTM
+139	157	159	on
+139	160	176	all the datasets
+143	5	7	on
+143	8	38	three out of the four datasets
+143	41	53	oh - 2 LSTMp
+143	54	65	outperforms
+143	66	81	SVM and the CNN
+195	0	27	Semi-supervised experiments
+212	15	21	tested
+212	22	34	wv - 2 LSTMp
+212	37	82	word - vector bidirectional LSTM with pooling
+212	98	113	difference from
+212	114	126	oh - 2 LSTMp
+212	127	129	is
+212	139	163	input to the LSTM layers
+212	164	166	is
+212	171	195	pre-trained word vectors
+220	7	13	review
+220	18	29	performance
+220	30	32	of
+220	33	46	one - hot CNN
+220	47	51	with
+220	52	82	one 200 - dim CNN tv-embedding
+220	104	119	comparable with
+220	120	128	our LSTM
+220	129	133	with
+220	134	166	two 100 - dim LSTM tv-embeddings
+220	179	190	in terms of
+220	195	226	dimensionality of tv-embeddings

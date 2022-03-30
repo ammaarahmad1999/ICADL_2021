@@ -1,0 +1,129 @@
+141	0	9	n	BoW Model
+142	17	27	p	trained on
+142	28	33	n	spans
+142	34	46	p	up to length
+142	47	49	n	10
+144	0	2	p	As
+144	3	23	n	pre-processing steps
+144	27	36	n	lowercase
+144	37	47	n	all inputs
+144	52	60	p	tokenize
+144	64	69	p	using
+144	70	75	n	spacy
+145	4	15	n	binary word
+145	16	18	p	in
+145	19	35	n	question feature
+145	39	50	p	computed on
+145	51	57	n	lemmas
+145	58	69	p	provided by
+145	70	75	n	spacy
+145	80	93	p	restricted to
+145	94	112	n	alphanumeric words
+145	118	125	p	are not
+145	126	135	n	stopwords
+146	30	33	p	use
+146	36	57	n	hidden dimensionality
+146	58	60	p	of
+146	61	62	n	n
+146	63	64	p	=
+146	65	68	n	150
+146	71	78	n	dropout
+146	79	81	p	at
+146	86	102	n	input embeddings
+146	103	107	p	with
+146	112	121	n	same mask
+146	122	125	p	for
+146	126	135	n	all words
+146	142	146	n	rate
+146	147	149	p	of
+146	150	153	n	0.2
+146	176	199	n	fixed word - embeddings
+146	158	175	n	300 - dimensional
+146	200	204	p	from
+146	205	210	n	Glove
+147	3	11	p	employed
+147	12	16	n	ADAM
+147	17	20	p	for
+147	21	33	n	optimization
+147	34	38	p	with
+147	42	65	n	initial learning - rate
+147	66	68	p	of
+147	69	74	n	10 ?3
+148	3	7	p	used
+148	8	20	n	mini-batches
+148	21	23	p	of
+148	24	28	n	size
+148	29	31	n	32
+149	0	6	n	FastQA
+151	3	11	p	tokenize
+151	16	21	n	input
+151	22	24	p	on
+151	25	36	n	whitespaces
+151	55	82	n	non-alphanumeric characters
+152	4	15	n	binary word
+152	16	18	p	in
+152	19	35	n	question feature
+152	39	50	p	computed on
+152	55	60	n	words
+152	69	78	p	appear in
+152	79	86	n	context
+153	30	33	p	use
+153	36	57	n	hidden dimensionality
+153	58	60	p	of
+153	61	62	n	n
+153	63	64	p	=
+153	65	68	n	300
+153	71	90	n	variational dropout
+153	91	93	p	at
+153	98	114	n	input embeddings
+153	115	119	p	with
+153	124	133	n	same mask
+153	134	137	p	for
+153	138	147	n	all words
+153	154	158	n	rate
+153	159	161	p	of
+153	162	165	n	0.5
+153	186	209	n	fixed word - embeddings
+153	170	185	n	300 dimensional
+153	210	214	p	from
+153	215	220	n	Glove
+154	3	11	p	employed
+154	12	16	n	ADAM
+154	17	20	p	for
+154	21	33	n	optimization
+154	34	38	p	with
+154	42	65	n	initial learning - rate
+154	66	68	p	of
+154	69	74	n	10 ?3
+28	122	128	p	namely
+28	129	135	n	FastQA
+28	19	26	p	develop
+28	36	69	n	neural , bag - of - words ( BoW )
+28	78	110	n	recurrent neural network ( RNN )
+29	75	80	p	model
+29	53	64	n	interaction
+29	93	100	p	between
+29	101	121	n	question and context
+29	127	134	p	through
+29	135	154	n	computable features
+29	155	157	p	on
+29	162	172	n	word level
+2	7	16	n	Neural QA
+4	36	61	n	question answering ( QA )
+4	156	158	n	QA
+11	0	18	n	Question answering
+175	4	23	n	neural BoW baseline
+175	24	32	p	achieves
+175	33	45	n	good results
+176	18	29	n	outperforms
+176	32	75	n	feature rich logistic - regression baseline
+176	76	78	p	on
+176	83	104	n	SQuAD development set
+176	109	123	n	nearly reaches
+176	128	150	n	BiLSTM baseline system
+179	6	22	n	very competitive
+179	23	25	p	to
+179	26	76	n	previously established stateof - the - art results
+179	106	114	n	improves
+179	121	124	p	for
+179	125	132	n	News QA

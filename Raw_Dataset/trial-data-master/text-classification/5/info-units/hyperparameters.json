@@ -1,0 +1,57 @@
+{
+  "has" : {
+    "Hyperparameters" : {
+      "use" : {
+        "AWD - LSTM language model" : {
+          "with" : [
+            {"embedding size" : {"of" : "400"}},
+            "3 layers",
+            {"hidden activations" : {"per layer" : "1150"}},
+            {"BPTT batch size" : {"of" : "70"}},
+            {"from sentence" : "We use the AWD - LSTM language model with an embedding size of 400 , 3 layers , 1150 hidden activations per layer , and a BPTT batch size of 70 ."}
+          ]
+        },
+        "Adam" : {
+          "with" : ["? 1 = 0.7" , "? 2 = 0.99", {"from sentence" : "We use Adam with ? 1 = 0.7 instead of the default ? 1 = 0.9 and ? 2 = 0.99 , similar to ."}]
+        },
+        "batch size" : {
+          "of" : "64"
+        },
+        "base learning rate" : {
+          "0.004 and 0.01" : {
+            "for" : {
+              "finetuning" : "LM and the classifier"  
+            }
+          }
+        }
+      },
+      "tune" : {
+        "number of epochs" : {
+          "on" : "validation set"
+        },
+        "from sentence" : "We use a batch size of 64 , a base learning rate of 0.004 and 0.01 for finetuning the LM and the classifier respectively , and tune the number of epochs on the validation set of each task 7 ."
+      },	  
+      "apply" : {
+        "dropout" : {
+          "0.4" : ["to layers", "to input embedding layers"],
+          "0.3" : "to RNN layers",
+          "0.05" : "to embedding layers"
+        },
+        "weight dropout" : {
+          "0.5" : "to the RNN hidden - to - hidden matrix"
+        },
+        "from sentence" : "We apply dropout of 0.4 to layers , 0.3 to RNN layers , 0.4 to input embedding layers , 0.05 to embedding layers , and weight dropout of 0.5 to the RNN hidden - to - hidden matrix ."
+      },
+      "has" : {
+        "classifier" : {
+          "has" : {
+            "hidden layer" : {
+              "size" : "50"
+            }
+          },
+          "from sentence" : "The classifier has a hidden layer of size 50 ."          
+        }
+      }
+    }
+  }
+}

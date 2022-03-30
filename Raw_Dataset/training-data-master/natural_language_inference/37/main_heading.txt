@@ -1,0 +1,9 @@
+title
+abstract
+Introduction
+Pipelined Method
+Confidence Method
+Experimental Setup
+Results
+Related Work
+Conclusion

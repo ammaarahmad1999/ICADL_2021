@@ -1,0 +1,8 @@
+title
+abstract
+Introduction
+A solution to annotation artifacts
+Experiments
+Analysis
+Related Work
+Conclusion

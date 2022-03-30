@@ -1,0 +1,164 @@
+174	17	24	p	conduct
+174	25	47	n	an ablation experiment
+174	48	50	p	on
+174	51	75	n	SNLI development dataset
+174	9	11	p	in
+176	4	10	n	result
+176	11	13	p	is
+176	24	40	n	not satisfactory
+176	64	74	p	only using
+176	75	93	n	sentence embedding
+176	94	98	p	from
+176	99	116	n	discourse markers
+176	117	127	p	to predict
+176	132	138	n	answer
+176	139	141	p	is
+176	142	151	n	not ideal
+176	155	177	n	large - scale datasets
+181	77	88	n	performance
+181	89	100	n	drops a lot
+181	3	9	p	remove
+181	14	41	n	character - level embedding
+181	50	70	n	POS and NER features
+183	4	23	n	exact match feature
+183	29	41	p	demonstrates
+183	46	59	n	effectiveness
+183	60	62	p	in
+183	67	82	n	ablation result
+177	8	14	p	remove
+177	19	41	n	sentence encoder model
+177	162	164	p	to
+178	3	15	p	observe that
+178	20	31	n	performance
+178	32	51	n	drops significantly
+178	55	64	n	87 . 24 %
+184	13	19	p	ablate
+184	24	51	n	reinforcement learning part
+185	4	10	n	result
+185	11	28	n	drops about 0.5 %
+153	3	6	p	use
+153	11	35	n	Stanford CoreNLP toolkit
+153	36	47	p	to tokenize
+153	52	57	n	words
+153	62	70	p	generate
+153	71	87	n	POS and NER tags
+158	11	19	n	AdaDelta
+158	20	23	p	for
+158	24	36	n	optimization
+158	53	57	p	with
+158	58	82	n	? as 0.95 and as 1 e - 8
+154	4	19	n	word embeddings
+154	24	38	p	initialized by
+154	39	49	n	300d Glove
+154	56	66	n	dimensions
+154	67	69	p	of
+154	70	92	n	POS and NER embeddings
+154	20	23	p	are
+154	97	106	n	30 and 10
+159	3	6	p	set
+159	7	21	n	our batch size
+159	22	24	p	as
+159	25	27	n	36
+159	36	57	n	initial learning rate
+159	58	60	p	as
+159	61	64	n	0.6
+157	11	22	n	hidden size
+157	23	25	p	as
+157	26	29	n	300
+157	30	33	p	for
+157	34	53	n	all the LSTM layers
+157	58	63	p	apply
+157	64	71	n	dropout
+157	72	79	p	between
+157	80	86	n	layers
+157	87	91	p	with
+157	95	108	n	initial ratio
+157	109	111	p	of
+157	112	115	n	0.9
+157	122	132	n	decay rate
+157	133	135	p	as
+157	136	140	n	0.97
+157	141	144	p	for
+157	145	160	n	every 5000 step
+156	9	25	n	Tensorflow r 1.3
+156	26	28	p	as
+156	29	57	n	our neural network framework
+163	4	20	n	number of epochs
+163	24	30	p	set to
+163	34	36	n	10
+163	47	71	n	feedforward dropout rate
+163	21	23	p	is
+163	75	78	n	0.2
+162	0	3	p	For
+162	4	12	n	DMP task
+162	93	99	n	anneal
+162	100	102	p	by
+162	103	107	n	half
+162	108	117	n	each time
+162	122	141	n	validation accuracy
+162	142	144	p	is
+162	145	150	n	lower
+162	151	155	p	than
+162	160	174	n	previous epoch
+162	18	21	p	use
+162	22	49	n	stochastic gradient descent
+162	50	54	p	with
+162	55	76	n	initial learning rate
+162	77	79	p	as
+162	80	83	n	0.1
+34	19	26	p	propose
+34	29	63	n	Discourse Marker Augmented Network
+34	64	67	p	for
+34	68	94	n	natural language inference
+34	97	102	p	where
+34	106	114	n	transfer
+34	119	128	n	knowledge
+34	129	133	p	from
+34	138	162	n	existing supervised task
+34	165	200	n	Discourse Marker Prediction ( DMP )
+34	203	205	p	to
+34	209	229	n	integrated NLI model
+35	19	41	n	sentence encoder model
+35	42	53	p	that learns
+35	58	73	n	representations
+35	74	76	p	of
+35	81	90	n	sentences
+35	91	95	p	from
+35	100	108	n	DMP task
+35	118	124	p	inject
+35	129	136	n	encoder
+35	137	139	p	to
+35	144	155	n	NLI network
+37	101	107	p	employ
+37	108	130	n	reinforcement learning
+37	131	135	p	with
+37	138	144	n	reward
+37	145	155	p	defined by
+37	160	177	n	uniformity extent
+37	17	19	p	of
+37	185	200	n	original labels
+37	201	209	p	to train
+37	214	219	n	model
+2	67	93	n	Natural Language Inference
+4	0	34	n	Natural Language Inference ( NLI )
+4	51	89	n	Recognizing Textual Entailment ( RTE )
+6	207	210	n	NLI
+169	16	27	n	performance
+169	28	30	p	of
+169	31	61	n	most of the integrated methods
+169	62	65	p	are
+169	66	72	n	better
+169	73	77	p	than
+169	82	112	n	sentence encoding based models
+172	19	28	n	our model
+172	29	37	p	achieves
+172	38	44	n	89.6 %
+172	45	47	p	on
+172	48	52	n	SNLI
+172	55	61	n	80.3 %
+172	62	64	p	on
+172	65	81	n	matched MultiNLI
+172	86	92	n	79.4 %
+172	93	95	p	on
+172	96	115	n	mismatched MultiNLI
+172	128	162	n	all state - of - the - art results

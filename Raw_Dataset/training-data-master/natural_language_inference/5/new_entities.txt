@@ -1,0 +1,154 @@
+21	11	18	p	explore
+21	23	29	n	effect
+21	30	32	p	of
+21	33	55	n	additional information
+21	56	67	p	by adopting
+21	70	102	n	pretrained language model ( LM )
+21	103	113	p	to compute
+21	118	139	n	vector representation
+21	140	142	p	of
+21	147	157	n	input text
+29	32	61	n	different objective functions
+29	64	95	n	listwise and pointwise learning
+23	26	32	p	select
+23	36	55	n	ELMo language model
+24	3	14	p	investigate
+24	19	32	n	applicability
+24	33	35	p	of
+24	36	60	n	transfer learning ( TL )
+24	61	66	p	using
+24	69	89	n	large - scale corpus
+24	98	109	p	created for
+24	112	148	n	relevant - sentence - selection task
+24	151	155	p	i.e.
+24	158	199	n	question - answering NLI ( QNLI ) dataset
+25	20	27	p	enhance
+25	28	54	n	one of the baseline models
+25	57	68	n	Comp - Clip
+25	106	109	p	for
+25	114	128	n	target QA task
+25	129	141	p	by proposing
+25	144	181	n	novel latent clustering ( LC ) method
+26	4	13	n	LC method
+26	14	22	p	computes
+26	23	49	n	latent cluster information
+26	50	53	p	for
+26	54	68	n	target samples
+26	69	80	p	by creating
+26	83	102	n	latent memory space
+26	107	118	p	calculating
+26	123	133	n	similarity
+26	134	141	p	between
+26	146	152	n	sample
+26	161	167	n	memory
+27	82	89	p	assigns
+27	90	126	n	true - label question - answer pairs
+27	127	129	p	to
+27	130	146	n	similar clusters
+27	0	2	p	By
+27	6	34	n	endto - end learning process
+112	3	12	p	implement
+112	17	34	n	Comp - Clip model
+112	40	45	p	apply
+112	48	80	n	context projection weight matrix
+112	81	85	p	with
+112	86	100	n	100 dimensions
+112	110	124	p	shared between
+112	129	142	n	question part
+112	151	162	n	answer part
+113	0	2	p	In
+113	7	23	n	aggregation part
+113	29	32	p	use
+113	33	42	n	1 - D CNN
+113	43	47	p	with
+113	50	70	n	total of 500 filters
+117	3	9	p	select
+117	10	11	n	k
+117	50	52	p	as
+117	53	60	n	6 and 4
+117	14	17	p	for
+117	69	94	n	WikiQA and TREC - QA case
+118	22	27	p	apply
+118	28	45	n	8 latent clusters
+119	4	19	n	vocabulary size
+119	20	22	p	in
+119	27	62	n	WiKiQA , TREC - QA and QNLI dataset
+119	63	66	p	are
+119	67	94	n	30,104 , 56,908 and 154,442
+120	5	13	p	applying
+120	18	20	n	TL
+120	27	42	n	vocabulary size
+120	46	52	p	set to
+120	53	60	n	154,442
+120	71	80	n	dimension
+120	81	83	p	of
+120	88	120	n	context projection weight matrix
+120	124	130	p	set to
+120	131	134	n	300
+121	3	6	p	use
+121	11	25	n	Adam optimizer
+121	28	37	p	including
+121	38	55	n	gradient clipping
+121	58	60	p	by
+121	65	69	n	norm
+121	70	72	p	at
+121	75	84	n	threshold
+121	85	87	p	of
+121	88	89	n	5
+122	0	3	p	For
+122	19	33	n	regularization
+122	39	46	p	applied
+122	49	56	n	dropout
+122	57	61	p	with
+122	64	69	n	ratio
+122	16	18	p	of
+122	73	76	n	0.5
+2	55	71	n	Answer Selection
+4	48	82	n	sentence - level answer- selection
+10	0	35	n	Automatic question answering ( QA )
+127	10	13	p	For
+127	18	32	n	WikiQA dataset
+127	39	66	n	pointwise learning approach
+127	67	72	p	shows
+127	75	93	n	better performance
+127	94	98	p	than
+127	103	129	n	listwise learning approach
+128	3	10	p	combine
+128	11	13	n	LM
+128	14	18	p	with
+128	23	54	n	base model ( Comp - Clip + LM )
+128	59	66	p	observe
+128	69	92	n	significant improvement
+128	93	95	p	in
+128	96	107	n	performance
+128	108	119	p	in terms of
+128	120	151	n	MAP ( 0.714 to 0.746 absolute )
+129	8	11	p	add
+129	16	51	n	LC method ( Comp - Clip + LM + LC )
+129	58	79	n	best previous results
+129	80	83	p	are
+129	84	93	n	surpassed
+129	94	105	p	in terms of
+129	106	137	n	MAP ( 0.718 to 0.764 absolute )
+132	65	69	p	with
+132	74	91	n	TREC - QA dataset
+132	4	31	n	pointwise learning approach
+132	37	42	p	shows
+132	43	64	n	excellent performance
+136	16	25	n	our model
+136	26	37	p	outperforms
+136	42	62	n	best previous result
+136	71	74	p	add
+136	75	112	n	LC method , ( Comp - Clip + LM + LC )
+136	113	124	p	in terms of
+136	125	128	n	MAP
+136	131	136	n	0.865
+136	137	139	p	to
+136	140	145	n	0.868
+135	27	34	p	achieve
+135	35	63	n	additional performance gains
+135	64	75	p	in terms of
+135	80	83	n	MAP
+135	90	95	p	apply
+135	96	112	n	LM , LC , and TL
+135	115	138	n	0.850 , 0.868 and 0.875

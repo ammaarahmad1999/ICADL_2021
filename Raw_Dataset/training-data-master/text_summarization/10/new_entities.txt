@@ -1,0 +1,77 @@
+192	0	33	n	Soft - sharing vs. Hard - sharing
+193	30	36	p	choose
+193	37	51	n	soft - sharing
+193	52	56	p	over
+193	57	71	n	hard - sharing
+193	72	82	p	because of
+193	87	120	n	more expressive parameter sharing
+194	23	28	p	prove
+194	34	55	n	soft - sharing method
+194	56	98	p	is statistically significantly better than
+194	99	113	n	hard - sharing
+194	114	118	p	with
+194	119	128	n	p < 0.001
+194	18	20	p	in
+194	132	143	n	all metrics
+203	0	39	n	Quantitative Improvements in Entailment
+208	3	8	p	found
+208	14	35	n	our 2 - way MTL model
+208	36	40	p	with
+208	41	62	n	entailment generation
+208	63	70	p	reduces
+208	76	92	n	extraneous count
+208	93	95	p	by
+208	96	122	n	17.2 % w.r.t. the baseline
+210	0	47	n	Quantitative Improvements in Saliency Detection
+213	4	15	p	results are
+213	46	97	n	2 - way - QG MTL model ( with question generation )
+213	98	104	p	versus
+213	105	125	n	baseline improvement
+213	126	128	p	is
+213	129	159	n	stat. significant ( p < 0.01 )
+215	0	60	n	Qualitative Examples on Entailment and Saliency Improvements
+215	91	100	n	summaries
+218	12	36	n	3 - way multi-task model
+218	37	46	p	generates
+218	62	80	p	are both better at
+218	81	99	n	logical entailment
+218	104	136	n	contain more salient information
+22	18	25	p	present
+22	26	65	n	novel multi-task learning architectures
+22	66	74	p	based on
+22	75	115	n	multi-layered encoder and decoder models
+22	127	143	p	empirically show
+22	155	175	n	substantially better
+22	176	184	p	to share
+22	189	216	n	higherlevel semantic layers
+22	217	224	p	between
+22	229	255	n	three aforementioned tasks
+22	264	271	p	keeping
+22	276	327	n	lower - level ( lexico- syntactic ) layers unshared
+2	22	48	n	Multi - Task Summarization
+5	38	63	n	abstractive summarization
+17	26	56	n	abstractive text summarization
+144	0	27	n	Pointer + Coverage Baseline
+149	2	4	p	On
+149	5	21	n	Gigaword dataset
+149	28	42	n	baseline model
+149	139	159	p	performs better than
+149	160	178	n	all previous works
+150	0	39	n	Multi - Task with Entailment Generation
+152	4	9	p	shows
+152	20	38	n	multi-task setting
+152	42	53	p	better than
+152	54	80	n	our strong baseline models
+154	0	3	p	For
+154	4	48	n	multi-task learning with question generation
+154	55	67	p	improvements
+154	72	97	n	statistically significant
+154	175	178	p	for
+154	179	194	n	CNN / DailyMail
+154	98	100	p	in
+154	101	123	n	ROUGE - 1 ( p < 0.01 )
+154	126	148	n	ROUGE - L ( p < 0.05 )
+154	155	174	n	METEOR ( p < 0.01 )
+154	231	239	n	Gigaword
+154	199	201	p	in
+154	202	226	n	all metrics ( p < 0.01 )

@@ -1,0 +1,123 @@
+title
+On the Role of Text Preprocessing in Neural Network Architectures : An Evaluation Study on Text Categorization and Sentiment Analysis
+abstract
+Text preprocessing is often the first step in the pipeline of a Natural Language Processing ( NLP ) system , with potential impact in its final performance .
+Despite its importance , text preprocessing has not received much attention in the deep learning literature .
+In this paper we investigate the impact of simple text preprocessing decisions ( particularly tokenizing , lemmatizing , lowercasing and multiword grouping ) on the performance of a standard neural text classifier .
+We perform an extensive evaluation on standard benchmarks from text categorization and sentiment analysis .
+While our experiments show that a simple tokenization of input text is generally adequate , they also highlight significant degrees of variability across preprocessing techniques .
+This reveals the importance of paying attention to this usually - overlooked step in the pipeline , particularly when comparing different models .
+Finally , our evaluation provides insights into the best preprocessing practices for training word embeddings .
+Introduction
+Words are often considered as the basic constituents of texts for many languages , including English .
+The first module in an NLP pipeline is a tokenizer which transforms texts to sequences of words .
+However , in practise , other preprocessing techniques can be ( and are ) further used together with tokenization .
+These include lemmatization , lowercasing and 1 Note that although word - based models are mainstream in NLP in general and text classification in particular , recent work has also considered other linguistic units , such as characters or word senses .
+These techniques require a different kind of preprocessing and , while they have been shown effective in various settings , in this work we only focus on the mainstream word - based models .
+multiword grouping , among others .
+Although these preprocessing decisions have been studied in the context of conventional text classification techniques , little attention has been paid to them in the more recent neural - based models .
+The most similar study to ours is , which analyzed different encoding levels for English and Asian languages such as Chinese , Japanese and Korean .
+As opposed to our work , their analysis was focused on UTF - 8 bytes , characters , words , romanized characters and romanized words as encoding levels , rather than the preprocessing techniques analyzed in this paper .
+Additionally , word embeddings have been shown to play an important role in boosting the generalization capabilities of neural systems .
+However , while some studies have focused on intrinsically analyzing the role of lemmatization in their underlying training corpus , the impact on their extrinsic performance when integrated into a neural network architecture has remained understudied .
+In this paper we focus on the role of preprocessing the input text , particularly in how it is split into individual ( meaning - bearing ) tokens and how it affects the performance of standard neural text classification models based on .
+CNNs have proven to be effective in a wide range of NLP applications , in - cluding text classification tasks such as topic categorization and polarity detection , which are the tasks considered in this work .
+The goal of our evaluation study is to find answers to the following two questions :
+1 .
+Are neural network architectures ( in particular CNNs ) affected by seemingly small preprocessing decisions in the input text ?
+2 .
+Does the preprocessing of the embeddings ' underlying training corpus have an impact on the final performance of a state - of - the - art neural network text classifier ?
+According to our experiments in topic categorization and polarity detection , these decisions are important in certain cases .
+Moreover , we shed some light on the motivations of each preprocessing decision and provide some hints on how to normalize the input corpus to better suit each setting .
+The accompanying materials of this submission can be downloaded at the following repository : github.com/pedrada88/preproc-textclassification .
+Text Preprocessing
+Given an input text , words are gathered as input units of classification models through tokenization .
+We refer to the corpus which is only tokenized as vanilla .
+For example , given the sentence " Apple is asking its manufacturers to move Mac - Book Air production to the United States . " ( running example ) , the vanilla tokenized text would be as follows ( white spaces delimiting different word units ) :
+Apple is asking its manufacturers to move MacBook Air production to the United States .
+We additionally consider three simple preprocessing techniques to be applied to an input text : lowercasing ( Section 2.1 ) , lemmatizing ( Section 2.2 ) and multiword grouping ( Section 2.3 ) .
+Lowercasing
+This is the simplest preprocessing technique which consists of lowercasing each single token of the input text :
+apple is asking its manufacturers to move macbook air production to the united states .
+Due to its simplicity , lowercasing has been a popular practice in modules of deep learning libraries and word embedding packages .
+Despite its desirable property of reducing sparsity and vocabulary size , lowercasing may negatively impact system 's performance by increasing ambiguity .
+For instance , the Apple company in our example and the apple fruit would be considered as identical entities .
+Lemmatizing
+The process of lemmatizing consists of replacing a given token with its corresponding lemma :
+Apple be ask its manufacturer to move Mac - Book Air production to the United States .
+Lemmatization has been traditionally a standard preprocessing technique for linear text classification systems .
+However , it is rarely used as a preprocessing stage in neural - based systems .
+The main idea behind lemmatization is to reduce sparsity , as different inflected forms of the same lemma may occur infrequently ( or not at all ) during training .
+However , this may come at the cost of neglecting important syntactic nuances .
+Multiword grouping
+This last preprocessing technique consists of grouping consecutive tokens together into a single token if found in a given inventory :
+Apple is asking its manufacturers to move MacBook Air production to the United States .
+The motivation behind this step lies in the idiosyncratic nature of multiword expressions , e.g. United States in the example .
+The meaning of these multiword expressions are often hardly traceable from their individual tokens .
+As a result , treating multiwords as single units may lead to better training of a given model .
+Because of this , word embedding toolkits such as Word2vec propose statistical approaches for extracting these multiwords , or directly include multiwords along with single words in their pretrained embedding spaces .
+We considered two tasks for our experiments : topic categorization , i.e. assigning a topic to a given document from a pre-defined set of topics , and polarity detection , i.e. detecting if the sentiment of a given piece of text is positive or negative .
+Two different settings were studied : ( 1 ) word embedding 's training corpus and the evaluation dataset were preprocessed in a similar manner ( Section 3.2 ) ; and ( 2 ) the two were preprocessed differently ( Section 3.3 ) .
+In what follows we describe the common experimental setting as well as the datasets and preprocessing used for the evaluation .
+Experimental setup
+We tried with two classification models .
+The first one is a standard CNN model similar to that of , using ReLU as non-linear activation function .
+In the second model , we add a recurrent layer ( specifically an LSTM ) before passing the pooled features directly to the fully connected softmax layer .
+The inclusion of this LSTM layer has been shown to be able to effectively replace multiple layers of convolution and be beneficial particularly for large inputs .
+These models were used for both topic categorization and polarity detection tasks , with slight hyperparameter variations given their different natures ( mainly in their text size ) which were fixed across all datasets .
+The embedding layer was initialized using 300 - dimensional CBOW Word2vec embeddings trained on the 3B - word UMBC WebBase corpus with standard hyperparameters
+4 .
+Evaluation datasets .
+For the topic categorization task we used the BBC news dataset 5 , 20 News , Reuters 6 and The code for this CNN implementation is the same as in , which is available at https://github.com/pilehvar/sensecnn
+4 Context window of 5 words and hierarchical softmax .
+5 http://mlg.ucd.ie/datasets/bbc.html
+6 Due to the large number of labels in the original Reuters ( i.e. 91 ) and to be consistent with the other datasets , we reduce the dataset to its 8 most frequent labels , a reduction already performed in previous works .
+Preprocessing .
+Four different techniques ( see Section 2 ) were used to preprocess the datasets as well as the corpus which was used to train word embeddings ( i.e. UMBC ) .
+For tokenization and lemmatization we relied on Stanford CoreNLP .
+As for multiwords , we used the phrases from the pre-trained Google News Word2vec vectors , which were obtained using a simple statistical approach .
+12 shows the accuracy 13 of the classification models using our four preprocessing techniques .
+We observe a certain variability of results depending on the preprocessing techniques used ( aver -7 ftp://medir.ohsu.edu/pub/ohsumed
+8 Both PL04 and PL05 were downloaded from http://www.cs.cornell.edu/people/pabo/movie-review-data/
+9 http://www.rottentomatoes.com
+10 We mapped the numerical value of phrases to either negative ( from 0 to 0.4 ) or positive ( from 0.6 to 1 ) , removing the neutral phrases according to the scale ( from 0.4 to 0.6 ) .
+For the datasets with train - test partitions , the sizes of the test sets are the following : 7,532 for 20 News ; 12,733 for Ohsumed ; 25,000 for IMDb ; and 1,000 for RTC .
+For future work it would be interesting to explore more complex methods to learn embeddings for multiword expressions .
+Computed by averaging accuracy of two different runs .
+The statistical significance was calculated according to an unpaired t- test at the 5 % significance level . age variability 14 of 2.4 % for the CNN + LSTM model , including a statistical significance gap in seven of the nine datasets ) , which proves the influence of preprocessing on the final results .
+It is perhaps not surprising that the lowest variance of results is seen in the datasets with the larger training data ( i.e. RTC and Stanford ) .
+This suggests that the preprocessing decisions are not so important when the training data is large enough , but they are indeed relevant in benchmarks where the training data is limited .
+As far as the individual preprocessing techniques are concerned , the vanilla setting ( tokenization only ) proves to be consistent across datasets and tasks , as it performs in the same ballpark as the best result in 8 of the 9 datasets for both models ( with no noticeable differences between topic categorization and polarity detection ) .
+The only topic categorization dataset in which tokenization does not seem enough is Ohsumed , which , unlike the more general nature of other categorization datasets ( news ) , belongs to a specialized domain ( medical ) for which fine - grained distinctions are required to classify cardiovascular diseases .
+In particular for this dataset , word embeddings trained on a general - domain corpus like UMBC may not accurately capture the specialized meaning of medical terms and hence , sparsity becomes an issue .
+In fact , lowercasing and lemmatizing , which are mainly aimed at reducing sparsity , outperform the vanilla setting by over six points in the CNN + LSTM setting and clearly outperform the other preprocessing techniques on the single CNN model as well .
+Experiment 1 : Preprocessing effect
+Nevertheless , the use of more complex preprocessing techniques such as lemmatization and multiword grouping does not help in general .
+Even though lemmatization has proved useful in conventional linear models as an effective way to deal with sparsity , neural network architectures seem to be more capable of overcoming sparsity thanks to the generalization power of word embeddings .
+Experiment 2 : Cross-preprocessing
+This experiment aims at studying the impact of using different word embeddings ( with differently preprocessed training corpora ) on tokenized datasets ( vanilla setting ) .
+shows the results for this experiment .
+In this experiment we observe a different trend , with multiwordenhanced vectors exhibiting a better performance both on the single CNN model ( best over all performance in seven of the nine datasets ) and on the CNN + LSTM model ( best performance in four datasets and in the same ballpark as the best results in four of the remaining five datasets ) .
+In this case the same set of words is learnt but single tokens inside multiword expressions are not trained .
+Instead , these single tokens are considered in isolation only , without the added noise when considered inside the multiword expression as well .
+For instance , the word Apple has a clearly different meaning in isolation from the one inside :
+Cross - preprocessing evaluation : accuracy on the topic categorization and polarity detection tasks using different sets of word embeddings to initialize the embedding layer of the two classifiers .
+All datasets were preprocessed similarly according to the vanilla setting .
+indicates results thatare statistically significant with respect to the top result .
+the multiword expression Big Apple , hence it can be seen as beneficial not to train the word
+Apple when part of this multiword expression .
+Interestingly , using multiword - wise embeddings on the vanilla setting leads to consistently better results than using them on the same multiwordgrouped preprocessed dataset in eight of the nine datasets .
+This could provide hints on the excellent results provided by pre-trained Word2vec embeddings trained on the Google News corpus , which learns multiwords similarly to our setting .
+Apart from this somewhat surprising finding , the use of the embeddings trained on a simple tokenized corpus ( i.e. vanilla ) proved again competitive , as different preprocessing techniques such as lowercasing and lemmatizing do not seem to help .
+In fact , the relatively weaker performance of lemmatization and lowercasing in this crossprocessing experiment is somehow expected as the coverage of word embeddings in vanilla - tokenized datasets is limited , e.g. , many entities which are capitalized in the datasets are not covered in the case of lowercasing , and inflected forms are missing in the case of lemmatizing .
+Conclusions
+In this paper we analyzed the impact of simple text preprocessing decisions on the performance of a standard word - based neural text classifier .
+Our evaluations highlight the importance of being careful in the choice of how to preprocess our data and to be consistent when comparing different systems .
+In general , a simple tokenization works equally or better than more complex pre-processing techniques such as lemmatization or multiword grouping , except for domain - specific datasets ( such as the medical dataset in our experiments ) in which sole tokenization performs poorly .
+Additionally , word embeddings trained on multiword - grouped corpora perform surprisingly well when applied to simple tokenized datasets .
+This property has often been overlooked and , to the best of our knowledge , we test the hypothesis for the first time .
+In fact , this finding could partially explain the long - lasting success of pre-trained Word2vec embeddings , which specifically learn multiword embeddings as part of their pipeline .
+Moreover , our analysis shows that there is a high variance in the results depending on the preprocessing choice ( 2.4 % on average for the best performing model ) , especially when the training data is not large enough to generalize .
+Further analysis and experimentation would be required to fully understand the significance of these results ; but , this work can be viewed as a starting point for studying the impact of text preprocessing in deep learning models .
+We hope that our findings will encourage future researchers to carefully select and report these preprocessing decisions when evaluating or comparing different models .
+Finally , as future work , we plan to extend our analysis to other tasks ( e.g. question answering ) , languages ( particularly morphologically rich languages for which these results may vary ) and preprocessing techniques ( e.g. stopword removal or part - of - speech tagging ) .

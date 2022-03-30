@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Anew corpus for NLI
+Data collection
+Data validation
+The distributed corpus
+Excitement Open Platform models
+Lexicalized Classifier
+Sentence embeddings and NLI
+Analysis and discussion
+Transfer learning with SICK
+Conclusion

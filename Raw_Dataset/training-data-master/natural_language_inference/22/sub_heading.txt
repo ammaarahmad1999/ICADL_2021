@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Question Answering
+Our Model
+Ruminating Reader
+Related Work
+Evaluation
+Implementation details
+Evaluation Method
+Results
+Analysis
+Conclusion

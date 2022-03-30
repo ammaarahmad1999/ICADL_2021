@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Related Work
+Approach
+Problem Formulation
+Network Architecture
+Focal Visual-Text Attention
+Similarity between visual and text features
+Intra-sequence temporal dependency
+Cross Sequence Interaction
+Experiments
+MemexQA
+MovieQA
+Conclusions and future work

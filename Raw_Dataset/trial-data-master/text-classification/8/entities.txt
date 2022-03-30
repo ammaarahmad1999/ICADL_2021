@@ -1,0 +1,116 @@
+21	19	26	conduct
+21	30	66	extensive experimental investigation
+21	67	80	to understand
+21	81	95	when , and why
+21	98	123	simple pooling strategies
+21	126	161	operated over word embeddings alone
+21	164	204	already carry sufficient information for
+21	205	235	natural language understanding
+22	0	16	To ac- count for
+22	21	102	distinct nature of various NLP tasks that may require different semantic features
+22	108	115	compare
+22	116	135	SWEM - based models
+22	136	140	with
+22	141	186	existing recurrent and convolutional networks
+22	187	191	in a
+22	192	214	pointby - point manner
+10	50	85	https://github.com/dinghanshen/SWEM
+117	3	6	use
+117	7	29	Glo Ve word embeddings
+117	30	34	with
+117	35	42	K = 300
+117	43	45	as
+117	46	60	initialization
+117	61	64	for
+117	65	79	all our models
+118	0	35	Out - Of - Vocabulary ( OOV ) words
+118	40	56	initialized from
+118	59	79	uniform distribution
+118	80	90	with range
+118	91	108	[ ? 0.01 , 0.01 ]
+119	4	21	Glo Ve embeddings
+119	26	37	employed in
+119	38	46	two ways
+119	47	55	to learn
+119	56	79	refined word embeddings
+119	97	105	updating
+119	106	125	each word embedding
+119	126	132	during
+119	133	141	training
+119	155	163	training
+119	166	217	300 dimensional Multilayer Perceptron ( MLP ) layer
+119	218	222	with
+119	223	238	ReLU activation
+119	246	263	Glo Ve embeddings
+119	264	275	as input to
+119	280	283	MLP
+119	293	299	output
+119	313	336	refined word embeddings
+124	0	4	Adam
+124	18	37	optimize all models
+2	30	68	Simple Word - Embedding - Based Models
+4	55	99	model the compositionality in text sequences
+14	90	152	model the compositionality in variable - length text sequences
+125	15	17	on
+125	18	40	topic prediction tasks
+125	47	57	SWEM model
+125	58	66	exhibits
+125	67	88	stronger performances
+125	91	107	relative to both
+125	108	148	LSTM and CNN compositional architectures
+125	156	174	by leveraging both
+125	179	213	average and max - pooling features
+125	214	218	from
+125	219	234	word embeddings
+127	0	2	On
+127	7	38	ontology classification problem
+127	64	71	observe
+127	94	98	SWEM
+127	99	107	exhibits
+127	108	143	comparable or even superior results
+127	146	157	relative to
+127	158	176	CNN or LSTM models
+81	16	19	for
+81	24	42	sentiment analysis
+81	51	55	both
+81	56	92	CNN and LSTM compositional functions
+81	93	112	perform better than
+81	113	117	SWEM
+149	0	22	Text Sequence Matching
+152	15	17	on
+152	18	67	most of the datasets considered ( except WikiQA )
+152	70	74	SWEM
+152	75	87	demonstrates
+152	92	104	best results
+152	105	118	compared with
+152	130	153	CNN or the LSTM encoder
+153	13	25	SNLI dataset
+153	31	43	observe that
+153	44	54	SWEM - max
+153	55	72	performs the best
+153	73	96	among all SWEM variants
+176	0	34	SWEM - hier for sentiment analysis
+177	35	59	word - order information
+177	60	82	plays a vital role for
+177	83	107	sentiment analysis tasks
+178	50	77	most important features for
+178	78	98	sentiment prediction
+178	99	104	maybe
+178	105	135	some key n-gram phrase / words
+189	12	31	greatly outperforms
+189	36	61	other three SWEM variants
+189	72	96	corresponding accuracies
+189	101	114	comparable to
+189	119	141	results of CNN or LSTM
+191	0	25	Short Sentence Processing
+195	51	55	SWEM
+195	56	62	yields
+195	63	82	inferior accuracies
+195	83	85	on
+195	86	113	sentiment analysis datasets
+196	15	23	exhibits
+196	24	46	comparable performance
+196	47	49	on
+196	54	69	other two tasks
+196	78	82	with
+196	83	123	much less parameters and faster training

@@ -1,0 +1,767 @@
+1812.01840v2 [cs.CL] 6 Dec 2018
+
+ar X1V
+
+Attention Boosted Sequential Inference Model
+
+Guanyu Li
+School of Computer and
+Information Technology & Beijing
+Key Lab of Traffic Data Analysis
+and Mining, Beijing Jiaotong
+
+Pengfei Zhang
+School of Computer and
+Information Technology & Beijing
+Key Lab of Traffic Data Analysis
+and Mining, Beijing Jiaotong
+
+Caiyan Jia“
+
+School of Computer and
+Information Technology & Beijing
+Key Lab of Traffic Data Analysis
+and Mining, Beijing Jiaotong
+
+University University University
+Beijing, China 100044 Beijing, China 100044 Beijing, China 100044
+17120379@bjtu.edu.cn 18120448 @bjtu.edu.cn cyjia@bjtu.edu.cn
+ABSTRACT and a hypothesis in a large training set, then predicts the rela
+Attention mechanism has been proven effective on natural language processing. This paper proposes an attention
+boosted natural language inference model named aESIM by
+adding word attention and adaptive direction-oriented attention mechanisms to the traditional Bi-LSTM layer of natural
+language inference models, e.g. ESIM. This makes the inference model aESIM has the ability to effectively learn the
+representation of words and model the local subsentential
+inference between pairs of premise and hypothesis. The empirical studies on the SNLI, MultiNLI and Quora benchmarks
+manifest that aESIM is superior to the original ESIM model.
+
+KEYWORDS
+
+natural language processing, deep learning, natural language
+inference, Bi-LSTM
+
+1 INTRODUCTION
+
+Natural language inference (NLI) is an important and significant task in natural language processing (NLP). It concerns
+whether a hypothesis can be inferred from a premise, requiring understanding of the semantic similarity between the
+hypothesis and the premise to discriminate their relation [1].
+Table 1 shows several samples of natural language inference
+from SNLI (Stanford Natural Language Inference) corpus [2].
+
+In the literature, the task of NLI is usually viewed as a relation classification. It learns the relation between a premise
+
+Permission to make digital or hard copies of all or part of this work for
+personal or classroom use is granted without fee provided that copies
+are not made or distributed for profit or commercial advantage and that
+copies bear this notice and the full citation on the first page. Copyrights
+for components of this work owned by others than the author(s) must
+be honored. Abstracting with credit is permitted. To copy otherwise, or
+republish, to post on servers or to redistribute to lists, requires prior specific
+permission and/or a fee. Request permissions from permissions@acm.org.
+DAPA 719, Melbourne, Australia
+
+© 2019 Copyright held by the owner/author(s). Publication rights licensed
+to ACM. .
+
+DOI:
+
+tion between a new pair of premise and hypothesis. The existing methods of NLI can be roughly partitioned into two categories: feature-based models [2] and neural network-based
+models [3, 4]. Feature-based models represent a premise
+and a hypothesis by their unlexicalized and lexicalized features, such as n-gram length and the real-valued feature of
+length difference, then train a classifier to perform relation
+classification. Recently, end-to-end neural network-based
+models have drawn worldwide attention since they have
+demonstrated excellent performance on quite a few NLP
+tasks including machine translation, natural language inference, etc.
+
+ 
+
+premise hypothesis relationship
+
+Wet brown dog | A dog is playing fetch | neutral
+swims towards in a pond.
+
+camera. A dog is in the water. | entailment
+
+The dog is sleeping in | contradiction
+his bed.
+
+Table 1: Samples from the SNLI corpus
+
+  
+
+ 
+
+On the basis of their model structures, we can divide neural
+network-based models for NLI into two classes [1], sentence
+encoding models and sentence interaction-aggregation models. The architectures of the two types of models are shown
+in Figure 1.
+
+Sentence encoding models [5-8] (their main architecture
+is shown in Figure 1.a) independently encode a pair of sentences, a premise and a hypothesis using pre-trained word
+embedding vectors, then learn semantic relation between
+two sentences with a multi-layer perceptron (MLP). In these
+models, LSTM (Long Short-Term Memory networks) [9], its
+variants GRU (Gated Recurrent Units) [10] and Bi-LSTM,
+are usually utilized to encode the sentences since they were
+capable of learning long-term dependencies inside sentences.
+For example, Conneau et al. proposed a generic NLI training
+DAPA ’19, February 15th, 2019, Melbourne, Australia
+
+ 
+
+| 3-way softmax |
+
+ 
+
+ 
+
+MLP layers |
+
+ 
+
+ 
+
+| concatenation |
+
+ 
+
+ 
+
+ 
+
+| u | | v |
+
+| sentence encoder sentence encoder |
+with premise input with hypothesis input
+
+ 
+
+ 
+
+ 
+
+ 
+
+(a) sentence encoding model
+
+ 
+
+[ 3-way softmax |
+
+|
+
+MLP layers ]
+
+ 
+
+ 
+
+ 
+
+Similarity Matrix & Alignment
+Layer
+
+ 
+
+ 
+
+ 
+
+| u | v |
+
+| |
+
+| sentence encoder | sentence encoder |
+with premise input with hypothesis input
+
+ 
+
+ 
+
+ 
+
+ 
+
+(b) sentence interaction-aggregation model
+Figure 1: Two types of neural network-based models
+
+scheme and compared several sentence encoding architectures: LSTM or GRU, Bi-LSTM with mean/max pooling, selfattention network and hierarchical convolutional networks
+[5]. The experimental results demonstrated that the Bi-LSTM
+with max pooling achieved the best performance. Talman et
+al. designed a hierarchical Bi-LSTM max pooling (HBMP)
+model to encode sentences [6]. This model applied parameters of one Bi-LSTM to initialize the next Bi-LSTM to convey
+information, which shown better results than the model
+with a single Bi-LSTM. Besides LSTM, attention mechanisms
+could also be used to boost the effectiveness of sentence
+encoding. The model developed by Ghaeini et al. added selfattention to LSTM model, and achieved better performance
+[11].
+
+Sentence interaction-aggregation models [1, 12-14] (their
+main architecture is shown in Figure 1.b) learn vector representations of pairs of sentences in the way similar to sentence
+encoding models and calculate pairwise word interaction
+matrix between two sentences using the newly updated word
+vectors, and then the matching results are aggregated into a
+vector to make the final decision. Compared with sentence
+encoding model, sentence interaction-aggregation models
+aggregate word similarities between a pair of sentences, are
+capable of capturing the relevant information between two
+
+Guanyu Li et al.
+
+sentences, a premise and a hypothesis. Bahdanau et al. translated and aligned text simultaneously in machine translation
+task [15], innovatively introducing attention mechanism to
+natural language process (NLP). He et al. designed a pairwise
+word interaction model (PWIM) [16], which made full use
+of word-level fine-grained information. Wang et al. put forward a bilateral multi-perspective matching (BiMPM) model
+[13], focusing on various matching strategies that could be
+seen as different types of attention. The empirical studies
+of Lan et al. [1] and Chen et al. [4] concluded that sentence
+interation-aggregation models, especially ESIM (Enhanced
+Sequential Inference Model), a carefully designed sequential
+inference model based on chain LSTMs, outperformed all
+previous sentence encoding models.
+
+Although ESIM has achieved excellent achievements, this
+model doesn’t consider the attention along the words in a
+sentence in its Bi-LSTM layer. Word attention can characterize the different contribution of each word. Therefore, it
+will be beneficial to put word attention into the Bi-LTSM
+layer. Moreover, the orientation of the words represents the
+direction of the information flow, either forward or backward, should not be ignored. In traditional Bi-LSTM model,
+the forward and the backward vectors learnt by Bi-LSTM
+are simply jointed. It’s necessary to consider whether each
+orientation (forward or backward) has different importance
+on word encoding, thus adaptively joint the two orientation
+vectors together with different weights. Therefore, in this
+study, using ESIM model as the baseline, we add an attention layer behind each Bi-LSTM layer, then use an adaptive
+orientation embedding layer to jointly represent the forward
+and backward vectors. We name this attention boosted BiLSTM as Bi-aLSTM, and denote the modified ESIM as aESIM.
+Experimental results on SNLI, MultiNLI [17] and Quora [13]
+benchmarks have demonstrated better performance of aESIM
+model than that of the baseline ESIM and the other state-ofthe-art models. We believe that the architecture of Bi-aLSTM
+has potentially to be used in other NLP tasks such as text
+classification, machine translation and so on.
+
+This paper is organized as follows. We introduce the general frameworks of ESIM and aESIM in Section 2. We describe
+the datasets and the experiment settings, and analyze our
+experimental results in Section 3. We then draw conclusions
+in Section 4.
+
+2 ATTENTION BOOSTED SEQUENTIAL
+INFERENCE MODEL
+
+Supposed that we have two sentences p = (p1,--- ,pj,) and
+q = (%.°** »41,), where p represents premise and q represents hypothesis. The goal is to predict the label y meaning
+for their relation.
+Attention Boosted Sequential Inference Model
+
+2.1 ESIM model
+
+Enhanced Sequential Inference Model (ESIM) [9] is composed of four main components: input encoding layer, local
+inference modeling layer, inference composition layer and
+classification layer.
+
+In the input encoding layer, ESIM first uses Bi-LSTM layer
+to encode input sentence pairs (Equations 1-2), which can
+be initialized using pre-trained word embeddings (e.g. Glove
+840B vectors [18]), where (p, i) is the word embedding vector
+of the i-th word in p, (q, i) is that of word in gq.
+
+pi = Bi-LSTM(p, i), Vi € [1,--+ , lp] (1)
+qj = Bi-LSTM(q, j), Vj € [1,- ++ 5g] (2)
+Secondly, ESIM implements the local inference layer for
+
+enhancing the sentence information. First it calculates a
+similarity matrix M based on p and q.
+
+M=p q (3)
+
+It then gets the new expression for p and q with the equation
+below:
+
+lg
+~ exp(Mij)
+P= TGC pl) 4)
+- q
+i) Y) exp(Mir)
+k=1
+ly
+~ exp(Mij)
+qi = >) =. Vie [1 slg] (5)
+
+i=l a exp(M;,;)
+where p and g represent the weighted summation of p and q.
+It further enhances the local inference information collected
+as below.
+Mp = |P:P:P — Pip © P| (6)
+mg =19:9:9- 9:99 9] (7)
+
+After the enhancement of local inference, another BiLSTM layer is used to capture local inference information
+and their context for inference composition.
+
+Instead of summation adopted by Parikh et al. [12], ESIM
+proposes to compute both max and average pooling and feeds
+the concatenate fixed length vector to the final classifier: a
+fully connected multi-layer perceptron.
+
+Figure 2 shows a high-level view of the ESIM architecture,
+where the bottom LSTM1 layer of Figure 2 is the input encoding layer, the middle part with LSTM2 layer is the local
+inference layer, the upper part is the inference composition
+layer.
+
+2.2 aESIM model
+
+The overall architecture of our newly proposed attention
+boosted sequential inference model (named aESIM) based
+on ESIM is similar to ESIM. In detail, aESIM also consists of
+four main parts: encoding layer, local inference modeling
+
+DAPA 19, February 15th, 2019, Melbourne, Australia
+
+Fully connected layers
+
+| Bi-aLSTM
+
+ 
+
+the Mat There Sit Cats
+
+Cats Sit On the Mat On
+
+Figure 2: ESIM and aESIM model architectures
+
+layer, decoding layer and classification layer. The only difference between ESIM and aESIM is that we substitute the
+two Bi-LSTM layers (LSTM1 and LSTM2) in ESIM with two
+Bi-aLSTM layers in aESIM. Therefore, as illustrated in Figure
+2, the layers with red-dotted circles in ESIM will be replaced
+by the Bi-aLSTM layers shown in the right upper corner of
+the Figure 2 and the details of Bi-aLSTM can be found in
+Figure 3.
+
+Given the word vector x;;, 1 € [1, T] of the /-th word in sentence i, which can be obtained by pre-trained word embeddings such as Glove 840B vectors [18] in the first Bi-aLSTM
+layer or obtained from the local inference modeling layer
+in the second Bi-aLSTM layer. We utilize a forward LSTM
+layer and a backward LSTM layer to collect both direction
+
+. . — <—_
+information f and f .
+
+f i) = ISTM(xi1).1 € [0,7] (8)
+Fy) = LSTM(x;1),1 € [0,7] (9)
+
+As described in introduction section, in the following newly
+proposed Bi-aLSTM, we add word attention and additive
+operation on both orientations of traditional Bi-LSTM layer.
+
+Word attention layer
+
+It’s obvious that not all words contribute equally to the
+representation of a sentence. Attention mechanism, which is
+introduced in [3], is extremely effective to extract vital words
+from the whole sentence, and is particularly beneficial to
+generate the sentence vector. Therefore, we use the following
+
+attention mechanism after we get f and f
+Suppose fj; € GF it F ith, we then have
+
+uj, = tanh(W fj, + b) (10)
+
+exp(Ut uy)
+
+7 x exp(ul uw)
+
+(11)
+
+Qil
+DAPA ’19, February 15th, 2019, Melbourne, Australia
+
+   
+
+Adaptive Word
+Direction Layer
+
+| Word
+Attention’
+| Layer
+
+Figure 3: The structure of Bi-aLSTM including input
+layer, word attention layer and adaptive word direction layer.
+
+Sil = ai * fil (12)
+where uj; is obtained after one-layer MLP for the input fj,
+jj is the importance of word I, is calculated by the SoftMax
+unit on the context vector u,, of the sentence i which is
+randomly initialized and modified during the training, s;;
+is the attention enhanced vector through multiplying the
+weight qj; and original vector fjj, where s;; € {Sif, Si } correspond to the forward vector Fi ; and the backward vector
+
+va °
+f il, respectively.
+
+Adaptive word direction layer
+
+In traditional Bi-LSTM model, the forward and the backward vectors of a word are considered to have equal importance on the word representation. The model simply
+connects the forward and backward vectors head and tail
+without weighing their importance. For a word in different direction or orientation, the former and the latter words
+are reversed. Thus, different direction vectors of a word
+make different contribution to the representation, especially
+the words in a long sentence. Therefore, we propose a new
+adaptive direction layer to learn the contribution of different
+directions for a single word.
+
+Formally, given two direction word vectors 3; and §;7, the
+whole word vector can be expressed as:
+
+Sit = gl(Wr * Si + br) . (Wp * Sy + bp) ] (13)
+
+where, W,. and b,, denote weight matrix and the bias, g denotes
+the nonlinear function, |.] denotes the concentration. All the
+parameters can be learned during training. Then we can get
+the whole sentence vector as below:
+
+pi = Bi-aLSTM@), Vi € [1,-++ Jp] (14)
+
+qj = Bi-aLSTM(s;1), Vj € [1, +++ 51g] (15)
+This word and orientation enhanced Bi-LSTM is called Bi
+aLSTM. Its whole architecture is shown in the Figure 3, is
+applied in ESIM model to replace the two Bi-LSTM layers
+
+Guanyu Li et al.
+
+for the task of natural language inference. Besides, this BiaLSTM can be used to other natural language processing
+tasks and our preliminary experiments have demonstrated
+that Bi-aLSTM is capable of improving the performance of
+Bi-LSTM models on sentimental classification task (for space
+limitation, this results will not be shown in the paper).
+
+3 EXPERIMENT SETUP
+3.1 Datasets
+
+We evaluated our model on three datasets: the Stanford
+Natural Language Inference (SNLI) corpus, the Multi-Genre
+Natural Language Inference (MultiNLI) corpus, and Quora
+duplicate question dataset. We selected these three relatively
+large corpora out of eight corpora in [1] since deep learning
+models usually show better generalization ability on large
+training sets and produce more convincing results than on
+small training sets.
+
+SNLI The Stanford Natural Language Inference (SNLI) corpus contains 570,152 sentence pairs, including 549K training
+pairs, 10K validation pairs and 10K testing pairs. Each pair
+has one of relation classes (entailment, neutral, contradiction
+and ‘-’). The ‘-’ class indicates there is no conclusion between
+the two sentences. Consequently, we remove all pairs with
+relation ’-’ during training, validating and testing processes.
+
+MultiNLI This corpus is a crowd-sourced collection of
+433K sentence pairs annotated with textual entailment information. The corpus is modeled on the SNLI corpus, but
+differs in that covers a range of genres of spoken and written text, and supports a distinctive cross-genre generation
+evaluation.
+
+Quora The Quora dataset contains 400,000 question pairs.
+The task of this corpus is to judge whether the two sentences
+means the same affair.
+
+3.2 Setting
+
+We use the validation set to select models for testing. The
+hyper-parameters of aESIM model are listed as follows. We
+use the Adam method [19] for optimization. The first momentum is set to be 0.9 and the second 0.999. The initial
+learning rate is set to 0.0005, and the batch size is 128. The
+dimensions of all hidden states of Bi-aLSTM and word embedding are 300. We employ non-linearity function f = selu
+[20] replacing rectified linear unit ReLU on account of its
+faster convergence rate. Dropout rate is set to 0.2 during
+training. We use pre-trained 300-D Glove 840B vectors [18]
+to initialize word embeddings. Out-of-vocabulary (OOV)
+words are initialized randomly with Gaussian samples. All
+vectors are updated during training.
+Attention Boosted Sequential Inference Model
+
+  
+
+ESIM aESIM ESIM
+1.0
+A A A
+woman woman woman
+with with 0.8 with
+a a a
+green green green
+headscarf headscarf a6 headscarf
+blue blue blue
+shirt shirt 0.4 shirt
+and and and
+a a a
+very very 0.2 very
+big big big
+grin grin grin
+0.0
+e eg £ se © 3 3 Se é£ FX & oe
+
+(a) contradiction pair
+
+1.0
+A A
+woman
+with 0.8 with
+a a
+green green
+headscarf 0.6 headscarf
+blue blue
+shirt 0.4 shirt
+and and
+a a
+very 0.2 very
+big big
+grin grin
+
+0.0
+
+3)
+ww es Ss
+
+(b) entailment pair
+
+DAPA ’19, February 15th, 2019, Melbourne, Australia
+
+aESIM ESIM aESIM
+
+1.0
+A
+woman
+with 0.8
+a
+green
+headscarf 0.6
+blue
+aint 0.4
+and
+a
+very 0.2
+big
+grin
+0.0
+we ef? s
+ee $
+
+(c) neutral pair
+
+ 
+
+& =
+
+Figure 4: Attention visualization
+
+3.3. Experiment results
+
+Except for comparing our method aESIM with ESIM, we
+listed the experimental results of methods with their references in Table 2 on SNIL. In Table 2, the method in the first
+block is a traditional feature engineering method, those in
+the second are the sentence vector-based models, those in the
+third are attention-based models, and ESIM and our aESIM
+are shown in the fourth block. Where the results of ESIM and
+aESIM are implemented by ourselves on Keras, the results
+of the others are taken from their original publications. We
+then compare the baseline models, CBOW, Bi-LSTM with
+ESIM and our aESIM on MultiNLI corpus shown In Table 3,
+where the results of the baselines are taken from [17]. Finally,we compare several types of CNN and RNN models on
+Quroa corpus shown in Table 4, the results of theses CNN
+and RNN models are taken from [13]. The accuracy (ACC) of
+each method is measured by the commonly used precision
+score ', and the methods with the best accuracy are marked
+in bold.
+
+According to the results in Tables 2-4, aESIM model achieved
+88.1% on SNLI corpus, elevating 0.8 percent higher than ESIM
+model. It promoted almost 0.5 percent accuracy and outperformed the baselines on MultiNLI. It also achieved 88.01%
+on Quora. Therefore, we concluded that aESIM with further
+word attention and word orientation operation was superior
+to ESIM model.
+
+3.4 Attention visualization
+
+We selected three types of sentence pairs from a premise
+and its three hypothesis sentences in the test set of SNLI
+corpus as shown in Figure 4, where the premise sentence is
+‘A woman with a green headscarf, blue shirt and a very big
+grin’, and three hypothesis sentences are ‘the woman has
+
+‘https://nlp.stanford.edu/projects/snli/
+
+Models Acc
+Unlexicalized + Unigram and bigram features [2] | 78.2
+300D LSTM encoders [2] 80.6
+300D NTI-SLSTM-LSTM encoders [21] 83.4
+4096D Bi-LSTM with max-pooling [5] 84.5
+300D Gumbel TreeLSTM encoders [22] 85.6
+512D Dynamic Meta-Embeddings [23] 86.7
+100D DF-LSTM17 [24] 84.6
+300D LSTMN with deep attention fusion [9] 85.7
+BiMPM [13] 87.5
+ESIM 87.3
+aESIM 88.1
+
+ 
+
+Table 2: The accuracy (%) of the methods on SNLI
+
+ 
+
+Accuracy (%)
+Models Mismatched
+CBOW 64.5
+Bi-LSTM 66.9 66.9
+ESIM 73.4 73.5
+aESIM 73.9
+
+Table 3: The accuracy (%) of the methods on MultiNLI
+
+been shot’, ‘the woman is very happy’ and ‘the woman is
+young’ with relation labels ‘contradiction’, ‘entailment’, and
+‘neutral’, respectively. Each pair of sentences has their key
+word pairs: grin-shot, grin-happy and grin-young, which
+determines whether the premise can entail the hypothesis.
+Figures 4.a-4.c are the visualization of the attention layer between sentence pairs after the Bi-LSTM layer in ESIM model
+and that after Bi-aLSTM layer in aESIM model for contrasting ESIM and aESIM. By doing so, we could understand how
+the models judge the relation between two sentences.
+DAPA ’19, February 15th, 2019, Melbourne, Australia
+
+ 
+
+Models Accuracy (%)
+Siamese-CNN 79.60
+Multi-perspective-CNN 81.38
+Siamese-LSTM 82.58
+Multi-Perspective-LSTM 83.21
+L.D.C 85.55
+ESIM 86.98
+aESIM 88.01
+
+ 
+
+Table 4: The accuracy (%) of the methods on Quora
+
+In each Figure, the brighter the color, the higher the weight
+is. We could conclude that our aESIM model had the higher
+weight than ESIM model on each key word pair, especially in
+Figure 4.b, where the similarity of ‘happy’ and ‘grin’ in aESIM
+model is much higher than that in ESIM model. Therefore,
+our aESIM model was able to capture the most important
+word pair in each pair of sentences.
+
+4 CONCLUSION
+
+In this study, we propose an improved version of ESIM named
+aESIM for NLI. It modifies the Bi-LSTM layer to collect more
+information. We evaluate our aESIM model on three NLI corpora. Experimental results show that aESIM model achieves
+better performance than ESIM model. In the future, we will
+evaluate how attention mechanisms can be applied on other
+tasks and explore a way to use less time and space with
+guaranteed accuracy.
+
+ACKNOWLEDGEMENT
+
+This work is supported in part by the National Nature Science
+Foundation of China (No. 61876016 and No. 61632004), the
+Fundamental Research Funds for the Central Universities
+(No. 2018JBZ006).
+
+REFERENCES
+
+[1] W. Lan and W. Xu, “Neural network models for paraphrase identification, semantic textual similarity, natural language inference, and
+question answering,” in Proceedings of COLING 2018, 2018.
+
+[2] S.R. Bowman, G. Angeli, C. Potts, and C. D. Manning, “A large annotated corpus for learning natural language inference,’ arXiv preprint
+arXiv: 1508.05326, 2015.
+
+[3] Z. Yang, D. Yang, C. Dyer, X. He, A. Smola, and E. Hovy, “Hierarchical
+attention networks for document classification,’ in Proceedings of the
+2016 Conference of the North American Chapter of the Association for
+Computational Linguistics: Human Language Technologies, pp. 14801489, 2016.
+
+[4] Q. Chen, X. Zhu, Z. Ling, S. Wei, H. Jiang, and D. Inkpen, “Enhanced
+Istm for natural language inference,” arXiv preprint arXiv:1609.06038,
+2016.
+
+[5] A. Conneau, D. Kiela, H. Schwenk, L. Barrault, and A. Bordes, “Supervised learning of universal sentence representations from natural
+language inference data,’ arXiv preprint arXiv:1705.02364, 2017.
+
+Guanyu Li et al.
+
+[6] A. Talman, A. Yli-Jyra, and J. Tiedemann, “Natural language inference
+with hierarchical bilstm max pooling architecture? arXiv preprint
+arXiv:1808.08762, 2018.
+
+[7] J. Im and S. Cho, “Distance-based self-attention network for natural
+language inference,’ arXiv preprint arXiv:1712.02047, 2017.
+
+[8] T. Shen, T. Zhou, G. Long, J. Jiang, S. Wang, and C. Zhang, “Reinforced
+self-attention network: a hybrid of hard and soft attention for sequence
+modeling,” arXiv preprint arXiv:1801.10296, 2018.
+
+[9] J. Cheng, L. Dong, and M. Lapata, “Long short-term memory-networks
+for machine reading,” arXiv preprint arXiv:1601.06733, 2016.
+
+[10] J. Chung, C. Gulcehre, K. Cho, and Y. Bengio, “Empirical evaluation
+of gated recurrent neural networks on sequence modeling,” arXiv
+preprint arXiv:1412.3555, 2014.
+
+[11] R. Ghaeini, S. A. Hasan, V. Datla, J. Liu, K. Lee, A. Qadir, Y. Ling,
+A. Prakash, X. Z. Fern, and O. Farri, “Dr-bilstm: Dependent reading bidirectional lstm for natural language inference,’ arXiv preprint
+arXiv:1802.05577, 2018.
+
+[12] A. P. Parikh, O. Tackstrém, D. Das, and J. Uszkoreit, “A decomposable attention model for natural language inference,” arXiv preprint
+arXiv:1606.01933, 2016.
+
+[13] Z. Wang, W. Hamza, and R. Florian, “Bilateral multi-perspective matching for natural language sentences,’ arXiv preprint arXiv:1702.03814,
+2017.
+
+[14] S. Kim, J.-H. Hong, I. Kang, and N. Kwak, “Semantic sentence matching
+with densely-connected recurrent and co-attentive information,” arXiv
+preprint arXiv:1805. 11360, 2018.
+
+[15] D. Bahdanau, K. Cho, and Y. Bengio, “Neural machine translation by
+jointly learning to align and translate,” arXiv preprint arXiv:1409.0473,
+2014.
+
+[16] H.HeandJ. Lin, “Pairwise word interaction modeling with deep neural
+networks for semantic similarity measurement,’ in Proceedings of the
+2016 Conference of the North American Chapter of the Association for
+Computational Linguistics: Human Language Technologies, pp. 937-948,
+2016.
+
+[17] A. Williams, N. Nangia, and S. R. Bowman, “A broad-coverage challenge corpus for sentence understanding through inference,’ arXiv
+preprint arXiv:1704.05426, 2017.
+
+[18] J. Pennington, R. Socher, and C. Manning, “Glove: Global vectors for
+word representation,’ in Proceedings of the 2014 conference on empirical
+methods in natural language processing (EMNLP), pp. 1532-1543, 2014.
+
+[19] D.P. Kingma and J. Ba, “Adam: A method for stochastic optimization,’
+arXiv preprint arXiv:1412.6980, 2014.
+
+[20] G. Klambauer, T. Unterthiner, A. Mayr, and S. Hochreiter, “Selfnormalizing neural networks,’ in Advances in Neural Information Processing Systems, pp. 971-980, 2017.
+
+[21] T. Munkhdalai and H. Yu, “Neural tree indexers for text understanding,” in Proceedings of the 55th Annual Meeting of the Association for
+Computational Linguistics, vol. 1, p. 11, NIH Public Access, 2017.
+
+[22] J. Choi, K. M. Yoo, and S.-g. Lee, “Learning to compose task-specific
+
+tree structures,’ in Proceedings of the 2018 Association for the Advance
+ment of Artificial Intelligence (AAAI). and the 7th International Joint
+
+Conference on Natural Language Processing (ACL-IFCNLP), 2018.
+
+D. Kiela, C. Wang, and K. Cho, “Dynamic meta-embeddings for im
+proved sentence representations,’ in Proceedings of the 2018 Conference
+
+[23
+
+i
+
+on Empirical Methods in Natural Language Processing, pp. 1466-1477,
+2018.
+
+[24] P. Liu, X. Qiu, J. Chen, and X. Huang, “Deep fusion Istms for text
+semantic matching,’ in Proceedings of the 54th Annual Meeting of the
+Association for Computational Linguistics, vol. 1, pp. 1034-1043, 2016.
+

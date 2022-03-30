@@ -1,0 +1,31 @@
+{
+  "has" : {
+    "Model" : {
+      "explore" : {
+        "treating text" : {
+          "as a kind of" : {
+            "raw signal" : {
+              "at" : {
+                "character level" : {
+                  "applying" : "temporal ( one-dimensional ) ConvNets"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "In this article we explore treating text as a kind of raw signal at character level , and applying temporal ( one-dimensional ) ConvNets to it ."
+      },
+      "used" : {
+        "classification task" : {
+          "to exemplify" : {
+            "ConvNets ' ability" : {
+              "to understand" : "texts"
+            }
+          }
+        },
+        "from sentence" : "For this article we only used a classification task as away to exemplify ConvNets ' ability to understand texts ."
+      }
+    }
+  }
+}
+

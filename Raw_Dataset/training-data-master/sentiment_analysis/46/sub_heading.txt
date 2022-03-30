@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Model
+Coupled Word Embedding
+Miaulti-sentiment-resource Attention
+Sentence Classifier
+Experiments
+Datasets and Sentiment Resources
+Baselines
+Implementation Details
+Experiment Results
+Conclusion

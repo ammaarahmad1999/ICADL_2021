@@ -1,0 +1,97 @@
+49	50	66	p	attempt to learn
+49	70	97	n	unsupervised representation
+49	103	122	p	accurately contains
+49	27	45	n	sentiment analysis
+51	20	28	p	consider
+51	41	106	n	research benchmark of byte ( character ) level language modelling
+51	107	113	p	due to
+51	114	151	n	its further simplicity and generality
+53	3	11	p	train on
+53	14	31	n	very large corpus
+53	32	46	p	picked to have
+53	49	69	n	similar distribution
+53	70	72	p	as
+53	73	93	n	our task of interest
+13	0	23	n	Representation learning
+99	0	25	n	Review Sentiment Analysis
+105	0	39	n	The representation learned by our model
+105	40	48	p	achieves
+105	49	55	n	91.8 %
+105	56	83	p	significantly outperforming
+105	88	104	n	state of the art
+105	105	107	p	of
+105	108	114	n	90.2 %
+105	115	117	p	by
+105	120	137	n	30 model ensemble
+107	3	10	p	matches
+107	15	26	n	performance
+107	27	29	p	of
+107	30	39	n	baselines
+107	40	45	p	using
+107	58	80	n	dozen labeled examples
+107	85	96	p	outperforms
+107	97	117	n	all previous results
+107	118	122	p	with
+107	130	158	n	few hundred labeled examples
+109	81	95	p	does not reach
+109	100	116	n	state of the art
+109	117	119	p	of
+109	120	126	n	53.6 %
+109	54	56	p	on
+109	134	156	n	fine - grained subtask
+109	159	168	p	achieving
+109	169	175	n	52.9 %
+112	0	17	n	L1 regularization
+117	0	7	p	Fitting
+117	10	19	n	threshold
+117	40	48	p	achieves
+117	51	64	n	test accuracy
+117	65	67	p	of
+117	68	75	n	92.30 %
+117	82	93	p	outperforms
+117	96	121	n	strong supervised results
+117	143	150	n	91.87 %
+117	151	153	p	of
+117	154	170	n	NB - SVM trigram
+117	180	191	p	still below
+117	196	228	n	semi-supervised state of the art
+117	229	231	p	of
+117	232	239	n	94.09 %
+118	0	5	p	Using
+118	10	39	n	full 4096 unit representation
+118	40	48	p	achieves
+118	49	56	n	92.88 %
+122	0	16	n	Capacity Ceiling
+124	3	6	p	try
+124	11	19	n	approach
+124	20	22	p	on
+124	27	41	n	binary version
+124	42	44	p	of
+124	49	79	n	Yelp Dataset Challenge in 2015
+127	0	5	p	Using
+127	10	22	n	full dataset
+127	28	35	p	achieve
+127	36	59	n	95 . 22 % test accuracy
+129	4	12	p	observed
+129	13	29	n	capacity ceiling
+129	30	32	p	is
+129	36	77	n	interesting phenomena and stumbling point
+129	78	81	p	for
+129	82	122	n	scaling our unsupervised representations
+134	15	23	p	there is
+134	26	38	n	notable drop
+134	39	41	p	in
+134	46	66	n	relative performance
+134	67	69	p	of
+134	70	82	n	our approach
+134	83	101	p	transitioning from
+134	102	131	n	sentence to document datasets
+136	27	39	n	labeled data
+136	40	49	n	increases
+136	56	67	n	performance
+136	24	26	p	of
+136	75	94	n	simple linear model
+136	98	113	p	train on top of
+136	118	139	n	static representation
+136	140	155	p	will eventually
+136	156	164	n	saturate

@@ -1,0 +1,137 @@
+154	3	12	p	pre-train
+154	15	26	n	large model
+154	27	31	p	with
+154	32	41	n	12 layers
+154	42	44	p	in
+154	57	76	n	encoder and decoder
+154	85	96	n	hidden size
+154	50	52	p	of
+154	100	104	n	1024
+155	0	9	p	Following
+155	10	17	n	RoBERTa
+155	23	26	p	use
+155	29	39	n	batch size
+155	40	42	p	of
+155	43	47	n	8000
+155	54	59	p	train
+155	64	69	n	model
+155	70	73	p	for
+155	74	86	n	500000 steps
+156	0	9	n	Documents
+156	14	28	p	tokenized with
+156	33	58	n	same byte - pair encoding
+156	59	61	p	as
+156	62	69	n	GPT - 2
+157	39	42	p	use
+157	45	56	n	combination
+157	57	59	p	of
+157	60	74	n	text infilling
+157	79	99	n	sentence permutation
+158	3	7	p	mask
+158	8	12	n	30 %
+158	13	15	p	of
+158	16	22	n	tokens
+158	23	25	p	in
+158	26	39	n	each document
+158	46	53	p	permute
+158	54	67	n	all sentences
+160	43	52	p	dis abled
+160	53	60	n	dropout
+160	61	64	p	for
+160	69	79	n	final 10 %
+160	80	82	p	of
+160	83	97	n	training steps
+160	0	7	p	To help
+160	12	17	n	model
+160	18	28	p	better fit
+160	33	37	n	data
+163	41	48	n	RoBERTa
+163	61	77	p	pre-trained with
+163	82	96	n	same resources
+163	105	124	n	different objective
+169	8	23	p	experiment with
+169	24	53	n	several text generation tasks
+175	78	85	p	present
+175	86	93	n	results
+175	94	96	p	on
+175	97	123	n	two summarization datasets
+175	126	141	n	CNN / DailyMail
+175	146	150	n	XSum
+178	15	19	n	BART
+178	20	31	n	outperforms
+180	21	39	n	best previous work
+180	48	57	p	leverages
+180	58	62	n	BERT
+180	65	67	p	by
+180	68	86	n	roughly 6.0 points
+180	87	89	p	on
+180	90	107	n	all ROUGE metrics
+180	110	122	p	representing
+180	125	144	n	significant advance
+180	145	147	p	in
+180	148	159	n	performance
+183	3	11	p	evaluate
+183	12	40	n	dialogue response generation
+183	41	43	p	on
+183	44	51	n	CONVAI2
+184	0	4	n	BART
+184	5	16	n	outperforms
+184	17	30	n	previous work
+184	31	33	p	on
+184	34	55	n	two automated metrics
+186	3	6	p	use
+186	11	41	n	recently proposed ELI5 dataset
+187	3	7	p	find
+187	8	12	n	BART
+187	13	24	n	outperforms
+187	29	47	n	best previous work
+187	48	50	p	by
+187	51	64	n	1.2 ROUGE - L
+194	16	29	p	experiment on
+194	34	67	n	original WMT16 Romanian - English
+194	68	82	p	augmented with
+194	83	106	n	back - translation data
+196	4	23	n	Preliminary results
+196	24	33	p	suggested
+196	39	51	n	our approach
+196	52	55	p	was
+196	56	70	n	less effective
+196	71	78	p	without
+196	79	102	n	back - translation data
+196	109	117	p	prone to
+196	118	129	n	overfitting
+17	19	26	p	present
+17	27	31	n	BART
+17	40	50	p	pre-trains
+17	53	58	n	model
+17	59	68	p	combining
+17	69	117	n	Bidirectional and Auto - Regressive Transformers
+18	0	4	n	BART
+18	5	7	p	is
+18	10	31	n	denoising autoencoder
+18	32	42	p	built with
+18	45	75	n	sequence - to - sequence model
+18	84	97	p	applicable to
+18	100	128	n	very wide range of end tasks
+20	5	9	p	uses
+20	12	79	n	standard Tranformer - based neural machine translation architecture
+20	120	127	p	seen as
+20	128	140	n	generalizing
+20	141	145	n	BERT
+20	148	154	p	due to
+20	159	180	n	bidirectional encoder
+20	185	188	n	GPT
+20	191	195	p	with
+20	200	225	n	left - to - right decoder
+19	0	11	n	Pretraining
+19	16	26	n	two stages
+19	33	37	n	text
+19	41	55	p	corrupted with
+19	59	85	n	arbitrary noising function
+19	100	130	n	sequence - to - sequence model
+19	38	40	p	is
+19	134	141	n	learned
+19	142	156	p	to reconstruct
+19	161	174	n	original text
+2	17	54	n	Sequence - to - Sequence Pre-training
+4	46	89	n	pretraining sequence - to - sequence models

@@ -1,0 +1,113 @@
+101	0	10	n	All models
+101	15	22	p	trained
+101	23	37	n	end - to - end
+101	38	45	n	jointly
+101	46	50	p	with
+101	55	72	n	refinement module
+101	73	95	n	using a dimensionality
+101	96	98	p	of
+101	99	106	n	n = 300
+101	107	110	p	for
+101	111	143	n	all but the TriviaQA experiments
+101	157	170	p	had to reduce
+101	171	179	n	n to 150
+101	180	186	p	due to
+101	187	205	n	memory constraints
+102	0	13	n	All baselines
+102	14	24	p	operate on
+102	29	54	n	unrefined word embeddings
+103	0	3	p	For
+103	8	27	n	DQA baseline system
+103	31	34	p	add
+103	39	44	n	lemma
+103	45	47	p	in
+103	50	74	n	question feature ( liq )
+21	19	26	p	develop
+21	29	45	n	new architecture
+21	46	75	p	for dynamically incorporating
+21	76	105	n	external background knowledge
+21	106	108	p	in
+21	109	119	n	NLU models
+22	87	110	n	supplementary knowledge
+22	114	128	p	retrieved from
+22	129	155	n	external knowledge sources
+22	174	184	n	ConceptNet
+22	189	198	n	Wikipedia
+22	204	229	p	assist with understanding
+22	230	241	n	text inputs
+25	25	28	p	are
+25	34	41	p	used as
+25	42	47	n	input
+25	48	50	p	to
+25	53	85	n	task - specific NLU architecture
+24	4	33	n	retrieved supplementary texts
+24	38	56	p	read together with
+24	61	72	n	task inputs
+24	73	75	p	by
+24	79	101	n	initial reading module
+24	102	107	p	whose
+24	108	115	n	outputs
+24	120	156	n	contextually refined word embeddings
+26	4	46	n	initial reading module and the task module
+26	47	57	p	are learnt
+26	58	82	n	jointly , end - to - end
+2	47	57	n	Neural NLU
+4	96	141	n	neural natural language understanding ( NLU )
+138	0	15	n	Wikipedia ( W )
+138	16	22	p	yields
+138	23	57	n	further , significant improvements
+138	58	60	p	on
+138	61	69	n	TriviaQA
+138	72	94	n	slightly outperforming
+138	99	129	n	current state of the art model
+147	25	40	n	RTE experiments
+148	17	32	p	introduction of
+148	33	56	n	our refinement strategy
+148	57	76	n	almost always helps
+148	84	100	p	with and without
+148	101	119	n	external knowledge
+149	0	14	p	When providing
+149	15	46	n	additional background knowledge
+149	47	51	p	from
+149	52	62	n	ConceptNet
+149	65	88	n	our BiLSTM based models
+149	89	110	n	improve substantially
+149	123	142	n	ESIM - based models
+149	143	150	n	improve
+149	151	158	p	only on
+149	163	194	n	more difficult MultiNLI dataset
+150	60	70	n	our models
+150	71	77	p	acquit
+150	89	99	n	quite well
+150	100	102	p	on
+150	107	125	n	MultiNLI benchmark
+150	132	145	n	competitively
+150	146	148	p	on
+150	153	167	n	SNLI benchmark
+157	15	49	n	both ESIM and our BiL - STM models
+157	55	67	p	trained with
+157	68	77	n	knowledge
+157	78	82	p	from
+157	83	93	n	ConceptNet
+157	98	110	p	sensitive to
+157	115	124	n	semantics
+157	125	127	p	of
+157	132	151	n	provided assertions
+154	6	15	p	find that
+154	25	38	n	little impact
+154	39	47	p	of using
+154	48	66	n	external knowledge
+154	67	69	p	on
+154	74	82	n	RTE task
+154	83	87	p	with
+154	88	92	n	ESIM
+159	14	24	p	increasing
+159	29	37	n	coverage
+159	38	40	p	of
+159	41	51	n	assertions
+159	52	54	p	in
+159	55	65	n	ConceptNet
+159	72	89	p	most likely yield
+159	90	110	n	improved performance
+159	116	134	p	without retraining
+159	135	145	n	our models

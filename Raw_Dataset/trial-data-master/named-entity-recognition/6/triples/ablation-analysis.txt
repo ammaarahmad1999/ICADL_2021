@@ -1,0 +1,7 @@
+(Contribution||has||Ablation analysis)
+(Ablation analysis||observe||models that use both feature sets)
+(models that use both feature sets||significantly outperform||other configurations)
+(Ablation analysis||on||both CONLL and ONTONOTES)
+(both CONLL and ONTONOTES||observe||SSKIP model)
+(SSKIP model||outperforms||our feature vector approach)
+(our feature vector approach||by||0.65 F1 points on average)

@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+External Knowledge as Supplementary
+Refining Word Embeddings by
+Unrefined Word Embeddings (E°)
+Refined Word Embeddings (E*, > 1)
+Experimental Setup
+Results
+Question Answering
+Recognizing Textual Entailment
+Qualitative Analysis
+Related Work
+Conclusion

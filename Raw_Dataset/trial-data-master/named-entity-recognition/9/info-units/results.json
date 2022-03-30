@@ -1,0 +1,96 @@
+{
+  "has" : {
+    "Results" : {
+      "of" : {
+        "NER" : {
+          "has" : {
+            "BioBERT" : {
+              "achieves" : {
+                "higher scores" : {
+                  "than" : "BERT"
+                },
+                "from sentence" : "The results of NER are shown in .
+On the other hand , BioBERT achieves higher scores than BERT on all the datasets ."
+
+              },
+              "outperformed" : {
+                "state - of - the - art models" : {
+                  "on" : "six out of nine datasets"
+                }
+              }
+            },
+            "BioBERT v 1.1 ( PubMed )" : {
+              "outperformed" : {
+                "state - of - the - art models" : {
+                  "by" : {
+                    "0.62" : {
+                      "in terms of" : "micro averaged F1 score"
+                    }
+                  }
+                }
+              },
+              "from sentence" : "BioBERT outperformed the state - of - the - art models on six out of nine datasets , and BioBERT v 1.1 ( PubMed ) outperformed the state - of - the - art models by 0.62 in terms of micro averaged F1 score ."              
+            }
+          }
+        },
+        "RE" : {
+          "has" : {
+            "BioBERT v1.0 ( PubMed )" : {
+              "obtained" : {
+                "higher F1 score ( 2.80 higher )" : {
+                  "than" : "state - of - the - art models"
+                }
+              },
+              "from sentence" : "The RE results of each model are shown in .
+On average ( micro ) , BioBERT v1.0 ( PubMed ) obtained a higher F1 score ( 2.80 higher ) than the state - of - the - art models ."
+
+            },
+            "BioBERT" : {
+              "achieved" : {
+                "highest F 1 scores" : {
+                  "on" : "2 out of 3 biomedical datasets"
+                }
+              },
+              "from sentence" : "Also , BioBERT achieved the highest F 1 scores on 2 out of 3 biomedical datasets ."
+            }
+          }
+        },
+        "QA" : {
+          "has" : {
+            "BioBERT" : {
+              "significantly outperformed" : ["BERT", "state - of - the - art models"]
+            },
+            "BioBERT v1.1 ( PubMed )" : {
+              "obtained" : {
+                "strict accuracy" : {
+                  "of" : "38.77"
+                },
+                "lenient accuracy" : {
+                  "of" : "53.81"
+                },
+                "mean reciprocal rank score" : {
+                  "of" : "44.77"
+                }
+              },
+              "from sentence" : "The QA results are shown in .
+			  All versions of BioBERT significantly outperformed BERT and the state - of - the - art models , and in particular , BioBERT v1.1 ( PubMed ) obtained a strict accuracy of 38.77 , a lenient accuracy of 53.81 and a mean reciprocal rank score of 44.77 , all of which were micro averaged ."
+			  
+            },
+            "biomedical QA datasets" : {
+              "has" : {
+                "BioBERT" : {
+                  "achieved" : {
+                    "new state - of - the - art performance" : {
+                      "in terms of" : "MRR"
+                    }
+                  }
+                }
+              },
+              "from sentence" : "On all the biomedical QA datasets , BioBERT achieved new state - of - the - art performance in terms of MRR ."
+            }
+          }
+        }
+      }
+    }
+  }
+}

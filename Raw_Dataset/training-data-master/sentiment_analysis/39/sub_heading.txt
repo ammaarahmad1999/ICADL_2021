@@ -1,0 +1,20 @@
+title
+abstract
+Introduction
+SentiHood
+Data Collection Process
+Categories
+Aspects
+Sentiment
+Target Entity
+Out of scope
+Procedure:
+Dataset
+Task
+Evaluation
+Baseline
+Logistic Regression
+Long Short-Term Memory (LSTM)
+Experiments
+Results
+Conclusion

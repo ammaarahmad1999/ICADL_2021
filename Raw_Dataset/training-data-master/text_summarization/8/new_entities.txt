@@ -1,0 +1,89 @@
+29	32	40	p	consider
+29	41	62	n	bottom - up attention
+30	13	26	p	first selects
+30	29	43	n	selection mask
+30	44	47	p	for
+30	52	67	n	source document
+30	112	124	p	by this mask
+30	77	111	n	constrains a standard neural model
+33	15	27	p	incorporates
+33	30	63	n	separate content selection system
+33	64	73	p	to decide
+33	77	93	n	relevant aspects
+33	94	96	p	of
+33	101	116	n	source document
+34	3	8	p	frame
+34	14	28	n	selection task
+34	29	33	p	as a
+34	34	60	n	sequence - tagging problem
+34	63	84	p	with the objective of
+34	85	103	n	identifying tokens
+34	104	108	p	from
+34	111	119	n	document
+34	129	136	p	part of
+34	141	148	n	summary
+36	80	86	p	employ
+36	87	94	n	masking
+36	95	107	p	to constrain
+36	108	121	n	copying words
+36	122	124	p	to
+36	129	143	n	selected parts
+36	144	146	p	of
+36	151	155	n	text
+36	164	172	p	produces
+36	173	192	n	grammatical outputs
+186	4	24	n	inference parameters
+186	29	37	p	tuned on
+186	40	58	n	200 example subset
+187	0	24	n	Length penalty parameter
+187	71	83	p	ranging from
+187	84	94	n	0.6 to 1.4
+187	31	40	n	copy mask
+187	101	113	p	ranging from
+187	114	124	n	0.1 to 0.2
+190	4	30	n	coverage penalty parameter
+190	36	42	p	set to
+190	43	45	n	10
+190	56	94	n	copy attention normalization parameter
+190	97	99	p	to
+190	100	101	n	2
+188	4	21	p	minimum length of
+188	26	43	n	generated summary
+188	44	53	p	is set to
+188	54	56	n	35
+188	57	60	p	for
+188	61	69	n	CNN - DM
+188	74	75	n	6
+188	76	79	p	for
+188	80	83	n	NYT
+191	3	6	p	use
+191	7	15	n	AllenNLP
+191	16	19	p	for
+191	24	40	n	content selector
+191	47	60	n	Open NMT - py
+191	61	64	p	for
+191	69	87	n	abstractive models
+2	12	37	n	Abstractive Summarization
+11	0	18	n	Text summarization
+13	31	63	n	neural abstractive summarization
+192	27	29	p	on
+192	34	49	n	CNN - DM corpus
+193	22	27	p	using
+193	30	56	n	coverage inference penalty
+193	57	63	p	scores
+193	64	72	n	the same
+193	73	77	p	as a
+193	78	101	n	full coverage mechanism
+193	104	121	p	without requiring
+193	126	153	n	additional model parameters
+193	157	176	n	model fine - tuning
+194	12	16	p	with
+194	21	57	n	CopyTransformer and coverage penalty
+194	58	66	p	indicate
+194	69	87	n	slight improvement
+194	88	94	p	across
+194	95	111	n	all three scores
+194	121	128	p	observe
+194	129	154	n	no significant difference
+194	155	162	p	between
+194	163	229	n	Pointer - Generator and CopyTransformer with bottom - up attention

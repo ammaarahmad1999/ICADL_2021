@@ -1,0 +1,34 @@
+{
+  "has" : {
+    "Results" : {
+      "has" : {
+        "Reranking" : {
+          "see that" : {
+            "multitasking with paraphrase data" : {
+              "improves F1" : "from 0.60 to 0.68"
+            },
+            "from sentence" : "Reranking
+First , we can see that multitasking with paraphrase data is essential since it improves F1 from 0.60 to 0.68 ."
+
+          },
+          "has" : {
+            "Fine - tuning the embedding model" : {
+              "to optimize" : "top of the list",
+              "grants a bump of" : {
+                "5 points" : {
+                  "of" : "F1"
+                }
+              },
+              "from sentence" : "Fine - tuning the embedding model is very beneficial to optimize the top of the list and grants a bump of 5 points of F1 : carefully tuning the similarity makes a clear difference ."              
+            },
+            "All versions of our system" : {
+              "greatly outperform" : "paralex",
+              "improves the F1 - score" : "by almost 20 points",      
+              "from sentence" : "All versions of our system greatly outperform paralex : the fine - tuned model improves the F1 - score by almost 20 points and , according to , is better in precision for all levels of recall ."
+            }            
+          }
+        }
+      }
+    }
+  }
+}

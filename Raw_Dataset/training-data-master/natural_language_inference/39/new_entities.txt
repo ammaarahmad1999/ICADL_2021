@@ -1,0 +1,75 @@
+190	3	8	p	found
+190	9	20	n	large drops
+190	26	34	p	removing
+190	39	65	n	context modeling component
+191	4	7	p	use
+191	15	37	n	similarity focus layer
+191	38	40	p	is
+191	46	56	n	beneficial
+191	70	72	p	on
+191	77	88	n	WikiQA data
+192	8	16	p	replaced
+192	21	50	n	entire similarity focus layer
+192	51	55	p	with
+192	58	90	n	random dropout layer ( p = 0.3 )
+192	111	116	n	hurts
+192	117	125	n	accuracy
+16	17	25	p	focus on
+16	26	35	n	capturing
+16	36	75	n	fine - grained word - level information
+18	8	24	p	instead of using
+18	25	42	n	sentence modeling
+18	48	55	p	propose
+18	56	90	n	pairwise word interaction modeling
+18	91	106	p	that encourages
+18	107	141	n	explicit word context interactions
+18	142	148	p	across
+18	149	158	n	sentences
+20	9	17	p	based on
+20	22	48	n	pairwise word interactions
+20	54	62	p	describe
+20	65	93	n	novel similarity focus layer
+20	94	99	p	which
+20	100	105	n	helps
+20	110	115	n	model
+20	116	136	p	selectively identify
+20	137	164	n	important word interactions
+20	195	198	p	for
+20	199	221	n	similarity measurement
+155	0	3	p	For
+155	8	35	n	SICK and MSRVID experiments
+155	41	45	p	used
+155	46	61	n	300 - dimension
+155	62	84	n	Glo Ve word embeddings
+156	8	49	n	STS2014 , WikiQA , and TrecQA experiments
+156	151	161	p	trained on
+156	162	172	n	word pairs
+156	102	106	p	from
+156	182	210	n	Paraphrase Database ( PPDB )
+156	55	59	p	used
+156	60	73	n	300 dimension
+156	74	101	n	PARAGRAM - SL999 embeddings
+156	115	143	n	PARAGRAM - PHRASE embeddings
+161	0	22	n	Our timing experiments
+161	28	40	p	conducted on
+161	44	68	n	Intel Xeon E5 - 2680 CPU
+162	0	6	p	Due to
+162	7	33	n	sentence length variations
+162	36	39	p	for
+162	44	64	n	SICK and MSRVID data
+162	68	74	p	padded
+162	79	88	n	sentences
+162	89	91	p	to
+162	92	100	n	32 words
+162	111	145	n	STS2014 , WikiQA , and TrecQA data
+162	151	157	p	padded
+162	162	171	n	sentences
+162	172	174	p	to
+162	175	183	n	48 words
+2	65	96	n	Semantic Similarity Measurement
+4	0	30	n	Textual similarity measurement
+9	43	78	n	semantic textual similarity ( STS )
+176	0	7	n	Wiki QA
+178	41	125	n	paragraph vector ( PV ) , CNN , and PV - Cnt / CNN - Cnt with word matching features
+179	0	9	n	Our model
+179	10	21	n	outperforms

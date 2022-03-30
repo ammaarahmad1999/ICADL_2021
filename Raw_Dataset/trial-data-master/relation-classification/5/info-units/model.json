@@ -1,0 +1,51 @@
+{
+  "has" : {
+    "Model" : {
+      "present" : {
+        "novel end - to - end neural model" : {
+          "for" : "joint entity and relation extraction"
+        },
+        "from sentence" : "In this paper , we present a novel end - to - end neural model for joint entity and relation extraction ."
+      },
+      "mixture of" : ["named entity recognition ( NER ) component", "relation classification ( RC ) component", {"from sentence" : "As illustrated in , our model architecture can be viewed as a mixture of a named entity recognition ( NER ) component and a relation classification ( RC ) component ."}],
+      "has" : {
+        "NER component" : {
+          "employs" : {
+            "BiLSTM - CRF architecture" : {
+              "to predict" : {
+                "entities" : {
+                  "from" : "input word tokens"
+                }
+              }
+            }
+          },
+          "from sentence" : "Our NER component employs a BiLSTM - CRF architecture to predict entities from input word tokens ."
+        },
+        "RC component" : {
+          "uses" : {
+            "another BiLSTM" : {
+              "to learn" : "latent features relevant for relation classification"
+            },
+            "from sentence" : "Based on both the input words and the predicted NER labels , the RC component uses another BiLSTM to learn latent features relevant for relation classification ."
+          },
+          "takes into account" : {
+            "second - order interactions" : {
+              "over" : {
+                "latent features" : {
+                  "via" : "tensor"
+                }
+              }
+            },
+            "from sentence" : "In contrast , our RC component takes into account second - order interactions over the latent features via a tensor ."
+          }
+        }
+      },
+      "for" : {
+        "relation classification" : {
+          "propose a novel use of" : "deep biaffine attention mechanism"
+        },
+        "from sentence" : "In particular , for relation classification we propose a novel use of the deep biaffine attention mechanism which was first introduced in dependency parsing ."        
+      }
+    }
+  }
+}

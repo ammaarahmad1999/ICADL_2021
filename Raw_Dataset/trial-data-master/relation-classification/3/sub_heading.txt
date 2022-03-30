@@ -1,0 +1,10 @@
+title
+abstract
+Introduction
+Related work
+Model
+Joint learning as head selection
+Adversarial training (AT)
+Experimental setup
+Results
+Conclusion

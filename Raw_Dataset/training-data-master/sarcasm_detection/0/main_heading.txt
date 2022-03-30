@@ -1,0 +1,10 @@
+title
+abstract
+Introduction
+Related Work
+Corpus Details
+Corpus Evaluation
+Benchmarks for Sarcasm Detection
+Conclusion
+Acknowledgements
+Bibliographical References

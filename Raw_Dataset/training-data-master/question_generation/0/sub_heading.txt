@@ -1,0 +1,10 @@
+title
+abstract
+Introduction
+Approach
+Feature-Rich Encoder
+Attention-Based Decoder
+Copy Mechanism
+Experiments and Results
+Results and Analysis
+Conclusion and Future Work

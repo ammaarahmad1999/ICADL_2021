@@ -1,0 +1,187 @@
+40	10	22	p	first builds
+40	26	37	n	RRC dataset
+40	38	44	p	called
+40	45	53	n	ReviewRC
+40	56	61	p	using
+40	62	69	n	reviews
+40	70	74	p	from
+40	75	94	n	SemEval 2016 Task 5
+40	105	109	p	is a
+40	110	125	n	popular dataset
+40	126	129	p	for
+40	130	172	n	aspect - based sentiment analysis ( ABSA )
+40	173	175	p	in
+40	180	212	n	domains of laptop and restaurant
+210	3	8	p	adopt
+210	9	30	n	BERT BASE ( uncased )
+210	31	33	p	as
+210	38	43	n	basis
+210	44	47	p	for
+210	48	63	n	all experiments
+211	97	105	p	leverage
+211	106	122	n	FP16 computation
+211	126	135	p	to reduce
+211	140	144	n	size
+211	145	152	p	of both
+211	157	162	n	model
+211	167	189	n	hidden representations
+211	190	192	p	of
+211	193	197	n	data
+212	3	6	p	set
+212	9	26	n	static loss scale
+212	27	29	p	of
+212	30	31	n	2
+212	32	34	p	in
+212	35	37	n	FP
+213	4	18	n	maximum length
+213	19	21	p	of
+213	22	36	n	post -training
+213	40	46	p	set to
+213	47	50	n	320
+213	51	55	p	with
+213	58	68	n	batch size
+213	69	71	p	of
+213	72	74	n	16
+213	75	91	p	for each type of
+213	92	101	n	knowledge
+214	4	24	n	number of subbatch u
+214	28	34	p	set to
+214	35	36	n	2
+214	48	68	p	good enough to store
+214	74	95	n	sub - batch iteration
+214	96	100	p	into
+214	103	113	n	GPU memory
+214	114	116	p	of
+214	117	120	n	11G
+215	3	6	p	use
+215	7	21	n	Adam optimizer
+215	26	29	p	set
+215	34	47	n	learning rate
+215	48	53	p	to be
+215	54	60	n	3e - 5
+216	3	8	p	train
+216	9	21	n	70,000 steps
+216	22	25	p	for
+216	30	43	n	laptop domain
+216	48	61	n	140,000 steps
+216	62	65	p	for
+216	70	87	n	restaurant domain
+43	10	16	p	adopts
+43	17	21	n	BERT
+43	24	26	p	as
+43	31	41	n	base model
+48	41	48	p	propose
+48	51	88	n	novel joint post - training technique
+48	94	99	p	takes
+48	100	127	n	BERT 's pre-trained weights
+48	128	130	p	as
+48	135	149	n	initialization
+48	152	155	p	for
+48	156	184	n	basic language understanding
+48	189	194	p	adapt
+48	195	199	n	BERT
+48	200	204	p	with
+48	205	253	n	both domain knowledge and task ( MRC ) knowledge
+48	254	260	p	before
+48	261	274	n	fine - tuning
+48	275	280	p	using
+48	285	315	n	domain end task annotated data
+48	316	319	p	for
+48	324	334	n	domain RRC
+49	15	24	p	leverages
+49	25	34	n	knowledge
+49	35	39	p	from
+49	40	51	n	two sources
+49	54	81	n	unsupervised domain reviews
+49	86	131	n	supervised ( yet out - of - domain ) MRC data
+2	58	91	n	Aspect - based Sentiment Analysis
+10	129	146	n	aspect extraction
+10	151	182	n	aspect sentiment classification
+10	186	219	n	aspect - based sentiment analysis
+250	19	27	p	observed
+250	37	81	n	proposed joint post - training ( BERT - PT )
+250	90	106	n	best performance
+250	107	111	p	over
+250	112	121	n	all tasks
+250	122	124	p	in
+250	125	136	n	all domains
+250	145	149	p	show
+250	154	162	n	benefits
+250	163	172	p	of having
+250	173	195	n	two types of knowledge
+252	102	112	p	found that
+252	117	144	n	vanilla pre-trained weights
+252	145	147	p	of
+252	148	152	n	BERT
+252	153	164	p	do not work
+252	165	169	n	well
+252	170	173	p	for
+252	174	194	n	review - based tasks
+254	19	31	p	noticed that
+254	36	41	n	roles
+254	42	44	p	of
+254	45	80	n	domain knowledge and task knowledge
+254	81	89	p	vary for
+254	90	117	n	different tasks and domains
+255	0	3	p	For
+255	4	7	n	RRC
+255	13	23	p	found that
+255	28	44	n	performance gain
+255	45	47	p	of
+255	48	57	n	BERT - PT
+255	58	75	p	mostly comes from
+255	76	115	n	task - awareness ( MRC ) post -training
+259	4	6	n	AE
+259	12	22	p	found that
+259	23	46	n	great performance boost
+259	47	64	p	comes mostly from
+259	65	94	n	domain knowledge posttraining
+269	9	15	n	errors
+269	16	32	p	mostly come from
+269	33	57	n	annotation inconsistency
+269	62	72	n	boundaries
+269	73	75	p	of
+269	76	83	n	aspects
+262	4	7	n	ASC
+262	13	26	p	observed that
+262	27	59	n	large - scale annotated MRC data
+262	60	62	p	is
+262	63	74	n	very useful
+258	3	23	p	further investigated
+258	49	59	n	BERT - MRC
+258	37	45	p	improved
+258	28	36	n	examples
+258	64	74	p	found that
+258	79	125	n	boundaries of spans ( especially short spans )
+258	126	130	p	were
+258	131	147	n	greatly improved
+260	0	10	n	BERT - MRC
+260	11	24	p	has almost no
+260	25	36	n	improvement
+260	37	39	p	on
+260	40	50	n	restaurant
+267	4	10	n	errors
+267	11	13	p	on
+267	14	17	n	RRC
+267	25	34	p	come from
+267	35	45	n	boundaries
+267	46	48	p	of
+267	49	54	n	spans
+267	55	67	p	that are not
+267	68	82	n	concise enough
+267	87	105	n	incorrect location
+267	106	108	p	of
+267	109	114	n	spans
+267	115	128	p	that may have
+267	129	149	n	certain nearby words
+267	150	160	p	related to
+267	165	173	n	question
+271	0	3	n	ASC
+271	4	17	p	tends to have
+271	23	29	n	errors
+271	30	32	p	as
+271	37	54	n	decision boundary
+271	55	62	p	between
+271	67	96	n	negative and neutral examples
+271	97	99	p	is
+271	100	107	n	unclear

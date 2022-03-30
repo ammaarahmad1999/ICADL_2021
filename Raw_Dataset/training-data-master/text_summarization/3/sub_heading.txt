@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+Related Work
+The Proposed Model
+Encoder-Decoder Framework
+Concept Pointer Generator
+Objective Learning
+Experiments
+Results and Analysis
+Quantitative Analysis
+Analysis on Training Strategies
+Human Evaluations
+Conclusion

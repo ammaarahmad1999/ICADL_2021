@@ -1,0 +1,22 @@
+{
+  "has" : {
+    "Ablation analysis" : {
+      "evaluate" : {
+        "contribution of neural components" : {
+          "including" : {
+            "pre-trained embeddings , the characterlevel LSTM and dropout layers" : {
+              "contribute significantly to" : {
+                "effectiveness of our model" : {
+                  "in" : "all three datasets"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "To evaluate the contribution of neural components including pre-trained embeddings , the characterlevel LSTM and dropout layers , we test the performances of ablated models .
+From the performance gap , we can conclude that these components contribute significantly to the effectiveness of our model in all three datasets ."
+
+      }
+    }
+  }
+}

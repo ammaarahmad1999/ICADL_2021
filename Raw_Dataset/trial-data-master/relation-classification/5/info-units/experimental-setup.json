@@ -1,0 +1,18 @@
+{
+  "has" : {
+    "Experimental setup" : {
+      "using" : [
+        "DYNET v 2.0",
+        {
+          "from sentence" : "Our model is implemented using DYNET v 2.0 ."  
+        }
+      ],
+      "optimize" : {
+        "objective loss" : {
+          "using" : "Adam"
+        },
+        "from sentence" : "We optimize the objective loss using Adam , no mini-batches and run for 100 epochs ."
+      }
+    }
+  }
+}

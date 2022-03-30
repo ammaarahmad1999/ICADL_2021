@@ -1,0 +1,142 @@
+260	23	43	n	n-gram functionality
+260	44	46	p	is
+260	47	56	n	important
+260	59	71	p	contributing
+260	72	103	n	almost 5 % accuracy improvement
+263	4	18	n	top N function
+263	19	30	p	contributes
+263	31	42	n	very little
+263	43	45	p	to
+263	50	70	n	over all performance
+265	0	32	n	Simple word - by - word matching
+265	46	52	n	useful
+265	53	55	p	on
+265	56	62	n	MCTest
+266	4	29	n	sequential sliding window
+266	30	35	p	makes
+266	38	54	n	3 % contribution
+267	24	57	n	dependency - based sliding window
+267	58	63	p	makes
+267	71	89	n	minor contribution
+270	14	36	n	exogenous word weights
+270	37	41	p	make
+270	44	68	n	significant contribution
+270	69	71	p	of
+270	72	82	n	almost 5 %
+264	0	8	p	Ablating
+264	13	33	n	sentential component
+264	34	38	p	made
+264	43	70	n	most significant difference
+264	73	81	p	reducing
+264	82	93	n	performance
+264	94	96	p	by
+264	97	110	n	more than 5 %
+218	0	3	p	For
+218	4	16	n	word vectors
+218	20	23	p	use
+218	24	63	n	Google 's publicly available embeddings
+218	66	78	p	trained with
+218	79	87	n	word2vec
+218	88	90	p	on
+218	95	127	n	100 - billion - word News corpus
+219	18	22	p	kept
+219	23	28	n	fixed
+219	29	39	p	throughout
+219	40	48	n	training
+220	12	15	p	are
+220	16	33	n	300 - dimensional
+231	114	118	p	used
+231	119	122	n	0.5
+231	123	125	p	as
+231	130	149	n	dropout probability
+235	12	26	n	Adam optimizer
+235	27	31	p	with
+235	36	53	n	standard settings
+235	85	98	n	learning rate
+235	99	101	p	of
+235	102	107	n	0.003
+232	0	7	n	Dropout
+232	8	20	p	occurs after
+232	21	57	n	all neural - network transformations
+232	89	99	p	allowed to
+232	100	106	n	change
+232	107	111	p	with
+232	112	120	n	training
+21	3	10	p	present
+21	13	45	n	parallel - hierarchical approach
+21	46	48	p	to
+21	49	70	n	machine comprehension
+21	71	82	p	designed to
+21	83	92	n	work well
+21	93	95	p	in
+21	98	120	n	data - limited setting
+26	10	19	p	learns to
+26	20	30	n	comprehend
+26	31	33	p	at
+26	36	46	n	high level
+26	47	56	p	even when
+26	57	61	n	data
+26	62	64	p	is
+26	65	71	n	sparse
+27	32	40	p	compares
+27	45	75	n	question and answer candidates
+27	8	10	p	to
+27	83	87	n	text
+27	88	93	p	using
+27	94	123	n	several distinct perspectives
+29	4	24	n	semantic perspective
+29	25	33	p	compares
+29	38	48	n	hypothesis
+29	49	51	p	to
+29	52	61	n	sentences
+29	62	64	p	in
+29	69	73	n	text
+29	74	83	p	viewed as
+29	84	118	n	single , self - contained thoughts
+29	131	148	p	represented using
+29	151	173	n	sum and transformation
+29	174	176	p	of
+29	177	199	n	word embedding vectors
+30	4	32	n	word - by - word perspective
+30	33	43	p	focuses on
+30	44	62	n	similarity matches
+30	63	70	p	between
+30	71	87	n	individual words
+30	88	92	p	from
+30	93	112	n	hypothesis and text
+30	115	117	p	at
+30	118	132	n	various scales
+31	36	44	p	consider
+31	45	52	n	matches
+31	53	57	p	over
+31	58	76	n	complete sentences
+32	8	11	p	use
+32	14	28	n	sliding window
+32	29	38	p	acting on
+32	41	60	n	subsentential scale
+2	36	57	n	Machine Comprehension
+4	0	31	n	Understanding unstructured text
+16	0	28	n	Machine comprehension ( MC )
+247	0	2	p	On
+247	3	15	n	MCTest - 500
+247	22	49	n	Parallel Hierarchical model
+247	50	75	n	significantly outperforms
+247	76	89	n	these methods
+247	90	92	p	on
+247	93	119	n	single questions ( > 2 % )
+247	124	144	n	slightly outperforms
+247	149	159	n	latter two
+247	160	162	p	on
+247	163	190	n	multi questions ( ? 0.3 % )
+249	4	10	n	method
+249	14	22	p	achieves
+249	27	47	n	best over all result
+249	48	50	p	on
+249	51	63	n	MCTest - 160
+253	12	21	n	our model
+253	22	35	n	outperforming
+253	40	52	n	alternatives
+253	53	55	p	by
+253	58	70	n	large margin
+253	71	77	p	across
+253	82	98	n	board ( > 15 % )

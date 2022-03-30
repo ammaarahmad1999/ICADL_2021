@@ -1,0 +1,642 @@
+1808.08703v2 [cs.CL] 13 Nov 2018
+
+ar X1V
+
+Generating Text through Adversarial Training
+using Skip-Thought Vectors
+
+Afroz Ahamad
+Department of Computer Science and Information Systems,
+Birla Institute of Technology and Science, Pilani
+afrozsahamad@gmail.com
+
+Abstract
+
+In the past few years, various advancements
+have been made in generative models owing
+to the formulation of Generative Adversarial
+Networks (GANs). GANs have been shown
+to perform exceedingly well on a wide variety of tasks pertaining to image generation
+and style transfer. In the field of Natural
+Language Processing, word embeddings such
+as word2vec and GLoVe are state-of-the-art
+methods for applying neural network models on textual data. Attempts have been
+made for utilizing GANs with word embeddings for text generation. This work presents
+an approach to text generation using SkipThought sentence embeddings in conjunction
+with GANs based on gradient penalty functions and f-measures. The results of using
+sentence embeddings with GANs for generating text conditioned on input information
+are comparable to the approaches where word
+embeddings are used.
+
+1. Introduction
+
+Numerous efforts have been made in the field of natural language text generation for tasks such as sentiment analysis (Zhang et al., 2018) and machine translation (Gangi & Federico, 2018; Qian et al., 2018).
+Early techniques for generating text conditioned on
+some input information were template or rule-based
+engines, or probabilistic models such as n-gram. In recent times, state-of-the-art results on these tasks have
+been achieved by recurrent (Press et al., 2017; Mikolov
+et al., 2010) and convolutional neural network models
+trained for likelihood maximization. This work pro
+Code available at:
+https://github.com/enigmaeth/skip-thought- gan
+
+poses an approach for text generation using Generative
+Adversarial Networks with Skip-Thought vectors.
+
+GANs (Goodfellow et al., 2014) are a class of neural
+networks that explicitly train a generator to produce
+high-quality samples by pitting against an adversarial
+discriminative model. GANs output differentiable values and hence the task of discrete text generation has
+to use vectors as differentiable inputs. This is achieved
+by training the GAN with sentence embedding vectors
+produced by Skip-Thought (Kiros et al., 2015), a neural network model for learning fixed length representations of sentences.
+
+2. Related Works
+
+Deep neural network architectures have demonstrated
+strong results on natural language generation tasks
+(Xie, 2017). Recurrent neural networks using combinations of shared parameter matrices across time-steps
+(Sutskever et al., 2014; Mikolov et al., 2010; Cho et al.,
+2014) with different gating mechanisms for easing optimization (Hochreiter & Schmidhuber, 1997; Cho et al.,
+2014) have found some success in modeling natural
+language. Another approach is to use convolutional
+neural networks that reuse kernels across time-steps
+with attention mechanism to perform language generation tasks (Kalchbrenner et al., 2016; 2014).
+
+Supervised learning with deep neural networks in the
+framework of encoder-decoder models has become the
+state-of-the-art methods for approaching NLP problems (Young et al., 2017). Recent text generation
+models use a wide variety of GANs such as gradient policy based sequence generation framework (Yu
+et al., 2016) and an actor-critic conditional GAN to fill
+missing text conditioned on surrounding text (Fedus
+et al., 2018) for performing natural language generation tasks. Other architectures such as those proposed
+in (Wang et al., 2017) with RNN and variational autoencoder generator with CNN discriminator and in
+Generating Text through Adversarial Training using Skip-Thought Vectors
+
+(Guo et al., 2017) with leaky discriminator to guide
+generator through high-level extracted features have
+also shown great results.
+
+Using adversarial examples of word and character level
+embeddings for natural language text generation has
+been explored in (Rajeswar et al., 2017). Models
+trained using generative adversarial networks or variational autoencoders have been shown to learn representations of continuous structures by leveraging deep
+latent variables such as text embeddings (Zhao et al.,
+2017). This work explores injecting sentence embeddings produced using the Skip Thought architecture
+(Kiros et al., 2015) into GANs with different setups.
+
+3. Skip-Thought Generative
+Adversarial Network (STGAN)
+
+In literature corpora (eg: fantasy novels, sci-fi novels),
+the vocabulary does not vary significantly across the
+authors, but the manner of expression does, which is
+best captured at the level of sentences than words. The
+approach that this work takes in generating sentences
+with the writing style of one author is to make the
+adversarial model approximate the distribution of all
+sentences (rather than words or characters) in a latent
+space using skip-thought architecture. The previous
+attempts on text generation have used the character
+and word-level embeddings instead with GANs, for example, in (Rajeswar et al., 2017).
+
+This section introduces Skip-Thought Generative Adversarial Network with a background on models that
+it is based on. The Skip-Thought model (Kiros et al.,
+2015) induces embedding vectors for sentences present
+in training corpus. These vectors constitute the real
+distribution for the discriminator network. The generator network produces sentence vectors similar to
+those from the encoded real distribution. The generated vectors are sampled over training and decoded to
+produce sentences using a Skip-Thought decoder conditioned on the same text corpus.
+
+3.1. Skip-Thought Vectors
+
+Skip-Thought is an encoder-decoder framework with
+an unsupervised approach to train a generic, distributed sentence encoder. ‘The encoder maps sentences sharing semantic and syntactic properties to
+similar vector representations and the decoder reconstructs the surrounding sentences of an encoded passage. ‘The sentence encoding approach draws inspiration from the skip-gram model in producing vector
+representations using previous and next sentences.
+
+The Skip-Thought model uses an RNN encoder with
+
+GRU activations (Chung et al., 2014) and an RNN
+decoder with conditional GRU, the combination being
+identical to the RNN encoder-decoder of (Cho et al.,
+2014) used in neural machine translation.
+
+3.1.1. Skip-THOUGHT ARCHITECTURE
+
+For a given sentence tuple (s;—1, 8;, 8:41), let wi denote the ¢-th word for sentence s;, and let x} denote
+its word embedding. ‘he model has three components:
+Encoder. Encoded vectors for a sentence s; with N
+
+words w’, w*t!,...,w” are computed by iterating over
+the following sequence of equations:
+
+r* = 0(W;x* + U,h*"*)
+
+z’ = o(W,x' + U,h* +)
+
+h* = tanh(Wx* + U(r* © h*~*))
+ht = (1—2t)oht-t42t ont
+
+where hi is a hidden state at each time step and interpreted as a sequence of words w;,...,w”,h’ is the
+proposed state update at time t, z° is the update gate
+and r° is the reset gate. Both update gates take values
+between zero and one.
+
+Decoder. A neural language model conditioned on
+the encoder output h; serves as the decoder. Bias matrices C,, C,, C are introduced for the update gate,
+reset gate and hidden state computation by the encoder. Two decoders are used in parallel, one each for
+sentences s; + 1 and s; — 1. The following equations
+are iterated over for decoding:
+
+ré = o(Wex*t-t + USh*t + C,h;)
+
+z’ = o(Wext? + Ugh*t + Chi)
+
+ht = tanh(W4xt-t + U4 (rt © ht) + Ch;)
+hi, =(1-z2)oh* *+2' on
+
+Objective. For the same tuple of sentences, objective
+function is the sum of log-probabilities for the forward
+and backward sentences conditioned on the encoder
+representation:
+
+SlogP (why, |wat, hi) + S$ logP(wi_y|wE", hi)
+t
+
+t
+
+3.2. Generative Adversarial Networks
+
+Generative Adversarial Networks (Goodfellow et al.,
+2014) are deep neural net architectures comprised of
+two networks, contesting with each other in a zero-sum
+game framework. For a given data, GANs can mimic
+Generating Text through Adversarial Training using Skip-Thought Vectors
+
+Pee eRe Ree Re Ree See eae eRe
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+| Training Corpus FF : gon eal,
+| | oct Skip Thought = — : df :
+=| Encoder \—— om cS
+Generated L <<< | : X |
+
+Lannnennanensnnanennsannnansnnnqarensneanenensnananagcnmarmastaanananneneurnasenanemunnensnnnsansnensanand! Samples : i |
+: Discriminator Fake
+
+>. » a NN
+SS \ Sampled generated j
+
+= U agar] || span =|
+
+new
+Generator sentences
+
+ 
+
+Figure 1. Skip-Thought Generative Adversarial Network model architecture
+
+learning the underlying distribution and generate artificial data samples similar to those from the real distribution. Generative Adversarial Networks consists
+of two players - a Generator and a Discriminator. The
+generator G tries to produce data close to the real distribution P(x) from some stochastic distribution P(z)
+termed as noise. The discriminator D’s objective is to
+differentiate between real and generated data G(z).
+
+The two networks - generator and discriminator compete against each other in a zero-sum game. ‘The minimax strategy dictates that each network plays optimally with the assumption that the other network is
+optimal. This leads to Nash equilibrium which is the
+point of convergence for GAN model.
+
+Objective. (Goodfellow et al., 2014) have formulated
+the minimax game for a generator G, discriminator D
+adversarial network with value function V(G, D) as:
+
+min max V(D,G) = Egnpaata(x)|logD(x) | +
+E,wp.(z)llog (1 — D(G(z)))]
+
+3.3. Model Architecture
+
+The STGAN model (Fig 1.) uses a deep convolutional
+generative adversarial network, similar to the one used
+in (Radford et al., 2015). The generator network is updated twice for each discriminator network update to
+prevent fast convergence of the discriminator network.
+
+The Skip-Thought encoder for the model encodes sentences with length less than 30 words using 2400 GRU
+units (Chung et al., 2014) with word vector dimensionality of 620 to produce 4800-dimensional combineskip vectors. (Kiros et al., 2015). The combine-skip
+vectors, with the first 2400 dimensions being uni-skip
+model and the last 2400 bi-skip model, are used as
+they have been found to be the best performing in the
+experiments!. The decoder uses greedy decoding tak
+‘https: //github.com/ryankiros/skip-thoughts/
+
+ing argmax over softmax output distribution for given
+time-step which acts as input for next time-step. It
+reconstructs sentences conditioned on a sentence vector by randomly sampling from the predicted distributions with or without a preset beam width. Unknown
+tokens are not included in the vocabulary. A 620 dimensional RNN word embeddings is used with 1600
+hidden GRU decoding units. Gradient clipping with
+Adam optimizer (Kingma & Ba, 2014) is used, with a
+batch size of 16 and maximum sentence length of 100
+words for decoder.
+
+3.4. Improving Training and Loss
+
+The training process of a GAN is notably difficult
+(Salimans et al., 2016) and several improvement techniques such as batch normalization, feature matching,
+historical averaging (Salimans et al., 2016) and unrolling GAN (Metz et al., 2016) have been suggested
+for making the training more stable. Training the
+Skip-Thought GAN often results in mode dropping
+(Arjovsky & Bottou, 2017; Srivastava et al., 2017) with
+a parameter setting where it outputs a very narrow
+distribution of points. To overcome this, it uses minibatch discrimination by looking at an entire batch of
+samples and modeling the distance between a given
+sample and all the other samples present in that batch.
+
+The minimax formulation for an optimal discriminator
+in a vanilla GAN is Jensen-Shannon Distance between
+the generated distribution and the real distribution.
+(Arjovsky et al., 2017) used Wasserstein distance or
+earth mover’s distance to demonstrate how replacing
+distance measures can improve training loss for GAN.
+(Gulrajani et al., 2017) have incorporated a gradient
+penalty regularizer in WGAN objective for discriminator’s loss function. The experiments in this work
+use the above f-measures to improve performance of
+Skip-Thought GAN on text generation.
+Generating Text through Adversarial Training using Skip-Thought Vectors
+
+ 
+
+it ?
+
+it ?
+
+it ?
+
+it ? how would it ?
+
+it ? how would it ?
+
+it a bottle ?
+
+a glass bottle ?
+
+a glass bottle it ?
+
+it my hand a bottle ?
+
+the phone my hand it
+
+battery is eighteen percent um ?
+
+what fine are cash please ?
+
+youre gonna go over the t- house .
+
+do you have a nice store around here?
+
+open this flight number six zero one.
+
+we have new year s holidays, always.
+
+here you can nt see your suitcase ,
+
+please show me how much is a transfer?
+
+i had a police take watch out of my wallet .
+
+here i collect my telephone card and telephone number
+my passport and a letter card with my card , please
+here on my telephone, mr. kimuras registration cards address.
+ican nt see some shopping happened .
+
+get him my camera found a person s my watch .
+
+delta airlines flight six zero two from six p.m. to miami, please?
+
+Mode collapse
+
+ 
+
+With minibatch discrimination
+
+With gradient penalty
+
+ 
+ 
+ 
+
+ 
+ 
+  
+
+Skip Thought WGAN
+
+Skip Thought WGAN-GP
+
+Pe eY,PRr APE EPP Pe MPA ee PP ee ee
+
+ 
+
+ 
+
+Table 1. Sample sentences generated from training on CMU-SE Dataset; mode collapse is overcome by using minibatch
+discrimination. Formation of sentences further improved by changing f-measure to Wasserstein distance along with
+gradient penalty regularizer. WGAWN: Wasserstein Generative Adversarial Network, GP: Gradient Penalty
+
+[se ae | ee ee
+| BLEU-3 | Biev-2 BLEU-3 | BLEU-4
+Vanilla RNN | 0.483 | 0.577 0.588 0.513
+fsrrNn | asia | esi | own | osm
+Vonitn sions | ogae | oar | osm
+srismm | osm | oo | oss | os
+STGAN | 0.521 | 0.709 0.564 0.525
+STGAN(minibatch) | 0.526 | 0.745 0.607 0.531
+
+STGAN-GP | 0.558 | 0.791 0.621 0.547
+STWGAN | 0.582 | 0.833 0.669 0.580
+STWGAN-GP | 0.617 | 0.836 0.682 0.594
+
+Table 2. BLEU-2, BLEU-3 and BLEU-4 metric scores for different models with (a) test set as reference, and
+(b) entire corpus as reference. ST: Skip-Thought, GAN: Generative Adversarial Network, W: Wasserstein
+
+ 
+
+ 
+
+ 
+
+ 
+Generating Text through Adversarial Training using Skip-Thought Vectors
+
+4. Results and Discussion
+4.1. Conditional Generation of Sentences.
+
+GANs can be conditioned on data attributes to generate samples (Mirza & Osindero, 2014; Radford et al.,
+2015). In this experiment, both the generator and discriminator are conditioned on Skip-Thought encoded
+vectors (Kiros et al., 2015).
+
+The dataset comprises of 70,000 sentences chosen from
+the BookCorpus dataset (Zhu et al., 2015), which belong to one series of fantasy novels of a particular author of English language. This selection implies that
+the author’s word choice, sentence structure, figurative language, and sentence arrangement are consistent
+and well-represented across the dataset. Conditioning
+on this high-level outline gives more robustness to the
+model in terms of generated samples.
+
+The encoder converts the dataset with a _ training/test/validation split of 5/1/1 into vectors to be
+used as real samples for discriminator. The decoded
+sentences are used to evaluate model performance under corpus level BLEU-2, BLEU-3 and BLEU-4 metrics (Papineni et al., 2002), once using only test set
+as reference and then entire corpus as reference. Table 1 compares these results for different architectures
+that have been experimented with in this paper against
+baselines of using character level RNNs and LSTMs?.
+The comparison is also made to RNNs and LST’Ms fed
+with Skip Thought embeddings. The models generate
+sentence vectors which are again decoded to produce
+sentences in english for computing the BLEU metrics.
+
+4.2. Language Generation.
+
+Language generation is done on a dataset comprising
+simple English sentences referred to as CMU-SE? in
+(Rajeswar et al., 2017). The CMU-SE dataset consists
+of 44,016 sentences with a vocabulary of 3,122 words.
+For encoding, the vectors are extracted in batches of
+sentences having the same length. The samples represent how mode collapse is manifested when using
+least-squares distance (Mao et al., 2016) fmeasure
+without minibatch discrimination. Table 2(a) contains
+sentences generated from STGAN using least-squares
+distance (Mao et al., 2016) in which there was no
+mode collapse observed, while 2(b) contains examples
+wherein it is observed. Table 2(c) shows generated sentences using gradient penalty regularizer(GAN-GP).
+Table 2(d) has samples generated from STGAN when
+
+*https://github.com/sherjilozair/
+char-rnn-tensorflow
+
+2https://github.com/clab/sp2016.11-731/tree/
+master/hw4/data
+
+using Wasserstein distance f-measure as WGAN (Arjovsky et al., 2017)) and 2(e) contains samples when
+using a gradient penalty regularizer term as WGANGP (Gulrajani et al., 2017).
+
+4.3. Proposed Oracle Experiment.
+
+The performance of this approach in generating sentences with the writing style of one certain author can
+be measured through an experiment with the help of
+a set of people. This set is familiar with the writing
+style but hasn’t read all the works of the author. This
+prevents them from being certain whether a sentence
+in question has or has not occurred in any work of the
+said author. ‘The generated samples mixed with real
+sentences are chosen from a random pool and form the
+evaluation set given to such an audience who marks if
+the sentences are fake or not. This data run through
+a scoring metric would determine a model’s performance. An experiment along similar lines is currently
+being carried out and will be included in the future
+revision.
+
+4.4. Further Work
+
+Another performance metric that can be computed for
+this setup has been described in (Rajeswar et al., 2017)
+which is a parallel work to this. Simple CFG* and
+more complex ones like Penn Treebank CFG generate
+samples (Eisner & Smith, 2008) which are used as input to GAN and the model is evaluated by computing
+the diversity and accuracy of generated samples conforming to the given CFG.
+
+Skip-Thought sentence embeddings can be used to
+generate images with GANs conditioned on text vectors for text-to-image conversion tasks like those
+achieved in (Reed et al., 2016; Bodnar, 2018). These
+embeddings have also been used to Models like neuralstoryteller? which use these sentence embeddings can
+be experimented with generative adversarial networks
+to generate unique samples.
+
+References
+
+Arjovsky, M. and Bottou, L. Towards Principled
+Methods for Training Generative Adversarial Networks. ArXiv e-prints, 2017.
+
+Arjovsky, M., Chintala, $., and Bottou, L. Wasserstein
+GAN. ArXiv e-prints, January 2017.
+
+“nttp://www.cs. jhu.edu/~jason/465/hw-grammar /
+extra-grammars/holygrail
+
+https: //github. com/ryankiros/
+neural-storyteller
+Generating Text through Adversarial Training using Skip-Thought Vectors
+
+Bodnar, Cristian. Text to image synthesis using generative adversarial networks. CoRR, abs/1805.00676,
+2018.
+
+Cho, Kyunghyun, van Merrienboer, Bart, Bahdanau,
+Dzmitry, and Bengio, Yoshua. On the properties
+of neural machine translation: Encoder—decoder approaches. In Proceedings of SSST-&, Eighth Workshop on Syntax, Semantics and Structure in Statistical Translation. Association for Computational
+Linguistics, 2014.
+
+Chung, Junyoung, Gulcehre, Caglar, Cho,
+KyungHyun, and Bengio, Yoshua. Empirical
+evaluation of gated recurrent neural networks on sequence modeling. arXiv preprint arXiv:1412.3555,
+2014.
+
+Eisner, Jason and Smith, Noah A. Competitive grammar writing. In Proceedings of the Third Workshop
+on Issues in Teaching Computational Linguistics,
+pp. 97-105. Association for Computational Linguistics, 2008.
+
+Fedus, W., Goodfellow, I., and Dai, A. M. MaskGAN:
+Better Text Generation via Filling in the_____.
+ArXiv e-prints, January 2018.
+
+Gangi, Mattia Antonino Di and Federico, Marcello. Deep neural machine translation with weaklyrecurrent units. CoRR, abs/1805.04185, 2018.
+
+Goodfellow, Ian, Pouget-Abadie, Jean, Mirza, Mehdi,
+Xu, Bing, Warde-Farley, David, Odzair, Sherjil,
+Courville, Aaron, and Bengio, Yoshua. Generative
+adversarial nets. In Advances in Neural Information Processing Systems 27, pp. 2672-2680. Curran
+Associates, Inc., 2014.
+
+Gulrajani, Ishaan, Ahmed, Faruk, Arjovsky, Martin,
+Dumoulin, Vincent, and Courville, Aaron C. Improved training of wasserstein gans. In Advances
+in Neural Information Processing Systems 30, pp.
+5767-5777. 2017.
+
+Guo, Jiaxian, Lu, Sidi, Cai, Han, Zhang, Weinan, Yu,
+Yong, and Wang, Jun. Long text generation via
+adversarial training with leaked information. CoRR,
+abs/1709.08624, 2017.
+
+Hochreiter, Sepp and Schmidhuber, Jurgen. Long
+short-term memory. Neural Comput., 9(8), November 1997.
+
+Kalchbrenner, Nal, Grefenstette, Edward, and Blunsom, Phil. A convolutional neural network for modelling sentences. In Proceedings of the 52nd Annual
+Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), 2014.
+
+Kalchbrenner, Nal, Espeholt, Lasse, Simonyan,
+Karen, van den Oord, Aaron, Graves, Alex, and
+Kavukcuoglu, Koray. Neural machine translation
+in linear time. CoRR, abs/1610.10099, 2016.
+
+Adam:
+CoRR,
+
+Kingma, Diederik P. and Ba, Jimmy.
+A method for stochastic optimization.
+abs/1412.6980, 2014.
+
+Kiros, Ryan, Zhu, Yukun, Salakhutdinov, Ruslan,
+Zemel, Richard §, Torralba, Antonio, Urtasun,
+Raquel, and Fidler, Sanja. Skip-thought vectors.
+arXiv preprint arXiv:1506.06726, 2015.
+
+Mao, Xudong, Li, Qing, Xie, Haoran, Lau, Raymond
+Y. K., and Wang, Zhen. Multi-class generative adversarial networks with the L2 loss function. CoRR,
+2016.
+
+Metz, Luke, Poole, Ben, Pfau, David, and SohlDickstein, Jascha. Unrolled generative adversarial
+networks. CoRR, abs/1611.02163, 2016.
+
+Mikolov, Tomas, Karafidt, Martin, Burget, Lukas,
+Cernocky, Jan, and Khudanpur, Sanjeev. Recurrent
+neural network based language model. In INTERSPEECH, 2010.
+
+Mirza, Mehdi and Osindero, Simon. Conditional
+generative adversarial nets. CoRR, abs/1411.1784,
+2014.
+
+Papineni, Kishore, Roukos, Salim, Ward, Todd, and
+Zhu, Wei-Jing. Bleu: A method for automatic evaluation of machine translation. In Proceedings of the
+40th Annual Meeting on Association for Computational Linguistics, ACL ’02, 2002.
+
+Press, Ofir, Bar, Amir, Bogin, Ben, Berant, Jonathan,
+and Wolf, Lior. Language generation with recurrent generative adversarial networks without pretraining. CoRR, abs/1706.01399, 2017.
+
+Qian, Xin, Zhong, Ziyi, and Zhou, Jieli. Multimodal
+machine translation with reinforcement learning.
+CoRR, abs/1805.02356, 2018.
+
+Radford, Alec, Metz, Luke, and Chintala, Soumith.
+Unsupervised representation learning with deep convolutional generative adversarial networks. CoRR,
+abs/1511.06434, 2015.
+
+Rajeswar, Sai, Subramanian, Sandeep, Dutil, Francis,
+Pal, Christopher Joseph, and Courville, Aaron C.
+Adversarial generation of natural language. CoRR,
+abs/1705.10929, 2017.
+Generating Text through Adversarial Training using Skip-Thought Vectors
+
+Reed, Scott E., Akata, Zeynep, Yan, Xinchen, Logeswaran, Lajanugen, Schiele, Bernt, and Lee,
+Honglak. Generative adversarial text to image synthesis. CoRR, abs/1605.05396, 2016.
+
+Salimans, Tim, Goodfellow, lan, Zaremba, Wojciech,
+Cheung, Vicki, Radford, Alec, and Chen, Xi. Improved techniques for training gans. In Proceedings
+of the 80th International Conference on Neural Information Processing Systems, NIPS’16, 2016.
+
+Srivastava, A., Valkov, L., Russell, C., Gutmann,
+M. U., and Sutton, C. VEEGAN: Reducing Mode
+Collapse in GANs using Implicit Variational Learning. ArXiv e-prints, 2017.
+
+Sutskever, Ilya, Vinyals, Oriol, and Le, Quoc V. Sequence to sequence learning with neural networks.
+CoRR, abs/1409.3215, 2014.
+
+Wang, Heng, Qin, Zengchang, and Wan, Tao. Text
+generation based on generative adversarial nets with
+latent variable. CoRR, abs/1712.00170, 2017.
+
+Xie, Ziang. Neural text generation: A practical guide.
+arXw preprint arXiv:1711.09534, 2017.
+
+Young, Tom, Hazarika, Devamanyu, Poria, Soujanya,
+and Cambria, Erik. Recent trends in deep learning based natural language processing. CoRR,
+abs/1708.02709, 2017.
+
+Yu, Lantao, Zhang, Weinan, Wang, Jun, and Yu,
+Yong. Seqgan: Sequence generative adversarial nets
+with policy gradient. CoRR, abs/1609.05473, 2016.
+
+Zhang, Lei, Wang, Shuai, and Liu, Bing. Deep learning for sentiment analysis : A survey. CoRR,
+abs/1801.07883, 2018.
+
+Zhao, J., Kim, Y., Zhang, K., Rush, A. M., and LeCun, Y. Adversarially Regularized Autoencoders.
+ArXiv e-prints, 2017.
+
+Zhu, Yukun, Kiros, Ryan, Zemel, Richard 6G.,
+Salakhutdinov, Ruslan, Urtasun, Raquel, Torralba,
+Antonio, and Fidler, Sanja. Aligning books and
+movies: ‘Towards story-like visual explanations by
+watching movies and reading books. 2015.
+

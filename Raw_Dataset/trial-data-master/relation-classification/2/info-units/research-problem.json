@@ -1,0 +1,8 @@
+{
+  "has research problem" : [
+    ["Joint entity recognition and relation extraction", {"from sentence" : "Joint entity recognition and relation extraction as a multi-head selection problem"}],
+    ["entity recognition and relation extraction simultaneously", {"from sentence" : "In this paper , we propose a joint neural model which performs entity recognition and relation extraction simultaneously , without the need of any manually extracted features or the use of any external tool ."}],
+    ["joint models to detect entities and their relations", {"from sentence" : "On the other hand , more recent studies propose to use joint models to detect entities and their relations overcoming the aforementioned issues and achieving state - of - the - art performance ."}],
+    ["joint model that performs the two tasks of entity recognition and relation extraction simultaneously", {"from sentence" : "In this work , we focus on a new general purpose joint model that performs the two tasks of entity recognition and relation extraction simultaneously , and that can handle multiple relations together ."}]
+    ]
+}

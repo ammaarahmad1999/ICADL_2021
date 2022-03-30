@@ -1,0 +1,92 @@
+27	3	10	p	propose
+27	11	31	n	two novel approaches
+27	32	45	p	for improving
+27	50	83	n	effectiveness of attention models
+28	4	18	n	first approach
+28	32	34	p	of
+40	51	56	p	model
+40	57	68	n	each target
+40	69	71	p	as
+40	74	81	n	mixture
+40	85	104	n	K aspect embeddings
+41	3	6	p	use
+41	10	31	n	autoencoder structure
+41	32	40	p	to learn
+41	41	111	n	both the aspect embeddings as well as the representation of the target
+41	112	114	p	as
+41	117	137	n	weighted combination
+41	138	140	p	of
+41	145	162	n	aspect embeddings
+43	4	25	n	autoencoder structure
+43	29	49	p	jointly trained with
+43	52	97	n	neural attention - based sentiment classifier
+43	98	108	p	to provide
+43	111	137	n	good target representation
+43	138	148	p	as well as
+43	151	164	n	high accuracy
+43	165	167	p	on
+43	172	191	n	predicted sentiment
+46	4	19	n	second approach
+46	20	28	p	exploits
+46	29	50	n	syntactic information
+46	51	63	p	to construct
+46	66	96	n	syntax - based attention model
+50	14	48	n	syntax - based attention mechanism
+50	49	71	p	selectively focuses on
+50	74	103	n	small subset of context words
+50	113	121	p	close to
+50	126	132	n	target
+50	133	135	p	on
+50	140	154	n	syntactic path
+50	164	175	p	obtained by
+50	176	204	n	applying a dependency parser
+50	205	207	p	on
+50	212	227	n	review sentence
+165	6	25	n	Feature - based SVM
+166	3	15	p	compare with
+166	20	36	n	reported results
+166	37	39	p	of
+166	42	52	n	top system
+166	53	55	p	in
+166	56	68	n	SemEval 2014
+168	6	10	n	LSTM
+168	32	40	p	built on
+168	41	63	n	top of word embeddings
+2	33	72	n	Aspect - Level Sentiment Classification
+16	64	97	n	fine - grained sentiment analysis
+179	53	67	n	our best model
+179	68	76	p	achieves
+179	77	96	n	competitive results
+179	97	99	p	on
+179	100	109	n	D1 and D2
+179	110	128	p	without relying on
+179	129	188	n	so many manually - designed features and external resources
+183	8	38	n	integrated full model over all
+183	39	47	p	achieves
+183	52	68	n	best performance
+183	69	86	p	compared to using
+183	87	126	n	only one of the two proposed approaches
+185	8	38	n	proposed target representation
+185	39	41	p	is
+185	42	54	n	more helpful
+185	55	57	p	on
+185	58	96	n	restaurant domain ( D1 , D3 , and D4 )
+185	97	101	p	than
+185	102	122	n	laptop domain ( D2 )
+180	4	17	p	Compared with
+180	18	44	n	all other neural baselines
+180	47	61	n	our full model
+180	62	70	p	achieves
+180	71	122	n	statistically significant improvements ( p < 0.05 )
+180	123	125	p	on
+180	126	163	n	both accuracies and macro - F1 scores
+180	164	167	p	for
+180	168	180	n	D1 , D3 , D4
+181	18	28	n	LSTM + ATT
+181	31	49	n	all three settings
+181	50	52	p	of
+181	53	62	n	our model
+181	63	82	p	are able to achieve
+181	83	134	n	statistically significant improvements ( p < 0.05 )
+181	135	137	p	on
+181	138	150	n	all datasets

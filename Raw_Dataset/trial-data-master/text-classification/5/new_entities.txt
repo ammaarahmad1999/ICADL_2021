@@ -1,0 +1,144 @@
+193	0	19	n	Low - shot learning
+202	0	2	p	On
+202	3	14	n	IMDb and AG
+202	17	34	n	supervised ULMFiT
+202	35	44	p	with only
+202	45	65	n	100 labeled examples
+202	66	92	p	matches the performance of
+202	93	114	n	training from scratch
+202	115	119	p	with
+202	120	139	n	10 and 20 more data
+204	3	11	n	TREC - 6
+204	14	20	n	ULMFiT
+204	21	48	p	significantly improves upon
+204	49	70	n	training from scratch
+207	0	11	n	Pretraining
+207	15	30	p	most useful for
+207	31	64	n	small and medium - sized datasets
+209	0	20	n	Impact of LM quality
+211	0	5	p	Using
+211	6	34	n	our fine - tuning techniques
+211	55	62	p	reaches
+211	63	92	n	surprisingly good performance
+211	93	95	p	on
+211	100	115	n	larger datasets
+212	0	2	p	On
+212	7	23	n	smaller TREC - 6
+212	28	54	n	vanilla LM without dropout
+212	55	71	p	runs the risk of
+212	72	83	n	overfitting
+215	0	13	n	Fine - tuning
+215	18	20	n	LM
+215	24	43	n	most beneficial for
+215	44	59	n	larger datasets
+225	0	13	n	Fine - tuning
+225	18	28	n	classifier
+225	29	56	p	significantly improves over
+225	57	78	n	training from scratch
+225	81	96	p	particularly on
+225	101	115	n	small TREC - 6
+238	73	110	n	forward and backwards LM - classifier
+238	111	117	p	brings
+238	120	137	n	performance boost
+238	12	14	p	of
+238	148	157	n	0.5 - 0.7
+239	0	2	p	On
+239	3	8	n	IMD b
+239	12	17	p	lower
+239	22	32	n	test error
+239	33	37	p	from
+239	38	42	n	5.30
+239	43	45	p	of
+239	48	60	n	single model
+239	61	63	p	to
+239	64	68	n	4.58
+239	69	72	p	for
+239	77	96	n	bidirectional model
+162	3	6	p	use
+162	11	36	n	AWD - LSTM language model
+162	37	41	p	with
+162	45	59	n	embedding size
+162	60	62	p	of
+162	63	66	n	400
+162	69	77	n	3 layers
+162	85	103	n	hidden activations
+162	104	113	p	per layer
+162	80	84	n	1150
+162	122	137	n	BPTT batch size
+162	138	140	p	of
+162	141	143	n	70
+165	7	11	n	Adam
+165	12	16	p	with
+165	17	26	n	? 1 = 0.7
+165	64	74	n	? 2 = 0.99
+166	9	19	n	batch size
+166	20	22	p	of
+166	23	25	n	64
+166	30	48	n	base learning rate
+166	52	66	p	0.004 and 0.01
+166	67	70	p	for
+166	71	81	p	finetuning
+166	86	107	n	LM and the classifier
+166	127	131	p	tune
+166	136	152	n	number of epochs
+166	153	155	p	on
+166	160	174	n	validation set
+163	3	8	p	apply
+163	9	16	n	dropout
+163	20	23	p	0.4
+163	24	33	n	to layers
+163	60	85	n	to input embedding layers
+163	36	39	p	0.3
+163	40	53	n	to RNN layers
+163	88	92	p	0.05
+163	93	112	n	to embedding layers
+163	119	133	n	weight dropout
+163	137	140	p	0.5
+163	141	179	n	to the RNN hidden - to - hidden matrix
+164	4	14	n	classifier
+164	21	33	n	hidden layer
+164	37	41	p	size
+164	42	44	n	50
+31	7	14	p	propose
+31	15	53	n	Universal Language Model Fine - tuning
+31	56	62	n	ULMFiT
+31	76	103	p	that can be used to achieve
+31	104	131	n	CV - like transfer learning
+31	132	135	p	for
+31	136	152	n	any task for NLP
+32	124	133	p	to retain
+32	134	152	n	previous knowledge
+32	157	162	p	avoid
+32	163	186	n	catastrophic forgetting
+32	7	14	p	propose
+32	15	43	n	discriminative fine - tuning
+32	46	79	n	slanted triangular learning rates
+32	86	104	n	gradual unfreezing
+32	187	193	p	during
+32	194	207	n	fine - tuning
+2	43	62	n	Text Classification
+175	4	10	n	method
+175	11	22	p	outperforms
+175	28	32	n	CoVe
+175	124	163	n	state - of - the - art on both datasets
+176	0	2	p	On
+176	3	7	n	IMDb
+176	13	19	p	reduce
+176	24	29	n	error
+176	43	45	p	by
+176	46	61	n	43.9 % and 22 %
+181	3	11	n	TREC - 6
+181	102	131	p	not statistically significant
+181	134	155	n	due to the small size
+181	60	62	p	of
+181	163	186	n	500 - examples test set
+186	3	5	n	AG
+186	11	18	p	observe
+186	21	55	n	similarly dramatic error reduction
+186	56	58	p	by
+186	59	65	n	23.7 %
+186	66	77	p	compared to
+186	82	104	n	state - of - the - art
+187	3	40	n	DBpedia , Yelp - bi , and Yelp - full
+187	46	62	p	reduce the error
+187	66	88	n	4.8 % , 18.2 % , 2.0 %

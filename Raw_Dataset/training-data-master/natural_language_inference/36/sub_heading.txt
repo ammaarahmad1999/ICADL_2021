@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Related Work
+Text Comprehension
+Semantic Role Labeling
+Semantic Role Labeling for Text
+Semantic Role Labeler
+Text Comprehension Model
+Evaluation
+Textual Entailment
+Machine Reading Comprehension
+Case Studies
+Dimension of SRL Embedding
+Comparison with POS/NER Tags
+Conclusion

@@ -1,0 +1,8 @@
+title
+abstract
+Introduction and Background
+Model
+Experimental Setup
+Results and Analysis
+Conclusion
+Addendum: Shortcut vs. Residual

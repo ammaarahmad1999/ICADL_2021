@@ -1,0 +1,4 @@
+(Contribution||has research problem||Machine Translation)
+(Contribution||has research problem||NMT)
+(Contribution||has research problem||news translation)
+(Contribution||has research problem||Neural machine translation)

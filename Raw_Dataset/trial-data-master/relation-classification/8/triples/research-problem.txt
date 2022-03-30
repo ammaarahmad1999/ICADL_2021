@@ -1,0 +1,8 @@
+(Contribution||has research problem||Extracting Multiple - Relations in One - Pass)
+(Contribution||has research problem||extracting multiple entity - relations from an input paragraph)
+(Contribution||has research problem||multiple entityrelations extraction task with only one - pass)
+(Contribution||has research problem||Relation extraction)
+(Contribution||has research problem||RE)
+(Contribution||has research problem||multiplerelations extraction)
+(Contribution||has research problem||MRE)
+(Contribution||has research problem||recognize relations of multiple pairs of entity mentions from an input paragraph)

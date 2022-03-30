@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+Miultispeaker speech synthesis model
+Speaker encoder
+Synthesizer
+U U
+Speech naturalness
+Speaker similarity
+Speaker verification
+Speaker embedding space
+Number of speaker encoder training speakers
+Fictitious speakers
+Conclusion

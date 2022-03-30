@@ -1,0 +1,135 @@
+81	3	11	p	evaluate
+81	12	22	n	our models
+81	23	25	p	on
+81	26	39	n	four datasets
+85	35	43	n	NER task
+85	75	80	p	using
+85	81	107	n	10 - fold cross validation
+89	3	9	p	employ
+89	10	24	n	early stopping
+90	33	36	p	fix
+90	41	115	n	hyperparameters ( i.e. , ? , dropout values , best epoch , learning rate )
+90	116	118	p	on
+90	123	138	n	validation sets
+90	3	6	p	use
+90	11	25	n	Adam optimizer
+95	7	32	n	three types of evaluation
+95	35	41	p	namely
+95	50	60	n	S( trict )
+95	66	71	p	score
+95	72	81	n	an entity
+95	82	84	p	as
+95	85	92	n	correct
+95	93	95	p	if
+95	96	154	n	both the entity boundaries and the entity type are correct
+95	197	212	n	B ( oundaries )
+95	218	223	p	score
+95	224	233	n	an entity
+95	234	236	p	as
+95	237	244	n	correct
+95	245	247	p	if
+95	248	334	n	only the entity boundaries are correct while the entity type is not taken into account
+95	356	367	n	R( elaxed )
+95	372	390	n	multi-token entity
+95	394	415	p	considered correct if
+95	416	489	n	at least one correct type is assigned to the tokens comprising the entity
+36	4	18	n	baseline model
+37	3	17	p	aims to detect
+37	28	67	n	type and the boundaries of the entities
+37	83	105	n	relations between them
+38	4	9	n	input
+38	10	14	p	is a
+38	15	73	n	sequence of tokens ( i.e. , sentence ) w = w 1 , ... , w n
+40	4	24	n	character embeddings
+40	29	35	p	fed to
+40	38	67	n	bidirectional LSTM ( BiLSTM )
+40	68	77	p	to obtain
+40	82	126	n	character - based representation of the word
+42	0	29	n	Word and character embeddings
+42	34	54	p	concatenated to form
+42	59	85	n	final token representation
+42	97	108	p	then fed to
+42	111	123	n	BiLSTM layer
+42	124	134	p	to extract
+42	135	157	n	sequential information
+67	0	27	n	Adversarial training ( AT )
+68	3	10	p	exploit
+68	15	25	n	idea of AT
+68	26	30	p	as a
+68	31	52	n	regularization method
+68	53	60	p	to make
+68	61	100	n	our model robust to input perturbations
+39	3	6	p	use
+39	7	33	n	character level embeddings
+39	34	55	p	to implicitly capture
+39	56	111	n	morphological features ( e.g. , prefixes and suffixes )
+39	114	131	p	representing each
+39	132	167	n	character by a vector ( embedding )
+41	12	39	n	pre-trained word embeddings
+43	0	3	p	For
+43	8	16	n	NER task
+43	22	27	p	adopt
+43	32	84	n	BIO ( Beginning , Inside , Outside ) encoding scheme
+53	3	8	p	model
+53	13	37	n	relation extraction task
+53	38	42	p	as a
+53	43	77	n	multi-label head selection problem
+2	25	75	n	multi-context joint entity and relation extraction
+5	39	81	n	entity recognition and relation extraction
+6	88	129	n	jointly extracting entities and relations
+106	0	3	p	For
+106	4	9	n	ACE04
+106	16	24	n	baseline
+106	25	39	p	outperforms by
+106	40	45	n	? 2 %
+106	46	48	p	in
+106	49	59	n	both tasks
+111	8	23	n	CoNLL04 dataset
+113	4	18	n	baseline model
+113	19	30	p	outperforms
+113	35	112	n	state - of - the - art models that do not rely on manually extracted features
+113	115	132	n	> 4 % improvement
+113	133	136	p	for
+113	137	147	n	both tasks
+117	8	20	n	DREC dataset
+118	0	2	p	In
+118	7	28	n	boundaries evaluation
+118	35	43	n	baseline
+118	44	65	p	has an improvement of
+118	66	71	n	? 3 %
+118	72	74	p	on
+118	75	85	n	both tasks
+120	0	2	p	In
+120	3	25	n	all of the experiments
+120	28	30	n	AT
+120	31	39	p	improves
+120	44	66	n	predictive performance
+120	67	69	p	of
+120	74	88	n	baseline model
+120	89	91	p	in
+120	96	109	n	joint setting
+119	4	8	p	show
+119	34	83	n	adversarial training on top of the baseline model
+122	15	18	p	for
+122	19	24	n	ACE04
+122	39	53	p	improvement in
+122	54	64	n	both tasks
+122	83	117	n	over all F 1 performance ( 0.4 % )
+126	14	17	n	ADE
+126	24	32	n	AT model
+126	33	38	p	beats
+126	43	55	n	baseline F 1
+126	56	58	p	by
+126	59	64	n	0.7 %
+123	0	3	p	For
+123	4	11	n	CoNLL04
+123	17	36	p	note an improvement
+123	44	65	n	over all F 1 of 0.4 %
+123	66	69	p	for
+123	74	76	n	EC
+123	81	86	n	0.8 %
+123	87	90	p	for
+123	95	104	n	NER tasks
+124	8	20	n	DREC dataset
+124	42	50	p	there is
+124	54	83	n	over all improvement of ? 1 %

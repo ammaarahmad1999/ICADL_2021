@@ -1,0 +1,138 @@
+152	0	20	n	Character Prediction
+156	4	19	n	ByteNet Decoder
+156	51	69	n	30 residual blocks
+156	70	80	p	split into
+156	81	104	n	six sets of five blocks
+156	32	35	p	for
+156	120	131	n	five blocks
+156	148	162	p	dilation rates
+156	184	204	n	1 , 2 , 4 , 8 and 16
+157	4	17	p	masked kernel
+157	22	28	n	size 3
+159	4	26	p	number of hidden units
+159	27	34	n	dis 512
+161	8	20	p	optimization
+161	28	32	n	Adam
+161	40	53	p	learning rate
+161	57	63	n	0.0003
+161	70	82	p	weight decay
+161	91	97	n	0.0001
+162	3	8	p	apply
+162	9	16	n	dropout
+162	17	19	p	to
+162	29	73	n	ReLU layer before the softmax dropping units
+162	74	78	p	with
+162	81	99	n	probability of 0.1
+164	16	22	p	sample
+164	25	43	n	batch of sequences
+164	44	46	p	of
+164	47	66	n	500 characters each
+164	69	72	p	use
+164	77	97	n	first 100 characters
+164	98	100	p	as
+164	101	120	n	the minimum context
+164	125	132	p	predict
+164	137	158	n	latter 400 characters
+167	51	53	p	on
+167	58	66	n	test set
+167	20	28	p	achieves
+167	29	50	n	1.31 bits / character
+168	0	37	n	Character - Level Machine Translation
+174	4	11	n	ByteNet
+174	40	58	n	30 residual blocks
+174	17	19	p	in
+174	59	73	n	in the encoder
+174	97	111	n	in the decoder
+179	8	20	p	optimization
+179	24	27	p	use
+179	28	32	n	Adam
+179	33	37	p	with
+179	40	63	n	learning rate of 0.0003
+180	5	13	n	sentence
+180	17	28	p	padded with
+180	29	47	n	special characters
+180	55	79	p	nearest greater multiple
+180	83	85	n	50
+175	32	47	p	residual blocks
+175	52	76	n	arranged in sets of five
+175	77	81	p	with
+175	96	110	p	dilation rates
+175	111	113	p	of
+175	114	134	n	1 , 2 , 4 , 8 and 16
+176	17	20	p	use
+176	25	40	p	residual blocks
+176	41	45	p	with
+176	46	51	n	ReLUs
+182	7	26	n	vanilla beam search
+182	27	39	p	according to
+182	44	87	n	total likelihood of the generated candidate
+182	92	98	p	accept
+182	104	154	n	candidates which end in a end -of - sentence token
+183	9	13	n	beam
+183	14	16	p	of
+183	17	24	n	size 12
+177	14	26	p	hidden units
+177	27	34	n	dis 800
+178	23	25	p	in
+178	30	44	n	source network
+178	4	22	p	size of the kernel
+178	48	49	n	3
+178	97	111	n	target network
+178	64	89	p	size of the masked kernel
+178	115	116	n	3
+181	26	32	p	mapped
+181	5	22	n	pair of sentences
+181	33	35	p	to
+181	38	44	n	bucket
+181	45	53	p	based on
+181	58	80	n	pair of padded lengths
+181	81	84	p	for
+181	85	119	n	efficient batching during training
+186	0	2	p	On
+186	3	16	n	NewsTest 2014
+186	29	37	p	achieves
+186	42	61	n	highest performance
+186	62	64	p	in
+186	65	129	n	character - level and subword - level neural machine translation
+186	176	178	p	is
+186	179	185	n	second
+186	136	147	p	compared to
+186	152	172	n	word - level systems
+186	191	193	p	to
+186	198	213	n	version of GNMT
+186	219	223	p	uses
+186	224	237	n	word - pieces
+187	3	16	n	NewsTest 2015
+187	46	54	p	achieves
+187	59	89	n	best published results to date
+31	4	11	n	ByteNet
+31	62	66	p	uses
+31	67	122	n	one - dimensional convolutional neural networks ( CNN )
+31	47	49	p	of
+31	126	137	n	fixed depth
+31	138	141	p	for
+31	142	174	n	both the encoder and the decoder
+32	4	12	n	two CNNs
+32	13	16	p	use
+32	17	47	n	increasing factors of dilation
+32	51	63	n	rapidly grow
+32	68	84	n	receptive fields
+33	24	35	n	decoder CNN
+33	4	16	n	convolutions
+33	40	46	n	masked
+33	50	95	n	prevent the network from seeing future tokens
+33	17	19	p	in
+33	103	118	n	target sequence
+34	16	64	n	beneficial computational and learning properties
+35	0	4	p	From
+35	7	32	n	computational perspective
+35	53	65	p	running time
+35	74	129	n	linear in the length of the source and target sequences
+38	7	27	n	learning perspective
+38	34	71	p	representation of the source sequence
+38	90	111	n	resolution preserving
+10	66	102	n	character - level language modelling
+11	64	110	n	character - to - character machine translation
+14	3	28	n	neural language modelling
+15	3	29	n	neural machine translation
+2	0	41	n	Neural Machine Translation in Linear Time

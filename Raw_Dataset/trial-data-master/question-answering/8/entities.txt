@@ -1,0 +1,59 @@
+176	3	6	use
+176	7	22	word embeddings
+176	28	33	GloVe
+176	34	57	to initialize the model
+180	7	13	ADAMAX
+180	14	18	with
+180	23	61	coefficients ? 1 = 0.9 and ? 2 = 0.999
+180	62	73	to optimize
+180	78	83	model
+179	4	20	dimensionality l
+179	28	41	hidden layers
+179	45	48	set
+179	55	65	150 or 300
+181	5	11	update
+181	15	31	computed through
+181	34	43	minibatch
+181	44	46	of
+181	47	59	30 instances
+38	19	26	propose
+38	33	67	end - to - end neural architecture
+38	68	78	to address
+38	83	112	machine comprehension problem
+38	113	126	as defined in
+38	131	144	SQuAD dataset
+41	11	28	two ways to apply
+41	33	48	Ptr - Net model
+41	66	80	sequence model
+41	87	101	boundary model
+42	42	46	with
+42	49	65	search mechanism
+39	123	128	adopt
+39	131	149	match - LSTM model
+39	95	99	from
+39	104	117	original text
+40	21	52	Pointer Net ( Ptr - Net ) model
+40	74	81	enables
+40	86	107	predictions of tokens
+40	117	131	input sequence
+40	202	210	generate
+40	211	218	answers
+40	224	234	consist of
+40	235	250	multiple tokens
+40	108	112	from
+2	0	21	MACHINE COMPREHENSION
+4	0	29	Machine comprehension of text
+191	0	12	outperformed
+191	17	42	logistic regression model
+191	54	63	relies on
+191	64	91	carefully designed features
+192	54	68	sequence model
+192	18	32	boundary model
+192	71	80	achieving
+192	84	111	exact match score of 61.1 %
+192	116	137	an F1 score of 71.2 %
+200	6	8	by
+200	9	15	adding
+200	16	70	Bi - Ans - Ptr with bi-directional pre-processing LSTM
+200	80	83	get
+200	84	107	1.2 % improvement in F1

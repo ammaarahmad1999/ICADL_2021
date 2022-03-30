@@ -1,0 +1,9 @@
+{
+  "has" : {
+    "Baselines" : {
+      "has" : [["Word - by - word translation ( WBW )", {"from sentence" : "Word - by - word translation ( WBW ) The first baseline we consider is a system that performs word - by - word translations using the inferred bilingual dictionary ."}],
+      ["Lample et al .", {"from sentence" : "Lample et al ."}],
+      ["Supervised training", {"from sentence" : "Supervised training"}]]
+    }
+  }
+}

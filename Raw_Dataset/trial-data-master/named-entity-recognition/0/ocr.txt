@@ -1,0 +1,942 @@
+1409.3660v4 [cs.LG] 17 Nov 2014
+
+arX1V
+
+10,000+ Times Accelerated Robust Subset Selection (ARSS)
+
+Feiyun Zhu, Bin Fan, Xinliang Zhu, Ying Wang, Shiming Xiang and Chunhong Pan
+Institute of Automation, Chinese Academy of Sciences
+{fyzhu, bfan, ywang, smxiang and chpan} @nlpr.ia.ac.cn, zhuxinliang2012 @ia.ac.cn
+
+Abstract
+
+Subset selection from massive data with noised information
+is increasingly popular for various applications. This problem
+is still highly challenging as current methods are generally
+slow in speed and sensitive to outliers. To address the above
+two issues, we propose an accelerated robust subset selection
+(ARSS) method. Specifically in the subset selection area, this
+is the first attempt to employ the @, (0 < p < 1)-norm based
+measure for the representation loss, preventing large errors
+from dominating our objective. As a result, the robustness
+against outlier elements is greatly enhanced. Actually, data
+size is generally much larger than feature length, i.e. N >> L.
+Based on this observation, we propose a speedup solver (via
+ALM and equivalent derivations) to highly reduce the computational cost, theoretically from O (N*) to O (N*L). Extensive experiments on ten benchmark datasets verify that our
+method not only outperforms state of the art methods, but also
+runs 10,000+ times faster than the most related method.
+
+Introduction
+
+Due to the explosive growth of data (Wang, Kumar, and
+Chang 2012), subset selection methods are increasingly popular for a wide range of machine learning and computer vision applications (Frey and Dueck 2007; Jenatton, Audibert,
+and Bach 2011). This kind of methods offer the potential
+to select a few highly representative samples or exemplars
+to describe the entire dataset. By analyzing a few, we can
+roughly know all. Such case is very important to summarize
+and visualize huge datasets of texts, images and videos etc.
+(Bien and Tibshirani 2011; Elhamifar et al. 2012b). Besides,
+by only using the selected exemplars for succeeding tasks,
+the cost of memories and computational time will be greatly
+reduced (Garcia et al. 2012). Additionally, as outliers are
+generally less representative, the side effect of outliers will
+be reduced, thus boosting the performance of subsequent applications (Elhamifar et al. 2012a).
+
+There have been several subset selection methods. The
+most intuitional method is to randomly select a fixed number
+of samples. Although highly efficient, there is no guarantee
+for an effective selection. For the other methods, depending on the mechanism of representative exemplars, there are
+mainly three categories of selection methods. One category
+
+Copyright © 2015, Association for the Advancement of Artificial
+Intelligence (www.aaai.org). All rights reserved.
+
+Speed vs. increasing N
+
+Performance
+
+ 
+
+ 
+
+ 
+
+| [00 TED 92.27 |
+| {U9 RRSSnie
+
+10 RRSSou, 91.93
+91.7| |DHARSS our
+
+ 
+
+ 
+
+ 
+
+91.38 91.43 91.43
+91.3} 91.21 91.21
+
+ 
+
+ 
+
+Selection Time (Second)
+Classification Accuracy (%)
+
+89.82
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+sani ‘ L I ES
+0 800 1,600 2,400 3,200 4,000 4,800 5,600
+Data size (N)
+
+Classifiers
+
+Figure 1: Comparisons of four algorithms on Optdigit. Two conclusions can be drawn. First, our method (ARSSour) is highly faster
+than all others; with the help of an elegant new theorem, RRSSour is
+significantly faster than the authorial algorithm RRSSnie. Second,
+ARSSour achieves highly promising prediction accuracies.
+
+relies on the assumption that the data points lie in one or
+multiple low-dimensional subspaces. Specifically, the Rank
+Revealing QR (RRQR) (Chan 1987; Boutsidis, Mahoney,
+and Drineas 2009) selects the subsets that give the best conditional sub-matrix. Unfortunately, this method has suboptimal properties, as it is not assured to find the globally optimum in polynomial time.
+
+Another category assumes that the samples are distributed
+around centers (Frey and Dueck 2007; Liu et al. 2010). The
+center or its nearest neighbour are selected as exemplars.
+Perhaps, Kmeans and Kmedoids are the most typical methods (Kmedoids is a variant of Kmeans). Both methods employ an EM-like algorithm. Thus, the results depend tightly
+on the initialization, and they are highly unstable for large
+K (.e. the number of centers or selected samples).
+
+Recently, there are a few methods that assume exemplars are the samples that can best represent the whole
+dataset. However, for (Yu, Bi, and Tresp 2006), the optimization is a combinatorial problem (NP-hard) (Nie et al. 2013;
+Yu et al. 2008), which is computationally intractable to
+solve. Besides, the representation loss is measured by the
+least square measure, which is sensitive to outliers in data
+(Wang et al. 2014; Zhu et al. 2014; Nie et al. 2013).
+
+Then (Nie et al. 2013) improves (Yu, Bi, and Tresp 2006)
+by employing a robust loss via the ¢2 ;-norm; the £;-norm is
+applied to samples, and the @)-norm is used for features. In
+this way, the side effect of outlier samples is relieved. The
+solver of (Nie et al. 2013) is theoretically perfect due to its
+ability of convergence to global optima. Unfortunately, in
+terms of computational costs, the solver is highly complex.
+It takes O (N *) for one iteration as shown in Table |. This is
+infeasible for the case of large N (e.g. it takes 2000+ hours
+for a case of V = 13000). Moreover, the representation loss
+is only robust against outlier samples. Such case is worth 1mprovement, as there may exist outlier elements in real data.
+
+Contributions. In this paper, we propose an accelerated
+robust subset selection method to highly raise the speed on
+the one hand, and to boost the robustness on the other. To
+this end, we use the £, (0<p<1)-norm based robust measure for the representation loss, preventing large errors from
+dominating our objective. As a result, the robustness against
+outliers is greatly boosted. Then, based on the observation
+that data size is generally much larger than feature length,
+i.e. N >> L, we propose a speedup solver. The main acceleration is owing to the Augmented Lagrange Multiplier
+(ALM) and an equivalent derivation. Via them, we reduce
+the computational complexity from O (N*) to O (N?L).
+Extensive results on ten benchmark datasets demonstrate
+that in average, our method is 10,000+ times faster than
+Nie’s method. The selection quality is highly encouraging as
+shown in Fig. 1. Additionally, via another equivalent derivation, we give an accelerated solver for Nie’s method, theoretically reducing the computational complexity from O (N *)
+to O(N?L + NL*) as listed in Table 1, empirically obtaining a 500+ times speedup compared with the authorial
+solver.
+
+Notations. We use boldface uppercase letters to denote
+matrices and boldface lowercase letters to represent vectors.
+For a matrix Y = [Y;,,] € R”’*, we denote its / row and
+n column as y! and y,, respectively. The f2;-norm of a
+
+matrix is defined as || Y||, ; => 2 = lly" |lo
+The ¢, (0 < p < 1)-norm of a matrix is defined as || Y'||,, =
+i
+(Son SY [¥in|) 75 thus, we have |[¥||> = D2y,n [¥inl?,
+
+Subset Selection via Self-Representation
+
+In the problem of subset selection, we are often given a
+set of N unlabelled points X = {x1,X2,---,XN |Xn €R*},
+where L is the feature length. The goal is to select the top
+K (K<N) most representative and informative samples
+(i.e. exemplars) to effectively describe the entire dataset X.
+By solely using these K exemplars for subsequent tasks, we
+could greatly reduce the computational costs and largely alleviate the side effects of outlier elements in data. Such a
+motivation could be formulated as the Transductive Experimental Design (TED) model (Yu, Bi, and Tresp 2006):
+
+N
+min S> ([iXn —Qan|lz +e llanlis),
+QA
+
+where Q € R’** is the selected subset matrix, whose
+column vectors all come from X, ie. qz, € X,Vk E€
+
+Table 1: Complexity comparison of three algorithms at one iteration step. Generally, data size is much larger than feature length,
+i.e. N >> L. Compared with RRSSnie (Nie’s model via the authorial solver), RRSSour (Nie’s method speeded up by our solver) and
+ARSSour (ours) are significantly simplified.
+
+{1,---,K}; A=[ay,--- , ay] € R**% is the corresponding linear combination coefficients. By minimizing (1), TED
+could select the highly informative and representative samples, as they have to well represent all the samples in X.
+Although TED (1) is well modeled—very accurate and
+intuitive, there are two bottlenecks. First, the objective is
+a combinatorial optimization problem. It is NP-hard to exhaustively search the optimal subset Q from X. For this reason, the author approximate (1) via a sequential optimization
+problem, which is solved by an inefficient greedy optimization algorithm. Second, similar to the existing least square
+loss based models in machine learning and statistics, (1) is
+sensitive to the presence of outliers (Wang et al. 2014).
+Accordingly, Nie et al. propose a new model (RRSS):
+
+N
+natihy 2 I — Xan, +7 ||Allo.; (2)
+
+where ¥ is a nonnegative parameter; A is constrained to be
+row-sparse, and thus to select the most representative and
+informative samples (Nie et al. 2013). As the representation
+loss is accumulated via the @;-norm among samples, compared with (1), the robustness against outlier samples is enhanced. Equivalently, (2) is rewritten in the matrix format:
+
+in, ||(X— XA)" | Allo. 3
+wai, | | tll
+Since the objective (3) is convex in A, the global minimum
+may be found by differentiating (3) and setting the derivative
+
+to zero (Levin et al. 2008), resulting in a linear system!
+—1
+an =Unn (UnnX7X + 7Vv) XT x, Vn={1,2,---,N}, (4)
+
+where V € RX*N j isa diagonal matrix with the n" diagonal
+entry as Vz, = aa" Tp and U,,, = Wxac Kaa"
+n nil2
+It seems perfect to use (4) to solve the objective (3), because (4) looks simple and the global optimum is theoretically guaranteed (Nie et al. 2013). Unfortunately, in terms of
+speed, (4) is usually infeasible due to the incredible computational demand in the case of large N (the number of samples). At each iteration, the computational complexity of (4)
+is up to O (NV ‘\, as analyzed in Remark |. According to our
+experiments, the time cost is up to 2088 hours (1.e. 87 days)
+for a subset selection problem of 13000 samples.
+
+1
+
+ filmiaa Lee,
+2/ lar |Z+e°
+
+(« > 0). Then the algorithm is to minimize
+
+'To avoid singular failures, we get Vin =
+i
+
+24/||Kn—Xan |Z +e
+
+the objective of a xn — Xa||3 1 ety lla” ||5 “Fe.
+
+When € — 0, this objective is reduced to the objective (3).
+Remark 1. Since UnnX!?X+yV ER *N, the major computational cost of (4) focuses ona N x N linear system. If
+solved by the Cholesky factorization method, it costs 3N a
+for factorization as well as 2N? for forward and backward
+substitution. This amounts to O (N >) in total. By now, we
+
+only solve ay. Once solving all the set of {an}, the total
+
+complexity amounts to O (NV ‘) for one iteration step.
+
+Accelerated Robust Subset Selection (ARSS)
+
+Due to the huge computational costs, Nie’s method is infeasible for the case of large N—the computational time
+is up to 2088 hours for a case of 13000 samples. Besides,
+Nie’s model (3) imposes the £2-norm among features, which
+is prone to outliers in features. To tackle the above two issues, we propose a more robust model in the @,, (0 < p < 1)norm. Although the resulted objective is challenging to
+solve, a speedup algorithm is proposed to dramatically save
+the computational costs. For the same task of N = 13000,
+it costs our method 1.8 minutes, achieving a 68429 times
+acceleration compared with the speed of Nie’s method.
+
+Modeling. To boost the robustness against outliers in both
+samples and features, we formulate the discrepancy between
+X and XA via the £,,(0<p<1)-norm. There are theoretical
+and empirical evidences to verify that compared with @) or
+€,; norms, the 4,-norm is more able to prevent outlier elements from dominating the objective, enhancing the robustness (Nie et al. 2012). Thus, we have the following objective
+: Pp
+
+amin O=|[K-XAIP+7IAl., ©)
+where 7¥ is a balancing parameter; A is a row sparse matrix,
+used to select the most informative and representative samples. By minimizing the energy of (5), we could capture the
+most essential properties of the dataset X.
+
+After obtaining the optimal A, the row indexes are sorted
+by the row-sum value of the absolute A in decreasing order.
+The samples specified by the top / indexes are selected as
+exemplars. Note that the model (5) could be applied to the
+unsupervised feature selection problem by only transposing
+the data matrix X. In this case, A is a L x L row sparse
+matrix, used to select the most representative features.
+
+Accelerated Solver for the ARSS Objective in (5)
+
+Although objective (5) is challenging to solve, we propose
+an effective and highly efficient solver. The acceleration
+owes to the ALM and an equivalent derivation.
+
+ALM _ The most intractable challenge of (5) is that, the
+é, (0 < p < 1)-norm is non-convex, non-smooth and notdifferentiable at the zero point. Therefore, it is beneficial
+to use the Augmented Lagrangian Method (ALM) (Nocedal
+and Wright 2006) to solve (5), resulting in several easily
+tackled unconstrained subproblems. By solving them iteratively, the solutions of subproblems could eventually converge to a minimum (Li 2011; Meng et al. 2013).
+
+Specifically, we introduce an auxiliary variable KE = X —
+XA € R“*%. Thus, the objective (5) becomes:
+
+P
+a eee HEM, + 7 NAlle1 - (6)
+
+To deal with the equality constraint in (6), the most convenient method is to add a penalty, resulting in
+
+. bt 2
+min WEIS +7 WlAllo. + sIE-X+XAlp,
+
+where pz is a penalty parameter. To guarantee the equality constraint, it requires jz approaching infinity, which may
+cause bad numerical conditions. Instead, once introducing a
+Lagrangian multiplier, it is no longer requiring j4 — oo (Li
+2011; Nocedal and Wright 2006). Thus, we rewrite (7) into
+the standard ALM formulation as:
+
+2
+
+ 
+
+ 
+
+e M 4
+
+=|El+7|Alloa+5 JE X+XA+—
+AR, C4 IBID B+ KA TD
+(8)
+
+where A consists of Z x N Lagrangian multipliers. In the
+following, a highly efficient solver will be given.
+
+The updating rule for A Similar to the iterative thresholding (IT) in (Wright et al. 2009; Nie et al. 2014), the degree
+of violations of the L x N equality constraints are used to
+update the Lagrangian multiplier:
+
+A¢A+yp(E-X+XA), (9)
+
+where ju is a monotonically increasing parameter over iteration steps. For example, 4 + py, where 1 < p < 2isa
+predefined parameter (Nocedal and Wright 2006).
+
+Efficient solver for E Removing irrelevant terms with E
+from (8), we have
+
+‘ p LL 2
+min EI? + & |B — HHI. (10)
+where H = X — XA — c € R’*", According to the defi
+nition of the @,,-norm and the Frobenius-norm, (10) could be
+decoupled into L x N independent and unconstrained subproblems. The standard form of these subproblems is
+
+1
+min f (y) =AlyP+5-e, (11)
+
+where \ = = is a given positive parameter, y is the scalar
+
+variable need to deal with, c is a known scalar constant.
+
+Zuo et al. (Zuo et al. 2013) has recently proposed a generalized iterative shrinkage algorithm to solve (11). This algorithm is easy to implement and able to achieve more accurate solutions than current methods. Thus, we use it for our
+problem as:
+
+y™ = max (|c| — Tp (A) ,0) - Sp (Jel; A) -sign(c), (12)
+where
+Tp (A) = [2A (1 ~ p)]?-* + Av 2A (1 — p)?>
+; 5, (|c|; A) is obtained by solving the following equation:
+Sp (¢; A) — €+ Ap (Sp (cA)? = 0,
+
+which could be solved efficiently via an iterative algorithm.
+In this manner, (10) could be sovled extremely fast.
+
+\e
+Accelerated solver for A. The main acceleration focuses
+on the solver of A. Removing irrelevant terms with A from
+(8), we have
+
+min ||Alo . + Car {(XA —p)" (XA — p)} (13)
+
+where § = a is a nonnegative parameter, P = X — E —
+A € R&*N. Since (13) is convex in A, the optimum could
+
+be found by differentiating (13) and setting the derivative to
+zero. This amounts to tackling the following linear system?:
+
+A =8(V+6X7X) ' X7P. (14)
+
+As V+ BX?X ¢€ RY*N, (14) is mainly a N x N linear system. Once solved by the Cholesky factorization, the
+computational complexity is highly up to O (N a This is
+by no means a good choice for real applications with large
+N. In the following, an equivalent derivation of (14) will be
+proposed to significantly save the computational complexity.
+
+Theorem 2. The N x N linear system (14) is equivalent to
+the following L x L linear system:
+
+A=8(XV-1)" |I, +6X(XV-1)") 'P, (15)
+
+where I, is a L x L identity matrix.
+
+Proof. Note that V isa N x N diagonal and positive-definite
+matrix, the exponent of V is efficient to achieve, 1.e. V° =
+
+{Vo}, , Va@ER. We have the following equations
+A=8(V+6X?X) ~X7P
+= BV-* |v-3 (V+ BX7X) V-3| ~'V-EXTp
+= BV? (In + BZ"Z) Z'P, (16)
+
+where Z = XV~2, Iy isa N x N identity matrix. The
+following equation holds for any conditions
+
+(Iv +6Z°Z) Z’ =Z" (Ip + 8ZZ"). (17)
+Multiplying (17) with (Ivy + 8Z"Z)~+ on the left and
+
+(I, + ZZ") ~* on the right of both sides of the equal-sign,
+we have the equation as:
+
+Z (I, + BZZ") = (Iy + BZ™Z)
+
+Therefore, substituting (18) and Z = XV~-2 into (16), we
+have the simplified updating rule as:
+
+‘ZT (18)
+
+A=8(XV"')" |I, + 8X (XV-1)") PL (19)
+
+When N > L, the most complex operation is the matrix
+multiplications, not the L x L linear system. LJ
+
+Corollary 3. We have two equivalent updating rules (14)
+and (15) for the objective (13). If using (14) when N < L,
+and otherwise using (15) as shown in Algorithm 1, the computational complexity of solvers for (13) is O (N °L). Due
+to N > L, we have highly reduced the complexity from
+O (N *) to O (N *L) compared with Nie’s method.
+
+Algorithm 1 for (13): A* = ARSSa (X, V,P, Iz, (@)
+Input: X,V,P,1I7,6
+1: if N < L then
+2: update A via the updating rule (14), that is
+A=6 (V a5 BXTX)-!XTP.
+else if N > L then
+update A via the updating rule (15), that is
+A = B(I;, + XB)~'P, where B = 8 (XV“)?.
+end if
+Output: A
+
+= Sh Mtg
+
+Algorithm 2 for (5) or (8): A* = ARSSarm (X, ¥, p)
+Input: X, 7, p
+1: Initialize p>0,1<p<2,e=10~-'°, A=Iy, A=0.
+2: repeat
+3: update E by the updating rule (12).
+update V = [Vnn] € RY*%.
+P= X—-E-}, 6 = ©;T, isa L x L identity matrix.
+A = ARSSa (X, V,P,I,, 2) via Algorithm 1.
+7: update A by the updating rule (9), u < py.
+8: until convergence
+Output: A
+
+Nu S
+
+The solver to update A is given in Algorithm |. The overall solver for our model (5) is summarized in Algorithm 2.
+
+According to Theorem 2 and Corollary 3, the solver for
+our model (13) is highly simplified, as feature length is generally much smaller than data size, 1.e L < N. Similarly,
+Nie’s method could be highly accelerated by Theorem 4, obtaining 500+ times speedup, as shown in Fig. 2 and Table 3.
+Theorem 4. Nie’s N x N solver (20) (Nie et al. 2013) is
+equivalent to the following L x L linear system (21)
+
+an =Unn(UnnX™X +7V) X7x, (20)
+=Unn(XV~!)" (UnnX (XV-1)" +911) "x, (21)
+Vn € {1,2,---,N}, where I, is a L x L identity matrix.
+Proof. Based on (20), we have the following equalities:
+an =Unn(UnnX?X +7V)  X7 xp,
+=UnyV~? vo (UnnX?X+V) v3] Vv" EXT x,
+-1
+
+1
+
+1 — 1 1 L
+=U V# (Gon XV-4) XV} +L) (xv-?) x,
+
+1 1 L 1 1 L ~t
+=UnnV~* (XV~) (VnxV~2(xV-) tal) Xn
+—_1\L —1\T ol
+=Unn(XV1)" (UnnX (XV) "+9IL) Xn.
+The derivations are equivalent; their results are equal. LJ
+
+“Vv € R** is a positive and diagonal matrix with the n™
+
+diagonal entry as V;,, = ——=——=— > 0, where « is a small value
+Vilar lig te
+
+to avoid singular failures (Nie et al. 2013; Zhu et al. 2014).
+Letter
+
+-4- TED
+~ af RRSSwie |
+
+! - TED !
+1 =4— RRSSnie 800
+: wf RRSSour fi 700 :
+
+fen oe ce fe eb oe oe em Ys eee
+
+-4 TED
+
+alten ARSSour
+
+often ARSSour
+
+oo SS SF & 2
+e eee .e
+a 6s &$ 6 §$
+Ss 6 S&S 6&6 6
+
+      
+
+Subset Selection Time (Second)
+a»
+oS
+S
+
+= tO
+S oo oe
+S$ 6 6
+Ss 6S 6
+
+   
+
+(i ee 0 a —— eee ee 0 — 2
+0 4,000 8,000 12,000 16,000 20,000 100 10,000 20,000 30,000 40,000 50,000 50 1,000 2,000 3,000 4,000 5,000
+Data Size (N) Data Size (N) Data Size (N)
+
+Figure 2: Speed vs. increasing N on (a) Letter, (b) MNIST and (c) Waveform. Compared with the authorial solver TED and RRSSnie, our
+method ARSS and RRSSou dramatically reduce the computational time. The larger data size is, the larger gaps between these methods are.
+
+Note that the selection time is not sensitive to the number of selected samples kK. (best viewed in color)
+
+Table 2: Statistics of ten benchmark datasets.
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Corollary 5. Since feature length is generally much smaller
+than data size, t.e. L < N, our accelerated solver (20) for
+Nie’s model (3) is highly faster than the authorial solver
+(21). Theoretically, we reduce the computational complexity from O (N*) toO (N?L + NL?), while maintaining the
+same solution. That is, like Nie’s solver (20), our speedup
+solver (21) can reach the global optimum. Extensive empirical results will verify the huge acceleration
+
+Experiments
+Experimental Settings
+
+In this part, the experimental settings are introduced. All
+experiments are conducted on a server with 64-core Intel
+Xeon E7-4820 @ 2.00 GHz, 18 Mb Cache and 0.986 TB
+RAM, using Matlab 2012. Brief descriptions of ten benchmark datasets are summarized in Table 2, where ‘Total(V*)’
+denotes the total set of samples in each data. Due to the high
+computational complexity, other methods can only handle
+small datasets (while our method can handle the total set).
+Thus, we randomly choose the candidate set from the total
+set to reduce the sample size, i.e. N < N* (cf. ‘Total(NV*)’
+and ‘candid.(V)’ in Table 2). The remainder (except candidate set) are used for test. Specifically, to simulate the
+varying quality of samples, ten percentage of candidate samples from each class are randomly selected and arbitrarily
+added one of the following three kinds of noise: ““Gaussian’’,
+
+“Laplace” and “Salt & pepper’ respectively. In a word, all
+experiment settings are same and fair for all the methods.
+
+Datasets Total(N*) Candid.(N) Classes  Features(L)
+#1 Vehicle 846 700 4 18 ‘
+#2 Diabetes 768 600 2 8 Speed Comparisons
+#3 Optdigit 5,620 3,823 10 64 There are two parts of speed comparisons. First, how speed
+#4 Waveform 5,000 4,200 3 21 varies with increasing NV is illustrated in Fig. 2. Then the
+#5 Satimage 6,435 4,435 7 36 comparison of specific speed is summarized in Table 3. Note
+#6 Coil20 1,440 1,200 20 296 that TED and RRSSyj- denote the authorial solver (via au#7 University 42,776 17,400 g 115 thorial codes); RRSSou; is our accelerated solver for Nie’s
+#8 Center 103,539 4,500 9 11s model via Theorem 4; ARSS is the proposed method.
+#9 MNIST 60,000 5,000 10 196
+#10 Letter 20,000 13,000 26 16
+
+Speed vs. increasing VV To verify the great superiority of
+our method over the state-of-the-art methods in speed, three
+experiments are conducted. The results are illustrated in Fig.
+2, where there are three sub-figures showing the speed of
+four methods on the benchmark datasets of Letter, MNIST
+and Waveform respectively. As we shall see, both selection
+time of TED (Yu, Bi, and Tresp 2006) and RRSSwnie (Nie et
+al. 2013) increases dramatically as N increases. No surprisingly, RRSSwie is incredibly time-consuming as NV grows—
+the order of curves looks higher than quadratic. Actually, the
+theoretical complexity of RRSSwnie is highly up to O (N *) as
+analyzed in Remark 1.
+
+Compared with TED and RRSSwnie, the curve of ARSS is
+surprisingly lower and highly stable against increasing NV;
+there is almost no rise of selection time over growing JV.
+This is owing to the speedup techniques of ALM and equivalent derivations. Via them, we reduce the computational cost
+from O (N*) to O (N?L), as analyzed in Theorem 2 and
+Corollary 3. Moreover, with the help of Theorem 4, RRSSour
+is the second faster algorithm that is significantly accelerated
+compared with the authorial algorithm RRSSwie.
+
+Speed with fixed NV The speed of four algorithms is summarized in Table 3a, where each row shows the results on
+one dataset and the last row displays the average results.
+Four conclusions can be drawn from Table 3a. First, ARSS
+is the fastest algorithm, and RRSSoy, is the second fastest
+algorithm. Second, with the help of Theorem 4, RRSSour
+is highly faster than RRSSynie, averagely obtaining a 559
+times acceleration. Third, ARSS is dramatically faster than
+Table 3: Performances of TED, RRSS and ARSS: (left-a) speed in seconds, (right-b) prediction accuracies. In terms of speed, with the help
+of Theorem 4, RRSSour is averagely 559+ times faster than the authorial algorithm, i.e. RRSSnie; ARSS achieves surprisingly 23275+ times
+acceleration compared with RRSSnie. Due to the more robust loss in the @,-norm, the prediction accuracy of ARSS is highly encouraging.
+
+Speed Comparison in seconds
+Datasets
+
+Accuracy by KNN (%) Accuracy by Linear SVM (%)
+
+ 
+
+TED RRSSnie RRSSour ARSS | ARSS(wv*)
+
+Vehicle 33.1 1399.4 28.2
+Diabetes 15.4 1271.3 2.1
+Optdigit 3082.6 138486.8 637.7
+Waveform 3467.5 147095.2 SOT et
+Satimage 2651.8 115158.5 416.3
+University 83206.0 >9624600.0 23409.2
+Center 9742.3 581159.9 2366.5
+MNIST 8785.8 1092390.0 5558.8
+Letter 120577.9 7515330.0 1351.9
+
+TED RRSS ARSS TED RRSS ARSS
+62.329 71.233 75.342 = =76.027
+69.643 | 66.667 73.810 74.405
+91.375 | 91.931 91.430 92.265
+80.375 | 83.500 85.500 84.875
+79.500 | 78.300 67.450 79.100
+69.684 66.776 71.635 72.679
+53.845 | 42.872 59.899 61.907
+76.985 82.611 83.684 82.116
+41.543 | 37.843 46.886 47.157
+
+ 
+
+25729.1 = >2135210.1 3818.7
+
+Average
+
+ 
+
+ 
+
+ 
+
+69.475 | 69.081 72.848 74.503
+
+‘ARSS(N*)’ means the task of selecting samples from the whole dataset (with N* samples as shown in the 2" column in Table 2), while
+‘TED’ to ‘ARSS’ indicate the problem of dealing with the candidate sample sets (with N samples as shown in the 3 column in Table 2).
+
+RRSSwnie and TED; the results in Table 3a verify an average acceleration of 23275 times faster than RRSSnie and
+281 times faster than TED. This means that for example if it
+takes RRSSyje 100 years to do a subset selection task, it only
+takes our method 1.6 days to address the same problem. Finally, we apply ARSS to the whole sample set of each data.
+The results are displayed in the 6" column in Table 3, showing its capability to process very large datasets.
+
+Prediction Accuracy
+
+Accuracy comparison We conduct experiments on ten
+benchmark datasets. For each dataset, the top 200 representative samples are selected for training. The prediction accuracies are reported in Table 3b, including the results of two
+popular classifiers. Three observations can be drawn from
+this table. First, Linear SVM generally outperforms KNN.
+Second, in general, our method performs the best; for a few
+cases, our method achieves comparable results with the best
+performances. Third, compared with TED, both RRSS and
+ARSS achieve an appreciable advantage. The above analyses are better illustrated in the last row of Table 3b. These results demonstrate that the , loss in our model is well suited
+to select exemplars from the sample sets of various quality.
+
+Prediction accuracies vs. increasing K ‘To give a more
+detailed comparison, Fig. 3 shows the prediction accuracies
+versus growing Kk (the number of selected samples). There
+are two rows and four columns of sub-figures. The top row
+shows the results of KNN, and the bottom one shows results
+of SVM. Each column gives the result on one dataset. As
+we Shall see, the prediction accuracies generally increase as
+kK increases. Such case is consistent with the common view
+that more training data will boost the prediction accuracy.
+For each sub-figure, ARSS is generally among the best. This
+case implies that our robust objective (5) via the @,,-norm is
+feasible to select subsets from the data of varying qualities.
+
+Conclusion
+
+To deal with tremendous data of varying quality, we propose
+an accelerated robust subset selection (ARSS) method. The
+é,-norm is exploited to enhance the robustness against both
+outlier samples and outlier features. Although the resulted
+objective is complex to solve, we propose a highly efficient
+solver via two techniques: ALM and equivalent derivations.
+Via them, we greatly reduce the computational complexity
+from O (N*) to O (N?L). Here feature length L is much
+smaller than data size N, i.e. L < WN. Extensive results
+on ten benchmark datasets verify that our method not only
+runs 10,000+ times faster than the most related method, but
+also outperforms state of the art methods. Moreover, we propose an accelerated solver to highly speed up Nie’s method,
+theoretically reducing the computational complexity from
+O (N*) to O (N?L + NL*). Empirically, our accelerated
+solver could achieve equal results and 500+ times acceleration compared with the authorial solver.
+
+Limitation. Our efficient algorithm build on the observation that the number of samples is generally larger than feature length, i.e. N > L. For the case of N < L, the acceleration will be inapparent.
+
+Acknowledgements
+
+The authors would like to thank the editor and the reviewers for their valuable suggestions. Besides, this work is supported by the projects (Grant No. 61272331, 91338202,
+61305049 and 61203277) of the National Natural Science
+Foundation of China.
+
+References
+
+Bien, J., and Tibshirani, R. 2011. Prototype selection
+for interpretable classification. Annals of Applied Statistics
+5(4):2403-2424.
+Diabetes by KNN
+75 7 a 5
+
+Vehicle by KNN
+
+66
+
+   
+ 
+
+RRQR
+» TED
+
+| 1 1 1 1 RRSS
+Rigo pm foe ep me ARSS
+
+Pp -- - = -j- -- 5-4 --- -- 4+ ---- + ---K
+  
+
+Classification Accuracy (%)
+
+       
+
+| L L L L
+70 80 90 100 40 56 72 88 104-120-136
+Number of selected samples
+
+f
+20 30 40 50 60
+Number of selected samples
+
+Diabetes by SVM Vehicle by SVM
+
+   
+
+  
+
+ 
+
+Classification Accuracy (%)
+
+poe se See pe UNO SP Seep Se a
+'
+
+      
+
+= 6
+i 1 1 i 1
+
+80 90 100 40 56 72 88 104.12 136
+
+Number of selected samples
+
+i
+20 30 40 50 60 70
+Number of selected samples
+
+«see Random |;
+—*- Kmeans | |
+--@+ Kmedoid | |
+
+i
+
+    
+
+ee ee ee cle ef eee bee ele cme le
+i i i ! ! ! ! !
+250 300 350 400 450 500 550 600 650
+
+   
+
+tee Ae were eee
+
+~ | --ae= Random | |
+—*— Kmeans |!
+
+--@- Kmedoid | | |
+-—@ RRQR |_|
+-%: TED '
+—a RRSS
+-—@ ARSS
+
+Waveform by KNN
+
+   
+
+ 
+
+1 *, ad
++ Random }
+—— Kmeans |
+--@- Kmedoid |}
+‘ TED |:
+
+| oes. | RRSS
+—2- _ARSS |
+
+ 
+
+ 
+
+7 ' 1 '
+! ! ! ! ! I i
+150 210) =.270) §©6©330)=6— 3390S 450 3 5510 5570—Ss 630
+
+Number of selected samples Number of selected samples
+
+Coil20 by SVM Waveform by SVM
+
+   
+
+ 
+
+| «se Random gg hi----2-- Sif it
+
+‘|| —*— Kmeans
+
+|+-@» Kmedoid 1
+
+Vege BRE |—— 1 | —~ |
+» TED
+
+RRSS J|oo0. 1 fi} 79F
+
+ARSS |
+
+75}
+
+1 1 i 1 1 i 1
+
+150 210 270 330 390 450 510 570 630
+Number of selected samples
+
+ 
+
+i o_o ! ! l
+300 350 400 450 500 550 600 650
+Number of selected samples
+
+Figure 3: Accuracies vs. increasing K (the number of selected samples). There are two rows and four columns of subfigures: the top row
+shows the prediction accuracies of KNN, and the bottom shows the results of Linear SVM; each column shows the performances on one
+datasets, that is Diabetes, Vehicle, Coil20 and Waveform respectively. Generally, ARSS (ours) is among the best. (best viewed in color)
+
+Boutsidis, C.; Mahoney, M. W.; and Drineas, P. 2009. An
+improved approximation algorithm for the column subset selection problem. In SODA, 968-977.
+
+Chan, T. F. 1987. Rank revealing {QR} factorizations. Linear Algebra and its Applications 88—89(0):67 — 82.
+
+Elhamifar, E.; Sapiro, G.; Vidal, R.; and Vidal, R. 2012a.
+See all by looking at a few: Sparse modeling for finding representative objects. In JEEE CVPR, 1600-1607.
+
+Elhamifar, E.; Sapiro, G.; Vidal, R.; and Vidal, R. 2012b.
+Finding exemplars from pairwise dissimilarities via simultaneous sparse recovery. In N/JPS, 19-27.
+
+Frey, B. J., and Dueck, D. 2007. Clustering by passing
+messages between data points. Science 315(5814):972-976.
+
+Garcia, S.; Derrac, J.; Cano, J. R.; and Herrera, F. 2012. Prototype selection for nearest neighbor classification: Taxonomy and empirical study. JEEE Trans. Pattern Anal. Mach.
+Intell. 34(3):417-435.
+
+Jenatton, R.; Audibert, J.-Y.; and Bach, F. 2011. Structured
+variable selection with sparsity-inducing norms. Journal of
+Machine Learning Research (JMLR) 12:2777-2824.
+
+Levin, A.; Lischinski, D.; Weiss, Y.; and Weiss, Y. 2008. A
+closed-form solution to natural image matting. JEEE Trans.
+Pattern Anal. Mach. Intell. 30(2):228—242.
+
+Li, C. 2011. Compressive Sensing for 3D Data Processing
+Tasks: Applications, Models and Algorithms. Ph.D. Dissertation, Houston, TX, USA. AAI3524544.
+
+Liu, G.; Lin, Z.; Yu, Y.; and Yu, Y. 2010. Robust subspace
+segmentation by low-rank representation. In ICML, 663670.
+
+Meng, G.; Wang, Y.; Duan, J.; Xiang, S.; and Pan, C. 2013.
+Efficient image dehazing with boundary constraint and contextual regularization. In ICCV, 617-624.
+
+Nie, F.; Wang, H.; Cai, X.; Huang, H.; and Ding, C. 2012.
+Robust matrix completion via joint schatten p-norm and Ipnorm minimization. In JEEE ICDM, 566-574.
+
+Nie, F.; Wang, H.; Huang, H.; and Ding, C. H. Q. 2013.
+Early active learning via robust representation and structured
+sparsity. In IJCAI, 1572-1578.
+
+Nie, F.; Huang, Y.; Wang, X.; and Huang, H. 2014. New
+primal svm solver with linear computational cost for big data
+classifications. In ICML.
+
+Nocedal, J., and Wright, S. J. 2006. Numerical Optimization. New York: Springer, 2nd edition.
+
+Wang, H.; Nie, F.; Huang, H.; and Huang, H. 2014. Robust distance metric learning via simultaneous |1-norm minmization and maximization. In ICML, 1836-1844.
+
+Wang, J.; Kumar, S.; and Chang, S.-F. 2012. Semisupervised hashing for large-scale search. JEEE Trans. Pattern Anal. Mach. Intell. 34.
+
+Wright, J.; Ganesh, A.; Rao, S.; Peng, Y.; and Ma, Y. 2009.
+Robust principal component analysis: Exact recovery of corrupted low-rank matrices via convex optimization. In N/PS,
+2080-2088.
+
+Yu, K.; Zhu, S.; Xu, W.; ; and Gong, Y. 2008. Non-greedy
+active learning for text categorization using convex transductive experimental design. In S/GJR, 1081-1088.
+
+Yu, K.; Bi, J.; and Tresp, V. 2006. Active learning via transductive experimental design. In JCML, 1081-1088.
+
+Zhu, F.; Wang, Y.; Fan, B.; Meng, G.; and Pan, C. 2014.
+Effective spectral unmixing via robust representation and
+learning-based sparsity. arXiv :1409.0685.
+
+Zuo, W.; Meng, D.; Zhang, L.; Feng, X.; and Zhang, D.
+2013. A generalized iterated shrinkage algorithm for nonconvex sparse coding. In JEEE ICCV, 217-224.
+

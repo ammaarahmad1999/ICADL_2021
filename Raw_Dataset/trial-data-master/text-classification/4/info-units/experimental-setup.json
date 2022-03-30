@@ -1,0 +1,99 @@
+{
+  "has" : {
+    "Experimental setup" : {
+      "utilized" : {
+        "one - layer architec - ture" : {
+          "for" : "both the CNN baseline and the ACNN model"
+        },
+        "from sentence" : "A one - layer architec - ture is utilized for both the CNN baseline and the ACNN model , since we did not observe significant performance gains with a multilayer architecture ."
+      },
+      "has" : {
+        "minibatch size" : {
+          "is set as" : "128"
+        },
+        "dropout rate" : {
+          "of" : {
+            "0.2" : {
+              "is utilized on" : "embedding layer"
+            }
+          },
+          "from sentence" : "The minibatch size is set as 128 , and a dropout rate of 0.2 is utilized on the embedding layer ."          
+        },
+        "Dropout" : {
+          "with a rate of" : {
+            "0.5" : {
+              "employed on" : "word embedding layer"  
+            }
+          },
+          "from sentence" : "Dropout , with a rate of 0.5 , is employed on the word embedding layer ."
+        },
+        "All models" : {
+          "implemented with" : "TensorFlow",
+          "trained using" : {
+            "one NVIDIA GeForce GTX TITAN X GPU" : {
+              "with" : "12 GB memory"
+            }
+          },
+          "from sentence" : "All models are implemented with TensorFlow and are trained using one NVIDIA GeForce GTX TITAN X GPU with 12 GB memory ."          
+        }
+      },
+      "For" : {
+        "document classification experiments" : {
+          "randomly initialize" : {
+            "word embeddings" : {
+              "uniformly within" : "[ ? 0.001 , 0.001 ]",
+              "update them" : "during training"
+            },
+            "from sentence" : "For the document classification experiments , we randomly initialize the word embeddings uniformly within [ ? 0.001 , 0.001 ] and update them during training ."            
+          }
+        },
+        "generated filters" : {
+          "set" : {
+            "window size" : {
+              "as" : "h = 5",
+              "with" : "K = 100 feature maps"
+            }
+          },
+          "from sentence" : "For the generated filters , we set the window size as h = 5 , with K = 100 feature maps ( the dimension of z is set as 100 ) ."
+        },
+        "sentence matching tasks" : {
+          "initialized" : {
+            "word embeddings" : {
+              "with" : {
+                "50 - dimensional Glove word vectors" : {
+                  "pretrained from" : "Wikipedia 2014 and Gigaword 5"
+                }
+              }
+            },
+            "from sentence" : "For the sentence matching tasks , we initialized the word embeddings with 50 - dimensional Glove word vectors pretrained from Wikipedia 2014 and Gigaword 5 for all model variants ."            
+          }
+        }
+      },
+      "for" : {
+        "filters" : {
+          "set" : {
+            "window size" : {
+              "as" : {
+                "h = 5" : {
+                  "with" : "K = 300 feature maps"
+                }
+              }
+            }
+          },
+          "from sentence" : "As for the filters , we set the window size as h = 5 , with K = 300 feature maps ."
+        }
+      },
+      "use" : {
+        "Adam" : {
+          "to train" : "models",
+          "with" : {
+            "learning rate" : {
+              "of" : "3 10 ?4"
+            }
+          }
+        },
+        "from sentence" : "We use Adam to train the models , with a learning rate of 3 10 ?4 ."
+      }
+    }
+  }
+}

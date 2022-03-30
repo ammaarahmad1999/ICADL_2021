@@ -1,0 +1,98 @@
+159	113	123	p	evaluating
+159	124	149	n	several simplified models
+159	71	76	n	model
+160	4	24	n	first simplification
+160	28	34	p	to use
+160	45	52	p	without
+160	57	82	n	input attention mechanism
+160	87	91	p	with
+160	96	119	n	pooling attention layer
+161	4	10	n	second
+161	11	18	p	removes
+161	19	44	n	both attention mechanisms
+162	4	9	n	third
+162	10	17	p	removes
+162	18	41	n	both forms of attention
+162	59	63	p	uses
+162	66	92	n	regular objective function
+162	93	101	p	based on
+162	106	127	n	inner product s = r w
+162	128	131	p	for
+162	134	159	n	sentence representation r
+162	164	190	n	relation class embedding w
+163	3	15	p	observe that
+163	16	43	n	all three of our components
+163	44	51	p	lead to
+163	52	75	n	noticeable improvements
+163	76	80	p	over
+163	87	96	n	baselines
+149	3	6	p	use
+149	11	38	n	word2 vec skip - gram model
+149	39	47	p	to learn
+149	48	76	n	initial word representations
+149	77	79	p	on
+149	80	89	n	Wikipedia
+150	0	14	n	Other matrices
+150	19	35	p	initialized with
+150	36	49	n	random values
+150	50	59	p	following
+150	62	83	n	Gaussian distribution
+151	3	8	p	apply
+151	11	37	n	cross-validation procedure
+151	38	40	p	on
+151	45	58	n	training data
+151	59	68	p	to select
+151	69	93	n	suitable hyperparameters
+24	3	10	p	propose
+24	13	35	n	novel CNN architecture
+27	4	20	n	CNN architecture
+27	21	30	p	relies on
+27	33	70	n	novel multi-level attention mechanism
+27	71	81	p	to capture
+27	87	114	n	entity - specific attention
+27	117	134	n	primary attention
+27	135	137	p	at
+27	142	153	n	input level
+27	156	171	p	with respect to
+27	176	191	n	target entities
+27	198	235	n	relation - specific pooling attention
+27	238	257	n	secondary attention
+27	258	273	p	with respect to
+27	278	294	n	target relations
+29	7	16	p	introduce
+29	19	70	n	novel pair - wise margin - based objective function
+29	76	82	p	proves
+29	83	91	n	superior
+29	92	94	p	to
+29	95	118	n	standard loss functions
+2	0	23	n	Relation Classification
+153	3	15	p	observe that
+153	20	53	n	novel attentionbased architecture
+153	54	62	p	achieves
+153	63	97	n	new state - of - the - art results
+154	0	17	n	Att - Input - CNN
+154	18	32	p	relies only on
+154	37	53	n	primal attention
+154	54	56	p	at
+154	61	72	n	input level
+154	75	85	p	performing
+154	86	108	n	standard max - pooling
+154	109	114	p	after
+154	119	136	n	convolution layer
+154	137	148	p	to generate
+154	153	171	n	network output w O
+156	0	49	n	Our full dual attention model Att - Pooling - CNN
+156	50	58	p	achieves
+156	62	91	n	even more favorable F1- score
+156	92	94	p	of
+156	95	99	n	88 %
+155	0	4	p	With
+155	5	22	n	Att - Input - CNN
+155	28	35	p	achieve
+155	39	47	n	F1-score
+155	48	50	p	of
+155	51	57	n	87.5 %
+155	73	86	p	outperforming
+155	138	172	n	an SVM - based approach ( 82.2 % )
+155	188	223	n	wellknown CR - CNN model ( 84.1 % )
+155	272	303	n	newly released DRNNs ( 85.8 % )

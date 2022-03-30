@@ -1,0 +1,28 @@
+{
+  "has" : {
+    "Model" : {
+      "propose" : {
+        "Universal Language Model Fine - tuning" : {
+          "name" : "ULMFiT",
+          "that can be used to achieve" : {
+            "CV - like transfer learning" : {
+              "for" : "any task for NLP"
+            }
+          },
+          "from sentence" : "1 ) We propose Universal Language Model Fine - tuning ( ULMFiT ) , a method that can be used to achieve CV - like transfer learning for any task for NLP ."
+        }
+      },
+      "to retain" : {
+        "previous knowledge" : {
+          "avoid" : {
+            "catastrophic forgetting" : {
+              "propose" : ["discriminative fine - tuning", "slanted triangular learning rates", "gradual unfreezing"],			
+              "during" : "fine - tuning"
+            }
+          }
+        },
+        "from sentence" : "2 ) We propose discriminative fine - tuning , slanted triangular learning rates , and gradual unfreezing , novel techniques to retain previous knowledge and avoid catastrophic forgetting during fine - tuning ."
+      }
+    }
+  }
+}

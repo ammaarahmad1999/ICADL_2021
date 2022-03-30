@@ -1,0 +1,20 @@
+title
+abstract
+Introduction
+Related work
+Named entity recognition
+Relation extraction
+Joint entity and relation extraction
+Joint Model
+Embedding layer
+Bidirectional LSTM encoding layer
+Named entity recognition
+Relation extraction as multi-head selection
+Edmonds’ algorithm
+Experimental setup
+Datasets and evaluation metrics
+Word embeddings
+Results and discussion
+Results
+Analysis of feature contribution
+Conclusion

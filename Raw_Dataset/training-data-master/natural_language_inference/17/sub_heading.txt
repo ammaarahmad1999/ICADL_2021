@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+MRC with Reattention
+Task Description
+Alignment Architecture for MRC
+Reattention Mechanism
+Dynamic-critical Reinforcement Learning
+End-to-end Architecture
+Experiments
+Implementation Details
+Overall Results
+Ablation Study
+Effectiveness of Reattention
+Prediction Analysis
+Conclusion

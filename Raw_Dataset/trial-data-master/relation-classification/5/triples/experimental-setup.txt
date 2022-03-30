@@ -1,0 +1,4 @@
+(Contribution||has||Experimental setup)
+(Experimental setup||using||DYNET v 2.0)
+(Experimental setup||optimize||objective loss)
+(objective loss||using||Adam)

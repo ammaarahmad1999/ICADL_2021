@@ -1,0 +1,8 @@
+(Contribution||has||Dataset)
+(Dataset||collected||first large - scale dataset of questions and answers based on a KB)
+(first large - scale dataset of questions and answers based on a KB||called||SimpleQuestions)
+(first large - scale dataset of questions and answers based on a KB||to study||coverage)
+(coverage||of||existing systems)
+(first large - scale dataset of questions and answers based on a KB||to train||jointly)
+(jointly||on||different data sources)
+(different data sources||via||multitasking)

@@ -1,0 +1,63 @@
+{
+  "has" : {
+    "Results" : {
+      "has" : {
+        "CoNLL - 2003 English NER" : {
+          "has" : {
+            "Sentence - level prediction" : {
+              "has" : {
+                "Viterbi - decoding Bi - LSTM - CRF and ID - CNN - CRF and greedy ID - CNN" : {
+                  "obtain" : "highest average scores",
+                  "from sentence" : "6.3 CoNLL - 2003 English NER 6.3.1 Sentence - level prediction lists F 1 scores of models predicting with sentence - level context on CoNLL - 2003 .
+				  The Viterbi - decoding Bi - LSTM - CRF and ID - CNN - CRF and greedy ID - CNN obtain the highest average scores , with the ID - CNN - CRF outperforming the Bi - LSTM - CRF by 0.11 points of F1 on average , and the Bi - LSTM - CRF out - performing the greedy ID - CNN by 0.11 as well ."
+				  
+                },
+                "greedy ID - CNN" : {
+                  "outperforms" : "Bi - LSTM and the 4 - layer CNN",
+                  "from sentence" : "Our greedy ID - CNN outperforms the Bi - LSTM and the 4 - layer CNN , which uses the same number of parameters as the ID - CNN , and performs similarly to the 5 - layer CNN which uses more parameters but covers the same effective input width ."                
+                },
+                "ID - CNN" : {
+                  "When paired with" : "Viterbi decoding",
+                  "performs on par with" : {
+                    "Bi - LSTM" : {
+                      "showing" : {
+                        "ID - CNN is also an effective token encoder" : {
+                          "for" : "structured inference"
+                        }
+                      }
+                    }
+                  },
+                  "from sentence" : "When paired with Viterbi decoding , our ID - CNN performs on par with the Bi - LSTM , showing that the ID - CNN is also an effective token encoder for structured inference ."                
+                }
+              }
+            },
+            "Document - level prediction" : {
+              "on" : {
+                "CoNLL - 2003" : {
+                  "adding" : {
+                    "document - level context" : {
+                      "improves" : "every model"
+                    }
+                  }
+                }
+              },
+              "from sentence" : "Document - level prediction
+In we show that adding document - level context improves every model on CoNLL - 2003 ."
+
+            }
+          }
+        },
+        "OntoNotes 5.0 English NER" : {
+          "has" : {
+            "greedy model" : {
+              "out - performed by" : "Bi - LSTM - CRF reported in Chiu and Nichols ( 2016 )"
+            }
+          },
+          "from sentence" : "OntoNotes 5.0 English NER
+Our greedy model is out - performed by the Bi - LSTM - CRF reported in Chiu and Nichols ( 2016 ) as well as our own re-implementation , which appears to be the new state - of - the - art on this dataset ."
+
+        }        
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+164	3	6	p	use
+164	7	33	n	librosa , a Python library
+164	36	46	p	to process
+164	51	62	n	audio files
+165	7	33	n	scikit - learn and xgboost
+165	87	99	p	to implement
+165	100	168	n	all the ML classifiers ( RF , XGB , SVM , MNB , and LR ) and the MLP
+166	7	14	n	PyTorch
+166	15	27	p	to implement
+166	32	48	n	LSTM classifiers
+167	9	22	p	to regularize
+167	27	39	n	hidden space
+167	40	42	p	of
+167	47	63	n	LSTM classifiers
+167	69	72	p	use
+167	75	95	n	shut - off mechanism
+167	98	104	p	called
+167	105	112	n	dropout
+167	115	120	p	where
+167	123	155	n	fraction of neurons are not used
+167	156	159	p	for
+167	160	176	n	final prediction
+169	3	17	p	randomly split
+169	18	29	n	our dataset
+169	30	34	p	into
+169	37	73	n	train ( 80 % ) and test ( 20 % ) set
+171	4	20	n	LSTM classifiers
+171	26	36	p	trained on
+171	40	58	n	NVIDIA Titan X GPU
+172	3	7	p	stop
+172	12	20	n	training
+172	21	25	p	when
+172	29	55	n	do not see any improvement
+172	56	58	p	in
+172	59	81	n	validation performance
+172	82	85	p	for
+172	86	97	n	> 10 epochs
+18	18	25	p	explore
+18	30	68	n	implication of hand - crafted features
+18	69	72	p	for
+18	73	76	n	SER
+18	81	88	p	compare
+18	93	104	n	performance
+18	105	107	p	of
+18	108	139	n	lighter machine learning models
+18	140	144	p	with
+18	149	192	n	heavily data - reliant deep learning models
+19	22	29	p	combine
+19	30	38	n	features
+19	39	43	p	from
+19	48	64	n	textual modality
+19	65	78	p	to understand
+19	83	123	n	correlation between different modalities
+19	128	131	p	aid
+19	132	152	n	ambiguity resolution
+21	35	42	p	extract
+21	43	63	n	handcrafted features
+21	64	68	p	from
+21	73	84	n	time domain
+21	85	87	p	of
+21	92	104	n	audio signal
+21	109	114	p	train
+21	119	136	n	respective models
+22	0	2	p	In
+22	7	21	n	first approach
+22	27	32	p	train
+22	33	73	n	traditional machine learning classifiers
+22	76	82	p	namely
+22	85	99	n	Random Forests
+22	102	119	n	Gradient Boosting
+22	122	145	n	Support Vector Machines
+22	148	161	n	Naive - Bayes
+22	166	185	n	Logistic Regression
+23	7	22	n	second approach
+23	28	33	p	build
+23	36	83	n	Multi - Layer Perceptron and an LSTM classifier
+23	84	96	p	to recognize
+23	97	104	n	emotion
+23	105	110	p	given
+23	113	126	n	speech signal
+2	0	62	n	Multimodal Speech Emotion Recognition and Ambiguity Resolution
+4	0	31	n	Identifying emotion from speech
+16	100	134	n	Speech Emotion Recognition ( SER )
+18	73	76	n	SER
+199	23	56	n	our simpler and lighter ML models
+199	57	95	p	either outperform or are comparable to
+199	100	141	n	much heavier current state - of - the art
+201	0	20	n	Audio - only results
+203	0	27	n	Performance of LSTM and ARE
+203	28	35	p	reveals
+203	41	85	n	deep models indeed need a lot of information
+203	86	94	p	to learn
+203	95	103	n	features
+203	104	106	p	as
+203	111	126	n	LSTM classifier
+203	127	137	p	trained on
+203	138	166	n	eight - dimensional features
+203	167	175	p	achieves
+203	176	193	n	very low accuracy
+203	194	208	p	as compared to
+203	213	239	n	end - to - end trained ARE
+207	0	19	n	Text - only results
+208	3	10	p	observe
+208	20	49	n	performance of all the models
+208	67	69	p	is
+208	70	77	n	similar
+212	3	23	n	Audio + Text results
+213	12	21	p	combining
+213	22	45	n	audio and text features
+213	46	51	p	gives
+213	57	62	n	boost
+213	63	65	p	of
+213	66	92	n	? 14 % for all the metrics
+219	17	30	p	conclude that
+219	31	52	n	our simple ML methods
+219	53	56	p	are
+219	57	68	n	very robust
+219	69	85	p	to have achieved
+219	86	108	n	comparable performance

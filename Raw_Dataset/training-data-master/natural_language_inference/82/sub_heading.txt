@@ -1,0 +1,8 @@
+title
+abstract
+Introduction
+Model
+Dynamic Entity Representation
+Max-pooling
+Evaluation
+Discussion

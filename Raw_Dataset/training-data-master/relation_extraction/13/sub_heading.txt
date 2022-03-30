@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Overview
+Architectures for Relation Learning
+Relation Classification and Extraction
+Relation Representations from Deep
+Fixed length relation representation
+Learning by Matching the Blanks
+Learning Setup
+Introducing Blanks
+Matching the Blanks Training
+Experimental Evaluation
+Few-shot Relation Matching
+Supervised Relation Extraction
+Conclusion and Future Work

@@ -1,0 +1,47 @@
+18	19	26	explore
+18	27	40	treating text
+18	41	53	as a kind of
+18	54	64	raw signal
+18	65	67	at
+18	68	83	character level
+18	90	98	applying
+18	99	136	temporal ( one-dimensional ) ConvNets
+19	25	29	used
+19	32	51	classification task
+19	60	72	to exemplify
+19	73	91	ConvNets ' ability
+19	92	105	to understand
+19	106	111	texts
+2	45	64	Text Classification
+13	95	148	assign predefined categories to free - text documents
+195	4	29	most important conclusion
+195	30	34	from
+195	35	50	our experiments
+195	51	53	is
+195	59	85	character - level ConvNets
+195	86	100	could work for
+195	101	120	text classification
+195	121	141	without the need for
+195	142	147	words
+199	4	22	most obvious trend
+199	23	34	coming from
+199	35	48	all the plots
+199	52	59	is that
+199	64	79	larger datasets
+199	80	95	tend to perform
+199	96	102	better
+207	10	26	further analysis
+207	30	48	needed to validate
+207	53	63	hypothesis
+207	64	68	that
+207	69	92	ConvNets are truly good
+207	93	107	at identifying
+207	108	137	exotic character combinations
+207	138	145	such as
+207	146	172	misspellings and emoticons
+217	0	14	Comparing with
+217	15	33	traditional models
+217	41	49	suggests
+217	57	104	simple use of a distributed word representation
+217	105	120	may not give us
+217	121	156	an advantage to text classification

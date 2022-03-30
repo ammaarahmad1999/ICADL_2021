@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Model Description
+Bi-directional LSTM Layer
+Context-Preserving Transformation
+Convolutional Feature Extractor
+Experiments
+Experimental Setup
+Main Results
+Performance of Ablated TNet
+CPT versus Alternatives
+Impact of CPT Layer Number
+Case Study
+Related Work
+Conclusions

@@ -1,0 +1,20 @@
+title
+abstract
+INTRODUCTION
+RELATED WORK
+ATTENTION-BASED NEURAL MATCHING MODEL
+Terminology
+Model Overview
+Value-shared Weighting
+Question Attention Network
+Model Training
+Extension to Deep Neural Networks with
+EXPERIMENTS
+Data Set and Experiment Settings
+Evaluation and Metrics
+Model Learning Results
+Experimental Results for Ranking Answers
+Parameter Sensitivity Analysis
+CONCLUSIONS AND FUTURE WORK
+ACKNOWLEDGMENTS
+REFERENCES

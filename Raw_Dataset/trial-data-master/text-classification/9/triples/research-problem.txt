@@ -1,0 +1,2 @@
+(Contribution||has research problem||Sentence Classification)
+(Contribution||has research problem||given a sentence ( e.g. a sentence of a review ) as input , we are tasked to classify it into one of multiple classes ( e.g. into positive or negative ))

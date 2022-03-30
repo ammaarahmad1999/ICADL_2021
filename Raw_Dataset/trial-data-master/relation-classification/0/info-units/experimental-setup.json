@@ -1,0 +1,38 @@
+{
+  "has" : {
+    "Experimental setup" : {
+      "implemented" : {
+        "our model" : {
+          "using" : "cnn library"
+        },
+        "from sentence" : "We implemented our model using the cnn library ."
+      },
+      "parsed" : {
+        "texts" : {
+          "using" : {
+            "Stanford neural dependency parser 7 ( Chen and Manning , 2014 )" : {
+              "with" : "original Stanford Dependencies"
+            }
+          }
+        },
+        "from sentence" : "We parsed the texts using the Stanford neural dependency parser 7 ( Chen and Manning , 2014 ) with the original Stanford Dependencies ."
+      },
+      "fixed" : {
+        "embedding dimensions" : {
+          "n w" : "200",
+          "n p , n d , n e" : "25"
+        },
+        "dimensions of intermediate layers" : {
+          "n ls , n lt of LSTM - RNNs and n he , n hr of hidden layers" : "100"
+        },
+        "from sentence" : "Based on preliminary tuning , we fixed embedding dimensions n w to 200 , n p , n d , n e to 25 , and dimensions of intermediate layers ( n ls , n lt of LSTM - RNNs and n he , n hr of hidden layers ) to 100 ."        
+      },
+      "initialized" : {
+        "word vectors" : {
+          "via" : "word2 vec"
+        },
+        "from sentence" : "We initialized word vectors via word2 vec trained on Wikipedia 8 and randomly initialized all other parameters ."    
+      }
+    }
+  }
+}

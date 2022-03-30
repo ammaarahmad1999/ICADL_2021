@@ -1,0 +1,103 @@
+87	15	30	n	BASELINE - LSTM
+87	33	35	p	is
+87	38	59	n	multi - task learning
+88	9	24	p	predicting both
+88	25	63	n	CCG supertags and sentence compression
+88	82	84	p	at
+88	89	100	n	outer layer
+85	0	33	n	Both the baseline and our systems
+85	34	37	p	are
+85	38	68	n	three - layer bi - LSTM models
+85	69	80	p	trained for
+85	81	94	n	30 iterations
+85	95	99	p	with
+85	100	131	n	pretrained ( SENNA ) embeddings
+86	4	27	n	input and hidden layers
+86	28	31	p	are
+86	32	45	n	50 dimensions
+86	59	71	n	output layer
+86	75	82	p	predict
+86	83	92	n	sequences
+86	93	95	p	of
+86	96	106	n	two labels
+12	21	36	p	suggesting that
+12	37	62	n	eye - tracking recordings
+12	75	84	p	to induce
+12	85	98	n	better models
+12	99	102	p	for
+12	103	123	n	sentence compression
+12	124	127	p	for
+12	128	147	n	text simplification
+13	18	33	p	show how to use
+13	34	68	n	existing eye - tracking recordings
+13	69	79	p	to improve
+13	84	93	n	induction
+13	94	96	p	of
+13	97	138	n	Long Short - Term Memory models ( LSTMs )
+13	139	142	p	for
+13	143	163	n	sentence compression
+14	0	18	n	Our proposed model
+14	19	35	p	does not require
+14	45	79	n	gaze data and the compression data
+14	80	89	p	come from
+14	94	105	n	same source
+16	29	49	n	intriguing potential
+16	50	52	p	of
+16	53	62	n	this work
+16	66	77	p	in deriving
+16	78	108	n	sentence simplification models
+16	109	117	p	that are
+16	118	130	n	personalized
+16	131	134	p	for
+16	135	151	n	individual users
+16	154	162	p	based on
+16	163	185	n	their reading behavior
+15	25	28	p	use
+15	29	38	n	gaze data
+15	39	43	p	from
+15	44	51	n	readers
+15	52	54	p	of
+15	59	72	n	Dundee Corpus
+15	73	83	p	to improve
+15	84	112	n	sentence compression results
+15	113	115	p	on
+15	116	132	n	several datasets
+2	10	30	n	sentence compression
+93	16	22	p	across
+93	23	41	n	all three datasets
+93	44	53	p	including
+93	54	88	n	all three annotations of BROADCAST
+93	91	104	n	gaze features
+93	105	112	p	lead to
+93	113	125	n	improvements
+93	126	130	p	over
+93	135	163	n	baseline 3 - layer bi - LSTM
+94	7	22	n	CASCADED - LSTM
+94	23	25	p	is
+94	26	45	n	consistently better
+94	46	50	p	than
+94	51	67	n	MULTITASK - LSTM
+95	0	3	p	For
+95	4	22	n	all three datasets
+95	29	38	n	inclusion
+95	39	41	p	of
+95	42	55	n	gaze measures
+95	58	84	n	first pass duration ( FP )
+95	89	118	n	regression duration ( Regr. )
+95	121	129	p	leads to
+95	130	142	n	improvements
+95	143	147	p	over
+95	152	160	n	baseline
+100	0	4	p	With
+100	9	24	n	harder datasets
+100	31	40	p	impact of
+100	45	61	n	gaze information
+100	62	69	p	becomes
+100	70	78	n	stronger
+100	94	103	p	favouring
+100	108	129	n	cascaded architecture
+100	136	140	p	with
+100	141	153	n	improvements
+100	154	159	p	using
+100	165	184	n	first pass duration
+100	189	208	n	regression duration

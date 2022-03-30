@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Related Work
+Methodology
+Vector Representation
+Convolution
+Piecewise Max Pooling
+Softmax Output
+Maulti-instance Learning
+Experiments
+Dataset and Evaluation Metrics
+Experimental Settings
+Comparison with Traditional Approaches
+Effect of Piecewise Max Pooling and
+Conclusion

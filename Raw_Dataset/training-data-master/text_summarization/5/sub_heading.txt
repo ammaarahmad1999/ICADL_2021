@@ -1,0 +1,17 @@
+title
+abstract
+Introduction
+Method
+Retrieve
+Jointly Rerank and Rewrite
+Learning
+Experiments
+Datasets
+Evaluation Metrics
+Implementation Details
+Baselines
+Informativeness Evaluation
+Linguistic Quality Evaluation
+Effect of Templates
+Related Work
+Conclusion and Future Work

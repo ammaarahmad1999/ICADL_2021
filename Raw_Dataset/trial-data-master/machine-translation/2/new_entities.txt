@@ -1,0 +1,146 @@
+159	0	21	n	Hardware and Schedule
+160	3	10	p	trained
+160	15	21	n	models
+160	22	24	p	on
+160	25	36	n	one machine
+160	37	41	p	with
+160	42	60	n	8 NVIDIA P100 GPUs
+162	15	26	n	base models
+162	27	30	p	for
+162	33	67	n	total of 100,000 steps or 12 hours
+164	4	14	n	big models
+164	28	31	p	for
+164	32	58	n	300,000 steps ( 3.5 days )
+165	0	9	n	Optimizer
+166	3	7	p	used
+166	12	26	n	Adam optimizer
+166	27	31	p	with
+166	32	66	n	? 1 = 0.9 , ? 2 = 0.98 and = 10 ?9
+169	8	20	n	warmup_steps
+169	21	22	p	=
+169	23	27	n	4000
+170	0	14	n	Regularization
+172	0	16	n	Residual Dropout
+173	3	8	p	apply
+173	9	16	n	dropout
+173	17	19	p	to
+173	24	50	n	output of each sub - layer
+174	90	92	p	in
+174	38	89	n	sums of the embeddings and the positional encodings
+174	93	128	n	both the encoder and decoder stacks
+176	0	15	n	Label Smoothing
+177	21	29	p	employed
+177	49	63	n	value ls = 0.1
+48	0	26	n	Encoder and Decoder Stacks
+49	0	7	n	Encoder
+50	15	26	p	composed of
+50	29	60	n	stack of N = 6 identical layers
+51	15	29	n	two sub-layers
+52	4	9	p	first
+52	15	52	n	multi-head self - attention mechanism
+52	63	69	p	second
+52	75	135	n	simple , positionwise fully connected feed - forward network
+53	3	9	p	employ
+53	12	31	n	residual connection
+53	32	38	p	around
+53	51	65	n	two sub-layers
+53	68	79	p	followed by
+53	80	99	n	layer normalization
+56	0	7	n	Decoder
+57	20	31	p	composed of
+57	34	65	n	stack of N = 6 identical layers
+58	70	77	p	inserts
+58	80	97	n	third sub - layer
+58	106	114	p	performs
+58	115	135	n	multi-head attention
+58	136	140	p	over
+58	145	172	n	output of the encoder stack
+59	28	34	p	employ
+59	35	55	n	residual connections
+59	56	62	p	around
+59	63	85	n	each of the sub-layers
+59	88	99	p	followed by
+59	100	119	n	layer normalization
+60	8	14	p	modify
+60	19	47	n	self - attention sub - layer
+60	48	50	p	in
+60	55	68	n	decoder stack
+60	72	79	p	prevent
+60	80	128	n	positions from attending to subsequent positions
+62	0	9	n	Attention
+63	29	41	p	described as
+63	42	88	n	mapping a query and a set of key - value pairs
+63	89	91	p	to
+63	95	101	n	output
+63	104	109	p	where
+64	14	25	p	computed as
+64	28	54	n	weighted sum of the values
+64	67	96	n	weight assigned to each value
+64	100	111	p	computed by
+64	114	149	n	compatibility function of the query
+64	150	154	p	with
+64	159	176	n	corresponding key
+65	0	30	n	Scaled Dot - Product Attention
+80	0	22	n	Multi - Head Attention
+101	0	39	n	Position - wise Feed - Forward Networks
+102	86	94	p	contains
+102	97	135	n	fully connected feed - forward network
+102	147	157	p	applied to
+102	158	198	n	each position separately and identically
+103	5	13	p	consists
+103	17	43	n	two linear transformations
+103	44	48	p	with
+103	51	66	n	ReLU activation
+108	0	22	n	Embeddings and Softmax
+109	53	56	p	use
+109	57	75	n	learned embeddings
+109	76	86	p	to convert
+109	91	121	n	input tokens and output tokens
+109	10	12	p	to
+109	125	153	n	vectors of dimension d model
+110	16	72	n	usual learned linear transformation and softmax function
+110	73	83	p	to convert
+110	88	102	n	decoder output
+110	103	105	p	to
+110	106	142	n	predicted next - token probabilities
+113	0	19	n	Positional Encoding
+114	134	140	p	inject
+114	141	157	n	some information
+114	158	163	p	about
+114	168	197	n	relative or absolute position
+114	95	97	p	of
+117	0	22	n	tokens in the sequence
+118	17	20	p	add
+118	23	43	n	positional encodings
+118	46	48	p	to
+118	53	69	n	input embeddings
+118	70	87	p	at the bottoms of
+118	92	118	n	encoder and decoder stacks
+6	81	101	n	attention mechanisms
+22	41	125	n	push the boundaries of recurrent language models and encoder - decoder architectures
+30	44	191	n	model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output
+180	0	19	n	Machine Translation
+181	0	2	p	On
+181	7	54	n	WMT 2014 English - to - German translation task
+181	110	121	p	outperforms
+181	122	181	n	the best previously reported models ( including ensembles )
+181	182	184	p	by
+181	185	203	n	more than 2.0 BLEU
+181	206	218	p	establishing
+181	225	247	n	state - of - the - art
+181	248	258	p	BLEU score
+181	262	266	n	28.4
+185	7	54	n	WMT 2014 English - to - French translation task
+185	71	79	p	achieves
+185	82	100	n	BLEU score of 41.0
+185	103	116	p	outperforming
+185	117	162	n	all of the previously published single models
+204	0	28	n	English Constituency Parsing
+214	78	86	p	performs
+214	87	104	n	surprisingly well
+214	107	115	p	yielding
+214	116	130	n	better results
+214	131	135	p	than
+214	136	166	n	all previously reported models
+214	167	185	p	with the exception
+214	193	225	n	Recurrent Neural Network Grammar

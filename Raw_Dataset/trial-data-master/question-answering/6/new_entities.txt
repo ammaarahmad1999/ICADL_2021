@@ -1,0 +1,107 @@
+229	102	107	n	model
+229	108	113	p	lacks
+229	114	134	n	reasoning capability
+229	58	62	p	When
+229	67	83	n	number of layers
+229	84	86	p	is
+229	92	95	n	one
+232	28	33	p	helps
+232	6	27	n	Adding the reset gate
+233	29	34	p	hurts
+233	6	28	n	Including vector gates
+233	35	37	p	in
+233	38	50	n	1 k datasets
+234	71	85	p	sometimes help
+234	20	32	n	vector gates
+234	33	35	p	in
+234	36	70	n	bAbI story - based QA 10 k dataset
+204	3	11	p	withhold
+204	12	32	n	10 % of the training
+204	33	36	p	for
+204	37	48	n	development
+205	3	6	p	use
+205	11	28	n	hidden state size
+205	29	31	p	of
+205	32	34	n	50
+205	35	37	p	by
+205	38	45	n	deafult
+206	110	114	p	used
+206	0	11	n	Batch sizes
+206	12	14	p	of
+206	15	17	n	32
+206	18	21	p	for
+206	22	46	n	bAbI story - based QA 1k
+206	49	61	n	bAb I dialog
+206	66	78	n	DSTC2 dialog
+206	85	88	n	128
+206	89	92	p	for
+206	93	105	n	bAbI QA 10 k
+210	0	15	n	L2 weight decay
+210	16	18	p	of
+210	19	47	n	0.001 ( 0.0005 for QA 10 k )
+211	4	17	n	loss function
+211	18	20	p	is
+211	25	91	n	cross entropy betweenv and the one - hot vector of the true answer
+212	4	8	n	loss
+212	9	24	p	is minimized by
+212	25	52	n	stochastic gradient descent
+212	53	56	p	for
+212	57	77	n	maximally 500 epochs
+212	96	109	p	early stopped
+212	84	92	n	training
+212	110	145	p	if the loss on the development data
+212	146	163	n	does not decrease
+212	164	167	p	for
+212	168	177	n	50 epochs
+213	21	31	p	controlled
+213	4	17	n	learning rate
+213	32	34	p	by
+213	35	42	n	AdaGrad
+213	52	73	p	initial learning rate
+213	77	100	n	0.5 ( 0.1 for QA 10 k )
+24	21	46	n	Query - Reduction Network
+24	59	63	p	is a
+24	64	85	n	single recurrent unit
+24	91	100	p	addresses
+24	105	162	n	long - term dependency problem of most RNN - based models
+24	163	177	p	by simplifying
+24	182	198	n	recurrent update
+24	207	230	p	taking the advantage of
+24	231	248	n	RNN 's capability
+24	249	257	p	to model
+24	258	273	n	sequential data
+25	0	3	n	QRN
+25	4	13	p	considers
+25	18	35	n	context sentences
+25	36	52	p	as a sequence of
+25	53	78	n	state - changing triggers
+25	85	107	p	transforms ( reduces )
+25	112	126	n	original query
+25	127	129	p	to
+25	132	151	n	more informed query
+25	152	166	p	as it observes
+25	172	179	n	trigger
+25	180	187	p	through
+25	188	192	n	time
+2	76	94	n	QUESTION ANSWERING
+4	40	105	n	question answering when reasoning over multiple facts is required
+218	0	16	n	Story - based QA
+220	0	2	p	In
+220	3	11	n	1 k data
+220	14	62	n	QRN 's ' 2 r' ( 2 layers + reset gate + d = 50 )
+220	63	74	p	outperforms
+220	75	91	n	all other models
+220	92	94	p	by
+220	97	121	n	large margin ( 2.8 + % )
+221	3	15	n	10 k dataset
+221	22	41	p	average accuracy of
+221	42	100	n	QRN 's ' 6r200 ' ( 6 layers + reset gate + d = 200 ) model
+221	101	112	p	outperforms
+221	113	132	n	all previous models
+221	133	135	p	by
+221	138	162	n	large margin ( 2.5 + % )
+222	0	6	n	Dialog
+222	88	101	n	previous work
+225	4	15	p	outperforms
+225	30	32	p	by
+225	35	59	n	large margin ( 2.0 + % )

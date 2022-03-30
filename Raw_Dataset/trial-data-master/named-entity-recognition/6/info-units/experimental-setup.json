@@ -1,0 +1,44 @@
+{
+  "has" : {
+    "Experimental setup" : {
+      "has" : {
+		    "Training" : {
+			    "carried out by" : {
+				    "mini-batch stochastic gradient descent ( SGD )" : {
+					    "with" : ["momentum of 0.9", "gradient clipping of 5.0"]
+						}
+			    },
+			    "from sentence" : "Training is carried out by mini-batch stochastic gradient descent ( SGD ) with a momentum of 0.9 and a gradient clipping of 5.0 ."
+		    },
+		    "mini-batch" : {
+          "is" : {
+            "10" : {
+              "for" : "both datasets"
+            }
+          }
+		    },
+		    "learning rates" : {
+		      "are" : {
+		        "0.009 and 0.013" : {
+		          "for" : "CONLL and ONTONOTES"
+		        }
+		      },
+		      "from sentence" : "The mini-batch is 10 for both datasets , and learning rates are 0.009 and 0.013 for CONLL and ONTONOTES respectively ."
+		    }
+      },
+      "varied" : ["dropout", "hidden units", "capitalization", "char ) embedding dimensions", {"learning rate" : {"has" :  {"[ 0.001 , 0.015 ]" : {"by" : "step 0.002"}}}}, {"from sentence" : "We varied dropout . 65 ] ) , hidden units ) , capitalization ) and char ) embedding dimensions , learning rate ( [ 0.001 , 0.015 ] by step 0.002 ) , and optimization algorithms and fixed the other hyper - parameters ."}
+      ],
+      "implemented" : {
+        "system" : {
+          "using" : "Tensorflow library"
+        }
+      },
+      "ran" : {
+        "models" : {
+          "on" : "GeForce GTX TITAN Xp GPU"
+        },
+        "from sentence" : "We implemented our system using the Tensorflow library , and ran our models on a GeForce GTX TITAN Xp GPU ."
+      }
+    }
+  }
+}

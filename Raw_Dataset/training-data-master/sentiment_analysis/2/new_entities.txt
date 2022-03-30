@@ -1,0 +1,163 @@
+134	0	4	n	LSTM
+134	12	17	p	takes
+134	22	30	n	sentence
+134	31	33	p	as
+134	34	39	n	input
+134	46	52	p	to get
+134	57	78	n	hidden representation
+134	79	81	p	of
+134	82	91	n	each word
+134	43	45	p	as
+135	8	15	p	regards
+135	20	33	n	average value
+135	34	36	p	of
+135	41	54	n	hidden states
+135	62	88	n	representation of sentence
+135	95	107	p	puts it into
+135	108	121	n	softmax layer
+135	122	132	p	to predict
+135	137	148	n	probability
+135	149	151	p	of
+135	152	175	n	each sentiment polarity
+137	0	9	n	AE - LSTM
+137	28	34	p	models
+137	39	44	n	words
+137	45	47	p	in
+137	48	56	n	sentence
+137	57	60	p	via
+137	61	73	n	LSTM network
+137	78	89	p	concatenate
+137	94	110	n	aspect embedding
+137	111	113	p	to
+137	118	150	n	hidden contextual representation
+137	151	166	p	for calculating
+137	171	188	n	attention weights
+137	201	220	p	employed to produce
+137	225	245	n	final representation
+137	246	249	p	for
+137	254	268	n	input sentence
+137	269	277	p	to judge
+137	282	300	n	sentiment polarity
+138	0	11	n	ATAE - LSTM
+138	26	34	p	extended
+138	35	44	n	AE - LSTM
+138	45	57	p	by appending
+138	62	78	n	aspect embedding
+138	79	81	p	to
+138	82	101	n	each word embedding
+138	108	120	p	to represent
+138	125	139	n	input sentence
+140	0	3	n	IAN
+140	10	19	p	considers
+140	24	41	n	separate modeling
+140	42	44	p	of
+140	45	71	n	aspect terms and sentences
+143	0	6	n	MemNet
+143	16	23	p	applies
+143	24	33	n	attention
+143	34	48	n	multiple times
+143	49	51	p	on
+143	56	70	n	word embedding
+143	73	80	p	so that
+143	81	107	n	more abstractive evidences
+143	108	130	p	could be selected from
+143	135	150	n	external memory
+120	25	39	n	word embedding
+120	44	58	p	initialized by
+120	63	87	n	pre-trained Glove vector
+121	8	23	n	weight matrices
+121	28	33	p	given
+121	38	51	n	initial value
+121	52	54	p	by
+121	55	63	n	sampling
+121	64	68	p	from
+121	73	110	n	uniform distribution U ( ?0.1 , 0.1 )
+121	125	131	n	biases
+121	132	142	p	are set to
+121	143	147	n	zero
+123	4	13	n	dimension
+123	14	16	p	of
+123	17	35	n	position embedding
+123	39	45	p	set to
+123	46	49	n	100
+123	52	60	p	which is
+123	61	93	n	randomly initialized and updated
+123	94	100	p	during
+123	105	121	n	training process
+122	21	61	n	word embedding and aspect term embedding
+122	66	72	p	set to
+122	73	76	n	300
+122	101	113	n	hidden units
+122	118	124	p	set to
+122	125	128	n	200
+124	3	6	p	use
+124	7	17	n	Tensorflow
+124	18	30	p	to implement
+124	31	49	n	our proposed model
+124	54	60	p	employ
+124	65	73	n	Momentum
+124	74	76	p	as
+124	81	96	n	training method
+124	99	104	p	whose
+124	105	125	n	momentum parameter ?
+124	129	135	p	set to
+124	136	139	n	0.9
+124	171	192	n	initial learning rate
+124	147	153	p	set to
+124	203	207	n	0.01
+39	46	53	p	propose
+39	56	113	n	position - aware bidirectional attention network ( PBAN )
+39	114	122	p	based on
+39	123	171	n	bidirectional Gated Recurrent Units ( Bi - GRU )
+40	52	56	n	PBAN
+40	62	77	n	mutually models
+40	82	94	n	relationship
+40	95	102	p	between
+40	107	154	n	sentence and different words in the aspect term
+40	155	166	n	by adopting
+40	169	202	n	bidirectional attention mechanism
+42	4	34	n	Obtaining position information
+42	35	37	p	of
+42	38	47	n	each word
+42	48	50	p	in
+42	51	73	n	corresponding sentence
+42	74	82	p	based on
+42	87	106	n	current aspect term
+42	114	124	p	converting
+42	129	149	n	position information
+42	150	154	p	into
+42	155	173	n	position embedding
+43	8	12	n	PBAN
+43	13	24	p	composes of
+43	25	46	n	two Bi - GRU networks
+43	47	69	p	focusing on extracting
+43	74	94	n	aspectlevel features
+43	99	124	n	sentence - level features
+44	14	47	n	bidirectional attention mechanism
+44	48	56	p	to model
+44	61	76	n	mutual relation
+44	77	84	p	between
+44	85	127	n	aspect term and its corresponding sentence
+2	55	88	n	Aspect - level Sentiment Analysis
+18	0	18	n	Sentiment analysis
+145	61	63	p	on
+145	64	94	n	datasets Restaurant and Laptop
+146	7	14	p	observe
+146	20	43	n	our proposed PBAN model
+146	44	52	p	achieves
+146	57	73	n	best performance
+146	74	79	p	among
+146	84	91	n	methods
+160	21	35	p	by integrating
+160	40	102	n	position information and the bidirectional attention mechanism
+160	105	109	n	PBAN
+160	110	118	p	achieves
+160	123	158	n	state - of - the - art performances
+160	172	189	p	effectively judge
+160	194	212	n	sentiment polarity
+160	213	215	p	of
+160	216	237	n	different aspect term
+160	238	240	p	in
+160	245	267	n	corresponding sentence
+160	274	284	p	to improve
+160	289	312	n	classification accuracy

@@ -1,0 +1,146 @@
+159	0	21	Hardware and Schedule
+160	3	10	trained
+160	15	21	models
+160	22	24	on
+160	25	36	one machine
+160	37	41	with
+160	42	60	8 NVIDIA P100 GPUs
+162	15	26	base models
+162	27	30	for
+162	33	67	total of 100,000 steps or 12 hours
+164	4	14	big models
+164	28	31	for
+164	32	58	300,000 steps ( 3.5 days )
+165	0	9	Optimizer
+166	3	7	used
+166	12	26	Adam optimizer
+166	27	31	with
+166	32	66	? 1 = 0.9 , ? 2 = 0.98 and = 10 ?9
+169	8	20	warmup_steps
+169	21	22	=
+169	23	27	4000
+170	0	14	Regularization
+172	0	16	Residual Dropout
+173	3	8	apply
+173	9	16	dropout
+173	17	19	to
+173	24	50	output of each sub - layer
+174	90	92	in
+174	38	89	sums of the embeddings and the positional encodings
+174	93	128	both the encoder and decoder stacks
+176	0	15	Label Smoothing
+177	21	29	employed
+177	49	63	value ls = 0.1
+48	0	26	Encoder and Decoder Stacks
+49	0	7	Encoder
+50	15	26	composed of
+50	29	60	stack of N = 6 identical layers
+51	15	29	two sub-layers
+52	4	9	first
+52	15	52	multi-head self - attention mechanism
+52	63	69	second
+52	75	135	simple , positionwise fully connected feed - forward network
+53	3	9	employ
+53	12	31	residual connection
+53	32	38	around
+53	51	65	two sub-layers
+53	68	79	followed by
+53	80	99	layer normalization
+56	0	7	Decoder
+57	20	31	composed of
+57	34	65	stack of N = 6 identical layers
+58	70	77	inserts
+58	80	97	third sub - layer
+58	106	114	performs
+58	115	135	multi-head attention
+58	136	140	over
+58	145	172	output of the encoder stack
+59	28	34	employ
+59	35	55	residual connections
+59	56	62	around
+59	63	85	each of the sub-layers
+59	88	99	followed by
+59	100	119	layer normalization
+60	8	14	modify
+60	19	47	self - attention sub - layer
+60	48	50	in
+60	55	68	decoder stack
+60	72	79	prevent
+60	80	128	positions from attending to subsequent positions
+62	0	9	Attention
+63	29	41	described as
+63	42	88	mapping a query and a set of key - value pairs
+63	89	91	to
+63	95	101	output
+63	104	109	where
+64	14	25	computed as
+64	28	54	weighted sum of the values
+64	67	96	weight assigned to each value
+64	100	111	computed by
+64	114	149	compatibility function of the query
+64	150	154	with
+64	159	176	corresponding key
+65	0	30	Scaled Dot - Product Attention
+80	0	22	Multi - Head Attention
+101	0	39	Position - wise Feed - Forward Networks
+102	86	94	contains
+102	97	135	fully connected feed - forward network
+102	147	157	applied to
+102	158	198	each position separately and identically
+103	5	13	consists
+103	17	43	two linear transformations
+103	44	48	with
+103	51	66	ReLU activation
+108	0	22	Embeddings and Softmax
+109	53	56	use
+109	57	75	learned embeddings
+109	76	86	to convert
+109	91	121	input tokens and output tokens
+109	10	12	to
+109	125	153	vectors of dimension d model
+110	16	72	usual learned linear transformation and softmax function
+110	73	83	to convert
+110	88	102	decoder output
+110	103	105	to
+110	106	142	predicted next - token probabilities
+113	0	19	Positional Encoding
+114	134	140	inject
+114	141	157	some information
+114	158	163	about
+114	168	197	relative or absolute position
+114	95	97	of
+117	0	22	tokens in the sequence
+118	17	20	add
+118	23	43	positional encodings
+118	46	48	to
+118	53	69	input embeddings
+118	70	87	at the bottoms of
+118	92	118	encoder and decoder stacks
+6	81	101	attention mechanisms
+22	41	125	push the boundaries of recurrent language models and encoder - decoder architectures
+30	44	191	model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output
+180	0	19	Machine Translation
+181	0	2	On
+181	7	54	WMT 2014 English - to - German translation task
+181	110	121	outperforms
+181	122	181	the best previously reported models ( including ensembles )
+181	182	184	by
+181	185	203	more than 2.0 BLEU
+181	206	218	establishing
+181	225	247	state - of - the - art
+181	248	258	BLEU score
+181	262	266	28.4
+185	7	54	WMT 2014 English - to - French translation task
+185	71	79	achieves
+185	82	100	BLEU score of 41.0
+185	103	116	outperforming
+185	117	162	all of the previously published single models
+204	0	28	English Constituency Parsing
+214	78	86	performs
+214	87	104	surprisingly well
+214	107	115	yielding
+214	116	130	better results
+214	131	135	than
+214	136	166	all previously reported models
+214	167	185	with the exception
+214	193	225	Recurrent Neural Network Grammar

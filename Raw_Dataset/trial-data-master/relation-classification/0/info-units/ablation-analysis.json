@@ -1,0 +1,16 @@
+{
+  "has" : {
+    "Ablation analysis" : {
+      "on" : ["ACE05 development set", {"from sentence" : "To analyze the contributions and effects of the various components of our end - to - end relation extraction model , we perform ablation tests on the ACE05 development set ( ) ."}],
+      "performance slightly degraded" : "without scheduled sampling",
+      "performance significantly degraded" : ["removed entity pretraining", {"from sentence" : "The performance slightly degraded without scheduled sampling , and the performance significantly degraded when we removed entity pretraining or removed both ( p < 0.05 ) ."}],
+      "performance is significantly worse" : [
+        "than SP - Tree ( p < 0.01 )",
+        {"removed all the enhancements" : {
+          "name" : ["scheduled sampling", "entity pretraining", "label embedding", "shared parameters"]
+        }},
+        {"from sentence" : "When we removed all the enhancements , i.e. , scheduled sampling , entity pretraining , label embedding , and shared parameters , the performance is significantly worse than SP - Tree ( p < 0.01 ) , showing that these enhancements provide complementary benefits to end - to - end relation extraction ."}
+      ]
+    }
+  }
+}

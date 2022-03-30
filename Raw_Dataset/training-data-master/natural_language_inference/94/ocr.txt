@@ -1,0 +1,1663 @@
+1809.06309v3 [cs.CL] 1 Jun 2019
+
+ar X1v
+
+Commonsense for Generative Multi-Hop Question Answering Tasks
+
+Lisa Bauer*
+
+Yicheng Wang*
+
+Mohit Bansal
+
+UNC Chapel Hill
+{lbauer6, yicheng, mbansal}@cs.unc.edu
+
+Abstract
+
+Reading comprehension QA tasks have seen
+a recent surge in popularity, yet most works
+have focused on fact-finding extractive QA.
+We instead focus on a more challenging multihop generative task (NarrativeQA), which requires the model to reason, gather, and synthesize disjoint pieces of information within the
+context to generate an answer. This type of
+multi-step reasoning also often requires understanding implicit relations, which humans resolve via external, background commonsense
+knowledge. We first present a strong generative baseline that uses a multi-attention mechanism to perform multiple hops of reasoning
+and a pointer-generator decoder to synthesize
+the answer. This model performs substantially better than previous generative models,
+and is competitive with current state-of-theart span prediction models. We next introduce a novel system for selecting grounded
+multi-hop relational commonsense information from ConceptNet via a pointwise mutual
+information and term-frequency based scoring function. Finally, we effectively use this
+extracted commonsense information to fill in
+gaps of reasoning between context hops, using
+a Selectively-gated attention mechanism. This
+boosts the model’s performance significantly
+(also verified via human evaluation), establishing a new State-of-the-art for the task. We
+also show promising initial results of the generalizability of our background knowledge enhancements by demonstrating some improvement on QAngaroo-WikiHop, another multihop reasoning dataset.
+
+1 Introduction
+
+In this paper, we explore the task of machine
+reading comprehension (MRC) based QA. This
+
+* Equal contribution (published at EMNLP 2018).
+
+We publicly release all our code, models, and data at:
+https://github.com/yicheng-w/CommonSenseMultiHopOA
+
+task tests a model’s natural language understanding capabilities by asking it to answer a question
+based on a passage of relevant content. Much
+progress has been made in reasoning-based MRCQA on the bAbI dataset (Weston et al., 2016),
+which contains questions that require the combination of multiple disjoint pieces of evidence in
+the context. However, due to its synthetic nature,
+bAbI evidences have smaller lexicons and simpler passage structures when compared to humangenerated text.
+
+There also have been several attempts at the
+MRC-QA task on human-generated text. Large
+scale datasets such as CNN/DM (Hermann et al.,
+2015) and SQuAD (Rajpurkar et al., 2016) have
+made the training of end-to-end neural models
+possible. However, these datasets are fact-based
+and do not place heavy emphasis on multi-hop reasoning capabilities. More recent datasets such as
+QAngaroo (Welbl et al., 2018) have prompted a
+strong focus on multi-hop reasoning in very long
+texts. However, QAngaroo is an extractive dataset
+where answers are guaranteed to be spans within
+the context; hence, this is more focused on fact
+finding and linking, and does not require models
+to synthesize and generate new information.
+
+We focus on the recently published NarrativeQA generative dataset (KoCisky et al., 2018)
+that contains questions requiring multi-hop reasoning for long, complex stories and other narratives, which requires the model to go beyond
+fact linking and to synthesize non-span answers.
+Hence, models that perform well on previous reasoning tasks (Dhingra et al., 2018) have had limited success on this dataset. In this paper, we first
+propose the Multi-Hop Pointer-Generator Model
+(MHPGM), a strong baseline model that uses multiple hops of bidirectional attention, self-attention,
+and a pointer-generator decoder to effectively read
+and reason within a long passage and synthesize
+a coherent response. Our model achieves 41.49
+Rouge-L and 17.33 METEOR on the summary
+subtask of NarrativeQA, substantially better than
+the performance of previous generative models.
+
+Next, to address the issue that understanding human-generated text and performing longdistance reasoning on it often involves intermittent
+access to missing hops of external commonsense
+(background) knowledge, we present an algorithm
+for selecting useful, grounded multi-hop relational
+knowledge paths from ConceptNet (Speer and
+Havasi, 2012) via a pointwise mutual information
+(PMI) and term-frequency-based scoring function. We then present a novel method of inserting these selected commonsense paths between
+the hops of document-context reasoning within
+our model, via the Necessary and Optional Information Cell (NOIC), which employs a selectivelygated attention mechanism that utilizes commonsense information to effectively fill in gaps of inference. With these additions, we further improve
+performance on the NarrativeQA dataset, achieving 44.16 Rouge-L and 19.03 METEOR (also verified via human evaluation). We also provide manual analysis on the effectiveness of our commonsense selection algorithm.
+
+Finally, to show the generalizability of our
+multi-hop reasoning and commonsense methods,
+we show some promising initial results via the addition of commonsense information over the baseline on QAngaroo-WikiHop (Welbl et al., 2018),
+an extractive dataset for multi-hop reasoning from
+a different domain.
+
+2 Related Work
+
+Machine Reading Comprehension: MRC has
+long been a task used to assess a model’s ability
+to understand and reason about language. Large
+scale datasets such as CNN/Daily Mail (Hermann et al., 2015) and SQUAD (Rajpurkar et al.,
+2016) have encouraged the development of many
+advanced, high performing attention-based neural
+models (Seo et al., 2017; Dhingra et al., 2017).
+Concurrently, datasets such as bAbI (Weston et al.,
+2016) have focused specifically on multi-step reasoning by requiring the model to reason with
+disjoint pieces of information. On this task,
+it has been shown that iteratively updating the
+query representation with information from the
+context can effectively emulate multi-step reasoning (Sukhbaatar et al., 2015).
+
+More recently, there has been an increase in
+multi-paragraph, multi-hop inference QA datasets
+such as QAngaroo (Welbl et al., 2018) and NarrativeQA (Ko€éisky et al., 2018). These datasets have
+much longer contexts than previous datasets, and
+answering a question often requires the synthesis
+of multiple discontiguous pieces of evidence. It
+has been shown that models designed for previous tasks (Seo et al., 2017; Kadlec et al., 2016)
+have limited success on these new datasets. In
+our work, we expand upon Gated Attention Network (Dhingra et al., 2017) to create a baseline
+model better suited for complex MRC datasets
+such as NarrativeQA by improving its attention
+and gating mechanisms, expanding its generation
+capabilities, and allowing access to external commonsense for connecting implicit relations.
+
+Commonsense/Background Knowledge: Commonsense or background knowledge has been
+used for several tasks including opinion mining (Cambria et al., 2010), sentiment analysis (Poria et al., 2015, 2016), handwritten text
+recognition (Wang et al., 2013), and more recently, dialogue (Young et al., 2018; Ghazvininejad et al., 2018). These approaches add commonsense knowledge as relation triples or features from external databases. Recently, largescale graphical commonsense databases such as
+ConceptNet (Speer and Havasi, 2012) use graphical structure to express intricate relations between concepts, but effective goal-oriented graph
+traversal has not been extensively used in previous
+commonsense incorporation efforts. Knowledgebase QA is a task in which systems are asked to
+find answers to questions by traversing knowledge
+graphs (Bollacker et al., 2008). Knowledge path
+extraction has been shown to be effective at the
+task (Bordes et al., 2014; Bao et al., 2016). We apply these techniques to MRC-QA by using them to
+extract useful commonsense knowledge paths that
+fully utilize the graphical nature of databases such
+as ConceptNet (Speer and Havasi, 2012).
+
+Incorporation of External Knowledge: There
+have been several attempts at using external
+knowledge to boost model performance on a variety of tasks: Chen et al. (2018) showed that adding
+lexical information from semantic databases such
+as WordNet improves performance on NLI; Xu
+et al. (2017) used a gated recall-LSTM mechanism
+to incorporate commonsense information into token representations in dialogue.
+In MRC, Weissenborn et al. (2017) integrated
+external background knowledge into an NLU
+model by using contextually-refined word embeddings which integrated information from ConceptNet (single-hop relations mapped to unstructured text) via a single layer bidirectional LSTM.
+Concurrently to our work, Mihaylov and Frank
+(2018) showed improvements on a cloze-style task
+by incorporating commonsense knowledge via a
+context-to-commonsense attention, where commonsense relations were extracted as triples. This
+work represented commonsense relations as keyvalue pairs and combined context representation
+and commonsense via a Static gate.
+
+Differing from previous works, we employ
+multi-hop commonsense paths (multiple connected edges within ConceptNet graph that give
+us information beyond a single relationship triple)
+to help with our MRC model. Moreover, we use
+this in tandem with our multi-hop reasoning architecture to incorporate different aspects of the commonsense relationship path at each hop, in order
+to bridge different inference gaps in the multi-hop
+QA task. Additionally, our model performs synthesis with its external, background knowledge as
+it generates, rather than extracts, its answer.
+
+3 Methods
+
+3.1 Miulti-Hop Pointer-Generator Baseline
+
+We first rigorously state the problem of generative QA as follows: given two sequences of input
+tokens: the context, X° = {w¥,wf,...,w%}
+and the query, X° = {we, w, Las wet, the
+system should generate a series of answer tokens
+X* = {wt, wg,-.-, Wp}. As outlined in previous
+sections, an effective generative QA model needs
+to be able to perform several hops of reasoning
+over long and complex passages. It would also
+need to be able to generate coherent statements to
+answer complex questions while having the ability to copy rare words such as specific entities
+from the reading context. With these in mind, we
+propose the Multi-Hop Pointer-Generator Model
+(MHPGM) baseline, a novel combination of previous works with the following major components:
+
+e Embedding Layer: The tokens are embedded
+into both learned word embeddings and pretrained context-aware embeddings (ELMo (Peters et al., 2018)).
+
+e Reasoning Layer: The embedded context is
+then passed through k& reasoning cells, each
+
+of which iteratively updates the context representation with information from the query via
+BiDAF attention (Seo et al., 2017), emulating a
+single reasoning step within the multi-step reasoning process.
+
+e Self-Attention Layer: The context representation is passed through a layer of self-attention
+(Cheng et al., 2016) to resolve long-term dependencies and co-reference within the context.
+
+e Pointer-Generator Decoding Layer: A
+attention-pointer-generator decoder (See et al.,
+2017) that attends on and potentially copies
+from the context is used to create the answer.
+
+The overall model is illustrated in Fig. 1, and
+the layers are described in further detail below.
+Embedding layer: We embed each word from the
+context and question with a learned embedding
+space of dimension d. We also obtain contextaware embeddings for each word via the pretrained embedding from language models (ELMo)
+(1024 dimensions). The embedded representation
+
+for each word in the context or question, ef or
+
+ee € IR¢d+1024 is the concatenation of its learned
+word embedding and ELMo embedding.
+
+Reasoning layer: Our reasoning layer is composed of & reasoning cells (see Fig. 1), where each
+incrementally updates the context representation.
+The t" reasoning cell’s inputs are the previous
+step’s output (fei! ;_-1) and the embedded question ({e? 1). It first creates step-specific context and query encodings via cell-specific bidirec
+tional LSTMs:
+
+u’ = BiLSTM(c’');_ sv’ = BiLSTM(e®)
+
+Then, we use bidirectional attention (Seo et al.,
+2017) to emulate a hop of reasoning by focusing
+on relevant aspects of the context. Specifically, we
+first compute context-to-query attention:
+
+Si; = Wu + Wovi + W3(uy © vi)
+i exp(Sj,)
+Pij = Dm... at
+yk=1 XP(S5;)
+
+mm
+(Cq)i = Ss DiiV;
+j=l
+
+where W{, W3, W3 are trainable parameters, and
+© 1s elementwise multiplication. We then compute a query-to-context attention vector:
+
+m: = max Si,
+l<jsm
+Embedding Layer
+
+Decoding Layer
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+we Reasoning Layer
+> 2 ‘ . Context Representation
+© =
+(of & Self-Attention Layer - Aerie
+m Distribution
+o
+wW r+ ‘a : Cc oa t
+1 o> —! | Sper | — > B>e ontext Vector
+W>, 2 g Hl J 7 \ ; ® lL
+— Bo ee S > ae
+>: _— S =
+. |
+we k Reasoning Cells Xs Xe Xy PTY
+Generative 2 i>
+Distribution
+VANES aa Final
+Query Query Distribution
+FON
+
+}x9]U09
+}x9]U09
+
+ 
+
+Baseline Reasoning Cell
+
+pt = exp(m!)
+© Yija1 exp(™m;5)
+
+n
+
+t t_.t
+
+Qc = S_ piu
+i=1
+
+We then obtain the updated context representation:
+
+c; = [uj; (eq) U; © (€q)i3 de © (€q)i]
+where ; is concatenation, c’ is the cell’s output.
+The initial input of the reasoning layer is the
+embedded context representation, 1.e., co = &,
+and the final output of the reasoning layer is the
+output of the last cell, cf.
+Self-Attention Layer: As the final layer before
+answer generation, we utilize a residual static selfattention mechanism (Clark and Gardner, 2018) to
+help the model process long contexts with longterm dependencies. The input of this layer is the
+output of the last reasoning cell, c”. We first pass
+this representation through a fully-connected layer
+and then a bi-directional LSTM to obtain another
+representation of the context c°4. We obtain the
+self attention representation c’:
+
+gpa = Wic?4 + Wse?4 + We(c?4 ©) cf")
+
+SA
+psa — Pi)
+7 SE esi)
+
+Bi-LSTM :
+y
+
+ 
+
+ 
+
+ 
+
+NOIC Reasoning Cell
+
+Figure 1: Architecture for our Multi-Hop Pointer-Generator Model, and the NOIC commonsense reasoning cell.
+
+nm
+So SA_SA
+Cci= > PF; Cc;
+j=l
+
+where Wy, Ws, and Wg are trainable parameters.
+The output of the self-attention layer is generated by another layer of bidirectional LSTM.
+
+ce” = BiLSTM((e’; c°4; ce’ © c°4]
+
+Finally, we add this residually to c* to obtain the
+encoded context ce = c* +c”.
+Pointer-Generator Decoding Layer: Similar to
+the work of See et al. (2017), we use a pointergenerator model attending on (and potentially
+copying from) the context.
+
+At decoding step ¢, the decoder receives the input x; (embedded representation of last timestep’s
+output), the last time step’s hidden state s;_; and
+context vector a;_;. The decoder computes the
+current hidden state s; as:
+
+st = LSTM ([x:; ar_1], St—1)
+
+This hidden state is then used to compute a probability distribution over the generative vocabulary:
+
+Poen = softmax(Wense + Bgen)
+
+We employ Bahdanau attention mechanism (Bahdanau et al., 2015) to attend over the
+context (c being the output of self-attention layer):
+
+ay = vi tanh(W-.c; ae W St + bitin)
+ConceptNet
+
+   
+  
+ 
+ 
+
+"Sir Leicester Dedlock and his
+wife Lady Honoria live on his
+estate at Chesney Wold.."
+
+: : " Unknown to Sir Leicester,
+
+~~ [ nowse Jo[ chia > Lady Dedlock had a lover ..
+before she married and had a
+daughter with him.."
+
+" .Lady Dedlock believes her
+
+daughter is dead. The
+
+> >) child | daughter, Esther, is in fact
+alive.."
+
+>| lover | church and talks with her later
+at Chesney Wod though neither
+
+A woman recognizes their
+
+C,>K> C.>h> C3>h>C,>Kh>C,
+
+      
+ 
+
+church
+
+" Esther sees Lady Dedlock at
+
+connection.."
+
+"What is the connection
+between Esther and Lady
+Dedlock?"
+
+Answers
+
+Question
+
+Figure 2: Commonsense selection approach.
+
+ _ _exp(ai)
+_=
+i=l exp(aj)
+
+nm
+ay = ) QC;
+i=1
+
+We utilize a pointer mechanism that allows the
+decoder to directly copy tokens from the context
+based on @;. We calculate a selection distribution
+p°*” © R?, where psc is the probability of generating a token from Pye, and p3” is the probability
+
+of copying a word from the context:
+
+o= o(Waat + Wx: + Wyse + bptr)
+
+p*“ = softmax(o)
+
+Our final output distribution at timestep ¢ is a
+weighted sum of the generative distribution and
+the copy distribution:
+
+P(w) = Di Pyen(w) + ps Ss Qi;
+
+iw? =w
+
+3.2 Commonsense Selection and
+Representation
+
+In QA tasks that require multiple hops of reasoning, the model often needs knowledge of relations
+not directly stated in the context to reach the correct conclusion. In the datasets we consider, manual analysis shows that external knowledge is frequently needed for inference (see Table 1).
+
+Even with a large amount of training data, it
+is very unlikely that a model is able to learn every nuanced relation between concepts and apply the correct ones (as in Fig. 2) when reasoning
+
+Dataset Outside Knowledge Required
+WikiHop 11%
+NarrativeQA 42%
+
+Table 1: Qualitative analysis of commonsense requirements. WikiHop results are from Welbl et al. (2018);
+NarrativeQA results are from our manual analysis (on
+the validation set).
+
+about a question. We remedy this issue by introducing grounded commonsense (background) information using relations between concepts from
+ConceptNet (Speer and Havasi, 2012)! that help
+inference by introducing useful connections between concepts in the context and question.
+
+Due to the size of the semantic network and
+the large amount of unnecessary information, we
+need an effective way of selecting relations which
+provides novel information while being grounded
+by the context-query pair. Our commonsense selection strategy is twofold: (1) collect potentially
+relevant concepts via a tree construction method
+aimed at selecting with high recall candidate reasoning paths, and (2) rank and filter these paths to
+ensure both the quality and variety of added information via a 3-step scoring strategy (initial node
+scoring, cumulative node scoring, and path selection). We will refer to Fig. 2 as a running example
+throughout this section.7
+
+3.2.1 Tree Construction
+
+Given context C’ and question @, we want to construct paths grounded in the pair that emulate reasoning steps required to answer the question. In
+this section, we build ‘prototype’ paths by constructing trees rooted in concepts in the query with
+the following branching steps* to emulate multihop reasoning process. For each concept c; in the
+question, we do:
+
+Direct Interaction: In the first level, we select relations 7; from ConceptNet that directly link c;
+to a concept within the context, cg € C, e.g., in
+Fig. 2, we have lady — church, lady — mother,
+lady — person.
+
+Multi-Hop: We then select relations in ConceptNet r2 that link cg to another concept in the context, cz € C. This emulates a potential reason
+‘A semantic network where the nodes are individual concepts (words or phrases) and the edges describe directed relations between them (e.g., (island, UsedFor, vacation) ).
+
+*We release all our commonsense extraction code and
+
+the extracted commonsense data at: https://github.com/
+yicheng-w/CommonSenseMultiHopQA
+
+>If we are unable to find a relation that satisfies the condition, we keep the steps up to and including the node.
+ing hop within the context of the MRC task, e.g.,
+church — house, mother — daughter, person —
+lover.
+
+Outside Knowledge: We then allow an unconstrained hop into c3’s neighbors in ConceptNet,
+getting to c, € nbh(c3) via r3 (nbh(v) is the set
+of nodes that can be reached from v in one hop).
+This emulates the gathering of useful external information to complete paths within the context,
+e.g., house — child, daughter — child.
+Context-Grounding: To ensure that the external knowledge is indeed helpful to the task, and
+also to explicitly link 2nd degree neighbor concepts within the context, we finish the process by
+grounding it again into context by connecting c4
+tocs € C via rg, e.g., child — their.
+
+3.2.2. Rank and Filter
+
+This tree building process collects a large number
+of potentially relevant and useful paths. However,
+this step also introduces a large amount of noise.
+For example, given the question and full context
+(not depicted in the figure) in Fig. 2, we obtain
+the path “between — hard — being — cottage
+country” using our tree building method, which is
+not relevant to our question. Therefore, to improve
+the precision of useful concepts, we rank these
+knowledge paths by their relevance and filter out
+noise using the following 3-step scoring method:
+Initial Node Scoring: We want to select paths
+with nodes that are important to the context,
+in order to provide the most useful commonsense relations. We approximate importance and
+saliency for concepts in the context by their termfrequency, under the heuristic that important concepts occur more frequently. Thus we score c €
+{c2,¢3,¢5} by: score(c) = count(c)/|C|, where
+|C| is the context length and count() is the number of times a concept appears in the context. In
+Fig. 2, this ensures that concepts like daughter are
+scored highly due to their frequency in the context.
+For c4, we use a special scoring function as it 1s
+an unconstrained hop into ConceptNet. We want
+c4 to be a logically consistent next step in reasoning following the path of c, to cs, e.g., in Fig. 2, we
+see that child is a logically consistent next step after the partial path of mother — daughter. We approximate this based on the heuristic that logically
+consistent paths occur more frequently. Therefore,
+we score this node via Pointwise Mutual Information (PMI) between the partial path c,_3 and cy:
+PMI(c4, c1-3) = log(P(ca, c1-3)/P(ca)P(c1_-3)),
+
+ 
+
+where
+P(c4,c1_-3) = ot Paths connecting C1, C2) C3, C4
+# of distinct paths of length 4
+P(c4) = 2 O nodes that can reach Ca
+|ConceptNet|
+P(cy_3) = 101 Paths connecting ¢1, C2, ¢3
+# of paths of length 3
+
+Further, it is well known that PMI has high
+sensitivity to low-frequency values, thus we
+use normalized PMI (NPMI) (Bouma, 2009):
+score(c4) = PMI (ca, c1-3)/(- log P(ca, C1-3)).
+
+Since the branching at each juncture represents
+a hop in the multi-hop reasoning process, and hops
+at different levels or with different parent nodes do
+not ‘compete’ with each other, we normalize each
+node’s score against its siblings:
+
+n-score(c) = softmaxiplings(c) (Score(c)).
+
+Cumulative Node Scoring: We want to add commonsense paths consisting of multiple hops of
+relevant information, thus we re-score each node
+based not only on its relevance and saliency but
+also that of its tree descendants.
+
+We do this by computing a cumulative node
+score from the bottom up, where at the leaf nodes,
+we have c-score = n-score, and for c not a leaf
+node, we have c-score(c;) = n-score(c;) + f (cz)
+where f of a node is the average of the c-scores of
+its top 2 highest scoring children.
+
+For example, given the paths lady — mother +
+daughter, lady + mother — married, and lady mother — book, we start the cumulative scoring
+at the leaf nodes, which in this case are daughter, married, and book, where daughter and married are scored much higher than book due to their
+more frequent occurrences. Then, to cumulatively
+score mother, we would take the average score of
+its two highest scoring children (in this case married and daughter) and compound that with the
+score of mother itself. Note that the poor scoring
+of the irrelevant concept book does not affect the
+scoring of mother, which is quite high due to the
+concept’s frequent occurrence and the relevance of
+its top scoring children.
+
+Path Selection: We select paths in a top-down
+breath-first fashion in order to add information relevant to different parts of the context. Starting at
+the root, we recursively take two of its children
+with the highest cumulative scores until we reach
+a leaf, selecting up to 24 = 16 paths. For example,
+if we were at node mother, this allows us to select the child node daughter and married over the
+child node book. These selected paths, as well as
+their partial sub-paths, are what we add as external information to the QA model, i.e., we add the
+complete path (lady, AtLocation, church, RelatedTo, house, RelatedTo, child, RelatedTo, their),
+but also truncated versions of the path, including
+(lady, AtLocation, church, RelatedTo, house, RelatedTo, child). We directly give these paths to the
+model as sequences of tokens.*
+
+Overall, our sampling strategy provides the
+knowledge that a Jady can be a mother and that
+mother is connected to daughter. This creates
+a logical connection between /ady and daughter
+which helps highlight the importance of our second piece of evidence (see Fig. 2). Likewise,
+the commonsense information we extracted create a similar connection in our third piece of evidence, which states the explicit connection between daughter and Esther. We also successfully
+extract a more story context-centric connection, in
+which commonsense provides the knowledge that
+a lady is at the location church, which directs to
+another piece of evidence in the context. Additionally, this path also encodes a relation between lady
+and child, by way of church, which is how lady
+and Esther are explicitly connected in the story.
+
+3.3. Commonsense Model Incorporation
+
+Given the list of commonsense logic paths as sequences of words: X©° = {w¥°, wf, ...,
+wee } where w?® represents the list of tokens
+that make up a single path, we first embed these
+commonsense tokens into the learned embedding
+space used by the model, giving us the embedded
+commonsense tokens, ef? € R¢. We want to
+use these commonsense paths to fill in the gaps
+of reasoning between hops of inference. Thus,
+we propose Necessary and Optional Information
+Cell (NOIC), a variation of our base reasoning
+cell used in the reasoning layer that is capable of
+
+incorporating optional helpful information.
+
+NOIC This cell is an extension to the base reasoning cell that allows the model to use commonsense information to fill in gaps of reasoning. An
+example of this is on the bottom left of Fig. 1,
+where we see that the cell first performs the operations done in the base reasoning cell and then
+
+“In cases where more than one relation can be used to
+make a hop, we pick one at random.
+
+adds optional, commonsense information.
+
+At reasoning step t, after obtaining the output of the base reasoning cell, c’, we create a
+cell-specific representation for commonsense information by concatenating the embedded commonsense paths so that each path has a single vector representation, uv? . We then project it to the
+same dimension as cf: v?° = ReLU(Wu +b)
+where W and 0 are trainable parameters.
+
+We use an attention layer to model the interaction between commonsense and the context:
+
+CS __ CS t CS. CS CS .t CS
+
+Cs
+pos 7 exp(S5 )
+Wo l
+Lok=1 exp(Sf*)
+
+l
+CS __ CS..CS
+co PS vi
+j=l
+
+Finally, we combine this commonsense-aware
+context representation with the original c; via a
+sigmoid gate, since commonsense information is
+often not necessary at every step of inference:
+
+Zi = o(W.[c0?; c;] + bz)
+
+(Co)i = 2% Oc; + (1-2) Ock*
+
+We use c,° as the output of the current reasoning
+step instead of c’. As we replace each base reasoning cell with NOIC, we selectively incorporate
+commonsense at every step of inference.
+
+4 Experimental Setup
+
+Datasets: We report results on two multi-hop reasoning datasets: generative NarrativeQA (Kocisky
+et al., 2018) (summary subtask) and extractive
+QAngaroo WikiHop (Welbl et al., 2018). For
+multiple-choice WikiHop, we rank candidate responses by their generation probability. Similar to
+previous works (Dhingra et al., 2018), we use the
+non-oracle, unmasked and not-validated dataset.
+Evaluation Metrics: We evaluate NarrativeQA
+on the metrics proposed by its original authors:
+Bleu-1, Bleu-4 (Papineni et al., 2002), METEOR (Banerjee and Lavie, 2005) and RougeL (Lin, 2004). We also evaluate on CIDEr (Vedantam et al., 2015) which emphasizes annotator consensus. For WikiHop, we evaluate on accuracy.
+
+More dataset, metric, and all other training details are in the supplementary.
+Model BLEU-1
+Seq2Seq (KoCisky et al., 2018) 15.89
+ASR (Koéisky et al., 2018) 23.20
+BiDAF' (Koéisky et al., 2018) 33.72
+BiAttn + MRU-LSTM! (Tay etal.,2018) 36.55
+MHPGM 40.24
+MHPGM+ NOIC 43.63
+
+BLEU-4 METEOR’ Rouge-L CIDEr
+
+1.26 4.08 13.15 6.39 71.77 22.26 15.53 15.38 36.30 19.79 17.87 41.44 17.40 17.33 41.49 139.23
+21.07 19.03 44.16 152.98
+
+Table 2: Results across different metrics on the test set of NarrativeQA-summaries task. ' indicates span prediction
+
+models trained on the Rouge-L retrieval oracle.
+
+Model Dev __ Test
+
+BiDAF (Welbl et al., 2018) 42.1 42.9
+Coref-GRU (Dhingra et al., 2018) 56.0 59.3
+MHPGM 56.2 57.5
+MHPGM+ NOIC 58.5 57.9
+
+Table 3: Results of our models on WikiHop dataset,
+measured in % accuracy.
+
+5 Results
+
+5.1 Main Experiment
+
+The results of our model on both NarrativeQA and
+WikiHop with and without commonsense incorporation are shown in Table 2 and Table 3. We see
+empirically that our model outperforms all generative models on NarrativeQA, and is competitive
+with the top span prediction models. Furthermore,
+with the NOIC commonsense integration, we were
+able to further improve performance (p < 0.001
+on all metrics”), establishing a new state-of-the-art
+for the task.
+
+We also see that our model performs reasonably well on WikiHop, and further achieves
+promising initial improvements via the addition
+of commonsense, hinting at the generalizability
+of our approaches. We speculate that the improvement is smaller on Wikihop because only
+approximately 11% of WikiHop data points require commonsense and because WikiHop data requires more fact-based commonsense (e.g., from
+Freebase (Bollacker et al., 2008)) as opposed to
+semantics-based commonsense (e.g., from ConceptNet (Speer and Havasi, 2012)).°
+
+5.2 Model Ablations
+
+We also tested the effectiveness of each component of our architecture as well as the effective
+Stat. significance computed using bootstrap test with
+100K iterations (Noreen, 1989; Efron and Tibshirani, 1994).
+
+°All results here are for the standard (non-oracle) unmasked and not-validated dataset. Welbl et al. (2018) has
+reported higher numbers on different data settings which are
+not comparable to our results.
+
+ness of adding commonsense information on the
+NarrativeQA validation set, with results shown in
+Table 4. Experiment | and 5 are our models presented in Table 2. Experiment 2 demonstrates the
+importance of multi-hop attention by showing that
+if we only allow one hop of attention (even with all
+other components of the model, including ELMo
+embeddings) the model’s performance decreases
+by over 12 Rouge-L points. Experiment 3 and 4
+demonstrate the effectiveness of other parts of our
+model. We see that ELMo embeddings (Peters
+et al., 2018) were also important for the model’s
+performance and that self-attention is able to contribute significantly to performance on top of other
+components of the model. Finally, we see that effectively introducing external knowledge via our
+commonsense selection algorithm and NOIC can
+improve performance even further on top of our
+strong baseline.
+
+5.3 Commonsense Ablations
+
+We also conducted experiments testing the effectiveness of our commonsense selection and incorporation techniques. We first tried to naively add
+ConceptNet information by initializing the word
+embeddings with the ConceptNet-trained embeddings, NumberBatch (Speer and Havasi, 2012)
+(we also change embedding size from 256 to
+300). Then, to verify the effectiveness of our commonsense selection and grounding algorithm, we
+test our best model on in-domain noise by giving each context-query pair a set of random relations grounded in other context-query pairs. This
+should teach the model about general commonsense relations present in the domain of NarrativeQA but does not provide grounding that fills
+in specific hops of inference. We also experimented with a simpler commonsense extraction
+method of using a single hop from the query to
+the context. The results of these are shown in
+Table 5, where we see that neither NumberBatch
+nor random-relationships nor single-hop commonAblation B-1 B-4 M R C
+
+#
+
+1 - 42.3 18.9 183 449 151.6
+2 k=1 32.55 11.7 12.9 32.4 95.7
+3 - ELMo 32.8 12.7) 13.6 33.7 103.1
+4 -Self-Attn 370 164 15.6 386 125.6
+5 + NOIC 46.0 21.9 20.7 48.0 166.6
+
+Table 4: Model ablations on NarrativeQA val-set.
+
+Commonsense__ B-1 B-4 M R C
+
+None 423 189 183 449 151.6
+NumberBatch 42.6 196 186 444 148.1
+Random Rel. 43.3 193 186 45.2 151.2
+Single Hop 42.1 199 182 440 148.6
+Grounded Rel. 45.9 21.9 20.7 48.0 166.6
+
+Table 5: Commonsense ablations on NarrativeQA valset.
+
+sense offer statistically significant improvements’,
+whereas our commonsense selection and incorporation mechanism improves performance significantly across all metrics. We also present several
+examples of extracted commonsense and its model
+attention visualization in the supplementary.
+
+6 Human Evaluation Analysis
+
+We also conduct human evaluation analysis on
+both the quality of the selected commonsense relations, as well as the performance of our final
+model.
+
+Commonsense Selection: We conducted manual
+analysis on a 50 sample subset of the NarrativeQA
+test set to check the effectiveness of our commonsense selection algorithm. Specifically, given a
+context-query pair, as well as the commonsense
+selected by our algorithm, we conduct two independent evaluations: (1) was any external commonsense knowledge necessary for answering the
+question?; (2) were the commonsense relations
+provided by our algorithm relevant to the question? The result for these two evaluations as well
+as how they overlap with each other are shown in
+Table 6, where we see that 50% of the cases required external commonsense knowledge, and on
+a majority (34%) of those cases our algorithm was
+able to select the correct/relevant commonsense
+information to fill in gaps of inference. We also
+see that in general, our algorithm was able to provide useful commonsense 48% of the time.
+Model Performance: We also conduct human
+evaluation to verify that our commonsense incorporated model was indeed better than MHPGM.
+
+’The improvement in Rouge-L and METEOR for all three
+ablation approaches have p > 0.15 with the bootstrap test.
+
+Commonsense Required
+
+Yes No
+Relevant CS Extracted 34% 14%
+Irrelevant CS Extracted 16% 36%
+
+Table 6: NarrativeQA’s commonsense requirements
+and effectiveness of commonsense selection algorithm.
+
+MHPGM+NOIC better 23%
+MHPGM better 15%
+Indistinguishable (Both-good) | 41%
+Indistinguishable (Both-bad) 21%
+
+Table 7: Human evaluation on the output quality of the
+MHPGM+NOIC vs. MHPGM in terms of correctness.
+
+We randomly selected 100 examples from the NarrativeQA test set, along with both models’ predicted answers, and for each datapoint, we asked
+3 external human evaluators (fluent English speakers) to decide (without knowing which model produced each response) if one is strictly better than
+the other, or that they were similar in quality (bothgood or both-bad). As shown in Table 7, we see
+that the human evaluation results are in agreement
+with that of the automatic evaluation metrics: our
+commonsense incorporation has a reasonable impact on the overall correctness of the model. The
+inter-annotator agreement had a Fleiss k = 0.831,
+indicating ‘almost-perfect’ agreement between the
+annotators (Landis and Koch, 1977).
+
+7 Conclusion
+
+We present an effective reasoning-generative QA
+architecture that is a novel combination of previous work, which uses multiple hops of bidirectional attention and a pointer-generator decoder to
+effectively perform multi-hop reasoning and synthesize a coherent and correct answer. Further, we
+introduce an algorithm to select grounded, useful paths of commonsense knowledge to fill in
+the gaps of inference required for QA, as well a
+Necessary and Optional Information Cell (NOIC)
+which successfully incorporates this information
+during multi-hop reasoning to achieve the new
+state-of-the-art on NarrativeQA.
+
+Acknowledgments
+
+We thank the reviewers for their helpful comments. This work was supported by DARPA
+(YFA17-D17AP00022), Google Faculty Research
+Award, Bloomberg Data Science Research Grant,
+and NVidia GPU awards. The views contained in
+this article are those of the authors and not of the
+funding agency.
+References
+
+Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. 2015. Neural machine translation by jointly
+learning to align and translate. In JCLR.
+
+Satanjeev Banerjee and Alon Lavie. 2005. Meteor: An
+automatic metric for mt evaluation with improved
+correlation with human judgments. In Proceedings of the ACL Workshop on intrinsic and extrinsic
+evaluation measures for machine translation and/or
+summarization, pages 65-72.
+
+Junwei Bao, Nan Duan, Zhao Yan, Ming Zhou, and
+Tiejun Zhao. 2016. Constraint-based question answering with knowledge graph. In Proceedings of
+COLING 2016, the 26th International Conference
+on Computational Linguistics: Technical Papers,
+pages 2503-2514.
+
+Kurt Bollacker, Colin Evans, Praveen Paritosh, Tim
+Sturge, and Jamie Taylor. 2008. Freebase: a collaboratively created graph database for structuring human knowledge. In Proceedings of the 2008 ACM
+SIGMOD international conference on Management
+of data, pages 1247-1250. AcM.
+
+Antoine Bordes, Sumit Chopra, and Jason Weston.
+2014. Question answering with subgraph embeddings. In Proceedings of the 2014 Conference on
+Empirical Methods in Natural Language Processing
+(EMNLP), pages 615-620.
+
+Gerlof Bouma. 2009. Normalized (pointwise) mutual
+information in collocation extraction. Proceedings
+of GSCL, pages 31-40.
+
+Erik Cambria, Amir Hussain, Tariq Durrani, Catherine
+Havasi, Chris Eckl, and James Munro. 2010. Sentic computing for patient centered applications. In
+Signal Processing (ICSP), 2010 IEEE 10th International Conference on, pages 1279-1282. IEEE.
+
+Qian Chen, Xiaodan Zhu, Zhen-Hua Ling, Diana
+Inkpen, and Si Wei. 2018. Neural natural language
+inference models enhanced with external knowledge. In Proceedings of the 56th Annual Meeting of
+the Association for Computational Linguistics (Volume I: Long Papers), pages 2406-2417. Association for Computational Linguistics.
+
+Jianpeng Cheng, Li Dong, and Mirella Lapata. 2016.
+Long short-term memory-networks for machine
+reading. In Proceedings of the 2016 Conference on
+Empirical Methods in Natural Language Processing, pages 551-561.
+
+Christopher Clark and Matt Gardner. 2018. Simple
+and effective multi-paragraph reading comprehension. In Proceedings of the 56th Annual Meeting of
+the Association for Computational Linguistics (Long
+Papers), pages 845-855.
+
+Bhuwan Dhingra, Qiao Jin, Zhilin Yang, William Cohen, and Ruslan Salakhutdinov. 2018. Neural models for reasoning over multiple mentions using coreference. In Proceedings of the 2018 Conference of
+
+the North American Chapter of the Association for
+Computational Linguistics: Human Language Technologies, Volume 2 (Short Papers), volume 2, pages
+42-48.
+
+Bhuwan Dhingra, Hanxiao Liu, Zhilin Yang, William
+Cohen, and Ruslan Salakhutdinov. 2017. Gatedattention readers for text comprehension. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long
+Papers), volume 1, pages 1832-1846.
+
+Bradley Efron and Robert J Tibshirani. 1994. An introduction to the bootstrap. CRC press.
+
+Marjan Ghazvininejad, Chris Brockett, Ming-Wei
+Chang, Bill Dolan, Jianfeng Gao, Wen-tau Yih, and
+Michel Galley. 2018. A knowledge-grounded neural
+conversation model. In AAAI.
+
+Karl Moritz Hermann, Tomas Kocisky, Edward
+Grefenstette, Lasse Espeholt, Will Kay, Mustafa Suleyman, and Phil Blunsom. 2015. Teaching machines to read and comprehend. In Advances in Neural Information Processing Systems, pages 16931701.
+
+Rudolf Kadlec, Martin Schmid, Ondrej Bajgar, and Jan
+Kleindienst. 2016. Text understanding with the attention sum reader network. In Proceedings of the
+54th Annual Meeting of the Association for Computational Linguistics, pages 908-918.
+
+Diederik P Kingma and Jimmy Ba. 2015. Adam: A
+method for stochastic optimization. In 3rd International Conference for Learning Representations.
+
+Tomas Koéisky, Jonathan Schwarz, Phil Blunsom,
+Chris Dyer, Karl Moritz Hermann, Gaabor Melis,
+and Edward Grefenstette. 2018. The narrativeqa
+reading comprehension challenge. Transactions
+of the Association of Computational Linguistics,
+6:317-328.
+
+J Richard Landis and Gary G Koch. 1977. The measurement of observer agreement for categorical data.
+biometrics, pages 159-174.
+
+Chin-Yew Lin. 2004. Rouge: A package for automatic evaluation of summaries. Text Summarization
+Branches Out.
+
+Todor Mihaylov and Anette Frank. 2018. Knowledgeable reader: enhancing cloze-style reading comprehension with external commonsense knowledge. In
+Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1:
+Long Papers), pages 821-832. Association for Computational Linguistics.
+
+Eric W Noreen. 1989. Computer-intensive methods for
+testing hypotheses. Wiley New York.
+
+Kishore Papineni, Salim Roukos, Todd Ward, and WeiJing Zhu. 2002. Bleu: a method for automatic evaluation of machine translation. In Proceedings of the
+40th Annual Meeting on Association for Computational Linguistics, pages 311-318. Association for
+Computational Linguistics.
+
+Matthew E Peters, Mark Neumann, Mohit Iyyer, Matt
+Gardner, Christopher Clark, Kenton Lee, and Luke
+Zettlemoyer. 2018. Deep contextualized word representations. In Proceedings of NAACL.
+
+Soujanya Poria, Erik Cambria, Alexander Gelbukh,
+Federica Bisio, and Amir Hussain. 2015. Sentiment
+data flow analysis by means of dynamic linguistic
+patterns. ZEEE Computational Intelligence Magazine, 10(4):26-36.
+
+Soujanya Poria, [ti Chaturvedi, Erik Cambria, and Federica Bisio. 2016. Sentic LDA: Improving on LDA
+with semantic similarity for aspect-based sentiment
+analysis. In Neural Networks (IJCNN), 2016 International Joint Conference on, pages 4465-4473.
+IEEE.
+
+Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and
+Percy Liang. 2016. Squad: 100,000+ questions for
+machine comprehension of text. In Proceedings of
+the 2016 Conference on Empirical Methods in Natural Language Processing, pages 2383-2392.
+
+Abigail See, Peter J Liu, and Christopher D Manning.
+2017. Get to the point: Summarization with pointergenerator networks. In Proceedings of the 55th Annual Meeting of the Association for Computational
+Linguistics (Volume 1: Long Papers), volume 1,
+pages 1073-1083.
+
+Minjoon Seo, Aniruddha Kembhavi, Ali Farhadi, and
+Hannaneh Hajishirzi. 2017. Bidirectional attention
+flow for machine comprehension. In JCLR.
+
+Robyn Speer and Catherine Havasi. 2012. Representing general relational knowledge in ConceptNet 5.
+In LREC, pages 3679-3686.
+
+Sainbayar Sukhbaatar, Jason Weston, Rob Fergus, et al.
+2015. End-to-end memory networks. In Advances
+in Neural Information Processing Systems, pages
+2440-2448.
+
+Yi Tay, Luu Anh Tuan, and Siu Cheung Hui. 2018.
+Multi-range reasoning for machine comprehension.
+arXiv preprint arXiv: 1803.09074.
+
+Ramakrishna Vedantam, C Lawrence Zitnick, and Devi
+Parikh. 2015. Cider: Consensus-based image description evaluation. In Proceedings of the [EEE
+Conference on Computer Vision and Pattern Recognition, pages 4566-4575.
+
+Qiu-Feng Wang, Erik Cambria, Cheng-Lin Liu, and
+Amir Hussain. 2013. Common sense knowledge
+for handwritten chinese text recognition. Cognitive
+Computation, 5(2):234—242.
+
+Dirk Weissenborn, Tomas Kocisky, and Chris Dyer.
+2017. Dynamic integration of background knowledge in neural NLU systems. arXiv preprint
+arXiv: 1706.02596.
+
+Johannes Welbl, Pontus Stenetorp, and Sebastian
+Riedel. 2018. Constructing datasets for multi-hop
+reading comprehension across documents. Transactions of the Association of Computational Linguistics, 6:287—-302.
+
+Jason Weston, Antoine Bordes, Sumit Chopra, Alexander M Rush, Bart van Merriénboer, Armand Joulin,
+and Tomas Mikolov. 2016. Towards ai-complete
+question answering: A set of prerequisite toy tasks.
+In JCLR.
+
+Zhen Xu, Bingquan Liu, Baoxun Wang, Chengyjie Sun,
+and Xiaolong Wang. 2017. Incorporating loosestructured knowledge into LSTM with recall gate for
+conversation modeling. In Jnternational Joint Conference on Neural Networks.
+
+Tom Young, Erik Cambria, Iti Chaturvedi, Munlie
+Huang, Hao Zhou, and Subham Biswas. 2018. Augmenting end-to-end dialog systems with commonsense knowledge. In Proceedings of the ThirtySecond AAAI Conference on Artificial Intelligence
+(AAAI-18).
+
+A Supplemental Material
+
+A.1 Experimental Setup
+
+Datasets We test our model with and without commonsense addition on two challenging
+datasets that require multi-hop reasoning and external knowledge: NarrativeQA (Koéisky et al.,
+2018) and QAngaroo-WikiHop (Welbl et al.,
+2018). NarrativeQA is a generative QA dataset
+where the passages are either stories or summaries
+of stories, and the questions ask about complex
+aspects of the narratives such as event timelines,
+characters, relations between characters, etc. Each
+question has two answers which are generated by
+human annotators and usually cannot be found
+in the passage directly. We focus on the summary subtask in this paper, where summaries have
+lengths of up to 1000 words.
+
+We also test our model on WikiHop, a fact
+based, multi-hop dataset. Questions in WikiHop
+often require a model to read several documents
+in order to obtain an answer. We focus on the
+multiple-choice part of WikiHop, where models
+are tasked with picking the correct response from
+a pool of candidates. We rank candidate responses
+by calculating their generation probability based
+on our model. As this is a multi-document QA
+task, we first rank the candidate documents via TFIDF cosine distance with the question, and then
+take the top & documents such that their combined
+length is less than 1300 words.
+Evaluation Metrics We evaluate NarrativeQA
+on the metrics proposed by its original authors:
+Bleu-1, Bleu-4 (Papineni et al., 2002), METEOR (Banerjee and Lavie, 2005) and RougeL (Lin, 2004). We also evaluate on CIDEr (Vedantam et al., 2015) as it places emphasize on annotator consensus. For WikiHop, we evaluate on accuracy.
+
+Training Details In training for both datasets,
+we minimize the negative log probability of generating the ground-truth answer with the Adam optimizer (Kingma and Ba, 2015) with an initial learning rate of 0.001, a dropout-rate of 0.2 (dropout is
+applied to the input of each RNN layer) and batch
+size of 24. We use 256 dimensional word embeddings and a hidden size of 128 for all RNNs and
+k; = 3 hops of multi attention. At inference time
+we use greedy decoding to generate the answer.
+For both NarrativeQA and WikiHop, we reached
+these parameters via tuning on the full, official validation set.
+
+A.2 Commonsense Extraction Examples
+
+In Tables 8, 9, and 10 (see next page), we demonstrate extracted commonsense examples for questions that require commonsense to reach an answer. We bold words in the question and in the extracted commonsense in cases where the commonsense knowledge explicitly bridges gaps between
+implicitly connected words in the context or question. The relevant context is also displayed, with
+context words that are key to answering the question (via commonsense) marked in bold. These are
+then followed by a context visualization described
+in the next section.
+
+A.3. Commonsense Integration Visualization
+
+We also visualize how much commonsense information is integrated into each part of the context
+by providing a visualization of the z; value (see
+end of Sec. 3.3 of main file) for i € {1,2,3},
+which is the gate value signifying how much
+commonsense-attention representation is used in
+the output context representation. In the following examples (next page), we use shades of blue
+to represent the average of (1 — z;) at each word
+in the context (normalized within each hop), with
+deeper blue indicating the use of more commonsense information. As a general trend, we see that
+in the earlier hops, words which are near tokens
+that occur in both the context and commonsense
+
+paths have high activation, but the activation becomes more focused on the passage’s key words
+w.r.t. the question, as the number of hops increase.
+maurya has lost her husband , and five of her sons to the sea . as the play begins nora
+and cathleen receive word from the priest that a body , that may be their brother
+michael , has washed up on shore in donegal , the island farthest north of their home
+island of inishmaan . bartley is planning to sail to connemara to sell a horse , and
+ignores maurya s pleas to stay . he leaves gracefully . maurya predicts that by
+nightfall she will have no living sons , and her daughters chide her for sending
+bartley off with an ill word . maurya goes after bartley to bless his voyage , and nora
+and cathleen receive clothing from the drowned corpse that confirms itis their
+brother . maurya returns home claiming to have seen the ghost of michael riding
+behind bartley and begins lamenting the loss of the men in her family to the sea ,
+after which some villagers bring 1n the corpse of bartley , who has fallen off his
+horse into the sea and drowned . this speech of maurya s is famous 1n irish drama : (
+raising her head and speaking as if she did not see the people around her ) they re all
+gone now , and there is n't anything more the sea can do to me ... . 1 | have no call
+now to be up crying and praying when the wind breaks from the south , and you can
+hear the surf is in the east , and the surf is in the west , making a great stir with the
+two noises , and they hitting one on the other . 1 II have no call now to be going
+down and getting holy Waterjin the dark nights after samhain , and 1 wo n't care what
+way the sea is when the other women will be keening . ( to nora ) give me the holy
+Water , nora ; there s a small sup still on the dresser .
+
+ 
+
+Figure 3: Example | visualized activation values of first attention hop (1 — z1).
+
+maurya has lost her husband , and five of her sons to the sea . as the play begins nora
+and cathleen receive word from the priest that a body , that may be their brother
+michael , has washed up on shore in donegal , the island farthest north of their home
+island of inishmaan . bartley is planning to sail to connemara to sell a horse , and
+ignores maurya s pleas to stay . he leaves gracefully . maurya predicts that by
+nightfall she will have no living sons , and her daughters chide her for sending
+bartley off with an ill word . maurya goes after bartley to bless his voyage , and nora
+and cathleen receive clothing from the drowned corpse that confirms it is their
+brother . maurya returns home claiming to have seen the ghost of michael riding
+behind bartley and begins lamenting the loss of the men in her family to the sea ,
+after which some villagers bring in the corpse of bartley , who has fallen off his
+horse into the sea and drowned . this speech of maurya s is famous in irish drama : (
+raising her head and speaking as if she did not see the people around her ) they re all
+gone now , and there 1s n't anything more the sea can do to me... .1 ll have no call
+now to be up crying and praying when the wind breaks from the south , and you can
+hear the surf is in the east , and the surf is in the west , making a great stir with the
+two noises , and they hitting one on the other . i Il have no call now to be going
+down and getting holy water in the dark nights after samhain , and 1 wo n't care what
+way the sea is when the other women will be keening . ( to nora ) give me the holy
+water , nora ; there s a small sup still on the dresser .
+
+Figure 4: Example | visualized activation values of second attention hop (1 — z2).
+Commonsense Extraction and Visualization Examples
+
+Question
+
+Context
+
+Answers
+
+Extracted
+Commonsense
+
+ 
+
+What shore does Michael’s corpse wash up on?
+
+” as the play begins nora and cathleen receive word from the priest that a
+body, that may be their brother michael, has washed up on shore in donegal,
+the island farthest north of their home island of inishmaan..”
+
+the shore of donegal / donegal
+
+up — RelatedTo — wind + Antonym — her — RelatedTo — person
+
+up — RelatedTo — north + RelatedTo — up
+
+wash — RelatedTo — up
+
+up — Antonym — down
+
+wash — RelatedTo — water — PartOf — sea + RelatedTo — fish
+
+up — RelatedTo — wind
+
+wash — RelatedTo — water — PartOf — sea
+
+shore — RelatedTo — sea
+
+wash — RelatedTo — body
+
+wash — Antonym — making
+
+up — Antonym — down — Antonym — up
+
+wash — RelatedTo — water — PartOf — sea + MadeOf — water
+
+up — RelatedTo — wind — Antonym — her
+
+wash — RelatedTo — water
+
+up — RelatedTo — south
+
+shore — RelatedTo — sea + MadeOf — water — AtLocation + bucket — RelatedTo — horse
+wash — RelatedTo — clothing
+
+wash — RelatedTo — water — PartOf — sea — MadeOf — water + PartOf — sea
+shore — RelatedTo — sea + MadeOf — water
+
+wash — Antonym —> getting
+
+up — RelatedTo — north
+
+corpse — RelatedTo — body
+
+shore + RelatedTo — sea — MadeOf — water — AtLocation — fountain
+
+corpse —> RelatedTo — body — RelatedTo — corpse
+
+corpse —> RelatedTo — body — RelatedTo — water
+
+wash — HasContext — west
+
+up — RelatedTo — wind — Antonym — her — RelatedTo — person — MadeOf — water
+up — RelatedTo — wind — AtLocation — sea
+
+wash — RelatedTo — water — AtLocation — can
+
+shore + RelatedTo — sea + MadeOf — water — AtLocation — bucket
+
+wash — RelatedTo — will
+
+shore —+ RelatedTo — sea + MadeOf — water — AtLocation — fountain — RelatedTo — water
+
+Table 8: Example 1 selected commonsense paths.
+
+ 
+ 
+  
+
+maurya has lost her husband , and five of her sons to the §€a’. as the play begins nora
+and cathleen receive word from ae a body , ea tmay 7 t
+michael , has washed up on Shore in donegal , th thest
+
+island of inishimaaml. bartley is planning to sail t
+ignores maurya s pl o stay . he mlcaves oa maa prec mea by
+nightfall she will have n no o daught
+
+     
+  
+ 
+     
+ 
+
+    
+ 
+
+  
+ 
+ 
+ 
+
+soe, ae ctorns home claiming to have s seen the ghost of SI icine
+behind bartley and begins lamenting the loss of the in to the Seal,
+after which St agers bring in the Corpse of bartley , who has ae off his
+nto the §€aland drowned . this speech of maurya s is famous in irish drama : (
+
+sh see the people around her ) they re all
+an do to me... . ill have no 0 call
+
+{ iS 1 yt on and OMs i in the west, making a
+two noises , and they hitting n the Other. i 11 have no call
+down and getting , and iwo n't it hat
+way thé S€ilis when the other Women will be keening . ( to nofa)) give me the Roly
+water , nora ; there s a small sup still on the dresser .
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+   
+   
+  
+
+   
+
+Figure 5: Example 1 visualized activation values of third attention hop (1 — zs).
+
+Question What species lives in the nearby mines?
+Context ” .the nearby mines are inhabited by a race of goblins..”
+Answers the goblins / goblins.
+
+species —> RelatedTo — kingdom — RelatedTo — queen
+
+species —> RelatedTo — kingdom — RelatedTo — queen —> UsedFor — people — HasA — feet
+mines — FormOf — mine
+
+lives + FormOf — life
+
+mines — FormOf — mine — AtLocation — home — RelatedTo — person
+
+species —> RelatedTo — kingdom — RelatedTo — queen — UsedFor — people
+
+species > RelatedTo — kingdom — DerivedFrom — king — RelatedTo — master
+
+species —> RelatedTo — kingdom — RelatedTo — queen — RelatedTo — person — Desires — feet
+mines — FormOf — mine — AtLocation — home — RelatedTo — line > RelatedTo — thread
+species —> RelatedTo — kingdom — DerivedFrom — king — RelatedTo — leader — AtLocation
+— company
+
+species —> RelatedTo — kingdom
+
+species —> RelatedTo — kingdom — DerivedFrom — king — RelatedTo — leader
+
+species —> RelatedTo — kingdom — DerivedFrom — king
+
+mines — FormOf — mine — AtLocation — home — RelatedTo — line
+
+species — RelatedTo — race
+
+mines — FormOf — mine — AtLocation + home
+
+species > RelatedTo — kingdom — RelatedTo — queen — RelatedTo — person
+
+species —> RelatedTo — kingdom — DerivedFrom — king — RelatedTo — master — RelatedTo
+— young
+
+Extracted
+Commonsense
+
+ 
+
+Table 9: Example 2 selected commonsense paths.
+
+ 
+     
+    
+   
+  
+
+irene persuades her neta to take her
+
+goblins and fests |
+
+ 
+
+at-gr at-grandmother S tower leads her home ,
+ther gives irene a ring attached to a thread invisible
+constantly to home when curdie
+
+in his leg , until i TOKE S Rae eateerandmotied heals the wound |
+ile , the goblins break through the palace floor and Ee: abduct the
+
+; but curdie escapes from his
+
+upon the goblins’ retreat irene
+
+    
+  
+  
+
+, and curdie warns the others ; but
+1s a bodyguard ; but curdie refuses
+
+an and and instead accepts a
+
+ 
+
+ 
+
+Figure 6: Example 2 visualized activation values of first attention hop (1 — 2).
+eight-year-old princess irene lives a lonely life in a Castle)in a wild , desolate ,
+mountainous kingdom , with only her nursemaid , lootie , for company . her father ,
+the king , is normally absent , and her mother is dead . unknown to her , the nearby
+mines are inhabited by a race of goblins , long banished from the kingdom and now
+anxious to take revenge on their human neighbors . one rainy day , the princess
+explores the Castle and discovers a beautiful , mysterious lady , who identifies
+herself as irene s namesake and great-great-grandmother . the next day , princess
+irene persuades her nursemaid to take her outside . after dark they are chased by
+goblins and rescued by the young miner, curdie , whom irene befriends . at work
+with the rest of the miners , curdie overhears the goblins talking , and their
+conversation reveals to curdie the secret weakness of goblin anatomy : they have
+very soft , vulnerable feet . curdie sneaks into the great hall of the goblin palace to
+eavesdrop on their general meeting , and hears that the goblins intend to flood the
+mine if a certain other part of their plan should fail . he later conveys this news to his
+father . in the palace , princess irene injures her hand , which her great-greatgrandmother heals . a week later irene is about to see her great-great-grandmother
+again , but is frightened by a long-legged cat and escapes up the mountain ;
+whereupon the light from her great-great-grandmother s tower leads her home ,
+where her great-great-grandmother gives irene a ring attached to a thread invisible
+except to herself , which thereafter connects her constantly to home . when curdie
+explores the goblins ' domain , he is discovered by the goblins and stamps on their
+feet with great success ; but when he tries to stamp on the queen s feet she 1s
+uninjured due to her stone shoes . the goblins imprison curdie , thinking he will die
+of starvation ; but irene s magic thread leads her to his rescue , and curdie steals one
+of the goblin queen s stone shoes . irene takes curdie to see her great-greatgrandmother and be introduced ; but she is only visible to irene . curdie later learns
+that the goblins are digging a tunnel in the mines towards the king s palace , where
+they plan to abduct the princess and marry her to goblin prince harelip . curdie warns
+the palace guards about this , but is imprisoned instead and contracts a fever through
+a wound in his leg, until irene s great-great-grandmother heals the wound .
+meanwhile , the goblins break through the palace floor and come to abduct the
+princess ; but curdie escapes from his prison room and stamps on the goblins ' feet .
+upon the goblins’ retreat , irene is believed a captive ; but curdie follows the magic
+thread to her refuge at his own house, and restores her to the king . when the goblins
+flood the mines , the water enters the palace , and curdie warns the others ; but the
+goblins are drowned . the king asks him to serve as a bodyguard ; but curdie refuses
+, saying he can not leave his mother and father , and instead accepts a new red
+petticoat for his mother , as a reward .
+
+Figure 7: Example 2 visualized activation values of second attention hop (1 — z2).
+is normally ea, and ict
+
+sean —— a
+
+  
+  
+ 
+ 
+
+herself as irene s namesake
+irene persuades her BESeenalto take he 7
+Soblins and rescued by the young miner), curdie , whom irenélbefriends at ae
+with the rest of the Miners. curdie overhears the GOblins|talking , and their
+conversation reveals to cur of Sapien they have
+= Inerable feet . curdie sneaks into the great hall of the Soblin'palace t
+eave: on their general meeting , and hears that the GObliASlintend to flood
+mine if a 5 OEMatnenedlot GSGlshould fail . 7 conveys this news to his
+father . in the palace’, princess irene injures h her great-greatgrandmother heals . a Week later irene is about to =
+again , but is frightened by a long“legged cat and escapes up the |
+whereupon her great-great-grandmother s tower leads her home ,
+where her great-great-grandmother gives iret attached to a thread invisible
+except to herself, which thereafter connects her constantly to home . when curdie
+he ' domain , he is discovered by and sta
+success ; but when he tries to stamp on the Queens f is
+uninjured due BD her BEEEEEshoes . the Soblins!imprison curdie , thinking he will die
+of starvation : but irene s magic thread leads her to his rescue , and curdie steals one
+of the goblin queen s stone shoes . irene takes curdie to see
+grandmother and be introduced ; but she i is only visible to irene . - & learns
+that the BOblinSlare digging a in the mines towards
+HEY plan to abduct the SRE and : marry her to
+he palace guards about this , but is imprisoned instead and contracts SEbroush
+» wound in his leg, until irene's great-great-grandmother heals the wound .
+meanwhile , the SOblins! break through floor st the
+a. b rm curdie escapes from his prison room amd stamps on the Boblins’'
+upon the §oblins! , irene is believed a Captive ; but curdie follows the magic
+thread to her refuge at his own house, and restores her to the king). when the BOIS
+flood the mines , the Water enters the , and curdie warns the others ; but the
+goblins . the King/asks him to serve as a bodyguard ; but curdie refuses
+, saying a can not an: i and father , and instead accepts a new fed
+
+ 
+ 
+   
+    
+ 
+ 
+ 
+    
+  
+  
+
+ 
+
+ 
+ 
+
+        
+
+    
+    
+
+   
+
+Figure 8: Example 2 visualized activation values of third attention hop (1 — zs).
+Question
+
+Context
+
+Answers
+
+Extracted
+Commonsense
+
+What duty does ruth have to fulfill when her aunt dies?
+
+” ruth anvoy, a young american woman with a wealthy father, comes to britain to
+visit her widowed aunt lady coxon..”
+
+” ,£having made a promise to her now-deceased husband, lady coxon has for
+years been seeking to bestow a sum of 13,000 pounds upon a talented
+intellectual whose potential has been hampered by lack of money. having failed to
+find such a person, lady coxon tells anvoy that upon her death the money will be
+left to her, and she must carry on the quest..”
+
+” ,anvoy, having lost nearly all her wealth, has only the 13,000 pounds from
+
+lady coxon, with a moral but not legal obligation to give it away..”
+
+” she awards the coxon fund to saltram, who lives off it exactly as he lived off
+his friends, producing nothing of intellectual value..”
+
+she must give away the 13,000 pounds to an appropriate recipient. /
+bestow 13000 to the appropriate person
+
+duty —> RelatedTo — moral — Antonym — immoral
+
+duty — RelatedTo — time — IsA — money
+
+duty — RelatedTo — time — IsA —+ money — AtLocation — church
+
+duty — DistinctFrom — off
+
+duty — RelatedTo — time — IsA — money — CapableOf — pay — bills — MotivatedByGoal
+— must
+
+duty —> RelatedTo — time —+ IsA — money — AtLocation —+ church — RelatedTo — house
+duty — RelatedTo — must — RelatedTo — having — RelatedTo — estate — RelatedTo — real
+her —> RelatedTo — woman — RelatedTo — lady —+ RelatedTo — plate — Antonym — her
+duty —> RelatedTo — moral — RelatedTo — will — RelatedTo — choose — IsA — decide
+
+duty —> RelatedTo — must — RelatedTo — having — RelatedTo — estate
+
+duty — RelatedTo — obligation
+
+duty —> RelatedTo — moral — RelatedTo — will — IsA — purpose
+
+her — RelatedTo — but — DistinctFrom — only + RelatedTo — child + RelatedTo — particularly
+her —> RelatedTo — person — RelatedTo — others — RelatedTo — people
+
+her — Antonym — him — RelatedTo — he — RelatedTo — person — Desires — conversation
+her — RelatedTo — woman — RelatedTo — lady
+
+her — RelatedTo — woman — RelatedTo — she
+
+duty —> RelatedTo — must — RelatedTo — having — RelatedTo — own — RelatedTo — having
+her — RelatedTo — person — DistinctFrom — man — Antonym — people
+
+her — RelatedTo — but — DistinctFrom — only + RelatedTo — child
+
+her — Antonym — him — RelatedTo — he — RelatedTo — person
+
+her — Antonym — his — RelatedTo — him — RelatedTo — person
+
+ 
+
+Table 10: Example 3 selected commonsense paths.
+
+ 
+frank saltram is a man who apparently has a towering intellect , but one that
+manifests itself only in sparkling table-talk . he has a real and power gift to delight
+with his conversation , particularly when intoxicated , but other than conversation he
+produces nothing . saltram also recognises no obligations or duties , is ungrateful
+and utterly unreliable , and is apparently prone to immoral acts . he lives off others ,
+particularly the mulvilles , who , convinced of saltram 's genius and genuinely
+enjoying his talk , host him for months at a time . in the opinion of the unnamed
+narrator , saltram is not a deliberate conman ; he simply suffers from a want of
+dignity . the story revolves around saltram and a group of people who are fascinated
+by him . ruth anvoy , a young american woman with a wealthy father , comes to
+britain to visit her widowed aunt lady coxon . there she meets george gravener , a
+man with a real intellect and a future in politics , and the two become engaged . she
+also meets saltram , and is fascinated and impressed by his talk and intellect , though
+aware that he has shortcomings of character . having made a promise to her nowdeceased husband , lady coxon has for years been seeking to bestow a sum of 13,000
+pounds upon a talented intellectual whose potential has been hampered by lack of
+money . having failed to find such a person , lady coxon tells anvoy that upon her
+death the money will be left to her , and she must carry on the quest . anvoy s father
+suffers heavy financial losses and loses most of what he has . he dies , and shortly
+afterwards lady coxon dies . anvoy , having lost nearly all her wealth , has only the
+13,000 pounds from lady coxon , with a moral but not legal obligation to give it
+away . gravener urges her to keep the money , as it could be used to buy them a
+house once they are married . she refuses , and their relationship becomes strained .
+later , she entertains the idea of giving the money to saltram , who gravener despises
+as a fraud and not a gentleman . eventually their engagement is broken off . finally ,
+the unnamed narrator is given a sealed letter and asked to give it to anvoy . the letter
+is understood to contain a denunciation of saltram s most immoral acts . the narrator
+must decide whether to blight saltram s prospects by delivering the letter . he is
+willing to do so if it will save his friend gravener s engagement with anvoy , but
+gravener is unable to assure him of this . eventually he does offer the letter to anvoy
+, but anvoy declines to read it . she awards the coxon fund to saltram , who lives off
+it exactly as he lived off his friends , producing nothing of intellectual value . thus
+the only result of the award is the mulvilles and others lose the pleasure of saltram s
+conversation .
+
+Figure 9: Example 3 visualized activation values of first attention hop (1 — z1).
+frank saltram is a man who apparently has a towering , but one that
+- a
+
+manifests itself only in _ he has a
+
+o his host or a: in the opinion of the unnamed
+, Saltram is not a deliberate conman ; he simply suffers from
+
+eves arc
+
+by him .
+britain to visit eeanea AAI. there she meets
+man with a real intellect and 2 and the two become e
+
+also meets saltram , and is f ypress und :
+aware Shaving made a fafomnise to her now:
+
+deceased EE Bicoxon has for years been secking to bestow a Siimilof 131000
+‘lady cOXOR ‘cll BVO that upon her
+on the quest . anvoy s father
+
+left r, and she must carry
+suffers a loses most of what he has . he dies , and shortly
+
+afterwards lady Coxon dies . anvoy , having lost nearly all her wealth has only the
+13,000 pounds from lady coxon , with Dt 0 give it
+. gravener urges her to keep the money , as it a be used to buy =,
+houselonce they are 1 .
+later , she entertains the idea of giving the EEEEto
+as a fraud!anc a gentleman . eventually their BGRERs b
+
+whether to blight saltram s prospects by delivering 4 he is
+his ifiend/gravener s ARM with Raya,
+
+willing to do : if i it will save
+gravener is unable to assure him of this . eventually he does offer
+
+, but anvoy declines to read 7 aie awards the coxon fund to saltram , who Re off
+
+it exactly as he lived
+
+ 
+
+Figure 10: Example 3 visualized activation values of second attention hop (1 — Za).
+) apparently has = BEAR ntcllect but —
+Spandlinehable-talk hethas
+
+itself only | in
+
+with his conversation , particular! !
+produces nothing . Gelso 1 recognises | blige or duties , i
+, and is ‘apparently prone to inmorl as -he es
+
+narrator , Saltram is not +» RN ei hesimply i from a Want of
+
+BG. the MEBrevolves around Saltram and f
+. fitiilan : oR A woman th A comes to
+meets george gravener 1
+
+O ee and SBS must carry on
+
+5 ySSeS es of what he has . _— and sh
+afterwards uilicoxonidies anvoy , hav: ;
+13}000Ipounds from [ad¥lcoxon , with ot |
+away . gravener urges
+OUsElonce they are married . She'refuses , and their relationship becomes strained
+se eteriin the idea of Bian the Ico saltram , ane a
+
+il II save his friend gravener s EgagemeRE with anvoy. but
+na S$ of this . eventually he does offe beer
+
+, but moet: to read it . She awards the oxon fund to Salttam , who lives’
+Blexactly as he lived off t
+
+f the EWARElis the HMUINHMESland others lose t
+
+ 
+
+Figure 11: Example 3 visualized activation values of third attention hop (1 — z3).
+

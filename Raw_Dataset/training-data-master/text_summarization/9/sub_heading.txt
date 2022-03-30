@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Previous Work
+Attentive Recurrent Architecture
+Recurrent Decoder
+Attentive Encoder
+Training and Generation
+Experimental Setup
+Datasets and Evaluation
+Architectural Choices
+Results
+Conclusion

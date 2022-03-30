@@ -1,0 +1,134 @@
+187	0	8	n	YahooCQA
+188	6	21	n	key competitors
+188	38	41	p	are
+188	46	79	n	Neural Tensor LSTM ( NTN - LSTM )
+188	84	93	n	HD - LSTM
+188	94	98	p	from
+188	99	109	n	Tay et al.
+189	17	31	n	implementation
+189	32	34	p	of
+189	39	74	n	Convolutional Neural Tensor Network
+189	77	94	n	vanilla CNN model
+189	105	128	n	Okapi BM - 25 benchmark
+190	157	163	n	WikiQA
+190	54	56	p	of
+191	6	21	n	key competitors
+191	38	41	p	are
+191	46	69	n	Paragraph Vector ( PV )
+191	74	89	n	PV + Cnt models
+191	93	106	n	Le and Mikolv
+191	109	124	n	CNN + Cnt model
+191	125	129	p	from
+191	130	139	n	Yu et al.
+191	144	164	n	LCLR ( Yih et al . )
+194	48	60	p	compare with
+194	61	69	n	AP - CNN
+194	74	91	n	QA - BiLSTM / CNN
+210	0	8	n	Hyper QA
+210	12	26	p	implemented in
+210	27	40	n	Tensor - Flow
+212	4	14	n	batch size
+212	15	17	p	is
+212	18	23	n	tuned
+212	24	31	p	amongst
+212	32	50	n	{ 50 , 100 , 200 }
+213	0	6	n	Models
+213	11	22	p	trained for
+213	23	32	n	25 epochs
+213	41	57	n	model parameters
+213	7	10	p	are
+213	62	67	n	saved
+213	68	77	p	each time
+213	82	93	n	performance
+213	94	96	p	on
+213	101	115	n	validation set
+213	116	118	p	is
+213	119	125	n	topped
+214	4	13	n	dimension
+214	14	16	p	of
+214	21	37	n	projection layer
+214	38	40	p	is
+214	41	46	n	tuned
+214	47	54	p	amongst
+214	55	80	n	{ 100 , 200 , 300 , 400 }
+215	0	17	n	L2 regularization
+215	18	20	p	is
+215	21	26	n	tuned
+215	27	34	p	amongst
+215	35	63	n	{ 0.001 , 0.0001 , 0.00001 }
+216	4	26	n	negative sampling rate
+216	27	29	p	is
+216	30	35	n	tuned
+216	36	40	p	from
+216	41	47	n	2 to 8
+211	3	8	p	adopt
+211	13	30	n	AdaGrad optimizer
+211	31	35	p	with
+211	36	57	n	initial learning rate
+211	58	71	p	tuned amongst
+211	72	99	n	{ 0.2 , 0.1 , 0.05 , 0.01 }
+24	19	26	p	propose
+24	30	67	n	extremely simple neural ranking model
+24	68	71	p	for
+24	72	90	n	question answering
+25	4	18	n	neural ranking
+25	19	25	p	models
+25	30	43	n	relationships
+25	44	51	p	between
+25	52	60	n	QA pairs
+25	61	63	p	in
+25	64	80	n	Hyperbolic space
+25	81	91	p	instead of
+25	92	107	n	Euclidean space
+26	0	16	n	Hyperbolic space
+26	17	19	p	is
+26	23	38	n	embedding space
+26	39	43	p	with
+26	46	73	n	constant negative curvature
+26	74	82	p	in which
+26	87	95	n	distance
+26	96	103	p	towards
+26	108	114	n	border
+26	115	117	p	is
+26	118	142	n	increasing exponentially
+2	58	83	n	Neural Question Answering
+227	33	35	p	on
+227	36	46	n	SemEvalCQA
+228	4	21	n	proposed approach
+228	22	30	p	achieves
+228	31	61	n	highly competitive performance
+230	4	15	n	performance
+230	16	18	p	of
+230	19	28	n	our model
+230	29	31	p	on
+230	32	35	n	MAP
+230	36	38	p	is
+230	39	55	n	marginally short
+230	56	60	p	from
+230	65	86	n	best performing model
+229	23	31	p	obtained
+229	36	65	n	best P@1 performance over all
+229	68	81	n	outperforming
+229	86	123	n	state - of - the - art AI - CNN model
+229	124	126	p	by
+229	127	130	n	3 %
+229	131	142	p	in terms of
+229	143	146	n	P@1
+239	23	37	n	TrecQA ( raw )
+239	20	22	p	on
+240	0	8	n	Hyper QA
+240	9	17	p	achieves
+240	23	46	n	competitive performance
+240	55	74	n	MAP and MRR metrics
+241	24	35	n	outperforms
+241	40	66	n	basic CNN model of ( S&M )
+241	67	69	p	by
+241	70	79	n	2 % ? 3 %
+241	80	91	p	in terms of
+241	92	101	n	MAP / MRR
+247	35	51	n	TrecQA ( clean )
+248	12	20	n	Hyper QA
+248	26	37	n	outperforms
+248	38	46	n	MP - CNN
+248	49	57	n	AP - CNN
+248	62	70	n	QA - CNN

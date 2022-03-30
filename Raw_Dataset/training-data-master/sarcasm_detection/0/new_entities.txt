@@ -1,0 +1,26 @@
+120	45	76	n	https://github.com/NLPrinceton/
+12	18	32	p	make available
+12	37	49	n	first corpus
+12	52	55	p	for
+12	56	73	n	sarcasm detection
+12	88	126	n	unbalanced and self - annotated labels
+13	0	4	p	With
+13	5	33	n	more than a million examples
+13	34	36	p	of
+13	37	57	n	sarcastic statements
+13	60	78	p	each provided with
+13	79	118	n	author , topic , and contex information
+13	133	140	p	exceeds
+13	145	169	n	previous sarcasm corpora
+13	170	172	p	by
+13	173	202	n	an order of magnitude in size
+4	139	156	n	sarcasm detection
+169	17	24	p	perform
+169	25	40	n	reasonably well
+169	45	56	n	much better
+169	57	61	p	than
+169	66	81	n	random baseline
+170	9	20	n	clear scope
+170	21	24	p	for
+170	25	36	n	improvement
+170	41	65	n	machine learning methods

@@ -1,0 +1,98 @@
+19	148	157	p	collected
+19	162	214	n	first large - scale dataset of questions and answers
+19	215	223	p	based on
+19	226	228	n	KB
+19	231	237	p	called
+19	238	253	n	SimpleQuestions
+20	49	57	p	contains
+20	58	83	n	more than 100 k questions
+229	4	45	n	embedding dimension and the learning rate
+229	51	63	p	chosen among
+229	64	115	n	{ 64 , 128 , 256 } and { 1 , 0.1 , ... , 1.0e ? 4 }
+229	139	145	n	margin
+230	4	10	p	set to
+230	11	14	n	0.1
+24	34	41	p	present
+24	45	72	n	embedding - based QA system
+24	73	88	p	developed under
+24	93	133	n	framework of Memory Networks ( Mem NNs )
+25	0	15	n	Memory Networks
+25	16	19	p	are
+25	20	36	n	learning systems
+25	37	52	p	centered around
+25	55	71	n	memory component
+25	77	83	p	can be
+25	84	103	n	read and written to
+25	124	144	p	focus on cases where
+25	149	161	n	relationship
+25	287	299	p	performed by
+25	300	309	n	embedding
+25	162	169	p	between
+25	174	228	n	input and response languages ( here natural language )
+25	237	283	n	storage language ( here , the facts from KBs )
+25	322	324	p	in
+25	329	346	n	same vector space
+26	4	14	p	setting of
+26	19	28	n	simple QA
+26	29	43	p	corresponds to
+26	48	68	n	elementary operation
+26	69	82	p	of performing
+26	85	98	n	single lookup
+26	99	101	p	in
+26	106	112	n	memory
+2	0	39	n	Large - scale Simple Question Answering
+4	9	41	n	large - scale question answering
+5	69	94	n	simple question answering
+12	267	292	n	Simple Question Answering
+254	0	2	p	On
+254	3	15	n	WebQuestions
+254	69	90	n	86 % of the questions
+254	102	115	p	answered with
+254	118	140	n	single supporting fact
+254	147	158	n	performance
+254	159	182	n	increases significantly
+254	185	189	p	from
+254	190	196	n	36.2 %
+254	197	199	p	to
+254	200	215	n	41.0 % F1-score
+255	0	5	p	Using
+255	10	27	n	bigger FB5M as KB
+255	33	43	p	not change
+255	44	55	n	performance
+255	56	58	p	on
+255	59	74	n	SimpleQuestions
+256	0	27	n	Transfer learning on Reverb
+259	4	16	n	best results
+259	17	20	p	are
+259	21	34	n	67 % accuracy
+259	41	45	n	68 %
+259	46	49	p	for
+259	54	74	n	ensemble of 5 models
+262	9	15	p	notice
+262	21	27	n	models
+262	28	38	p	trained on
+262	41	58	n	single QA dataset
+262	59	66	p	perform
+262	67	73	n	poorly
+262	74	76	p	on
+262	81	95	n	other datasets
+263	20	31	p	training on
+263	32	45	n	both datasets
+263	51	59	p	improves
+263	60	71	n	performance
+264	0	26	n	Importance of data sources
+266	6	17	n	paraphrases
+266	21	32	p	not seem to
+266	33	42	n	help much
+266	43	45	p	on
+266	46	78	n	WebQuestions and SimpleQuestions
+266	81	92	p	except when
+266	93	101	n	training
+266	102	111	p	only with
+266	112	131	n	synthetic questions
+266	139	143	p	have
+266	146	161	n	dramatic impact
+266	162	164	p	on
+266	169	180	n	performance
+266	181	183	p	on
+266	184	190	n	Reverb

@@ -1,0 +1,125 @@
+159	16	20	p	with
+159	21	47	n	three additional baselines
+159	50	54	n	NUTM
+159	55	60	p	using
+159	61	84	n	direct attention ( DA )
+159	87	91	n	NUTM
+159	92	97	p	using
+159	98	139	n	key - value without regularization ( KV )
+159	142	146	n	NUTM
+159	147	152	p	using
+159	153	196	n	fixed , uniform program distribution ( UP )
+159	203	214	n	vanilla NTM
+159	215	219	p	with
+159	220	244	n	2 memory heads ( h = 2 )
+163	12	23	p	demonstrate
+163	29	31	n	DA
+163	32	40	p	exhibits
+163	41	69	n	fast yet shallow convergence
+164	12	21	p	fall into
+164	22	34	n	local minima
+164	51	56	n	fails
+164	57	65	p	to reach
+164	66	75	n	zero loss
+165	0	20	n	Key- value attention
+165	21	26	p	helps
+165	27	40	n	NUTM converge
+165	52	56	p	with
+165	57	73	n	fewer iterations
+166	4	15	n	performance
+166	16	18	p	is
+166	19	35	n	further improved
+166	36	40	p	with
+166	45	73	n	proposed regularization loss
+167	0	2	n	UP
+167	3	16	n	underperforms
+167	17	21	n	NUTM
+167	22	24	p	as
+167	28	33	n	lacks
+167	34	50	n	dynamic programs
+168	4	7	n	NTM
+168	8	12	p	with
+168	13	20	n	2 heads
+168	21	26	p	shows
+168	27	54	n	slightly better convergence
+168	55	66	p	compared to
+168	71	74	n	NTM
+168	91	104	n	underperforms
+168	105	119	n	NUTM ( p = 2 )
+168	120	124	p	with
+168	125	152	n	1 head and fewer parameters
+21	25	45	p	step further towards
+21	46	49	n	UTM
+21	50	61	p	by coupling
+21	64	68	n	MANN
+21	69	73	p	with
+21	77	100	n	external program memory
+22	4	18	n	program memory
+22	19	33	p	co-exists with
+22	38	49	n	data memory
+22	50	52	p	in
+22	57	61	n	MANN
+22	124	132	n	learning
+22	133	150	n	complicated tasks
+22	64	73	p	providing
+23	19	25	p	stores
+23	30	37	n	weights
+23	38	40	p	of
+23	45	71	n	MANN 's controller network
+23	84	93	p	retrieved
+23	94	101	n	quickly
+23	102	105	p	via
+23	108	139	n	key - value attention mechanism
+23	140	146	p	across
+23	147	156	n	timesteps
+23	161	168	p	updated
+23	169	175	n	slowly
+23	176	179	p	via
+23	180	195	n	backpropagation
+24	104	115	p	referred to
+24	119	157	n	Neural Stored - program Memory ( NSM )
+24	164	172	p	learn to
+24	173	179	n	switch
+24	184	202	n	programs / weights
+24	203	205	p	in
+24	210	228	n	controller network
+24	229	242	n	appropriately
+24	245	256	p	adapting to
+24	257	282	n	different functionalities
+24	283	296	p	aligning with
+24	297	312	n	different parts
+24	57	59	p	of
+24	318	333	n	sequential task
+24	339	354	n	different tasks
+24	355	357	p	in
+24	358	391	n	continual and few - shot learning
+2	0	30	n	Neural Stored - program Memory
+6	97	120	n	stored - program memory
+148	49	60	n	other tasks
+148	61	68	p	observe
+148	69	98	n	convergence speed improvement
+148	99	101	p	of
+148	102	106	n	NUTM
+148	107	111	p	over
+148	120	123	n	NTM
+148	134	144	p	validating
+148	149	156	n	benefit
+148	157	165	p	of using
+148	166	178	n	two programs
+148	179	185	p	across
+148	186	195	n	timesteps
+148	196	204	p	even for
+148	209	228	n	single task setting
+149	0	4	n	NUTM
+149	5	13	p	requires
+149	14	36	n	fewer training samples
+149	37	39	p	to
+149	40	48	n	converge
+149	56	67	p	generalizes
+149	68	74	n	better
+149	75	77	p	to
+149	78	94	n	unseen sequences
+149	95	103	p	that are
+149	104	110	n	longer
+149	111	115	p	than
+149	116	134	n	training sequences

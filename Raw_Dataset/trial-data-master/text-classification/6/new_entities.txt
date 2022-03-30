@@ -1,0 +1,137 @@
+84	0	3	p	For
+84	4	23	n	word level transfer
+84	29	32	p	use
+84	33	83	n	word embeddings from a word2 vec skip - gram model
+84	84	94	p	trained on
+84	97	103	n	corpus
+84	104	106	p	of
+84	107	116	n	news data
+85	47	55	p	input to
+85	76	111	n	convolutional neural network models
+85	114	117	n	CNN
+85	124	127	n	DAN
+87	0	19	n	Additional baseline
+87	20	38	n	CNN and DAN models
+87	39	64	p	are trained without using
+87	69	107	n	pretrained word or sentence embeddings
+32	88	141	n	https://tfhub.dev/google/universal-sentence-encoder/1
+44	16	21	p	based
+44	22	45	n	sentence encoding model
+44	46	56	p	constructs
+44	57	76	n	sentence embeddings
+44	77	82	p	using
+44	87	139	n	encoding sub - graph of the transformer architecture
+45	17	21	p	uses
+45	22	31	n	attention
+45	32	42	p	to compute
+45	43	72	n	context aware representations
+45	73	75	p	of
+45	76	95	n	words in a sentence
+45	96	118	p	that take into account
+45	128	172	n	ordering and identity of all the other words
+46	43	52	p	converted
+46	4	38	n	context aware word representations
+46	53	57	p	to a
+46	58	95	n	fixed length sentence encoding vector
+46	96	108	p	by computing
+46	113	131	n	element - wise sum
+46	132	134	p	of
+46	139	176	n	representations at each word position
+48	4	18	n	encoding model
+48	22	36	p	designed to be
+48	40	55	n	general purpose
+49	8	23	p	accomplished by
+49	24	49	n	using multi-task learning
+49	50	57	p	whereby
+49	58	81	n	a single encoding model
+49	82	97	p	is used to feed
+49	98	123	n	multiple downstream tasks
+54	0	30	n	Deep Averaging Network ( DAN )
+55	72	79	p	whereby
+55	80	119	n	input embeddings for words and bi-grams
+55	120	129	p	are first
+55	130	147	n	averaged together
+55	152	171	p	then passed through
+55	174	213	n	feedforward deep neural network ( DNN )
+55	214	224	p	to produce
+55	225	244	n	sentence embeddings
+56	15	26	n	Transformer
+56	53	67	p	takes as input
+56	70	101	n	lowercased PTB tokenized string
+56	106	113	p	outputs
+56	116	150	n	512 dimensional sentence embedding
+58	8	11	p	use
+58	15	34	n	mul-titask learning
+58	35	42	p	whereby
+58	45	63	n	single DAN encoder
+58	67	81	p	used to supply
+58	82	101	n	sentence embeddings
+58	102	105	p	for
+58	106	131	n	multiple downstream tasks
+59	4	21	p	primary advantage
+59	49	61	n	compute time
+59	41	43	p	is
+59	65	85	n	linear in the length
+59	22	24	p	of
+59	93	107	n	input sequence
+2	0	26	n	Universal Sentence Encoder
+4	22	106	n	encoding sentences into embedding vectors that specifically target transfer learning
+9	13	56	n	transfer learning using sentence embeddings
+10	5	46	n	transfer learning via sentence embeddings
+112	3	10	p	observe
+112	16	33	n	transfer learning
+112	34	38	p	from
+112	43	77	n	transformer based sentence encoder
+112	86	117	p	performs as good or better than
+112	118	135	n	transfer learning
+112	136	140	p	from
+112	145	156	n	DAN encoder
+117	51	83	n	sentence level transfer learning
+117	18	21	p	for
+117	22	48	n	smaller quantities of data
+117	84	95	p	can achieve
+117	96	130	n	surprisingly good task performance
+114	0	6	n	Models
+114	12	23	p	make use of
+114	24	56	n	sentence level transfer learning
+114	57	84	p	tend to perform better than
+114	85	125	n	models that only use word level transfer
+118	0	2	p	As
+118	7	34	n	training set size increases
+118	37	85	n	models that do not make use of transfer learning
+118	86	113	p	approach the performance of
+118	118	130	n	other models
+69	0	2	n	MR
+69	5	35	n	Movie review snippet sentiment
+69	36	38	p	on
+69	41	56	n	five star scale
+70	0	2	n	CR
+70	5	27	n	Sentiment of sentences
+70	28	38	p	mined from
+70	39	55	n	customer reviews
+71	0	4	n	SUBJ
+71	7	32	n	Subjectivity of sentences
+71	33	37	p	from
+71	38	70	n	movie reviews and plot summaries
+72	0	4	n	MPQA
+72	7	36	n	Phrase level opinion polarity
+72	37	41	p	from
+72	42	51	n	news data
+73	0	4	n	TREC
+73	7	43	n	Fine grained question classification
+73	44	56	p	sourced from
+73	57	61	n	TREC
+74	0	3	n	SST
+74	6	50	n	Binary phrase level sentiment classification
+75	0	13	n	STS Benchmark
+75	16	51	n	Semantic textual similarity ( STS )
+75	52	59	p	between
+75	60	74	n	sentence pairs
+75	75	84	p	scored by
+75	85	125	n	Pearson correlation with human judgments
+76	0	4	n	WEAT
+76	7	17	n	Word pairs
+76	18	22	p	from
+76	27	48	n	psychology literature
+76	49	51	p	on
+76	52	86	n	implicit association tests ( IAT )

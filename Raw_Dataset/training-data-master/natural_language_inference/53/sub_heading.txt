@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Related work
+Approach
+The Natural Language Inference task
+Sentence encoder architectures
+Training details
+Evaluation of sentence representations
+Empirical results
+Architecture impact
+Task transfer
+Conclusion

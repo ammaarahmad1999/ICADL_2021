@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Bidirectional Attention Connectors (BAC)
+Densely Connected Attention Propagation (DECAPROP)
+Contextualized Input Encoder
+Densely Connected Attention Encoder (DECAENC)
+Densely Connected Core Architecture (DECACORE)
+Answer Pointer and Prediction Layer
+Experiments
+Datasets and Competitor Baselines
+Experimental Setup
+Results
+R° N/A N/A 49.0 55.3
+Conclusion
+Acknowledgements

@@ -1,0 +1,7 @@
+{
+  "has research problem" : [
+    ["Neural Network Named - Entity Recognition", {"from sentence" : "Robust Lexical Features for Improved Neural Network Named - Entity Recognition"}],
+    ["Neural network approaches to Named - Entity Recognition", {"from sentence" : "Neural network approaches to Named - Entity Recognition reduce the need for carefully handcrafted features ."}],
+    ["Named - Entity Recognition", "NER", {"from sentence" : "Named - Entity Recognition ( NER ) is the task of identifying textual mentions and classifying them into a predefined set of types ."}]
+  ]
+}

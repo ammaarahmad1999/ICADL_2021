@@ -1,0 +1,137 @@
+216	7	10	p	see
+216	16	33	n	SCNN - VAE - Semi
+216	42	70	n	best classification accuracy
+216	71	73	p	of
+216	74	78	n	65.5
+218	20	37	n	LCNN - VAE - Semi
+218	46	61	n	best NLL result
+154	41	48	p	explore
+154	49	63	n	LSTMs and CNNs
+154	15	17	p	as
+154	67	75	n	decoders
+154	3	6	p	use
+154	10	14	n	LSTM
+154	64	66	p	as
+154	21	28	n	encoder
+154	29	32	p	for
+154	33	36	n	VAE
+182	19	45	n	KL cost annealing strategy
+183	3	6	p	set
+183	11	25	n	initial weight
+183	26	28	p	of
+183	29	41	n	KL cost term
+183	42	47	p	to be
+183	48	52	n	0.01
+183	57	65	p	increase
+183	69	77	n	linearly
+183	78	83	p	until
+183	86	103	n	given iteration T
+180	7	17	n	batch size
+180	18	20	p	of
+180	21	23	n	32
+165	7	23	n	Gumbel - softmax
+165	24	33	p	to sample
+165	34	50	n	y from q ( y|x )
+173	7	11	n	Adam
+173	12	23	p	to optimize
+173	24	34	n	all models
+173	43	56	n	learning rate
+173	60	73	p	selected from
+173	74	106	n	[ 2e - 3 , 1 e - 3 , 7.5 e - 4 ]
+177	24	33	n	drop word
+177	34	37	p	for
+177	42	54	n	LSTM decoder
+177	61	76	n	drop word ratio
+177	80	93	p	selected from
+177	96	115	n	0 , 0.3 , 0.5 , 0.7
+168	9	24	n	vocabulary size
+168	25	27	p	of
+168	28	32	n	20 k
+168	33	36	p	for
+168	37	51	n	both data sets
+168	56	59	p	set
+168	64	88	n	word embedding dimension
+168	89	94	p	to be
+168	95	98	n	512
+155	0	3	p	For
+155	4	8	n	CNNs
+156	3	6	p	set
+156	11	34	n	convolution filter size
+156	35	40	p	to be
+156	41	42	n	3
+178	8	19	n	CNN decoder
+178	25	28	p	use
+178	31	44	n	dropout ratio
+178	45	47	p	of
+178	48	51	n	0.1
+178	52	54	p	at
+178	55	65	n	each layer
+170	40	42	p	in
+170	43	55	n	CNN decoders
+170	4	22	n	number of channels
+170	23	26	p	for
+170	27	39	n	convolutions
+170	56	58	p	is
+170	59	73	n	512 internally
+170	78	93	n	1024 externally
+175	17	21	p	find
+175	22	35	n	learning rate
+175	36	55	n	1e - 3 and ?1 = 0.5
+175	56	66	p	to perform
+175	71	75	n	best
+176	3	9	p	select
+176	10	23	n	dropout ratio
+176	24	26	p	of
+176	27	61	n	LSTMs ( both encoder and decoder )
+176	62	66	p	from
+176	69	78	n	0.3 , 0.5
+33	3	10	p	propose
+33	24	35	n	dilated CNN
+33	36	38	p	as
+33	41	48	n	decoder
+33	49	51	p	in
+33	52	55	n	VAE
+34	69	76	p	exploit
+34	81	92	n	dilated CNN
+34	93	96	p	for
+34	101	112	n	flexibility
+34	113	137	p	in varying the amount of
+34	138	158	n	conditioning context
+2	38	51	n	Text Modeling
+4	15	39	n	generative text modeling
+186	12	15	p	for
+186	16	33	n	language modeling
+191	0	3	p	For
+191	4	24	n	SCNN , MCNN and LCNN
+191	31	42	n	VAE results
+191	43	55	p	improve over
+191	56	66	n	LM results
+191	67	71	p	from
+191	72	77	n	345.3
+191	78	80	p	to
+191	81	86	n	337.8
+191	89	94	n	338.3
+191	95	97	p	to
+191	98	103	n	336.2
+191	110	115	n	335.4
+191	116	118	p	to
+191	119	124	n	333.9
+195	0	4	p	When
+195	5	9	n	LCNN
+195	13	20	p	used as
+195	25	32	n	decoder
+195	38	44	p	obtain
+195	48	65	n	optimal trade off
+195	66	79	p	between using
+195	80	128	n	contextual information and latent representation
+196	0	10	n	LCNN - VAE
+196	11	19	p	achieves
+196	22	25	n	NLL
+196	26	28	p	of
+196	29	34	n	333.9
+196	43	56	p	improves over
+196	57	66	n	LSTM - LM
+196	67	71	p	with
+196	72	75	n	NLL
+196	76	78	p	of
+196	79	84	n	334.9

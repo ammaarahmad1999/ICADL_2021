@@ -1,0 +1,733 @@
+arXiv:1608.0790Sv2 [cs.CL] 7 Nov 2016
+
+Under review as a conference paper at ICLR 2017
+
+ 
+
+MACHINE COMPREHENSION USING MATCH-LSTM
+AND ANSWER POINTER
+
+Shuohang Wang Jing Jiang
+
+School of Information Systems School of Information Systems
+
+Singapore Management University Singapore Management University
+
+shwang.2014@phdis.smu.edu.sg jJingjiang@smu.edu.sg
+ABSTRACT
+
+Machine comprehension of text is an important problem in natural language processing. A recently released dataset, the Stanford Question Answering Dataset
+(SQuAD), offers a large number of real questions and their answers created by
+humans through crowdsourcing. SQUAD provides a challenging testbed for evaluating machine comprehension algorithms, partly because compared with previous datasets, in SQUAD the answers do not come from a small set of candidate
+answers and they have variable lengths. We propose an end-to-end neural architecture for the task. The architecture is based on match-LSTM, a model we proposed
+previously for textual entailment, and Pointer Net, a sequence-to-sequence model
+proposed by to constrain the output tokens to be from the
+input sequences. We propose two ways of using Pointer Net for our task. Our
+experiments show that both of our two models substantially outperform the best
+
+results obtained by|Rajpurkar et al.|(2016) using logistic regression and manually
+crafted features.
+
+1 INTRODUCTION
+
+Machine comprehension of text is one of the ultimate goals of natural language processing. While
+the ability of a machine to understand text can be assessed in many different ways, in recent years,
+several benchmark datasets have been created to focus on answering questions as a way to evaluate
+
+machine comprehension (Richardson et al.| {2013} 2015} {Hill et al.| {2016}
+2016}/Rajpurkar et al.|/2016). In this setup, typically the machine is first presented with a piece
+
+of text such as a news article or a story. The machine is then expected to answer one or multiple
+questions related to the text.
+
+In most of the benchmark datasets, a question can be treated as a multiple choice question, whose
+
+correct answer is to be chosen from a set of provided candidate answers (Richardson et al.}|2013
+Hill et al.}|/2016). Presumably, questions with more given candidate answers are more challenging.
+The Stanford Question Answering Dataset (SQuAD) introduced recently by|Rajpurkar et al.|(2016)
+
+contains such more challenging questions whose correct answers can be any sequence of tokens
+from the given text. Moreover, unlike some other datasets whose questions and answers were created
+automatically in Cloze style (2016), the questions and answers in
+SQuAD were created by humans through crowdsourcing, which makes the dataset more realistic.
+Given these advantages of the SQUAD dataset, in this paper, we focus on this new dataset to study
+machine comprehension of text. A sample piece of text and three of its associated questions are
+shown in Table[1]
+
+Traditional solutions to this kind of question answering tasks rely on NLP pipelines that involve multiple steps of linguistic analyses and feature engineering, including syntactic parsing, named entity
+recognition, question classification, semantic parsing, etc. Recently, with the advances of applying
+neural network models in NLP, there has been much interest in building end-to-end neural architectures for various NLP tasks, including several pieces of work on machine comprehension
+
+et al 2075) Millet al [2016)|¥in et al. 2016} [Kadlec et al. 2016} |Cui et al] 2016). However, given
+
+the properties of previous machine comprehension datasets, existing end-to-end neural architectures
+
+for the task either rely on the candidate answers (Hill et al.|[2016 2016) or assume that the
+Under review as a conference paper at ICLR 2017
+
+ 
+
+In 1870, Tesla moved to Karlovac, to attend school at the Higher Real Gymnasium, where he was
+profoundly influenced by a math teacher Martin Sekuli¢. The classes were held in German, as it was
+a school within the Austro-Hungarian Military Frontier. Tesla was able to perform integral calculus in
+his head, which prompted his teachers to believe that he was cheating. He finished a four-year term in
+three years, graduating in 1873.
+
+1. In what language were the classes given? German
+2. Who was Tesla’s main influence in Karlovac? Martin Sekuli¢
+3. Why did Tesla go to Karlovac? attend school at the Higher Real Gymnasium
+
+Table 1: A paragraph from Wikipedia and three associated questions together with their answers,
+taken from the SQuAD dataset. The tokens in bold in the paragraph are our predicted answers while
+the texts next to the questions are the ground truth answers.
+
+answer is a single token 2015}/Kadlec et al.|{2016| 2016), which make
+
+these methods unsuitable for the SQUAD dataset. In this paper, we propose a new end-to-end neural
+architecture to address the machine comprehension problem as defined in the SQuAD dataset.
+
+Specifically, observing that in the SQuAD dataset many questions are paraphrases of sentences
+from the original text, we adopt a match-LSTM model that we developed earlier for textual entailment (Wang & Jiang}|2016). We further adopt the Pointer Net (Ptr-Net) model developed by|Vinyals|
+(2015), which enables the predictions of tokens from the input sequence only rather than from
+a larger fixed vocabulary and thus allows us to generate answers that consist of multiple tokens from
+the original text. We propose two ways to apply the Ptr-Net model for our task: a sequence model
+and a boundary model. We also further extend the boundary model with a search mechanism. Experiments on the SQuAD dataset show that our two models both outperform the best performance
+
+reported by|Rajpurkar et al.|(2016). Moreover, using an ensemble of several of our models, we can
+
+achieve very competitive performance on SQuAD.
+
+Our contributions can be summarized as follows: (1) We propose two new end-to-end neural network
+models for machine comprehension, which combine match-LSTM and Ptr-Net to handle the special
+properties of the SQUAD dataset. (2) We have achieved the performance of an exact match score of
+67.9% and an F1 score of 77.0% on the unseen test dataset, which is much better than the featureengineered solution (2016). Our performance is also close to the state of the art
+on SQuAD, which is 71.6% in terms of exact match and 80.4% in terms of Fl from Salesforce
+Research. (3) Our further analyses of the models reveal some_useful insights for further improving
+the method. Beisdes, we also made our code available online|]
+
+2 METHOD
+
+In this section, we first briefly review match-LSTM and Pointer Net. These two pieces of existing
+work lay the foundation of our method. We then present our end-to-end neural architecture for
+machine comprehension.
+
+2.1 MATCH-LSTM
+
+In a recent work on learning natural language inference, we proposed a match-LSTM model for
+predicting textual entailment (Wang & Jiang}|2016). In textual entailment, two sentences are given
+where one is a premise and the other is a hypothesis. To predict whether the premise entails the
+hypothesis, the match-LSTM model goes through the tokens of the hypothesis sequentially. At each
+position of the hypothesis, attention mechanism is used to obtain a weighted vector representation
+of the premise. This weighted premise is then to be combined with a vector representation of the
+current token of the hypothesis and fed into an LSTM, which we call the match-LSTM. The matchLSTM essentially sequentially aggregates the matching of the attention-weighted premise to each
+token of the hypothesis and uses the aggregated matching result to make a final prediction.
+
+“https://github.com/shuohangwang/SeqMatchSeq
+Under review as a conference paper at ICLR 2017
+
+ 
+
+Answer
+Pointer Layer
+
+ 
+
+ 
+
+ 
+
+Match-LSTM
+Layer
+
+r
+
+LSTM
+
+preprocess- ae, P. . is] HP | ne
+ing Layer ma} 8) eS i> ns hio 1 hy
+
+1 an] I 1
+forP cl | school Real yma j attend) { School | | Real | Gyiinastin
+;
+
+ 
+
+ 
+
+ 
+
+ 
+
+LSTM
+preprocessing Layer
+forQ
+
+ 
+
+ 
+
+  
+
+Why did Tesla ?
+(a) Sequence Model (b) Boundary Model
+
+Figure 1: An overview of our two models. Both models consist of an LSTM preprocessing layer,
+a match-LSTM layer and an Answer Pointer layer. For each match-LSTM in a particular direction,
+h}, which is defined as Ha], is computed using the a in the corresponding direction, as described
+
+in either Eqn. (2) or Eqn. (5).
+
+2.2 POINTER NET
+
+proposed a Pointer Network (Ptr-Net) model to solve a special kind of problems
+where we want to generate an output sequence whose tokens must come from the input sequence.
+Instead of picking an output token from a fixed vocabulary, Ptr-Net uses attention mechanism as a
+pointer to select a position from the input sequence as an output symbol. The pointer mechanism
+
+has inspired some recent work on language processing (Gu et al.||2016}|Kadlec et al.||2016). Here
+we adopt Ptr-Net in order to construct answers using tokens from the input text.
+
+2.3 OUR METHOD
+
+Formally, the problem we are trying to solve can be formulated as follows. We are given a piece
+of text, which we refer to as a passage, and a question related to the passage. The passage is
+represented by matrix P € R?*”, where P is the length (number of tokens) of the passage and d is
+the dimensionality of word embeddings. Similarly, the question is represented by matrix Q € R?*@
+where () is the length of the question. Our goal is to identify a subsequence from the passage as the
+answer to the question.
+
+As pointed out earlier, since the output tokens are from the input, we would like to adopt the Pointer
+Net for this problem. A straightforward way of applying Ptr-Net here is to treat an answer as a
+sequence of tokens from the input passage but ignore the fact that these tokens are consecutive in
+the original passage, because Ptr-Net does not make the consecutivity assumption. Specifically, we
+represent the answer as a sequence of integers a = (a, a@2,...), where each a; is an integer between
+1 and P, indicating a certain position in the passage.
+
+Alternatively, if we want to ensure consecutivity, that is, if we want to ensure that we indeed select a
+subsequence from the passage as an answer, we can use the Ptr-Net to predict only the start and the
+end of an answer. In this case, the Ptr-Net only needs to select two tokens from the input passage,
+and all the tokens between these two tokens in the passage are treated as the answer. Specifically,
+we can represent the answer to be predicted as two integers a = (ds, de), where a, an de are integers
+between | and P.
+Under review as a conference paper at ICLR 2017
+
+ 
+
+We refer to the first setting above as a sequence model and the second setting above as a boundary model. For either model, we assume that a set of training examples in the form of triplets
+
+1(Pnz Qs an) }r_, are given.
+
+An overview of the two neural network models are shown in Figure Both models consist of
+three layers: (1) An LSTM preprocessing layer that preprocesses the passage and the question using
+LSTMs. (2) A match-LSTM layer that tries to match the passage against the question. (3) An
+Answer Pointer (Ans-Ptr) layer that uses Ptr-Net to select a set of tokens from the passage as the
+answer. The difference between the two models only lies in the third layer.
+
+LSTM Preprocessing Layer
+
+The purpose for the LSTM preprocessing layer is to incorporate contextual information into the
+representation of each token in the passage and the question. We use a standard one-directional
+LSTM 1997) P]to process the passage and the question separately, as
+shown below:
+
+H? = LSTM(P), H‘% = LSTM(Q). (1)
+
+The resulting matrices H? € R’*? and H4 € R!*® are hidden representations of the passage and
+the question, where / is the dimensionality of the hidden vectors. In other words, the 7" column
+vector h? (or h?) in H? (or H4) represents the i" token in the passage (or the question) together
+with some contextual information from the left.
+
+Match-LSTM Layer
+We apply the match-LSTM model (Wang & Jiang} |2016) proposed for textual entailment to our
+
+machine comprehension problem by treating the question as a premise and the passage as a hypothesis. The match-LSTM sequentially goes through the passage. At position 7 of the passage, it first
+uses the standard word-by-word attention mechanism to obtain attention weight vector a; € R@ as
+follows:
+
+—> >
+G; = tanh(W°H!+ (WPh? + Whi_, +b?) @eg),
+
+—>
+a; = softmax(w'G; + b@ eg), (2)
+
+where W4, WP, W' € R'™!, bP, w © R! and b € R are parameters to be learned, i, € R’ is the
+hidden vector of the one-directional match-LSTM (to be explained below) at position 7 — 1, and the
+outer product (- © eg) produces a matrix or row vector by repeating the vector or scalar on the left
+for Q times.
+
+Essentially, the resulting attention weight ai, ; above indicates the degree of matching between the
+i” token in the passage with the 7" token in the question. Next, we use the attention weight vector
+‘d ; to obtaina weighted version of the question and combine it with the current token of the passage
+to form a vector z;:
+
+p
+Zi = at| . (3)
+
+This vector Z ; is fed into a standard one-directional LSTM to form our so-called match-LSTM:
+— —_— >
+—
+where h! € R’.
+
+We further build a similar match-LSTM in the reverse direction. The purpose is to obtain a representation that encodes the contexts from both directions for each token in the passage. To build this
+reverse match-LSTM, we first define
+
+| = tanh(W4H! + (WPh? + Wht, +b?) @ eg),
+<—
+i = softmax(w'G; + beg). (5)
+
+et Ot
+
+“As the output gates in the preprocessing layer affect the final performance little, we remove it in our
+experiments.
+Under review as a conference paper at ICLR 2017
+
+ 
+
+Note that the parameters here (W4, WP, W', bP, w and b) are the same as used in Eqn. (2). We
+
+then define % ; in a similar way and finally define ht to be the hidden representation at position 2
+produced by the match-LSTM in the reverse direction.
+
+> + —
+Let H' € RIxP represent the hidden states [h{, h},..., h',] and H « RIxP represent
+ite hs. an Hy ht]. We define H' € R?!*” as the concatenation of the two:
+
+H = ET. (6)
+
+Answer Pointer Layer
+
+The top layer, the Answer Pointer (Ans-Ptr) layer, 1s motivated by the Pointer Net introduced by
+\Vinyals et al.](2015). This layer uses the sequence H' as input. Recall that we have two different
+models: The seguence model produces a sequence of answer tokens but these tokens may not be
+consecutive in the original passage. The boundary model produces only the start token and the end
+token of the answer, and then all the tokens between these two in the original passage are considered
+to be the answer. We now explain the two models separately.
+
+The Sequence Model: Recall that in the sequence model, the answer is represented by a sequence
+of integers a = (a1, d,...) indicating the positions of the selected tokens in the original passage.
+The Ans-Ptr layer models the generation of these integers in a sequential manner. Because the length
+of an answer is not fixed, in order to stop generating answer tokens at certain point, we allow each
+a, to take up an integer value between | and P + 1, where P + 1 is a special value indicating the
+end of the answer. Once a x is set to be P + 1, the generation of the answer stops.
+
+In order to generate the k'® answer token indicated by ax, first, the attention mechanism is used again
+to obtain an attention weight vector 3; € R(’+)), where Brg A <j < P +1) is the probability of
+selecting the j" token from the passage as the k"" token in the answer, and Gr,(P+1) 18 the probability
+of stopping the answer generation at position k. 5; is modeled as follows:
+
+F, = tanh(VH" + (W*h?_, +b’) @ erp41)), (7)
+Be = softmax(v™F; +c ® e(p+1)), (8)
+where H' € R2!*(P+1) is the concatenation of H" with a zero vector, defined as H' = [H’; 0],
+
+V € R'**" W* € R’*! b*,v © R! andc € R are parameters to be learned, (- ® e(p+1)) follows
+
+the same definition as before, and hi, € R! is the hidden vector at position & — 1 of an answer
+LSTM as defined below:
+
+a 7 ETA a cat
+;. = LSTM(H' 67, hi,_;). (9)
+We can then model the probability of generating the answer sequence as
+
+p(a|H") — ] [ pGelar,a2,...,an-1,H’), (10)
+k
+
+and
+p(Gk = jlai,a2,...,@n—-1, H") — Bre, 7- (11)
+
+To train the model, we minimize the following loss function based on the training examples:
+
+N
+— S (log p(an|Pn; Qn). (12)
+
+n=1
+
+The Boundary Model: The boundary model works in a way very similar to the sequence model
+above, except that instead of predicting a sequence of indices a,,a2,..., we only need to predict
+two indices a, and a,. So the main difference from the sequence model above is that in the boundary
+model we do not need to add the zero padding to H’, and the probability of generating an answer is
+simply modeled as
+
+p(a|H") = p(as|H")p(aelas, A"). (13)
+Under review as a conference paper at ICLR 2017
+
+ 
+
+l || Exact Match Fl
+
+Dev Test Dev _ Test
+Random Guess - 0 1.1 1.3 4.1 4.3
+Logistic Regression - - 40.0 404 51.0 51.0
+DCR - - 62.55 62.5 71.2 71.0
+Match-LSTM with Ans-Ptr (Sequence) 150 882K 544 - 68.2 Match-LSTM with Ans-Ptr (Boundary) 150 882K 61.1 - 7 Le Match-LSTM with Ans-Ptr (Boundary+Search) 150 882K 63.0 - 72.7 Match-LSTM with Ans-Ptr (Boundary+Search) 300 «=63.2M_ 63.1 - 72.7 Match-LSTM with Ans-Ptr (Boundary+Search+b) 150 LIM 63.4 73.0
+
+Match-LSTM with Bi-Ans-Ptr (Boundary+Search+b) 150 14M 64.1 64.7) 73.9 73.7
+Match-LSTM with Ans-Ptr (Boundary+Search+en) 150 882K 67.6 67.9 76.8 77.0
+
+Table 2: Experiment Results. Here “Search” refers to globally searching the spans with no more
+than 15 tokens, “‘b” refers to using bi-directional pre-processing LSTM, and “en” refers to ensemble
+method.
+
+We further extend the boundary model by incorporating a search mechanism. Specifically, during
+prediction, we try to limit the length of the span and globally search the span with the highest
+probability computed by p(a,) x p(a-). Besides, as the boundary has a sequence of fixed number
+of values, bi-directional Ans-Ptr can be simply combined to fine-tune the correct span.
+
+3. EXPERIMENTS
+
+In this section, we present our experiment results and perform some analyses to better understand
+how our models works.
+
+3.1 DATA
+
+We use the Stanford Question Answering Dataset (SQUAD) v1.1 to conduct our experiments. Passages in SQUAD come from 536 articles from Wikipedia covering a wide range of topics. Each
+passage is a single paragraph from a Wikipedia article, and each passage has around 5 questions
+associated with it. In total, there are 23,215 passages and 107,785 questions. The data has been split
+into a training set (with 87,599 question-answer pairs), a development set (with 10,570 questionanswer pairs) and a hidden test set.
+
+3.2 EXPERIMENT SETTINGS
+
+We first tokenize all the passages, questions and answers. The resulting vocabulary contains 117K
+unique words. We use word embeddings from GloVe to initialize the
+model. Words not found in GloVe are initialized as zero vectors. The word embeddings are not
+updated during the training of the model.
+
+The dimensionality / of the hidden layers is set to be 150 or 300. We use ADAMAX (Kingma &
+2015) with the coefficients 8; = 0.9 and B2 = 0.999 to optimize the model. Each update is
+computed through a minibatch of 30 instances. We do not use L2-regularization.
+
+The performance is measured by two metrics: percentage of exact match with the ground truth
+answers, and word-level Fl score when comparing the tokens in the predicted answers with the
+tokens in the ground truth answers. Note that in the development set and the test set each question has
+around three ground truth answers. Fl scores with the best matching answers are used to compute
+the average FI score.
+
+3.3. RESULTS
+
+The results of our models as well as the results of the baselines given by|Rajpurkar et al.|(2016) and
+(2016) are shown in Table[2] We can see that both of our two models have clearly outperUnder review as a conference paper at ICLR 2017
+
+ 
+
+Answer: German
+In
+what
+
+    
+
+c language
+s were
+n the
+Y classes
+Oo given
+NULL
+0 10 20 30 40
+Answer: Martin Sekuli¢
+Who =
+was
+c Tesla
+2 Ss
+5 main
+w influence
+> in
+Oo Karlovac
+NULL
+0 10 20 30 40
+Answer: attend school at the Higher Real Gymnasium
+Why a r
+did _
+5 Tesla
+z =e
+ov to
+6 Karlovac
+NULL 1
+EO "“KLGFQOV "“Cvoexeor BE “MOUHD>TDTDHOOSCL Ov’ ~ng~oeco "HVMH¥HOBoweopE
+B gers 5sesses si sesgs gees EXsa 8 * S SEsSES
+qa FQ °° EG Oru £€ c EUvaY “us = oS GFF
+& ra on = © = 5 os 3 & oO a = D= oO
+S c 25 2 0 5 PS er
+= of 5
+S 64 x
+0 o
+5
+Ww
+= |
+<
+Paragraph
+
+Figure 2: Visualization of the attention weights a for three questions associated with the same
+passage.
+
+formed the logistic regression model by|Rajpurkar et al.|(2016), which relies on carefully designed
+
+features. Furthermore, our boundary model has outperformed the sequence model, achieving an exact match score of 61.1% and an F1 score of 71.2%. In particular, in terms of the exact match score,
+the boundary model has a clear advantage over the sequence model. The improvement of our models
+over the logistic regression model shows that our end-to-end neural network models without much
+feature engineering are very effective on this task and this dataset. Considering the effectiveness of
+boundary model, we further explore this model. Observing that most of the answers are the spans
+with relatively small sizes, we simply limit the largest predicted span to have no more than 15 tokens
+and conducted experiment with span searching This resulted in 1.5% improvement in F1 on the development data and that outperformed the DCR model (Yu et al.|/2016), which also introduced some
+language features such as POS and NE into their model. Besides, we tried to increase the memory
+dimension / in the model or add bi-directional pre-processing LSTM or add bi-directional Ans-Ptr.
+The improvement on the development data using the first two methods is quite small. While by
+adding Bi-Ans-Ptr with bi-directional pre-processing LSTM, we can get 1.2% improvement in F1.
+Finally, we explore the ensemble method by simply computing the product of the boundary probabilities collected from 5 boundary models and then searching the most likely span with no more
+than 15 tokens. This ensemble method achieved the best performance as shown in the table.
+
+3.4 FURTHER ANALYSES
+
+To better understand the strengths and weaknesses of our models, we perform some further analyses
+of the results below.
+
+First, we suspect that longer answers are harder to predict. To verify this hypothesis, we analysed
+the performance in terms of both exact match and F1 score with respect to the answer length on
+the development set. For example, for questions whose answers contain more than 9 tokens, the Fl
+score of the boundary model drops to around 55% and the exact match score drops to only around
+30%, compared to the Fl score and exact match score of close to 72% and 67%, respectively, for
+questions with single-token answers. And that supports our hypothesis.
+Under review as a conference paper at ICLR 2017
+
+ 
+
+Next, we analyze the performance of our models on different groups of questions. We use a crude
+way to split the questions into different groups based on a set of question words we have defined,
+including “what,” “how,” “who,” “when,” “which,” “where,” and “why.” These different question
+words roughly refer to questions with different types of answers. For example, “when” questions
+look for temporal expressions as answers, whereas “where” questions look for locations as answers.
+According to the performance on the development data set, our models work the best for “when”
+questions. This may be because in this dataset temporal expressions are relatively easier to recognize. Other groups of questions whose answers are noun phrases, such as “what” questions, “which”
+questions and “where” questions, also get relatively better results. On the other hand, “why” questions are the hardest to answer. This is not surprising because the answers to “why” questions can
+be very diverse, and they are not restricted to any certain type of phrases.
+
+99 66
+
+Finally, we would like to check whether the attention mechanism used in the match-LSTM layer is
+effective in helping the model locate the answer. We show the attention weights a in Figure[2] In the
+figure the darker the color is the higher the weight is. We can see that some words have been well
+aligned based on the attention weights. For example, the word “German” in the passage is aligned
+well to the word “language” in the first question, and the model successfully predicts “German” as
+the answer to the question. For the question word “who” in the second question, the word “teacher”
+actually receives relatively higher attention weight, and the model has predicted the phrase “Martin
+Sekulic” after that as the answer, which is correct. For the last question that starts with “why’”’, the
+attention weights are more evenly distributed and it is not clear which words have been aligned to
+
+4 RELATED WORK
+
+Machine comprehension of text has gained much attention in recent years, and increasingly researchers are building data-drive, end-to-end neural network models for the task. We will first
+review the recently released datasets and then some end-to-end models on this task.
+
+4.1 DATASETS
+
+A number of datasets for studying machine comprehension were created in Cloze style by removing
+a single token from a sentence in the original corpus, and the task is to predict the missing word.
+For example, created questions in Cloze style from CNN and Daily Mail
+highlights. |Hill et al.|(2016) created the Children’s Book Test dataset, which is based on children’s
+stories. |Cui et al.|(2016) released two similar datasets in Chinese, the People Daily dataset and the
+Children’s Fairy Tale dataset.
+
+   
+  
+       
+
+Instead of creating questions in Cloze style, a number of other datasets rely on human annotators to
+
+create real questions. [Richardson et al.|(2013) created the well-known MCTest dataset and{Tapaswi|
+(2016) created the MovieQA dataset. In these datasets, candidate answers are provided for
+
+each question. Similar to these two datasets, the SQUAD dataset (Rajpurkar et al.)|2016) was also
+
+created by human annotators. Different from the previous two, however, the SQuAD dataset does
+not provide candidate answers, and thus all possible subsequences from the given passage have to
+be considered as candidate answers.
+
+Besides the datasets above, there are also a few other datasets created for machine comprehension,
+
+such as WikiReading dataset (Hewlett et al.|/2016) and bAbI dataset 2016), but they
+
+are quite different from the datasets above in nature.
+
+4.2 END-TO-END NEURAL NETWORK MODELS FOR MACHINE COMPREHENSION
+
+There have been a number of studies proposing end-to-end neural network models for machine
+comprehension. A common approach is to use recurrent neural networks (RNNs) to process the
+
+given text and the question in order to predict or generate the answers (Hermann et al.} |2015).
+
+Attention mechanism is also widely used on top of RNNs in order to match the question with the
+
+given passage 2015 2016). Given that answers often come from the
+
+given passage, Pointer Network has been adopted in a few studies in order to copy tokens from
+
+the given passage as answers (Kadlec et al.}|2016}|Trischler et al.||2016). Compared with existing
+Under review as a conference paper at ICLR 2017
+
+ 
+
+work, we use match-LSTM to match a question and a given passage, and we use Pointer Network
+in a different way such that we can generate answers that contain multiple tokens from the given
+passage.
+
+      
+  
+  
+
+Memory Networks (Weston et al. ) have also been applied to machine comprehension (Sukhbaatar et al.) |2015} 2016} |Hill et al.|/2016), but its scalability when applied
+
+to a large dataset is still an issue. In this work, we did not consider memory networks for the SQuAD
+dataset.
+
+    
+
+         
+
+5 CONCLUSIONS
+
+In this paper, We developed two models for the machine comprehension problem defined in the
+Stanford Question Answering (SQuAD) dataset, both making use of match-LSTM and Pointer Network. Experiments on the SQuAD dataset showed that our second model, the boundary model,
+could achieve an exact match score of 67.6% and an F1 score of 77% on the test dataset, which is
+
+better than our sequence model and|Rajpurkar et al.|(2016)’s feature-engineered model.
+
+In the future, we plan to look further into the different types of questions and focus on those questions
+which currently have low performance, such as the “why’ questions. We also plan to test how our
+models could be applied to other machine comprehension datasets.
+
+6 ACKNOWLEDGMENTS
+
+We thank Pranav Rajpurkar for testing our model on the hidden test dataset and Percy Liang for
+helping us with the Dockerfile for Codalab.
+
+REFERENCES
+
+Danqi Chen, Jason Bolton, and Christopher D. Manning. A thorough examination of the CNN/Daily
+Mail reading comprehension task. In Proceedings of the Conference on Association for Computational Linguistics, 2016.
+
+Yiming Cui, Ting Liu, Zhipeng Chen, Shijin Wang, and Guoping Hu. Consensus attention-based
+neural networks for chinese reading comprehension. In arXiv preprint arXiv: 1607.02250, 2016.
+
+Jiatao Gu, Zhengdong Lu, Hang Li, and Victor O.K. Li. Incorporating copying mechanism in
+sequence-to-sequence learning. In Proceedings of the Conference on Association for Computational Linguistics, 2016.
+
+Karl Moritz Hermann, Tomas Kocisky, Edward Grefenstette, Lasse Espeholt, Will Kay, Mustafa
+Suleyman, and Phil Blunsom. Teaching machines to read and comprehend. In Proceedings of the
+Conference on Advances in Neural Information Processing Systems, pp. 1693-1701, 2015.
+
+Daniel Hewlett, Alexandre Lacoste, Llion Jones, [Ilia Polosukhin, Andrew Fandrianto, Jay Han,
+Matthew Kelcey, and David Berthelot. WIKIREADING: A novel large-scale language understanding task over wikipedia. In Proceedings of the Conference on Association for Computational
+Linguistics, 2016.
+
+Felix Hill, Antoine Bordes, Sumit Chopra, and Jason Weston. The Goldilocks principle: Reading children’s books with explicit memory representations. In Proceedings of the International
+Conference on Learning Representations, 2016.
+
+Sepp Hochreiter and Jiirgen Schmidhuber. Long short-term memory. Neural computation, 9(8):
+1735-1780, 1997.
+
+Rudolf Kadlec, Martin Schmid, Ondrej Bajgar, and Jan Kleindienst. Text understanding with the
+attention sum reader network. In Proceedings of the Conference on Association for Computational
+Linguistics, 2016.
+
+Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In Proceedings of
+the International Conference on Learning Representations, 2015.
+Under review as a conference paper at ICLR 2017
+
+ 
+
+Ankit Kumar, Ozan Irsoy, Jonathan Su, James Bradbury, Robert English, Brian Pierce, Peter Ondruska, Ishaan Gulrajani, and Richard Socher. Ask me anything: Dynamic memory networks
+for natural language processing. In Proceedings of the International Conference on Machine
+Learning, 2016.
+
+Jeffrey Pennington, Richard Socher, and Christopher D Manning. GloVe: Global vectors for word
+representation. In Proceedings of the Conference on Empirical Methods in Natural Language
+Processing, 2014.
+
+Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang. SQuAD: 100,000+ questions
+for machine comprehension of text. In Proceedings of the Conference on Empirical Methods in
+Natural Language Processing, 2016.
+
+Matthew Richardson, Christopher JC Burges, and Erin Renshaw. MCTest: A challenge dataset for
+the open-domain machine comprehension of text. In Proceedings of the Conference on Empirical
+Methods in Natural Language Processing, 2013.
+
+Sainbayar Sukhbaatar, Jason Weston, Rob Fergus, et al. End-to-end memory networks. In Proceedings of the Conference on Advances in neural information processing systems, 2015.
+
+Makarand Tapaswi, Yukun Zhu, Rainer Stiefelhagen, Antonio Torralba, Raquel Urtasun, and Sanja
+Fidler. MovieQA: Understanding stories in movies through question-answering. In Proceedings
+of IEEE Conference on Computer Vision and Pattern Recognition, 2016.
+
+Adam Trischler, Zheng Ye, Xingdi Yuan, and Kaheer Suleman. Natural language comprehension
+with the EpiReader. In Proceedings of the Conference on Empirical Methods in Natural Language
+Processing, 2016.
+
+Oriol Vinyals, Meire Fortunato, and Navdeep Jaitly. Pointer networks. In Proceedings of the Conference on Advances in Neural Information Processing Systems, 2015.
+
+Shuohang Wang and Jing Jiang. Learning natural language inference with LSTM. In Proceedings of
+the Conference on the North American Chapter of the Association for Computational Linguistics,
+2016.
+
+Jason Weston, Sumit Chopra, and Antoine Bordes. Memory networks. In Proceedings of the International Conference on Learning Representations, 2015.
+
+Jason Weston, Antoine Bordes, Sumit Chopra, Alexander M Rush, Bart van Merriénboer, Armand
+Joulin, and Tomas Mikolov. Towards Al-complete question answering: A set of prerequisite toy
+tasks. In Proceedings of the International Conference on Learning Representations, 2016.
+
+Wenpeng Yin, Sebastian Ebert, and Hinrich Schiitze. Attention-based convolutional neural network
+for machine comprehension. arXiv preprint arXiv: 1602.04341, 2016.
+
+Yang Yu, Wei Zhang, Kazi Hasan, Mo Yu, Bing Xiang, and Bowen Zhou. End-to-end answer chunk
+extraction and ranking for reading comprehension. arXiv preprint arXiv: 1610.09996, 2016.
+
+10
+Under review as a conference paper at ICLR 2017
+
+ 
+
+(2)
+
+s—« F1 score(s)
+
+Exact match(s)
+F1 score(b)
+Exact match(b)
+F1 score(e)
+Exact match(e)
+
+0
+1 2 3 4 5 6 7 8 9 >9 1 2 3 4 5 6 7 8 9 >9
+Answer length Answer length
+
+(4)
+
+Score
+Instance number
+NO
+oO
+oS
+°
+
+ 
+
+Score
+Instance number
+
+ 
+
+x RY ° oS XS @ RY
+
+ 
+
+Question types Question types
+
+Figure 3: Performance breakdown by answer lengths and question types. Top: Plot (1) shows the
+performance of our two models (where s refers to the sequence model , b refers to the boundary
+model, and e refers to the ensemble boundary model) over answers with different lengths. Plot (2)
+shows the numbers of answers with different lengths. Bottom: Plot (3) shows the performance our
+the two models on different types of questions. Plot (4) shows the numbers of different types of
+questions.
+
+A APPENDIX
+
+We show the performance breakdown by answer lengths and question types for our sequence model,
+boundary model and the ensemble model in Figure[3]
+
+11
+

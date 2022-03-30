@@ -1,0 +1,110 @@
+131	4	45	n	passage - aligned question representation
+131	46	48	p	is
+131	49	56	n	crucial
+163	0	5	n	RASOR
+163	6	17	p	outperforms
+163	22	47	n	endpoint prediction model
+163	48	50	p	by
+163	51	69	n	1.1 in exact match
+157	11	18	p	observe
+157	19	39	n	general improvements
+157	40	50	p	when using
+157	51	90	n	labels that closely align with the task
+162	12	37	p	observe the importance of
+162	38	59	n	allowing interactions
+162	60	67	p	between
+162	68	81	n	the endpoints
+162	82	87	p	using
+162	92	106	n	spanlevel FFNN
+106	3	12	p	represent
+106	13	30	n	each of the words
+106	31	33	p	in
+106	38	59	n	question and document
+106	60	65	p	using
+106	66	98	n	300 dimensional GloVe embeddings
+106	107	109	p	on
+106	112	134	n	corpus of 840 bn words
+108	3	9	p	couple
+108	14	36	n	input and forget gates
+108	37	39	p	in
+108	44	49	n	LSTMs
+108	77	80	p	use
+108	83	102	n	single dropout mask
+108	106	119	p	apply dropout
+108	120	148	n	across all LSTM time - steps
+109	0	13	p	Hidden layers
+109	21	49	n	feed forward neural networks
+109	50	53	p	use
+109	54	76	n	rectified linear units
+111	45	48	p	ran
+111	49	62	n	grid searches
+111	74	88	p	dimensionality
+111	96	114	n	LSTM hidden states
+111	121	136	p	width and depth
+111	144	172	n	feed forward neural networks
+111	175	182	p	dropout
+111	191	196	n	LSTMs
+111	243	259	p	decay multiplier
+111	260	280	n	[ 0.9 , 0.95 , 1.0 ]
+111	295	303	p	multiply
+111	308	321	n	learning rate
+111	322	327	p	every
+111	328	338	n	10 k steps
+112	4	14	n	best model
+112	15	19	p	uses
+112	20	35	n	50d LSTM states
+112	38	57	n	two - layer BiLSTMs
+112	58	61	p	for
+112	66	132	n	span encoder and the passage - independent question representation
+112	135	142	p	dropout
+112	143	145	p	of
+112	146	149	n	0.1
+112	169	188	n	learning rate decay
+112	189	191	p	of
+112	192	195	n	5 %
+112	196	201	p	every
+112	202	212	n	10 k steps
+113	15	32	p	implemented using
+113	33	45	n	TensorFlow 3
+113	50	60	p	trained on
+113	65	83	n	SQUAD training set
+113	84	89	p	using
+113	94	108	n	ADAM optimizer
+113	109	113	p	with
+113	116	131	n	mini-batch size
+113	132	134	p	of
+113	135	136	n	4
+113	141	154	p	trained using
+113	155	187	n	10 asynchronous training threads
+113	188	190	p	on
+113	193	207	n	single machine
+24	58	64	p	called
+24	65	70	n	RASOR
+24	76	82	p	builds
+24	83	118	n	fixed - length span representations
+24	121	128	p	reusing
+24	129	151	n	recurrent computations
+24	152	155	p	for
+24	156	176	n	shared substructures
+25	3	14	p	demonstrate
+25	147	182	n	significant increase in performance
+25	20	40	p	directly classifying
+25	41	68	n	each of the competing spans
+25	75	88	p	training with
+25	89	109	n	global normalization
+25	110	118	p	over all
+25	119	133	n	possible spans
+2	44	73	n	EXTRACTIVE QUESTION ANSWERING
+4	4	25	n	reading comprehension
+17	77	125	n	answer questions about the contents of documents
+121	83	88	n	RASOR
+121	89	97	p	achieves
+121	101	116	n	error reduction
+121	117	129	p	of more than
+121	130	153	n	50 % over this baseline
+125	24	56	p	efficiently and explicitly model
+125	61	97	n	quadratic number of possible answers
+125	106	114	p	leads to
+125	117	137	n	14 % error reduction
+125	138	142	p	over
+125	147	181	n	best performing Match - LSTM model

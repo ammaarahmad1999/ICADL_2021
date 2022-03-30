@@ -1,0 +1,89 @@
+19	29	39	p	introduces
+19	44	95	n	Stanford Natural Language Inference ( SNLI ) corpus
+19	100	110	n	collection
+19	111	113	p	of
+19	114	128	n	sentence pairs
+19	129	140	p	labeled for
+19	141	151	n	entailment
+19	154	167	n	contradiction
+19	174	195	n	semantic independence
+20	0	2	p	At
+20	3	25	n	570,152 sentence pairs
+20	28	32	n	SNLI
+20	33	35	p	is
+20	36	66	n	two orders of magnitude larger
+20	67	71	p	than
+20	76	91	n	other resources
+20	92	94	p	of
+20	95	103	n	its type
+21	54	74	n	sentences and labels
+21	80	90	p	written by
+21	91	97	n	humans
+21	6	8	p	in
+21	103	134	n	grounded , naturalistic context
+22	0	2	p	In
+22	5	30	n	separate validation phase
+22	36	45	p	collected
+22	46	71	n	four additional judgments
+22	72	75	p	for
+22	76	86	n	each label
+22	87	90	p	for
+22	91	97	n	56,941
+22	98	100	p	of
+22	105	113	n	examples
+23	0	8	p	Of these
+23	11	15	n	98 %
+23	16	18	p	of
+23	19	24	n	cases
+23	25	36	p	emerge with
+23	39	63	n	threeannotator consensus
+23	70	74	n	58 %
+23	75	78	p	see
+23	81	100	n	unanimous consensus
+23	101	105	p	from
+23	106	125	n	all five annotators
+2	38	64	n	natural language inference
+11	7	41	n	natural language inference ( NLI )
+12	0	3	n	NLI
+163	4	22	n	sum of words model
+163	23	32	p	performed
+163	33	47	n	slightly worse
+163	48	52	p	than
+163	57	101	n	fundamentally similar lexicalized classifier
+165	73	76	n	gap
+165	77	84	p	between
+165	85	112	n	train and test set accuracy
+165	113	115	p	is
+165	116	132	n	relatively small
+165	133	136	p	for
+165	137	168	n	all three neural network models
+168	127	149	n	somewhat steeper slope
+168	150	153	p	for
+168	25	29	n	LSTM
+168	163	173	p	hints that
+168	178	194	n	ability to learn
+168	195	233	n	arbitrarily structured representations
+168	234	236	p	of
+168	237	253	n	sentence meaning
+168	258	265	p	give it
+168	269	278	n	advantage
+168	279	283	p	over
+168	288	322	n	more constrained lexicalized model
+168	94	96	p	on
+168	332	347	n	larger datasets
+164	0	2	p	Of
+164	7	21	n	two RNN models
+164	28	35	n	LSTM 's
+164	36	55	n	more robust ability
+164	56	64	p	to learn
+164	65	89	n	long - term dependencies
+164	90	96	p	serves
+164	100	104	n	well
+164	166	178	p	resulting in
+164	179	190	n	performance
+164	191	198	p	that is
+164	199	221	n	essentially equivalent
+164	222	224	p	to
+164	229	251	n	lexicalized classifier
+164	252	254	p	on
+164	259	267	n	test set

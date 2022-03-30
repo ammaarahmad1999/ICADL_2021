@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Convolutional Sentence Model
+Some Analysis on the Convolutional Architecture
+Convolutional Matching Models
+Architecture-I (ARC-I)
+Architecture-II (ARC-IT)
+Some Analysis on ARC-II
+Training
+Experiments
+Competitor Methods
+Experiment I: Sentence Completion
+Experiment II: Matching A Response to A Tweet
+Experiment III: Paraphrase Identification
+Discussions
+Related Work
+Conclusion

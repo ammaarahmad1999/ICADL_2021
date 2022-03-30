@@ -1,0 +1,77 @@
+19	11	31	p	study the ability of
+19	36	75	n	Transformer neural network architecture
+19	76	85	p	to encode
+19	86	95	n	relations
+19	96	103	p	between
+19	104	116	n	entity pairs
+19	126	134	p	identify
+19	147	161	n	representation
+19	162	178	p	that outperforms
+19	179	192	n	previous work
+19	193	195	p	in
+19	196	226	n	supervised relation extraction
+20	10	17	p	present
+20	20	26	n	method
+20	27	29	p	of
+20	30	38	n	training
+20	44	67	n	relation representation
+20	68	75	p	without
+20	76	91	n	any supervision
+20	92	96	p	from
+20	99	134	n	knowledge graph or human annotators
+20	135	146	p	by matching
+20	151	157	n	blanks
+2	52	69	n	Relation Learning
+11	16	63	n	identify and extract relations between entities
+12	21	40	n	relation extraction
+187	15	61	n	task agnostic BERT EM and BERT EM + MTB models
+187	62	72	p	outperform
+187	77	112	n	previous published state of the art
+187	113	115	p	on
+187	116	127	n	FewRel task
+187	133	156	p	when they have not seen
+187	157	181	n	any FewRel training data
+199	4	33	n	additional MTB based training
+199	34	51	p	further increases
+199	52	62	n	F 1 scores
+199	63	66	p	for
+199	67	76	n	all tasks
+188	0	3	p	For
+188	4	17	n	BERT EM + MTB
+188	24	32	p	increase
+188	64	80	n	very significant
+188	83	88	n	8.8 %
+188	89	91	p	on
+188	96	119	n	5 - way - 1 - shot task
+188	124	130	n	12.7 %
+188	131	133	p	on
+188	138	162	n	10 - way - 1 - shot task
+189	19	44	p	significantly outperforms
+189	0	7	n	BERT EM
+192	5	10	p	given
+192	11	17	n	access
+192	18	20	p	to
+192	21	45	n	all of the training data
+192	48	55	n	BERT EM
+192	56	66	p	approaches
+192	67	95	n	BERT EM + MTB 's performance
+195	15	24	p	show that
+195	25	37	n	MTB training
+195	38	54	p	could be used to
+195	55	82	n	significantly reduce effort
+195	83	98	p	in implementing
+195	102	143	n	exemplar based relation extraction system
+202	19	27	p	see that
+202	28	46	n	MTB based training
+202	50	73	p	even more effective for
+202	74	94	n	low - resource cases
+203	40	51	p	training by
+203	52	71	n	matching the blanks
+203	72	75	p	can
+203	76	96	n	significantly reduce
+203	101	110	p	amount of
+203	111	122	n	human input
+203	132	141	p	to create
+203	142	161	n	relation extractors
+203	168	176	p	populate
+203	179	193	n	knowledge base

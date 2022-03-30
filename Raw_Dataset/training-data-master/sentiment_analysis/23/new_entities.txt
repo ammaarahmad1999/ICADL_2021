@@ -1,0 +1,95 @@
+193	0	2	p	In
+193	3	20	n	our d-TBCNN model
+193	27	42	n	number of units
+193	43	45	p	is
+193	46	49	n	300
+193	50	53	p	for
+193	54	65	n	convolution
+193	70	73	n	200
+193	74	77	p	for
+193	82	99	n	last hidden layer
+197	0	7	n	Dropout
+197	19	29	p	applied to
+197	30	57	n	both weights and embeddings
+198	0	17	n	All hidden layers
+198	22	36	p	dropped out by
+198	37	41	n	50 %
+198	48	58	n	embeddings
+198	59	63	n	40 %
+194	0	15	n	Word embeddings
+194	16	19	p	are
+194	20	35	n	300 dimensional
+194	38	64	p	pretrained ourselves using
+194	65	73	n	word2vec
+194	74	82	p	To train
+194	83	92	n	our model
+194	98	105	p	compute
+194	106	114	n	gradient
+194	115	117	p	by
+194	118	136	n	back - propagation
+194	141	146	p	apply
+194	147	174	n	stochastic gradient descent
+194	175	179	p	with
+194	180	194	n	mini-batch 200
+195	3	6	p	use
+195	7	11	n	ReLU
+195	12	14	p	as
+195	19	38	n	activation function
+196	0	3	p	For
+196	4	18	n	regularization
+196	24	27	p	add
+196	28	37	n	2 penalty
+196	38	41	p	for
+196	42	49	n	weights
+196	50	54	p	with
+196	57	68	n	coefficient
+196	69	71	p	of
+196	72	77	n	10 ?5
+26	19	26	p	propose
+26	29	54	n	novel neural architecture
+26	55	58	p	for
+26	59	91	n	discriminative sentence modeling
+26	94	100	p	called
+26	105	156	n	Tree - Based Convolutional Neural Network ( TBCNN )
+27	15	23	p	leverage
+27	24	56	n	different sentence parsing trees
+28	10	18	n	variants
+28	23	33	p	denoted as
+28	34	42	n	c- TBCNN
+28	47	56	n	d - TBCNN
+29	12	36	n	tree - based convolution
+29	43	48	p	apply
+29	51	83	n	set of subtree feature detectors
+29	86	98	p	sliding over
+29	103	122	n	entire parsing tree
+29	9	11	p	of
+29	128	136	n	sentence
+29	144	151	p	pooling
+29	152	194	n	aggregates these extracted feature vectors
+29	198	204	p	taking
+29	209	222	n	maximum value
+29	223	225	p	in
+29	226	240	n	each dimension
+2	0	39	n	Discriminative Neural Sentence Modeling
+208	18	31	n	d-TBCNN model
+208	32	40	p	achieves
+209	0	15	n	87.9 % accuracy
+210	0	2	p	In
+210	5	31	n	more controlled comparison
+210	34	38	p	with
+210	39	60	n	shallow architectures
+210	69	137	n	basic interaction ( linearly transformed and non-linearly squashed )
+210	140	146	n	TBCNNs
+210	168	191	p	consistently outperform
+210	192	196	n	RNNs
+210	197	199	p	to
+210	202	246	n	large extent ( 50.4 - 51.4 % versus 43.2 % )
+210	283	296	n	" flat " CNNs
+210	297	309	p	by more than
+210	310	314	n	10 %
+212	8	15	p	observe
+212	16	24	n	d- TBCNN
+212	25	33	p	achieves
+212	34	52	n	higher performance
+212	53	57	p	than
+212	58	67	n	c - TBCNN

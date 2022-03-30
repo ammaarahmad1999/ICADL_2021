@@ -1,0 +1,14 @@
+title
+abstract
+Introduction
+Methodology
+Task description
+Construction of the auxiliary sentence
+Fine-tuning pre-trained BERT
+Experiments
+Datasets
+Hyperparameters
+Exp-I: TABSA
+Exp-II: ABSA
+Discussion
+Conclusion

@@ -1,0 +1,120 @@
+180	20	24	p	show
+180	34	53	n	two ruminate layers
+180	54	57	p	are
+180	63	84	n	important and helpful
+180	85	100	p	in contributing
+180	101	112	n	performance
+181	6	18	p	worth noting
+181	28	34	n	BiLSTM
+181	35	37	p	in
+181	42	64	n	context ruminate layer
+181	65	76	p	contributes
+181	77	90	n	substantially
+181	91	93	p	to
+181	94	111	n	model performance
+10	35	79	n	https://rajpurkar.github.io/SQuAD -explorer/
+148	0	2	p	In
+148	7	31	n	character encoding layer
+148	37	40	p	use
+148	41	52	n	100 filters
+148	53	55	p	of
+148	56	63	n	width 5
+149	35	38	p	set
+149	43	71	n	hidden layer dimension ( d )
+149	72	74	p	to
+149	75	78	n	100
+150	3	6	p	use
+150	7	60	n	pretrained 100D Glo Ve vectors ( 6B - token version )
+150	61	63	p	as
+150	64	79	n	word embeddings
+153	11	29	n	AdaDelta optimizer
+153	48	51	p	for
+153	52	64	n	optimization
+151	0	28	n	Out - of - vocobulary tokens
+151	33	47	p	represented by
+151	51	61	n	UNK symbol
+151	62	64	p	in
+151	69	89	n	word embedding layer
+151	96	103	p	treated
+151	104	112	n	normally
+151	113	115	p	by
+151	120	145	n	character embedding layer
+155	0	10	n	Batch size
+155	11	13	p	is
+155	14	16	n	30
+156	0	13	n	Learning rate
+156	14	23	p	starts at
+156	24	27	n	0.5
+156	34	46	p	decreases to
+156	47	50	n	0.2
+156	66	81	n	stops improving
+156	60	65	n	model
+157	4	28	n	L2-regularization weight
+157	29	31	p	is
+157	32	39	n	1 e - 4
+157	42	53	n	AQSL weight
+157	54	56	p	is
+157	57	58	n	1
+157	63	70	n	dropout
+157	71	75	p	with
+157	78	87	n	drop rate
+157	88	90	p	of
+157	91	94	n	0.2
+157	100	117	n	typical model run
+157	118	127	n	converges
+157	128	136	p	in about
+157	137	147	n	40 k steps
+154	3	11	p	selected
+154	12	33	n	hyperparameter values
+154	34	41	p	through
+154	42	55	n	random search
+158	20	25	p	using
+158	26	36	n	Tensorflow
+158	43	64	n	single NVIDIA K80 GPU
+23	3	10	p	propose
+23	14	23	n	extension
+23	24	26	p	of
+23	27	32	n	BIDAF
+23	35	41	p	called
+23	42	59	n	Ruminating Reader
+23	68	72	p	uses
+23	75	86	n	second pass
+23	87	89	p	of
+23	90	111	n	reading and reasoning
+23	133	141	p	to avoid
+23	142	150	n	mistakes
+23	155	164	p	to ensure
+23	184	199	n	effectively use
+23	204	216	n	full context
+23	217	231	p	when selecting
+23	235	241	n	answer
+24	46	55	p	introduce
+24	56	77	n	two novel layer types
+24	84	99	n	ruminate layers
+24	108	111	p	use
+24	112	129	n	gating mechanisms
+24	130	137	p	to fuse
+24	160	183	n	first and second passes
+26	30	61	n	answer-question similarity loss
+26	62	73	p	to penalize
+26	74	81	n	overlap
+26	82	89	p	between
+26	90	119	n	question and predicted answer
+4	26	54	n	machine comprehension ( MC )
+14	57	82	n	question answering ( QA )
+169	32	37	n	model
+169	38	40	p	is
+169	41	45	n	tied
+169	46	48	p	in
+169	49	57	n	accuracy
+169	58	60	p	on
+169	65	80	n	hidden test set
+169	81	85	p	with
+169	90	127	n	bestperforming published single model
+170	3	10	p	achieve
+170	14	23	n	F 1 score
+170	24	26	p	of
+170	27	31	n	79.5
+170	36	44	n	EM score
+170	45	47	p	of
+170	48	52	n	70.6

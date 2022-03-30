@@ -1,0 +1,112 @@
+230	12	25	p	validate that
+230	26	30	n	GCNs
+230	35	56	p	effective at encoding
+230	57	78	n	syntactic information
+231	173	181	p	inducing
+231	31	47	n	side information
+231	199	207	p	leads to
+231	208	236	n	improved relation extraction
+240	17	22	n	model
+240	23	31	p	performs
+240	32	36	n	best
+240	37	41	p	when
+240	42	49	n	aliases
+240	54	65	p	provided by
+240	70	72	n	KB
+241	23	29	n	RESIDE
+241	30	35	p	gives
+241	36	59	n	competitive performance
+241	65	69	p	when
+241	70	119	n	very limited amount of relation alias information
+241	120	122	p	is
+241	123	132	n	available
+242	3	10	p	observe
+242	16	27	n	performance
+242	28	49	p	improves further with
+242	54	92	n	availability of more alias information
+198	0	5	n	Mintz
+198	8	45	n	Multi-class logistic regression model
+198	58	61	p	for
+198	62	90	n	distant supervision paradigm
+199	0	6	n	MultiR
+199	9	38	n	Probabilistic graphical model
+199	39	42	p	for
+199	43	66	n	multi instance learning
+199	70	76	n	MIMLRE
+200	2	17	n	graphical model
+200	24	38	p	jointly models
+200	39	77	n	multiple instances and multiple labels
+201	18	22	n	PCNN
+201	27	62	n	CNN based relation extraction model
+201	72	76	p	uses
+201	77	100	n	piecewise max - pooling
+201	101	104	p	for
+201	105	128	n	sentence representation
+202	0	10	n	PCNN + ATT
+202	15	38	n	piecewise max - pooling
+202	39	43	p	over
+202	44	59	n	CNN based model
+202	77	83	p	to get
+202	84	107	n	sentence representation
+202	108	119	p	followed by
+202	120	144	n	attention over sentences
+203	0	4	n	BGWA
+203	7	47	n	Bi - GRU based relation extraction model
+203	48	52	p	with
+203	53	86	n	word and sentence level attention
+45	70	110	n	http://github.com / malllabiisc / RESIDE
+39	19	26	p	propose
+39	27	33	n	RESIDE
+39	38	89	n	novel distant supervised relation extraction method
+39	96	104	p	utilizes
+39	105	127	n	additional supervision
+39	128	132	p	from
+39	133	135	n	KB
+39	136	143	p	through
+39	148	181	n	neural network based architecture
+40	0	6	n	RESIDE
+40	7	12	p	makes
+40	13	27	n	principled use
+40	28	30	p	of
+40	31	73	n	entity type and relation alias information
+40	74	78	p	from
+40	79	82	n	KBs
+40	85	94	p	to impose
+40	95	111	n	soft constraints
+40	112	128	p	while predicting
+40	133	141	n	relation
+41	3	7	p	uses
+41	8	37	n	encoded syntactic information
+41	38	51	p	obtained from
+41	52	86	n	Graph Convolution Networks ( GCN )
+41	89	99	p	along with
+41	100	125	n	embedded side information
+41	128	138	p	to improve
+41	139	165	n	neural relation extraction
+2	19	68	n	Distantly - Supervised Neural Relation Extraction
+4	0	49	n	Distantly - supervised Relation Extraction ( RE )
+15	0	26	n	Relation Extraction ( RE )
+6	0	2	n	RE
+219	13	22	p	find that
+219	23	29	n	RESIDE
+219	30	38	p	achieves
+219	39	55	n	higher precision
+219	56	60	p	over
+219	65	84	n	entire recall range
+219	85	87	p	on
+219	88	105	n	both the datasets
+220	8	28	n	non-neural baselines
+220	29	46	p	could not perform
+220	47	51	n	well
+221	0	6	n	RESIDE
+221	7	18	p	outperforms
+221	19	38	n	PCNN + ATT and BGWA
+222	4	22	n	higher performance
+222	23	25	p	of
+222	26	45	n	BGWA and PCNN + ATT
+222	46	50	p	over
+222	51	55	n	PCNN
+222	56	66	p	shows that
+222	67	76	n	attention
+222	77	85	p	helps in
+222	86	107	n	distant supervised RE

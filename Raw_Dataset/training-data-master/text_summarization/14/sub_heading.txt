@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Background: Seq2seq Learning
+Our Proposed Model
+Overview
+Entailment-aware Encoder
+Entailment-aware Decoder
+Related work
+Dataset
+Experiment
+Experimental Settings
+Comparative Methods
+Experimental Results: Gigaword Corpus
+Experimental Results: DUC 2004 Test Corpus
+Manual Evaluation
+Further Analysis
+Case Study

@@ -1,0 +1,11 @@
+{
+  "has research problem" : [
+	  ["End - to - End Relation Extraction", {"from sentence" : "End - to - End Relation Extraction using LSTMs on Sequences and Tree Structures"}],
+    ["end - to - end neural model to extract entities and relations between them", {"from sentence" : "We present a novel end - to - end neural model to extract entities and relations between them ."}],
+    ["jointly represent both entities and relations with shared parameters in a single model", {"from sentence" : "This allows our model to jointly represent both entities and relations with shared parameters in a single model ."}],
+    ["Extracting semantic relations between entities in text",
+    {"from sentence" : "Extracting semantic relations between entities in text is an important and well - studied task in information extraction and natural language processing ( NLP ) ."}],
+    ["end - to - end ( joint ) modeling of entity and relation",
+    {"from sentence" : "Traditional systems treat this task as a pipeline of two separated tasks , i.e. , named entity recognition ( NER ) ) and relation extraction , but recent studies show that end - to - end ( joint ) modeling of entity and relation is important for high performance since relations interact closely with entity information ."}]
+    ]
+}

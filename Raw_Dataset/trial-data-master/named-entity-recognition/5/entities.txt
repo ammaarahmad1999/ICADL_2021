@@ -1,0 +1,66 @@
+31	34	72	https://github.com/ leuchine /S - LSTM
+148	4	15	experiments
+148	20	35	conducted using
+148	38	58	GeForce GTX 1080 GPU
+148	59	63	with
+148	64	75	8 GB memory
+19	31	39	to model
+19	44	85	hidden states of all words simultaneously
+19	86	88	at
+19	89	108	each recurrent step
+20	19	23	view
+20	28	42	whole sentence
+20	43	45	as
+20	48	60	single state
+20	69	80	consists of
+20	81	91	sub-states
+20	92	95	for
+20	96	112	individual words
+20	120	151	over all sentence - level state
+21	0	10	To capture
+21	11	39	local and non-local contexts
+21	53	72	updated recurrently
+21	42	48	states
+21	73	75	by
+21	76	117	exchanging information between each other
+25	0	22	At each recurrent step
+25	25	45	information exchange
+25	49	66	conducted between
+25	67	100	consecutive words in the sentence
+25	119	155	sentence - level state and each word
+26	16	25	each word
+26	26	34	receives
+26	35	46	information
+26	47	51	from
+26	56	96	predecessor and successor simultaneously
+2	0	45	Sentence - State LSTM for Text Representation
+7	18	62	alternative LSTM structure for encoding text
+18	18	64	alternative recurrent neural network structure
+165	14	17	for
+165	18	32	Classification
+170	32	34	on
+170	39	59	movie review dataset
+170	112	120	S - LSTM
+170	121	132	outperforms
+170	133	142	BiL - STM
+170	75	79	with
+170	166	178	faster speed
+173	14	19	among
+173	24	35	16 datasets
+173	50	55	gives
+173	60	72	best results
+173	73	75	on
+173	76	78	12
+174	21	23	of
+174	24	32	S - LSTM
+174	4	20	average accuracy
+174	36	42	85.6 %
+178	18	36	Sequence Labelling
+187	0	3	For
+187	4	7	NER
+187	50	52	on
+187	57	71	CoNLL test set
+187	19	24	gives
+187	10	18	S - LSTM
+187	28	38	F1 - score
+187	42	49	91.57 %

@@ -1,0 +1,20 @@
+title
+abstract
+Introduction
+Semantic parsing
+Semantic graphs
+Semantic graph construction
+Representation learning
+Deep Convolutional Networks
+Gated Graph Neural Networks
+Experiments
+Data
+Models
+Training the model
+Inference
+Results
+WebQSP-WD
+QALD-7
+Error analysis
+Related work
+Conclusions

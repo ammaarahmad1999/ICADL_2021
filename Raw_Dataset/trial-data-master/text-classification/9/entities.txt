@@ -1,0 +1,99 @@
+153	17	20	use
+153	21	43	rectified linear units
+153	48	61	three filters
+153	62	66	with
+153	67	103	different window sizes h = 3 , 4 , 5
+153	104	108	with
+153	109	130	100 feature maps each
+154	0	3	For
+154	8	29	final sentence vector
+154	35	46	concatenate
+154	51	63	feature maps
+154	64	70	to get
+154	73	95	300 - dimension vector
+155	7	14	dropout
+155	15	17	on
+155	18	43	all nonlinear connections
+155	44	63	with dropout rate
+155	67	70	0.5
+158	0	6	During
+158	7	15	training
+158	21	24	use
+158	25	40	mini-batch size
+158	41	43	of
+158	44	46	50
+159	0	8	Training
+159	9	20	is done via
+159	21	48	stochastic gradient descent
+159	49	53	over
+159	54	75	shuffled mini-batches
+159	76	80	with
+159	85	105	Adadelta update rule
+160	3	10	perform
+160	11	25	early stopping
+160	26	31	using
+160	34	45	random 10 %
+160	46	48	of
+160	53	65	training set
+160	66	68	as
+160	73	88	development set
+42	33	40	present
+42	43	99	neural attentionbased multiple context fixing attachment
+42	102	106	MCFA
+43	5	7	is
+43	10	27	series of modules
+43	33	37	uses
+43	38	62	all the sentence vectors
+43	65	69	e.g.
+43	70	95	Arabic , English , Korean
+43	105	107	as
+43	108	115	context
+43	116	122	to fix
+43	125	156	sentence vector ( e.g. Korean )
+44	0	18	Fixing the vectors
+44	19	26	is done
+44	27	29	by
+44	30	60	selectively moving the vectors
+44	61	74	to a location
+44	75	99	in the same vector space
+44	100	121	that better separates
+44	122	131	the class
+46	0	4	MCFA
+46	5	13	computes
+46	14	44	two sentence usability metrics
+46	45	55	to control
+46	60	65	noise
+46	66	70	when
+46	71	85	fixing vectors
+46	94	108	self usability
+47	6	24	relative usability
+2	40	63	Sentence Classification
+12	99	251	given a sentence ( e.g. a sentence of a review ) as input , we are tasked to classify it into one of multiple classes ( e.g. into positive or negative )
+169	3	7	show
+169	13	23	CNN + MCFA
+169	24	32	achieves
+169	33	61	state of the art performance
+169	62	64	on
+169	65	92	three of the four data sets
+169	97	122	performs competitively on
+169	123	135	one data set
+172	14	33	ensemble classifier
+172	34	58	additionally outperforms
+172	59	79	all competing models
+172	80	82	on
+172	87	98	MR data set
+170	0	4	When
+170	5	10	N = 1
+170	13	17	MCFA
+170	18	46	increases the performance of
+170	49	59	normal CNN
+170	60	64	from
+170	65	69	85.0
+170	70	72	to
+170	73	77	87.6
+171	5	11	N = 10
+171	14	18	MCFA
+171	19	37	additionally beats
+171	42	58	state of the art
+171	59	61	on
+171	66	79	TREC data set

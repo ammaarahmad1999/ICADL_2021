@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Neural Translation Model
+Desiderata
+ByteNet
+Encoder-Decoder Stacking
+Dynamic Unfolding
+Input Embedding Tensor
+Masked One-dimensional Convolutions
+Dilation
+Residual Blocks
+Model Comparison
+Recurrent ByteNets
+Comparison of Properties
+Character Prediction
+Character-Level Machine Translation
+Conclusion

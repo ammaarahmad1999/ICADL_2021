@@ -1,0 +1,4 @@
+(Contribution||has research problem||Neural Network Named - Entity Recognition)
+(Contribution||has research problem||Neural network approaches to Named - Entity Recognition)
+(Contribution||has research problem||Named - Entity Recognition)
+(Contribution||has research problem||NER)

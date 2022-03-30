@@ -1,0 +1,18 @@
+title
+abstract
+INTRODUCTION
+RELATED WORK
+MODEL
+Audio Recurrent Encoder (ARE)
+Text Recurrent Encoder (TRE)
+Multimodal Dual Recurrent Encoder (MDRE)
+Multimodal Dual Recurrent Encoder with Attention
+EXPERIMENTAL SETUP AND DATASET
+Dataset
+Feature extraction
+Implementation details
+EMPIRICAL RESULTS
+Performance evaluation
+Error analysis
+CONCLUSIONS
+REFERENCES

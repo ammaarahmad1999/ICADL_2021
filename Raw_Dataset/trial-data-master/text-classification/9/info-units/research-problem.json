@@ -1,0 +1,6 @@
+{
+  "has research problem" : [
+    ["Sentence Classification", {"from sentence" : "Translations as Additional Contexts for Sentence Classification"}],
+    ["given a sentence ( e.g. a sentence of a review ) as input , we are tasked to classify it into one of multiple classes ( e.g. into positive or negative )", {"from sentence" : "One of the primary tasks in natural language processing ( NLP ) is sentence classification , where given a sentence ( e.g. a sentence of a review ) as input , we are tasked to classify it into one of multiple classes ( e.g. into positive or negative ) ."}]
+  ]
+}

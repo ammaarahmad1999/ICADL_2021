@@ -1,0 +1,55 @@
+{
+  "has" : {
+    "Experimental setup" : {
+      "use" : {
+        "word embeddings" : {
+          "is" : "256 dimensional",
+          "for" : "both the source and target languages",
+          "from sentence" : "We use 256 dimensional word embeddings for both the source and target languages ."          
+        },
+        "4 ? 8 GPU machines" : {
+          "running for" : "10 days",
+          "to train" : "full model with parallelization at the data batch level",
+          "from sentence" : "We use 4 ? 8 GPU machines ( each has 4 K40 GPU cards ) running for 10 days to train the full model with parallelization at the data batch level ."
+        
+        }
+      },
+      "have" : {
+        "512 memory cells" : {
+          "has" : {
+            "LSTM layers" : {
+              "including" : "2n e layers in the encoder and then d layers in the decoder"
+            }
+          }
+        },
+        "from sentence" : "All LSTM layers , including the 2n e layers in the encoder and then d layers in the decoder , have 512 memory cells ."
+      },
+      "For" : {
+        "each LSTM layer" : {
+          "activation functions for gates , inputs and outputs" : "sigmoid , tanh , and tanh",
+          "from sentence" : "For each LSTM layer , the activation functions for gates , inputs and outputs are sigmoid , tanh , and tanh respectively ."          
+        }
+      },
+      "for" : {
+        "feed - forward computation" : {
+          "used" : {
+            "smaller learning rate" : {
+              "l f" : "4 10 ? 5"
+            }
+          }
+        }        
+      },
+      "in" : {
+        "recurrent computation" : {
+          "used" : {
+            "larger learning rate" : {
+              "l r" : "5 10 ? 4"   
+            }
+          }          
+        },
+        "from sentence" : "Since there are non-linear activations in the recurrent computation , a larger learning rate l r = 5 10 ? 4 is used , while for the feed - forward computation a smaller learning rate l f = 4 10 ? 5 is used ." 
+      },
+      "dropout ratio" : ["0.1", {"from sentence" : "The dropout ratio pd is 0.1 ."}]
+    }
+  }
+}

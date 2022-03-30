@@ -1,0 +1,12 @@
+title
+abstract
+Introduction
+Related Work
+Methods
+From Sequences to DAGs
+MAGE-GRUs
+Multiple Sequences
+Experiments
+Text Comprehension with Coreference
+Performance Comparison
+Conclusions

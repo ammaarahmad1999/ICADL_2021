@@ -1,0 +1,8 @@
+title
+abstract
+Introduction
+Related work
+Joint Model
+Experimental setup
+Results and discussion
+Conclusion

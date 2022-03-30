@@ -1,0 +1,9 @@
+{
+  "has" : {
+    "Baselines" : {
+      "strong LSTM and CNN baselines" : ["Bi - LSTM with local decoding , and one with CRF decoding", {"from sentence" : "We compare our ID - CNN against strong LSTM and CNN baselines : a Bi - LSTM with local decoding , and one with CRF decoding ( Bi - LSTM - CRF ) ."}],
+      "non-dilated CNN architecture" : "4 - layer CNN",
+      "has" : ["5 - layer CNN", {"from sentence" : "We also compare against a non-dilated CNN architecture with the same number of convolutional layers as our dilated network ( 4 - layer CNN ) and one with enough layers to incorporate an effective input width of the same size as that of the dilated network ( 5 - layer CNN ) to demonstrate that the dilated convolutions more effectively aggregate contextual information than simple convolutions ( i.e. using fewer parameters ) ."}]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "has" : {
+    "Results" : {
+      "has" : {
+        "Story - based QA" : {
+          "In" : {
+            "1 k data" : {
+              "has" : {
+                "QRN 's ' 2 r' ( 2 layers + reset gate + d = 50 )" : {
+                  "outperforms" : {
+                    "all other models" : {
+                      "by" : "large margin ( 2.8 + % )"  
+                    }
+                  }  
+                }
+              },
+              "from sentence" : "Story - based QA .
+In 1 k data , QRN 's ' 2 r' ( 2 layers + reset gate + d = 50 ) outperforms all other models by a large margin ( 2.8 + % ) ."
+
+            },
+            "10 k dataset" : {
+              "average accuracy of" : {
+                "QRN 's ' 6r200 ' ( 6 layers + reset gate + d = 200 ) model" : {
+                  "outperforms" : {
+                    "all previous models" : {
+                      "by" : "large margin ( 2.5 + % )"
+                    }
+                  }
+                }
+              },
+              "from sentence" : "In 10 k dataset , the average accuracy of QRN 's ' 6r200 ' ( 6 layers + reset gate + d = 200 ) model outperforms all previous models by a large margin ( 2.5 + % ) , achieving a nearly perfect score of 99.7 % ."
+            }
+          }
+        },
+        "Dialog" : {
+          "outperforms" : {
+            "previous work" : {
+              "by" : "large margin ( 2.0 + % )"
+            }
+          },
+          "from sentence" : "Dialog . Table 1 ( bottom ) reports the summary of the results of our model ( QRN ) and previous work on bAbI dialog and Task 6 dialog ( task - wise results are shown in in Appendix ) .
+QRN outperforms previous work by a large margin ( 2.0 + % ) in every comparison ."
+
+        }
+      }
+    }
+  }
+}

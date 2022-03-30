@@ -1,0 +1,164 @@
+192	0	7	n	TOPIARY
+192	40	43	p	for
+192	44	74	n	compressive text summarization
+193	3	11	p	combines
+193	14	59	n	system using linguistic based transformations
+193	64	105	n	an unsupervised topic detection algorithm
+194	0	7	n	MOSES +
+194	8	12	p	uses
+194	15	65	n	phrasebased statistical machine translation system
+194	66	76	p	trained on
+194	77	85	n	Gigaword
+194	86	96	p	to produce
+194	97	106	n	summaries
+196	0	13	n	ABS and ABS +
+196	55	59	p	with
+196	60	84	n	local attention modeling
+196	85	88	p	for
+196	89	123	n	abstractive sentence summarization
+197	0	5	n	ABS +
+197	9	19	p	trained on
+197	24	39	n	Gigaword corpus
+197	46	59	p	combined with
+197	63	117	n	additional log - linear extractive summarization model
+197	118	122	p	with
+197	123	143	n	handcrafted features
+198	0	21	n	RNN and RNN - context
+198	22	25	p	are
+198	26	51	n	two seq2seq architectures
+200	0	8	n	Copy Net
+200	9	19	p	integrates
+200	22	39	n	copying mechanism
+200	40	44	p	into
+200	49	81	n	sequence - to sequence framework
+201	0	14	n	RNN - distract
+201	15	19	p	uses
+201	22	45	n	new attention mechanism
+201	46	60	p	by distracting
+201	65	85	n	historical attention
+201	86	88	p	in
+201	93	107	n	decoding steps
+202	0	26	n	RAS - LSTM and RAS - Elman
+202	32	40	p	consider
+202	41	65	n	words and word positions
+202	66	68	p	as
+202	69	74	n	input
+202	79	82	p	use
+202	83	105	n	convolutional encoders
+202	106	115	p	to handle
+202	120	138	n	source information
+204	0	6	n	LenEmb
+204	27	34	p	control
+204	39	53	n	summary length
+204	54	68	p	by considering
+204	73	96	n	length embedding vector
+204	97	99	p	as
+204	104	109	n	input
+205	0	8	n	ASC+ FSC
+205	13	17	p	uses
+205	20	36	n	generative model
+205	37	41	p	with
+205	42	61	n	attention mechanism
+205	62	72	p	to conduct
+205	77	105	n	sentence compression problem
+207	0	31	n	lvt2k - 1sent and lvt5k - 1sent
+207	32	39	p	utilize
+207	42	47	n	trick
+207	48	58	p	to control
+207	63	78	n	vocabulary size
+207	79	89	p	to improve
+207	94	113	n	training efficiency
+209	20	22	p	on
+209	27	52	n	English dataset Gigawords
+209	58	61	p	set
+209	66	75	n	dimension
+209	76	78	p	of
+209	79	94	n	word embeddings
+209	95	97	p	to
+209	98	101	n	300
+209	125	159	n	hidden states and latent variables
+209	160	162	p	to
+209	163	166	n	500
+209	122	124	p	of
+210	4	21	p	maximum length of
+210	22	45	n	documents and summaries
+210	46	48	p	is
+210	49	59	n	100 and 50
+211	4	14	n	batch size
+211	18	37	n	mini-batch training
+211	38	40	p	is
+211	41	44	n	256
+212	0	3	p	For
+212	4	14	n	DUC - 2004
+212	21	38	p	maximum length of
+212	39	48	n	summaries
+212	49	51	p	is
+212	52	60	n	75 bytes
+213	8	24	n	dataset of LCSTS
+213	31	43	p	dimension of
+213	44	59	n	word embeddings
+213	60	62	p	is
+213	63	66	n	350
+214	29	63	n	hidden states and latent variables
+214	64	66	p	to
+214	67	70	n	500
+215	4	21	p	maximum length of
+215	22	45	n	documents and summaries
+215	46	48	p	is
+215	49	59	n	120 and 25
+216	4	16	p	beam size of
+216	21	28	n	decoder
+216	33	39	p	set to
+216	43	45	n	10
+217	0	8	n	Adadelta
+217	9	13	p	with
+217	14	37	n	hyperparameter ? = 0.95
+217	55	63	p	used for
+217	64	91	n	gradient based optimization
+218	4	34	n	neural network based framework
+218	38	55	p	implemented using
+218	56	62	n	Theano
+26	44	50	p	design
+26	53	66	n	new framework
+26	67	75	p	based on
+26	76	131	n	sequence to - sequence oriented encoder - decoder model
+26	132	145	p	equipped with
+26	148	183	n	latent structure modeling component
+27	3	9	p	employ
+27	10	46	n	Variational Auto - Encoders ( VAEs )
+27	47	49	p	as
+27	54	64	n	base model
+27	65	68	p	for
+27	69	93	n	our generative framework
+27	100	110	p	can handle
+27	115	132	n	inference problem
+27	133	148	p	associated with
+27	149	176	n	complex generative modeling
+29	17	20	p	add
+29	21	44	n	historical dependencies
+29	45	47	p	on
+29	52	68	n	latent variables
+29	69	71	p	of
+29	72	76	n	VAEs
+29	81	88	p	propose
+29	91	133	n	deep recurrent generative decoder ( DRGD )
+29	134	137	p	for
+29	138	163	n	latent structure modeling
+30	96	106	p	integrated
+30	9	91	n	standard discriminative deterministic decoder and the recurrent generative decoder
+30	107	111	p	into
+30	114	140	n	unified decoding framework
+31	29	36	p	decoded
+31	4	20	n	target summaries
+31	37	50	p	based on both
+31	55	93	n	discriminative deterministic variables
+31	102	142	n	generative latent structural information
+2	38	68	n	Abstractive Text Summarization
+11	0	23	n	Automatic summarization
+229	0	16	n	ROUGE Evaluation
+230	12	14	p	on
+230	19	40	n	Chinese dataset LCSTS
+231	0	14	n	Our model DRGD
+231	20	28	p	achieves
+231	33	49	n	best performance
+39	0	23	n	Automatic summarization

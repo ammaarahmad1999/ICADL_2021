@@ -1,0 +1,79 @@
+17	19	26	p	propose
+17	29	57	n	structured learning approach
+17	58	60	p	to
+17	61	89	n	temporal relation extraction
+17	92	97	p	where
+17	98	110	n	local models
+17	111	114	p	are
+17	115	122	n	updated
+17	123	131	p	based on
+17	132	140	n	feedback
+17	141	145	p	from
+17	146	163	n	global inferences
+18	4	23	n	structured approach
+18	29	42	p	gives rise to
+18	45	66	n	semisupervised method
+18	91	108	p	take advantage of
+18	113	145	n	readily available unlabeled data
+199	17	55	n	regularized averaged perceptron ( AP )
+199	56	70	p	implemented in
+199	75	89	n	LBJava package
+200	0	9	p	On top of
+200	14	28	n	first baseline
+200	34	43	p	performed
+200	44	60	n	global inference
+202	13	17	p	used
+202	22	38	n	same feature set
+202	65	70	p	as in
+202	75	112	n	proposed structured perceptron ( SP )
+202	117	121	n	CoDL
+2	34	62	n	Temporal Relation Extraction
+4	0	45	n	Identifying temporal relations between events
+13	25	44	n	temporal processing
+205	0	26	n	TE3 Task C - Relation Only
+214	7	10	p	see
+214	16	25	n	UT - Time
+214	26	34	p	is about
+214	35	38	n	3 %
+214	39	50	p	better than
+214	51	57	n	AP - 1
+214	58	60	p	in
+214	65	86	n	absolute value of F 1
+220	0	9	p	On top of
+220	10	16	n	AP - 2
+220	21	42	n	global inference step
+220	43	52	p	enforcing
+220	53	90	n	symmetry and transitivity constraints
+220	112	127	p	further improve
+220	132	141	n	F 1 score
+220	142	144	p	by
+220	145	150	n	9.3 %
+221	0	8	n	SP + ILP
+221	9	25	p	further improved
+221	30	41	n	performance
+221	42	44	p	in
+221	45	73	n	precision , recall , and F 1
+221	134	142	p	reaching
+221	146	155	n	F 1 score
+221	156	158	p	of
+221	159	165	n	67.2 %
+223	0	10	n	TE3 Task C
+232	4	18	p	improvement of
+232	19	27	n	SP + ILP
+232	39	43	p	over
+232	44	46	n	AP
+232	58	61	p	was
+232	62	67	n	small
+232	72	80	n	AP + ILP
+232	96	111	p	even worse than
+232	112	114	n	AP
+233	3	11	p	applying
+233	16	36	n	postfiltering method
+233	66	81	p	able to achieve
+233	82	101	n	better performances
+233	102	107	p	using
+233	108	116	n	SP + ILP
+239	0	21	n	Comparison with CAEVO
+249	0	8	n	SP + ILP
+249	9	21	p	outperformed
+249	22	27	n	CAEVO

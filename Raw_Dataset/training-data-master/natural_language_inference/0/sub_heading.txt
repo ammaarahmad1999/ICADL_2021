@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Related Work
+Gated-Attention Reader
+Model Details
+Experiments and Results
+Datasets
+Performance Comparison
+GA Reader Analysis
+Ablation Study for Model Components
+Attention Visualization
+Conclusion

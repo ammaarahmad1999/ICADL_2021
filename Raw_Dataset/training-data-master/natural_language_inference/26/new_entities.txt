@@ -1,0 +1,141 @@
+171	22	34	p	observe that
+171	39	52	n	concatenation
+171	59	64	p	yield
+171	68	79	n	improvement
+171	82	96	p	verifying that
+171	97	108	n	integrating
+171	109	129	n	contextual semantics
+171	136	138	p	be
+171	139	151	n	quite useful
+171	152	155	p	for
+171	156	178	n	language understanding
+172	10	17	n	SemBERT
+172	24	35	n	outperforms
+172	40	63	n	simple BERT + SRL model
+172	153	163	p	shows that
+172	164	171	n	SemBERT
+172	172	177	p	works
+172	178	194	n	more effectively
+172	195	198	p	for
+172	199	210	n	integrating
+172	211	215	p	both
+172	216	247	n	plain contextual representation
+172	252	272	n	contextual semantics
+124	0	18	n	Our implementation
+124	22	30	p	based on
+124	35	57	n	PyTorch implementation
+124	58	60	p	of
+124	61	65	n	BERT
+127	4	14	n	batch size
+127	18	29	p	selected in
+127	30	46	n	{ 16 , 24 , 32 }
+128	4	28	n	maximum number of epochs
+128	32	38	p	set in
+128	39	48	n	[ 2 , 5 ]
+128	49	61	p	depending on
+128	62	67	n	tasks
+129	0	5	n	Texts
+129	10	25	p	tokenized using
+129	26	36	n	wordpieces
+129	39	43	p	with
+129	44	58	n	maximum length
+129	59	61	p	of
+129	62	65	n	384
+129	66	69	p	for
+129	70	75	n	SQuAD
+129	80	90	n	128 or 200
+129	91	94	p	for
+129	95	106	n	other tasks
+130	4	13	n	dimension
+130	14	16	p	of
+130	17	30	n	SRL embedding
+130	34	40	p	set to
+130	41	43	n	10
+131	4	26	n	default maximum number
+131	27	29	p	of
+131	30	60	n	predicateargument structures m
+131	64	70	p	set to
+131	71	72	n	3
+125	3	6	p	use
+125	11	30	n	pre-trained weights
+125	31	33	p	of
+125	34	38	n	BERT
+125	43	49	p	follow
+125	54	82	n	same fine - tuning procedure
+125	83	85	p	as
+125	86	90	n	BERT
+125	122	136	n	all the layers
+125	141	151	p	tuned with
+125	152	171	n	moderate model size
+125	172	182	n	increasing
+125	185	187	p	as
+125	192	218	n	extra SRL embedding volume
+125	219	221	p	is
+125	222	236	n	less than 15 %
+125	237	239	p	of
+125	244	265	n	original encoder size
+126	3	6	p	set
+126	11	32	n	initial learning rate
+126	33	35	p	in
+126	36	75	n	{ 8e -6 , 1 e - 5 , 2 e - 5 , 3 e - 5 }
+126	76	80	p	with
+126	81	95	n	warm - up rate
+126	96	98	p	of
+126	99	102	n	0.1
+126	107	122	n	L2 weight decay
+126	123	125	p	of
+126	126	130	n	0.01
+26	25	31	p	enrich
+26	36	65	n	sentence contextual semantics
+26	66	68	p	in
+26	69	117	n	multiple predicate - specific argument sequences
+26	118	131	p	by presenting
+26	132	164	n	SemBERT : Semantics - aware BERT
+26	173	175	p	is
+26	178	195	n	fine - tuned BERT
+26	196	200	p	with
+26	201	235	n	explicit contextual semantic clues
+27	4	20	n	proposed SemBERT
+27	21	27	p	learns
+27	32	46	n	representation
+27	47	49	p	in
+27	52	73	n	fine - grained manner
+27	78	83	p	takes
+27	89	98	n	strengths
+27	99	101	p	of
+27	102	106	n	BERT
+27	107	109	p	on
+27	110	138	n	plain context representation
+27	143	161	n	explicit semantics
+27	162	165	p	for
+27	166	195	n	deeper meaning representation
+28	10	21	p	consists of
+28	22	38	n	three components
+29	4	42	n	an out - ofshelf semantic role labeler
+29	43	54	p	to annotate
+29	59	74	n	input sentences
+29	75	79	p	with
+29	82	113	n	variety of semantic role labels
+29	123	139	n	sequence encoder
+29	140	145	p	where
+29	148	174	n	pre-trained language model
+29	178	191	p	used to build
+29	192	206	n	representation
+29	207	216	p	for input
+29	217	226	n	raw texts
+29	235	255	n	semantic role labels
+29	260	269	p	mapped to
+29	270	279	n	embedding
+29	280	282	p	in
+29	283	291	n	parallel
+29	300	330	n	semantic integration component
+29	331	343	p	to integrate
+29	348	367	n	text representation
+29	368	372	p	with
+29	377	415	n	contextual explicit semantic embedding
+29	416	425	p	to obtain
+29	430	450	n	joint representation
+29	451	454	p	for
+29	455	471	n	downstream tasks
+4	19	43	n	language representations
+12	78	121	n	learning universal language representations

@@ -1,0 +1,100 @@
+213	0	6	n	Random
+213	7	14	p	Selects
+213	17	33	n	random candidate
+214	0	12	n	Max- mention
+215	0	8	p	Predicts
+215	13	48	n	most frequently mentioned candidate
+215	49	51	p	in
+215	56	73	n	support documents
+217	0	39	n	Majority - candidate - per-query - type
+218	0	8	p	Predicts
+218	13	22	n	candidate
+219	4	12	p	that was
+219	13	37	n	most frequently observed
+219	38	40	p	as
+219	45	56	n	true answer
+221	0	8	n	TF - IDF
+222	0	24	n	Retrieval - based models
+222	29	40	p	known to be
+222	41	60	n	strong QA baselines
+222	61	63	p	if
+222	64	81	n	candidate answers
+222	25	28	p	are
+222	86	94	n	provided
+229	6	20	n	Document - cue
+229	142	148	n	effect
+229	61	65	p	that
+229	158	175	n	correct candidate
+229	185	204	p	indicated solely by
+229	209	238	n	presence of certain documents
+29	12	19	n	WIKIHOP
+29	22	26	p	uses
+29	27	31	n	sets
+29	32	34	p	of
+29	35	53	n	WIKIPEDIA articles
+29	54	59	p	where
+29	60	67	n	answers
+29	68	70	p	to
+29	71	78	n	queries
+29	79	84	p	about
+29	85	104	n	specific properties
+29	105	107	p	of
+29	111	117	n	entity
+29	118	139	p	can not be located in
+29	144	161	n	entity 's article
+30	24	30	n	MEDHOP
+30	37	41	n	goal
+30	45	57	p	to establish
+30	58	82	n	drug - drug interactions
+30	83	91	p	based on
+30	92	111	n	scientific findings
+30	112	117	p	about
+30	118	159	n	drugs and proteins and their interactions
+30	162	174	p	found across
+30	175	201	n	multiple MEDLINE abstracts
+31	21	30	p	draw upon
+31	31	63	n	existing Knowledge Bases ( KBs )
+31	66	90	n	WIKIDATA and DRUG - BANK
+2	26	57	n	Multi-hop Reading Comprehension
+4	5	26	n	Reading Comprehension
+17	28	56	n	Reading Comprehension ( RC )
+261	4	27	n	Document - cue baseline
+261	32	39	p	predict
+261	40	72	n	more than a third of the samples
+261	73	82	n	correctly
+261	110	130	p	after sub - sampling
+261	131	163	n	frequent document - answer pairs
+261	85	88	p	for
+261	168	175	n	WIKIHOP
+267	0	21	n	Both neural RC models
+267	26	33	p	able to
+267	34	64	n	largely retain or even improve
+267	71	89	n	strong performance
+267	90	94	p	when
+267	95	102	n	answers
+267	22	25	p	are
+267	107	113	n	masked
+265	0	2	p	In
+265	7	19	n	masked setup
+265	20	39	n	all baseline models
+265	40	50	p	reliant on
+265	51	63	n	lexical cues
+265	64	68	p	fail
+265	69	117	n	in the face of the randomized answer expressions
+269	14	17	p	for
+269	22	43	n	open - domain setting
+269	44	46	p	of
+269	47	54	n	WIKIHOP
+269	59	68	n	reduction
+269	69	71	p	of
+269	76	93	n	answer vocabulary
+269	94	96	p	to
+269	97	139	n	100 random single - token mask expressions
+269	148	153	p	helps
+269	158	163	n	model
+269	164	176	p	in selecting
+269	179	193	n	candidate span
+269	196	207	p	compared to
+269	212	245	n	multi-token candidate expressions
+269	246	248	p	in
+269	253	269	n	unmasked setting

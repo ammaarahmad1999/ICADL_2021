@@ -1,0 +1,23 @@
+{
+  "has" : {
+    "Results" : {
+      "has" : {
+        "proposed model" : {
+          "achieves" : {
+            "F1-score" : {
+              "of" : "85.2 %"
+            }
+          },
+          "outperforms" : {
+            "all competing state - of - theart approaches" : {
+              "except" : ["depLCNN + NS", "DRNNs", "Attention - CNN"]
+            }
+          }
+        },
+        "from sentence" : "Non Our proposed model achieves an F1-score of 85.2 % which outperforms all competing state - of - theart approaches except depLCNN + NS , DRNNs , and Attention - CNN ."
+      }
+    }
+  }
+}
+
+

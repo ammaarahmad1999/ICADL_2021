@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Related work
+Proposed method
+Architecture
+Training strategy
+Training data and pre-processing
+Experimental evaluation
+XNLI: cross-lingual NLI
+MLDoc: cross-lingual classification
+BUCC: bitext mining
+Tatoeba: similarity search
+Ablation experiments
+Encoder depth
+Miultitask learning
+Number of training languages
+Conclusions

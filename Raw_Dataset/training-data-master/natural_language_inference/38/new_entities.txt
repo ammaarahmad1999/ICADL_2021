@@ -1,0 +1,175 @@
+156	26	28	p	of
+156	33	45	n	single model
+156	46	48	p	on
+156	49	64	n	SQ u AD dev set
+157	61	71	n	contribute
+157	72	79	p	towards
+157	84	104	n	model 's performance
+157	11	15	p	both
+157	16	36	n	syntactic embeddings
+157	41	60	n	semantic embeddings
+157	113	121	n	POS tags
+157	127	132	p	to be
+157	133	147	n	more important
+160	0	12	p	For ablating
+160	13	36	n	integral query matching
+160	43	49	n	result
+160	50	55	n	drops
+160	56	61	p	about
+160	62	65	n	2 %
+160	89	99	p	shows that
+160	104	124	n	integral information
+160	125	127	p	of
+160	128	133	n	query
+160	134	137	p	for
+160	138	147	n	each word
+160	148	150	p	in
+160	151	158	n	passage
+160	159	161	p	is
+160	162	169	n	crucial
+161	4	37	n	query - based similarity matching
+161	38	50	p	accounts for
+161	51	85	n	about 10 % performance degradation
+161	94	100	p	proves
+161	105	118	n	effectiveness
+161	119	121	p	of
+161	122	145	n	alignment context words
+161	146	153	p	against
+161	154	159	n	query
+162	0	3	p	For
+162	4	39	n	context - based similarity matching
+162	52	60	p	took out
+162	65	68	n	M 3
+162	69	73	p	from
+162	78	93	n	linear function
+162	104	116	p	proved to be
+162	117	129	n	contributory
+162	130	132	p	to
+162	137	148	n	performance
+162	149	151	p	of
+162	152	179	n	full - orientation matching
+110	4	14	n	tokenizers
+110	18	24	p	use in
+110	29	33	n	step
+110	34	36	p	of
+110	37	50	n	preprocessing
+110	51	55	n	data
+110	60	64	p	from
+110	65	81	n	Stanford CoreNLP
+111	106	118	p	to transform
+111	123	143	n	passage and question
+111	76	78	p	in
+111	79	105	n	Stanford CoreNLP utilities
+111	8	11	p	use
+111	12	37	n	part - of - speech tagger
+111	42	75	n	named - entity recognition tagger
+112	0	3	p	For
+112	8	25	n	skip - gram model
+112	28	37	n	our model
+112	38	47	p	refers to
+112	52	68	n	word2 vec module
+112	69	71	p	in
+112	72	100	n	open source software library
+112	103	113	n	Tensorflow
+112	120	131	n	skip window
+112	135	141	p	set as
+112	142	143	n	2
+118	8	23	n	memory networks
+118	29	32	p	set
+118	37	52	n	number of layer
+118	53	55	p	as
+118	56	57	n	3
+114	0	10	p	To improve
+114	15	40	n	reliability and stabllity
+114	46	56	p	screen out
+114	61	70	n	sentences
+114	71	76	p	whose
+114	77	83	n	length
+114	84	87	p	are
+114	88	102	n	shorter than 9
+115	3	6	p	use
+115	7	26	n	100 one dimensional
+115	27	34	n	filters
+115	35	38	p	for
+115	39	42	n	CNN
+115	43	45	p	in
+115	50	75	n	character level embedding
+115	78	82	p	with
+115	83	88	n	width
+115	89	91	p	of
+115	92	93	n	5
+115	94	97	p	for
+115	98	106	n	each one
+117	11	47	n	AdaDelta ( Zeiler , 2012 ) optimizer
+117	48	52	p	with
+117	55	76	n	initial learning rate
+117	77	79	p	as
+117	80	85	n	0.001
+116	3	6	p	set
+116	11	22	n	hidden size
+116	23	25	p	as
+116	26	29	n	100
+116	30	33	p	for
+116	34	61	n	all the LSTM and GRU layers
+116	66	71	p	apply
+116	72	79	n	dropout
+116	80	87	p	between
+116	88	94	n	layers
+116	95	99	p	with
+116	102	115	n	dropout ratio
+116	116	118	p	as
+116	119	122	n	0.2
+27	19	28	p	introduce
+27	33	87	n	Multi - layer Embedding with Memory Networks ( MEMEN )
+27	93	122	n	end - to - end neural network
+27	123	126	p	for
+27	127	153	n	machine comprehension task
+28	10	21	p	consists of
+28	22	33	n	three parts
+29	8	16	n	encoding
+29	17	19	p	of
+29	20	37	n	context and query
+29	40	48	p	in which
+29	52	55	n	add
+29	56	97	n	useful syntactic and semantic information
+29	98	100	p	in
+29	105	114	n	embedding
+29	115	117	p	of
+29	118	128	n	every word
+29	139	182	n	high - efficiency multilayer memory network
+29	183	185	p	of
+29	186	213	n	full - orientation matching
+29	214	222	p	to match
+29	227	247	n	question and context
+29	258	314	n	pointer - network based answer boundary prediction layer
+29	315	321	p	to get
+29	326	334	n	location
+29	335	337	p	of
+29	342	348	n	answer
+29	349	351	p	in
+29	356	363	n	passage
+2	55	76	n	Machine Comprehension
+4	0	53	n	Machine comprehension ( MC ) style question answering
+12	0	28	n	Machine comprehension ( MC )
+129	10	13	p	see
+129	19	28	n	our model
+129	29	40	n	outperforms
+129	41	60	n	all other baselines
+129	65	73	p	achieves
+129	78	107	n	state - of - the - art result
+129	108	110	p	on
+129	111	134	n	all subsets on TriviaQA
+132	8	11	p	use
+132	16	67	n	Stanford Question Answering Dataset ( SQuAD ) v 1.1
+132	68	70	p	to
+138	114	123	n	our model
+138	202	204	p	is
+138	205	216	n	competitive
+138	220	249	n	state - of - the - art method
+138	124	132	p	achieves
+138	136	153	n	exact match score
+138	12	14	p	of
+138	157	164	n	75.37 %
+138	172	180	n	F1 score
+138	154	156	p	of
+138	184	193	n	82 . 66 %

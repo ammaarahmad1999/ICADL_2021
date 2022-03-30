@@ -1,0 +1,143 @@
+67	3	10	p	propose
+67	13	33	n	novel tagging scheme
+67	41	57	n	end -toend model
+67	58	62	p	with
+67	63	88	n	biased objective function
+67	89	107	p	to jointly extract
+67	108	136	n	entities and their relations
+72	0	9	n	Tag " O "
+72	10	20	p	represents
+72	25	38	n	" Other " tag
+72	47	52	p	means
+72	62	120	n	corresponding word is independent of the extracted results
+99	55	62	p	produce
+99	67	80	n	tags sequence
+97	4	24	n	End - to - end Model
+100	3	11	p	contains
+100	14	71	n	bi-directional Long Short Term Memory ( Bi - LSTM ) layer
+100	72	81	p	to encode
+100	86	100	n	input sentence
+100	107	134	n	LSTM - based decoding layer
+100	135	139	p	with
+100	140	151	n	biased loss
+101	20	27	p	enhance
+101	32	56	n	relevance of entity tags
+74	3	6	p	use
+74	13	17	n	BIES
+74	22	51	n	Begin , Inside , End , Single
+74	63	72	p	represent
+74	77	97	n	position information
+74	98	102	p	of a
+74	103	107	n	word
+74	108	110	p	in
+74	115	121	n	entity
+169	87	99	p	divided into
+169	131	148	n	pipelined methods
+169	155	181	n	jointly extracting methods
+169	190	212	n	end - to - end methods
+170	8	25	n	pipelined methods
+173	6	17	n	DS-logistic
+173	20	24	p	is a
+173	25	68	n	distant supervised and feature based method
+173	77	85	p	combines
+173	90	146	n	advantages of supervised IE and unsupervised IE features
+173	155	159	n	LINE
+173	160	164	p	is a
+173	165	189	n	network embedding method
+173	201	213	p	suitable for
+173	214	253	n	arbitrary types of information networks
+174	6	9	n	FCM
+174	12	16	p	is a
+174	17	36	n	compositional model
+174	42	50	p	combines
+174	51	101	n	lexicalized linguistic context and word embeddings
+174	102	105	p	for
+174	106	125	n	relation extraction
+175	4	30	n	jointly extracting methods
+175	80	90	n	DS - Joint
+175	93	97	p	is a
+175	98	115	n	supervised method
+175	124	140	p	jointly extracts
+175	141	163	n	entities and relations
+175	164	169	p	using
+175	170	191	n	structured perceptron
+175	192	194	p	on
+175	195	220	n	human - annotated dataset
+175	229	235	n	MultiR
+175	236	240	p	is a
+175	241	274	n	typical distant supervised method
+175	275	283	p	based on
+175	284	318	n	multi-instance learning algorithms
+175	319	328	p	to combat
+175	333	352	n	noisy training data
+175	361	367	n	CoType
+175	370	374	p	is a
+175	375	403	n	domain independent framework
+175	404	424	p	by jointly embedding
+175	425	524	n	entity mentions , relation mentions , text features and type labels into meaningful representations
+176	60	89	n	end - to - end tagging models
+176	92	101	n	LSTM- CRF
+176	106	117	n	LSTM - LSTM
+177	14	26	p	proposed for
+177	27	45	n	entity recognition
+177	46	54	p	by using
+177	57	75	n	bidirectional LSTM
+177	76	85	p	to encode
+177	86	100	n	input sentence
+177	107	132	n	conditional random fields
+177	133	143	p	to predict
+177	148	167	n	entity tag sequence
+178	40	44	p	uses
+178	47	57	n	LSTM layer
+178	58	67	p	to decode
+178	72	99	n	tag sequence instead of CRF
+154	4	19	n	word embeddings
+154	20	27	p	used in
+154	32	45	n	encoding part
+154	50	62	p	initialed by
+154	63	81	n	running word2vec 3
+154	82	84	p	on
+154	85	104	n	NYT training corpus
+155	4	13	p	dimension
+155	40	47	n	d = 300
+156	3	13	p	regularize
+156	18	25	n	network
+156	26	31	p	using
+156	32	39	n	dropout
+156	40	42	p	on
+156	43	58	n	embedding layer
+156	75	83	p	ratio is
+156	84	87	n	0.5
+157	4	13	p	number of
+157	14	24	n	lstm units
+157	25	42	p	in encoding layer
+157	46	49	n	300
+157	65	82	p	in decoding layer
+157	86	89	n	600
+158	4	20	p	bias parameter ?
+159	35	37	n	10
+2	0	42	n	Joint Extraction of Entities and Relations
+10	49	148	n	detect entity mentions and recognize their semantic relations simultaneously from unstructured text
+17	70	131	n	extract entities together with relations using a single model
+182	33	51	n	LSTM - LSTM - Bias
+182	54	65	p	outperforms
+182	66	83	n	all other methods
+182	84	86	p	in
+182	87	96	n	F 1 score
+182	101	109	p	achieves
+182	112	127	n	3 % improvement
+182	128	130	p	in
+182	131	134	n	F 1
+182	135	139	p	over
+182	144	162	n	best method CoType
+191	22	39	n	LSTM - LSTM model
+191	40	54	p	is better than
+191	55	71	n	LSTM - CRF model
+191	72	80	p	based on
+191	81	99	n	our tagging scheme
+186	5	18	p	compared with
+186	23	42	n	traditional methods
+186	93	115	p	significantly improved
+186	49	59	n	precisions
+186	60	62	p	of
+186	67	88	n	end - to - end models

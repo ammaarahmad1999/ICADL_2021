@@ -1,0 +1,4 @@
+(Contribution||has research problem||Joint entity recognition and relation extraction)
+(Contribution||has research problem||entity recognition and relation extraction simultaneously)
+(Contribution||has research problem||joint models to detect entities and their relations)
+(Contribution||has research problem||joint model that performs the two tasks of entity recognition and relation extraction simultaneously)

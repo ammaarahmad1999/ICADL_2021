@@ -1,0 +1,75 @@
+285	4	8	n	NVDM
+285	85	92	p	extract
+285	97	117	n	embeddings from NVDM
+285	122	134	p	use them for
+285	135	162	n	training linear classifiers
+293	4	7	n	SMM
+293	37	39	p	is
+293	40	104	n	non-Bayesian SMM with 1 regularization over the rows in T matrix
+299	4	10	n	ULMFiT
+299	39	41	p	is
+299	46	70	n	universal language model
+299	71	87	p	fine - tuned for
+299	88	102	n	classification
+306	4	12	n	TF - IDF
+307	27	31	p	is a
+307	32	127	n	standard term frequency - inverse document frequency ( TF - IDF ) based document representation
+307	130	141	p	followed by
+307	142	180	n	multi-class logistic regression ( LR )
+274	4	23	n	embedding dimension
+274	28	39	p	chosen from
+274	40	65	n	K = { 100 , . . . , 800 }
+274	72	93	n	regularization weight
+274	94	98	p	from
+274	99	128	n	? = { 0.0001 , . . . , 10.0 }
+38	19	26	p	present
+38	27	79	n	Bayesian subspace multinomial model ( Bayesian SMM )
+38	80	84	p	as a
+38	85	101	n	generative model
+38	102	105	p	for
+38	106	147	n	bag - ofwords representation of documents
+39	27	45	p	learn to represent
+39	46	59	n	each document
+39	60	74	p	in the form of
+39	77	98	n	Gaussian distribution
+39	109	117	p	encoding
+39	122	151	n	uncertainty in its covariance
+40	13	20	p	propose
+40	23	53	n	generative Gaussian classifier
+40	59	67	p	exploits
+40	73	84	n	uncertainty
+40	85	88	p	for
+40	89	116	n	topic identification ( ID )
+41	33	41	p	extended
+41	4	25	n	proposed VB framework
+41	67	70	p	for
+41	71	92	n	subspace n-gram model
+41	100	109	p	can model
+41	110	151	n	n-gram distribution of words in sentences
+2	0	28	n	Learning document embeddings
+8	60	80	n	topic identification
+24	0	38	n	L EARNING word and document embeddings
+362	39	60	n	Fisher speech corpora
+362	61	65	p	with
+362	66	101	n	manual and automatic transcriptions
+367	7	15	p	see that
+367	16	36	n	our proposed systems
+367	37	44	p	achieve
+367	45	75	n	consistently better accuracies
+367	88	92	n	GLCU
+367	99	107	p	exploits
+367	112	146	n	uncertainty in document embeddings
+367	151	177	n	much lower cross - entropy
+367	178	182	p	than
+367	201	204	n	GLC
+370	35	56	n	20 Newsgroups dataset
+376	3	11	p	see that
+376	16	78	n	topic ID systems based on Bayesian SMM and logistic regression
+376	82	93	p	better than
+376	94	114	n	all the other models
+376	117	127	p	except for
+376	132	163	n	purely discriminative CNN model
+377	29	67	n	topic ID systems based on Bayesian SMM
+377	72	96	p	consistently better than
+377	97	162	n	variational auto encoder inspired NVDM , and ( non-Bayesian ) SMM
+18	60	80	n	topic identification

@@ -1,0 +1,21 @@
+title
+abstract
+INTRODUCTION
+RELATED WORK
+OUR PROPOSED APPROACH
+Embedding Layer
+Projection Layer
+Learning QA Representations
+Hyperbolic Representations of QA Pairs
+Similarity Scoring Layer
+Optimization and Learning
+EXPERIMENTS
+Datasets
+Compared Baselines
+Evaluation Protocol
+Results and Analysis
+Effects of QA Embedding Size
+DISCUSSION AND ANALYSIS
+Analysis of QA Embeddings
+Analysis of Word Embeddings
+CONCLUSION

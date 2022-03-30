@@ -1,0 +1,103 @@
+27	19	30	p	investigate
+27	31	46	n	several methods
+27	47	49	p	of
+27	50	62	n	constructing
+27	63	65	p	an
+27	66	84	n	auxiliary sentence
+27	89	98	p	transform
+27	99	109	n	( T ) ABSA
+27	110	114	p	into
+27	117	152	n	sentence - pair classification task
+28	3	14	p	fine - tune
+28	19	36	n	pre-trained model
+28	37	41	p	from
+28	42	46	n	BERT
+109	0	2	n	LR
+109	7	37	n	logistic regression classifier
+109	38	42	p	with
+109	43	70	n	n-gram and pos-tag features
+110	0	12	n	LSTM - Final
+110	19	31	n	biLSTM model
+110	32	36	p	with
+110	41	72	n	final state as a representation
+111	0	10	n	LSTM - Loc
+111	17	29	n	biLSTM model
+111	30	34	p	with
+111	39	44	n	state
+111	45	60	p	associated with
+111	65	100	n	target position as a representation
+112	0	14	n	LSTM + TA + SA
+112	21	33	n	biLSTM model
+112	40	50	p	introduces
+112	51	115	n	complex target - level and sentence - level attention mechanisms
+113	0	10	n	SenticLSTM
+113	16	32	n	upgraded version
+113	33	35	p	of
+113	40	60	n	LSTM + TA + SA model
+113	67	77	p	introduces
+113	78	116	n	external information from Sentic - Net
+114	0	12	n	Dmu - Entnet
+114	17	37	n	bidirectional EntNet
+114	38	42	p	with
+114	43	69	n	external " memory chains "
+114	70	74	p	with
+114	77	108	n	delayed memory update mechanism
+114	109	117	p	to track
+114	118	126	n	entities
+100	3	6	p	use
+100	11	48	n	pre-trained uncased BERT - base model
+100	51	54	p	for
+100	55	68	n	fine - tuning
+101	4	32	n	number of Transformer blocks
+101	33	35	p	is
+101	36	38	n	12
+101	45	62	n	hidden layer size
+101	63	65	p	is
+101	66	69	n	768
+101	76	108	n	number of self - attention heads
+101	109	111	p	is
+101	112	114	n	12
+101	125	151	n	total number of parameters
+101	152	155	p	for
+101	160	176	n	pretrained model
+101	177	179	p	is
+101	180	184	n	110M
+106	4	25	n	initial learning rate
+106	26	28	p	is
+106	29	36	n	2 e - 5
+106	47	57	n	batch size
+106	58	60	p	is
+106	61	63	n	24
+105	4	23	n	dropout probability
+105	24	26	p	at
+105	27	30	n	0.1
+105	33	36	p	set
+105	41	57	n	number of epochs
+105	58	60	p	to
+105	61	62	n	4
+2	19	52	n	Aspect - Based Sentiment Analysis
+4	0	42	n	Aspect - based sentiment analysis ( ABSA )
+4	156	181	n	sentiment analysis ( SA )
+16	5	7	n	SA
+16	12	16	n	ABSA
+17	34	86	n	targeted aspect - based sentiment analysis ( TABSA )
+120	13	26	n	BERT - single
+120	31	39	p	achieved
+120	40	54	n	better results
+120	83	94	n	BERT - pair
+120	99	107	p	achieved
+120	108	128	n	further improvements
+120	129	133	p	over
+120	134	147	n	BERT - single
+121	4	31	n	BERT - pair - NLI - B model
+121	32	40	p	achieves
+121	45	61	n	best performance
+121	62	65	p	for
+121	66	91	n	aspect category detection
+122	0	3	p	For
+122	4	28	n	aspect category polarity
+122	31	48	n	BERTpair - QA - B
+122	49	57	p	performs
+122	58	62	n	best
+122	63	65	p	on
+122	66	109	n	all 4 - way , 3 - way , and binary settings

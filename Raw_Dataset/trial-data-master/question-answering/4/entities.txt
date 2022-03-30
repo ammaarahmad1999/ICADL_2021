@@ -1,0 +1,110 @@
+259	47	56	important
+259	23	43	n-gram functionality
+259	59	71	contributing
+259	72	103	almost 5 % accuracy improvement
+262	19	42	contributes very little
+262	4	18	top N function
+262	73	83	suggesting
+262	89	169	most multi questions have their evidence distributed across contiguous sentences
+263	13	33	sentential component
+263	34	38	made
+263	43	70	most significant difference
+263	73	93	reducing performance
+263	94	110	by more than 5 %
+265	4	29	sequential sliding window
+265	30	35	makes
+265	38	54	3 % contribution
+265	57	69	highlighting
+265	74	112	importance of word - distance measures
+264	53	55	on
+264	56	62	MCTest
+264	36	52	obviously useful
+264	0	32	Simple word - by - word matching
+266	64	89	only a minor contribution
+266	24	57	dependency - based sliding window
+269	44	55	significant
+269	14	36	exogenous word weights
+269	56	71	contribution of
+269	72	82	almost 5 %
+218	0	3	For
+218	4	16	word vectors
+218	20	23	use
+218	24	63	Google 's publicly available embeddings
+218	66	78	trained with
+218	79	87	word2vec
+218	88	90	on
+218	95	127	100 - billion - word News corpus
+231	3	8	found
+231	9	16	dropout
+231	36	58	effective at improving
+231	59	107	generalization from the training to the test set
+231	114	118	used
+231	119	122	0.5
+231	123	125	as
+231	130	149	dropout probability
+235	3	7	used
+235	12	26	Adam optimizer
+235	27	31	with
+235	36	78	standard settings ( Kingma and Ba , 2014 )
+235	85	98	learning rate
+235	102	107	0.003
+236	0	12	To determine
+236	17	37	best hyperparameters
+236	41	50	performed
+236	53	64	grid search
+236	65	69	over
+236	70	82	150 settings
+236	83	91	based on
+236	92	117	validation - set accuracy
+27	32	40	compares
+27	45	75	question and answer candidates
+27	8	10	to
+27	83	87	text
+27	88	93	using
+27	94	123	several distinct perspectives
+29	4	24	semantic perspective
+29	25	33	compares
+29	38	48	hypothesis
+29	49	51	to
+29	52	61	sentences
+29	62	64	in
+29	69	73	text
+29	74	83	viewed as
+29	84	118	single , self - contained thoughts
+29	131	148	represented using
+29	151	199	sum and transformation of word embedding vectors
+30	4	32	word - by - word perspective
+30	33	43	focuses on
+30	44	62	similarity matches
+30	63	70	between
+30	71	132	individual words from hypothesis and text , at various scales
+32	8	11	use
+32	14	28	sliding window
+32	97	117	implicitly considers
+32	122	159	linear distance between matched words
+33	43	54	operates on
+33	55	92	two different views of text sentences
+33	99	114	sequential view
+33	117	122	where
+33	123	158	words appear in their natural order
+33	169	184	dependency view
+33	187	192	where
+33	193	212	words are reordered
+33	213	221	based on
+33	224	273	linearization of the sentence 's dependency graph
+2	36	72	Machine Comprehension on Sparse Data
+4	0	31	Understanding unstructured text
+6	30	87	machine comprehension on the challenging MCTest benchmark
+14	0	71	Comprehension of unstructured text by machines , at a near- human level
+16	0	21	Machine comprehension
+16	24	26	MC
+247	0	2	On
+247	3	15	MCTest - 500
+247	22	49	Parallel Hierarchical model
+247	90	92	on
+247	93	109	single questions
+247	110	119	( > 2 % )
+247	50	75	significantly outperforms
+247	124	144	slightly outperforms
+247	163	190	multi questions ( ? 0.3 % )
+247	195	213	over all ( ? 1 % )

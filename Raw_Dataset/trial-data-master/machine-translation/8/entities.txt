@@ -1,0 +1,78 @@
+118	3	8	train
+118	9	28	two types of models
+119	4	13	first one
+119	20	41	RNN Encoder - Decoder
+119	66	71	other
+119	117	126	RNNsearch
+120	9	25	each model twice
+120	34	38	with
+120	43	52	sentences
+120	53	62	of length
+120	63	77	up to 30 words
+120	152	165	up to 50 word
+121	24	26	of
+121	31	40	RNNencdec
+121	4	23	encoder and decoder
+121	51	68	hidden units each
+121	41	45	have
+121	46	50	1000
+122	4	14	encoder of
+122	19	28	RNNsearch
+122	29	40	consists of
+122	41	95	forward and backward recurrent neural networks ( RNN )
+122	96	107	each having
+122	108	125	1000 hidden units
+123	5	12	decoder
+123	22	34	hidden units
+123	17	21	1000
+124	19	22	use
+124	25	43	multilayer network
+124	44	48	with
+124	51	77	single maxout hidden layer
+124	78	88	to compute
+124	93	116	conditional probability
+124	117	119	of
+124	120	136	each target word
+20	36	45	introduce
+20	49	89	extension to the encoder - decoder model
+20	96	105	learns to
+20	106	133	align and translate jointly
+21	68	87	( soft - ) searches
+21	94	110	set of positions
+21	46	48	in
+21	116	131	source sentence
+21	132	137	where
+21	142	183	most relevant information is concentrated
+21	0	9	Each time
+21	29	38	generates
+21	41	45	word
+21	111	113	in
+21	51	62	translation
+22	15	23	predicts
+22	26	37	target word
+22	38	46	based on
+22	51	66	context vectors
+22	67	82	associated with
+22	89	105	source positions
+22	118	149	previous generated target words
+2	45	71	NEURAL MACHINE TRANSLATION
+11	7	26	machine translation
+7	39	159	use of a fixed - length vector is a bottleneck in improving the performance of this basic encoder - decoder architecture
+141	33	35	of
+141	36	45	RNNencdec
+141	46	67	dramatically drops as
+141	72	105	length of the sentences increases
+142	63	74	more robust
+142	20	58	both RNNsearch - 30 and RNNsearch - 50
+142	75	77	to
+142	82	105	length of the sentences
+143	36	64	no performance deterioration
+143	0	14	RNNsearch - 50
+143	70	74	with
+143	75	84	sentences
+143	85	94	of length
+143	95	105	50 or more
+144	134	145	outperforms
+144	114	128	RNNsearch - 30
+144	129	133	even
+144	146	160	RNNencdec - 50

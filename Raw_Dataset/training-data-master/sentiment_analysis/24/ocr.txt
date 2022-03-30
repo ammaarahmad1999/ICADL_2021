@@ -1,0 +1,1094 @@
+1906.06906v1 [cs.CL] 17 Jun 2019
+
+ar X1V
+
+An Interactive Multi-Task Learning Network for End-to-End
+Aspect-Based Sentiment Analysis
+
+Ruidan He", Wee Sun Lee', Hwee Tou Ng', and Daniel Dahlimeier?
+‘Department of Computer Science, National University of Singapore
+*SAP Innovation Center Singapore
+'fruidanhe, leews, nght}@comp.nus.edu.sg
+‘qd. dahlmeier@sap.com
+
+Abstract
+
+Aspect-based sentiment analysis produces a
+list of aspect terms and their corresponding
+sentiments for a natural language sentence.
+This task is usually done in a pipeline manner, with aspect term extraction performed
+first, followed by sentiment predictions toward the extracted aspect terms. While easier to develop, such an approach does not fully
+exploit joint information from the two subtasks and does not use all available sources
+of training information that might be helpful,
+such as document-level labeled sentiment corpus. In this paper, we propose an interactive
+multi-task learning network (IMN) which is
+able to jointly learn multiple related tasks simultaneously at both the token level as well
+as the document level. Unlike conventional
+multi-task learning methods that rely on learning common features for the different tasks,
+IMN introduces a message passing architecture where information is iteratively passed to
+different tasks through a shared set of latent
+variables. Experimental results demonstrate
+superior performance of the proposed method
+against multiple baselines on three benchmark
+datasets.
+
+1 Introduction
+
+Aspect-based sentiment analysis (ABSA) aims to
+determine people’s attitude towards specific aspects in a review. This is done by extracting explicit aspect mentions, referred to as aspect term
+extraction (AE), and detecting the sentiment orientation towards each extracted aspect term, referred to as aspect-level sentiment classification
+(AS). For example, in the sentence “Great food
+but the service is dreadful”, the aspect terms are
+“food” and “service”, and the sentiment orientations towards them are positive and negative respectively.
+
+In previous works, AE and AS are typically
+
+treated separately and the overall task is performed
+in a pipeline manner, which may not fully exploit the joint information between the two tasks.
+Recently, two studies (Wang et al., 2018; Li
+et al., 2019) have shown that integrated models
+can achieve comparable results to pipeline methods. Both works formulate the problem as a single sequence labeling task with a unified tagging
+scheme!. However, in their methods, the two tasks
+are only linked through unified tags, while the
+correlation between them is not explicitly modeled. Furthermore, the methods only learn from
+aspect-level instances, the size of which is usually small, and do not exploit available information from other sources such as related documentlevel labeled sentiment corpora, which contain
+useful sentiment-related linguistic knowledge and
+are much easier to obtain in practice.
+
+In this work, we propose an interactive multitask learning network (IMN), which solves both
+tasks simultaneously, enabling the interactions between both tasks to be better exploited. Furthermore, IMN allows AE and AS to be trained together with related document-level tasks, exploiting the knowledge from larger document-level
+corpora. IMN introduces a novel message passing
+mechanism that allows informative interactions
+between tasks. Specifically, it sends useful information from different tasks back to a shared latent representation. The information is then combined with the shared latent representation and
+made available to all tasks for further processing. This operation is performed iteratively, allowing the information to be modified and propagated
+across multiple links as the number of iterations
+increases. In contrast to most multi-task learning
+schemes which share information through learning
+
+'{B, I}-{POS, NEG, NEU} denotes the beginning and
+inside of an aspect-term with positive, negative, or neutral
+sentiment, respectively, and O denotes background words.
+a common feature representation, IMN not only
+allows shared features, but also explicitly models
+the interactions between tasks through the message passing mechanism, allowing different tasks
+to better influence each other.
+
+In addition, IMN allows fined-grained tokenlevel classification tasks to be trained together
+with document-level classification tasks. We incorporated two document-level classification tasks
+— sentiment classification (DS) and domain classification (DD) — to be jointly trained with AE and
+AS, allowing the aspect-level tasks to benefit from
+document-level information. In our experiments,
+we show that the proposed method is able to outperform multiple pipeline and integrated baselines
+on three benchmark datasets’.
+
+2 Related Work
+
+Aspect-Based Sentiment Analysis. Existing approaches typically decompose ABSA into two
+subtasks, and solve them in a pipeline setting.
+Both AE (Qiu et al., 2011; Yin et al., 2016; Wang
+et al., 2016a, 2017; Li and Lam, 2017; He et al.,
+2017; Li et al., 2018b; Angelidis and Lapata,
+2018) and AS (Dong et al., 2014; Nguyen and Shirai, 2015; Vo and Zhang, 2015; Tang et al., 2016;
+Wang et al., 2016b; Zhang et al., 2016; Liu and
+Zhang, 2017; Chen et al., 2017; Cheng et al., 2017;
+Tay et al., 2018; Maet al., 2018; He et al., 2018a,b;
+Li et al., 2018a) have been extensively studied in
+the literature. However, treating each task independently has several disadvantages. In a pipeline
+setting, errors from the first step tend to be propagated to the second step, leading to a poorer overall performance. In addition, this approach is unable to exploit the commonalities and associations
+between tasks, which may help reduce the amount
+of training data required to train both tasks.
+
+Some previous works have attempted to develop integrated solutions. Zhang et al. (2015)
+proposed to model the problem as a sequence labeling task with a unified tagging scheme. However, their results were discouraging. Recently,
+two works (Wang et al., 2018; Li et al., 2019) have
+shown some promising results in this direction
+with more sophisticated network structures. However, in their models, the two subtasks are still only
+linked through a unified tagging scheme, while the
+interactions between them are not explicitly mod
+*Our source code can be obtained from https: //
+github.com/ruidan/IMN-E2E-ABSA
+
+eled. To address this issue, a better network structure allowing further task interactions is needed.
+
+Multi-Task Learning. One straightforward approach to perform AE and AS simultaneously
+is multi-task learning, where one conventional
+framework is to employ a shared network and two
+task-specific network to derive a shared feature
+space and two task-specific feature spaces. Multitask learning frameworks have been employed
+successfully in various natural language processing (NLP) tasks (Collobert and Weston, 2008; Luong et al., 2015; Liu et al., 2016). By learning semantically related tasks in parallel using a shared
+representation, multi-task learning could capture
+the correlations between tasks and improve the
+model generalization ability in certain cases. For
+ABSA, He et al. (2018b) have shown that aspectlevel sentiment classification can be significantly
+improved through joint training with documentlevel sentiment classification. However, conventional multi-task learning still does not explicitly
+model the interactions between tasks — the two
+tasks only interact with each other through error
+back-propoagation to contribute to the learned features and such implicit interactions are not controllable. Unlike existing methods, our proposed
+IMN not only allows the representations to be
+shared, but also explicitly models the interactions
+between tasks, by using an iterative message passing scheme. The propagated information contributes to both learning and inference to boost the
+overall performance of ABSA.
+
+Message Passing Architectures. Networked representations for message passing graphical model
+inference algorithms have been studied in computer vision (Arnab et al., 2018) and NLP (Gormley et al., 2015). Modeling the execution of these
+message passing algorithms as a network results in
+recurrent neural network architectures. We similarly propagate information in a network and learn
+the update operators, but the architecture is designed for solving multi-task learning problems.
+Our algorithm can similarly be viewed as a recurrent neural network since each iteration uses the
+same network to update the shared latent variables.
+
+3 Proposed Method
+
+The IMN architecture is shown in Figure 1. It
+accepts a sequence of tokens {x1,...,%,} as input into a feature extraction component fg, that is
+fi
+
+ 
+
+Ss
+fa
+Embedding Layer
+
+{x1,X2,..., Xn}
+
+AE: aspect term and opinion term
+co-extraction
+
+AS: aspect-level sentiment
+classification
+
+DS: document-level sentiment
+classification
+
+DD: document-level domain
+classification
+
+fi message-passing
+te mechanism
+
+Figure 1: The overall architecture of IMN.
+
+shared among all tasks. This component consists
+of a word embedding layer followed by a few feature extraction layers. Specifically, we employ m°
+layers of CNNs after the word embedding layer in
+Fo.
+
+The output of fg, is a sequence of latent vectors {hj, h5,..., h’,} shared among all the tasks.
+After initialization by jfg,, this sequence of latent vectors is later updated by combining information propagated from different task components
+through message passing. We denote he as the
+value of the shared latent vector corresponding to
+x; after t rounds of message passing, with ns
+denoting the value after initialization.
+
+The sequence of shared latent vectors?
+{hj,h5,...,h*,} is used as input to the different
+task-specific components. Each _task-specific
+component has its own sets of latent and output
+variables. The output variables correspond to a
+label sequence in a sequence tagging task; in AE,
+we assign to each token a label indicating whether
+it belongs to any aspect or opinion* term, while
+in AS, we label each word with its sentiment. In
+a classification task, the output corresponds to
+the label of the input instance: the sentiment of
+the document for the sentiment classification task
+(DS), and the domain of the document for the
+domain classification task (DD). At each iteration,
+appropriate information is passed back to the
+shared latent vectors to be combined; this could
+be the values of the output variables or the latent
+variables, depending on the task. In addition, we
+also allow messages to be passed between the
+
+>We omit the iteration superscript t in the description for
+simplicity.
+
+te. g. “great” and “dreadful” in “Great food but the service
+is dreadful” are the opinion terms.
+
+components in each iteration. Specifically for
+this problem, we send information from the AE
+task to the AS task as shown in Figure |. After
+T’ iterations of message passing, which allows
+information to be propagated through multiple
+hops, we use the values of the output variables
+as predictions. For this problem, we only use
+the outputs for AE and AS during inference as
+these are the end-tasks, while the other tasks are
+only used for training. We now describe each
+component and how it is used in learning and
+inference.
+
+3.1 Aspect-Level Tasks
+
+AE aims to extract all the aspect and opinion
+terms” appearing in a sentence, which is formulated as a sequence tagging problem with the BIO
+tagging scheme. Specifically, we use five class
+labels: Y°° = {BA,IA, BP, IP, O}, indicating
+the beginning of and inside of an aspect term,
+the beginning of and inside of an opinion term,
+and other words, respectively. We also formulate AS as a sequence tagging problem with labels Y°* = {pos, neg, new}, indicating the tokenlevel positive, negative, and neutral sentiment orientations. Table 1 shows an example of aspectlevel training instance with gold AE and AS labels.
+In aspect-level datasets, only aspect terms get sentiment annotated. Thus, when modeling AS as a
+sequence tagging problem, we label each token
+that is part of an aspect term with the sentiment
+label of the corresponding aspect term. For exam
+Note that we are actually performing aspect and opinion term co-extraction. We still denote this task as AE for
+simplicity. We believe ABSA is more complete with opinion terms also extracted. Also, the information learned from
+opinion term extraction could be useful for the other tasks.
+Input The fish is fresh but the variety
+AE O BA O- BP O O BA
+AS - pos” - - - - neg
+
+of fish is nothing out of _— ordinary
+IA JA O O O oO BP O
+neg neg” - - - - - 
+Table 1: An aspect-level training instance with gold AE and AS labels.
+
+ple, as shown in Table 1, we label “fish” as pos,
+and label “variety”, “of”, “fish” as neg, based on
+the gold sentiment labels of the two aspect terms
+“fish” and “varity of fish” respectively. Since other
+tokens do not have AS gold labels, we ignore the
+predictions on them when computing the training
+loss for AS.
+
+The AE component fg,. is parameterized by
+Oqe and outputs {y7°,..., yee}. The AS component fg,, 1S parameterized by 6,; and outputs
+{y7*, .... y%*}. The AE and AS encoders consist of m°° and m°** layers of CNNs respectively, and they map the shared representations to
+{h7°, hs°, ..., ne} and {h7*, h$°, ..., h@*} respectively. For the AS encoder, we employ an additional self-attention layer on top of the stacked
+CNNs. As shown in Figure 1, we make y;,
+the outputs from AE available to AS in the selfattention layer, as the sentiment task could benefit from knowing the predictions of opinion terms.
+Specifically, the self-attention matrix A € R”*”
+is computed as follows:
+
+1. pe (1)
+
+score\’?) _ (h?°W**(h2°)7) . ial -P.
+
+J
+
+ii exp( score; ;
+
+Age = Ss 2)
+where the first term in Eq.(1) indicates the semantic relevance between hj* and h** with parameter matrix W°*, the second term is a distancerelevant factor, which decreases with increasing
+distance between the 7th token and the jth token,
+and the third term P;” denotes the predicted probability that the jth token is part of any opinion
+term. The probability P;” can be computed by
+summing the predicted probabilities on opinionrelated labels BP and IP in y5°. In this way, AS is
+directly influenced by the predictions of AE. We
+set the diagonal elements in A to zeros, as we only
+consider context words for inferring the sentiment
+of the target token. The self-attention layer outputs hits = iI Aijh%*. In AE, we concatenate the word embedding, the initial shared representation ns , and the task-specific representation h?° as the final representation of the 7th token.
+
+In AS, we concatenate ne and h‘* as the final
+
+representation. For each task, we employ a fullyconnected layer with softmax activation as the decoder, which maps the final token representation
+to probability distribution y“"° (y?*).
+
+3.2 Document-Level Tasks
+
+To address the issue of insufficient aspect-level
+training data, IMN is able to exploit knowledge
+from document-level labeled sentiment corpora,
+which are more readily available. We introduce two document-level classification tasks to be
+jointly trained with AE and AS. One is documentlevel sentiment classification (DS), which predicts the sentiment towards an input document.
+The other is document-level domain classification
+(DD), which predicts the domain label of an input
+document.
+
+As shown in Figure 1, the task-specific operation fg, consists of m° layers of CNNs that
+map the shared representations {hj,...,h'} to
+{h?,...,h? }, an attention layer att°, and a decoding layer dec°, where o € {ds, dd} is the task symbol. The attention weight is computed as:
+
+Oo _. exp(h?W°) (3)
+Depa exp(hg W°)
+where W° is a parameter vector. The final
+
+document representation is computed as h° =
+> oj-1 a2h?. We employ a fully-connected layer
+with softmax activation as the decoding layer,
+which maps h® to y®.
+
+3.3. Message Passing Mechanism
+
+To exploit interactions between different tasks, the
+message passing mechanism aggregates predictions of different tasks from the previous iteration,
+and uses this knowledge to update the shared latent vectors {hj,..., hh’ } at the current iteration.
+Specifically, the message passing mechanism integrates knowledge from 7%, y@*, y%, a%s, and a?
+computed on an input {71,..., 7%}, and the shared
+hidden vector h? is updated as follows:
+
+hs”) = fo, (ns gael dD) ge) | 4
+gas(t-1) get-} | aiitt—1)
+where t > 0 and [:] denotes the concatenation operation. We employ a fully-connected layer with
+ReLu activation as the re-encoding function fo...
+To update the shared representations, we incorporate yal 4 an nd y paste 0 , the outputs of AE and
+AS from the atevions iteration, such that these information are available for both tasks in current
+round of computation. We also incorporate information from DS and DD. y“ indicates the overall
+sentiment of the input sequence, which could be
+helpful for AS. The attention weights ads and aid
+generated by DS and DD respectively reflect how
+sentiment-relevant and domain-relevant the zth token is. A token that is more sentiment-relevant
+or domain-relevant is more likely to be an opinion
+word or aspect word. This information is useful
+for the aspect-level tasks.
+
+3.4 Learning
+
+Instances for aspect-level problems only have
+aspect-level labels while instances for documentlevel problems only have document labels. IMN
+is trained on aspect-level and document-level instances alternately.
+
+When trained on aspect-level instances, the loss
+function is as follows:
+
+Na
+
+4
+
+1
+
+Na tj
+i=l
+
+La(9s,0ae; Bas: bas; baa, 9 re) =
+2
+
+ae «ae(T as 2as(T
+lyse, 9% ) + Uys, 9954 ’))
+
+where 7’ denotes the maximum number of iterations in the message passing mechanism, NV, denotes the total number of aspect-level training instances, n; denotes the number of tokens contained in the ith training instance, and yj (yj")
+denotes the one-hot encoding of the gold label for
+AE (AS). / is the cross-entropy loss applied to each
+token. In aspect-level datasets, only aspect terms
+have sentiment annotations. We label each token
+that is part of any aspect term with the sentiment
+of the corresponding aspect term. During model
+training, we only consider AS predictions on these
+aspect term-related tokens for computing the AS
+loss and ignore the sentiments predicted on other
+tokens®.
+
+When trained on document-level instances, we
+
+“Let U(y 2s, yee" )) = 0 in Eq.(5) if y75 is not BA or IA
+
+Algorithm 1 Pseudocode for training IMN
+
+. Na
+Require: D? = {(x?,y%,y%)N,}, D4
+
+{(2fs, yf) 4} and DM = {(2 dd yd) Naa}
+Require: Integer r > 0
+
+for e € [1, max-pretrain-epochs]| do
+for minibatch B@*, B@ in D@, D“ do
+compute Ly based on B“ and B%
+update 0,, Oas, ad
+end for
+end for
+
+for e € [1, max-epochs] do
+for b © [1, batches-per-epoch| do
+sample B® from D*®
+compute L, based on B®
+update 0,, Oae, Pas, Ore
+if 6 is divisible by r then
+sample B?’, B“ from D®, D%
+compute Ly based on B“ and B@4
+update 6., as, Qad
+end if
+end for
+end for
+
+ 
+
+minimize the following loss:
+
+Nas
+
+da 27
+La(Os, bas, baa) = ° *)
+
+      
+
+      
+
+(6)
+
+Nu
++ 7 yi. 9%)
+
+where Vg, and Ngq denote the number of training
+instances for DS and DD respectively, and yo and
+yid denote the one-hot encoding of the gold label. Message passing iterations are not used when
+training document-level instances.
+
+For learning, we first pretrain the network on the
+document-level instances (minimize L,) for a few
+epochs, such that DS and DD can make reasonable
+predictions. Then the network is trained on aspectlevel instances and document-level instances alternately with ratio r, to minimize L, and Lg. The
+overall training process is given in Algorithm 1.
+D*, D%, and D@ denote the aspect-level training set and the training sets for DS, DD respectively. D@* and D® are from similar domains. D“
+contains review documents from at least two domains with ys denoting the domain label, where
+one of the domains is similar to the domains of D®
+and D@*. In this way, linguistic knowledge can
+be transferred from DS and DD to AE and AS, as
+ 
+
+Train Test
+Datasets — —
+aspect opinion aspect opinion
+D1 Restaurantl4 3699 3484 1134 1008
+D2 = Laptop14 2a13 2504 654 674
+
+D3 ~~ Restaurant15 1199 1210 542 510
+
+Table 2: Dataset statistics with numbers of aspect terms
+and opinion terms
+
+they are semantically relevant. We fix 047, and 044
+when updating parameters for Lg, since we do not
+want them to be affected by the small number of
+aspect-level training instances.
+
+4 Experiments
+
+4.1 Experimental Settings
+
+Datasets. Table 2 shows the statistics of
+the aspect-level datasets. We run experiments
+on three benchmark datasets, taken from SemEval2014 (Pontiki et al., 2014) and SemEval
+2015 (Pontiki et al., 2015). The opinion terms are
+annotated by Wang et al. (2016a). We use two
+document-level datasets from (He et al., 2018b).
+One is from the Yelp restaurant domain, and the
+other is from the Amazon electronics domain.
+Each contains 30k instances with exactly balanced
+class labels of pos, neg, and neu. We use the concatenation of the two datasets with domain labels
+as D““, We use the Yelp dataset as D“* when D®
+is either D1 or D3, and use the electronics dataset
+as D@* when D® is D2.
+
+Network details. We adopt the multi-layerCNN structure from (Xu et al., 2018) as the
+CNN-based encoders in our proposed network.
+See Appendix A for implementation details.
+For word embedding initialization, we concatenate a general-purpose embedding matrix and
+a domain-specific embedding matrix’ following
+(Xu et al., 2018). We adopt their released domainspecific embeddings for restaurant and laptop domains with 100 dimensions, which are trained
+on a large domain-specific corpus using fastText.
+The general-purpose embeddings are pre-trained
+Glove vectors (Pennington et al., 2014) with 300
+dimensions.
+
+One set of important hyper-parameters are the
+number of CNN layers in the shared encoder and
+the task-specific encoders. To decide the values
+
+of m*, m%, m@, m@8, m@, we first investigate
+
+"For DD, we only look at the general-purpose embeddings
+by masking out the domain-specific embeddings.
+
+how many layers of CNNs would work well for
+each of the task when training it alone. We denote c° as the optimal number of CNN layers in
+this case, where o € {ae,as,ds,dd} is the task
+indicator. We perform AE, AS separately on the
+training set of D1, and perform DS, DD separately
+on the document-level restaurant corpus. Crossvalidation is used for selecting c°, which yields 4,
+2, 2, 2 for c%, c%, c%, c44. Based on this observation, we made m*, m®, m@*, m@*, m@4 equals to
+2, 2, 0, 0, O respectively, such that m* + m? = c?.
+Note that there are other configurations satisfying
+the requirement, for example, m°, m°°, m®*, m?s,
+m4 equals to 1, 3, 1, 1, 1. we select our setting as
+it involves the smallest set of parameters.
+
+We tune the maximum number of iterations 7’
+in the message passing mechanism by training
+IMN~¢ via cross validation on D1. It is set to
+2. With T’ fixed as 2, we then tune r by training
+IMN via cross validation on D1 and the relevant
+document-level datasets. It is set to 2 as well.
+
+We use Adam optimizer with learning rate set
+to 10-4, and we set batch size to 32. Learning
+rate and batch size are set to conventional values
+without specific tuning for our task.
+
+At training phase, we randomly sample 20% of
+the training data from the aspect-level dataset as
+the development set and only use the remaining
+80% for training. We train the model for a fix number of epoches, and save the model at the epoch
+with the best F1-I score on the development set
+for evaluation.
+
+Evaluation metrics. During testing, we extract
+aspect (opinion) terms, and predict the sentiment
+for each extracted aspect term based on y*\7 and
+y75(T) Since the extracted aspect term may consist of multiple tokens and the sentiment predictions on them could be inconsistent in AS, we only
+output the sentiment label of the first token as the
+predicted sentiment for any extracted aspect term.
+
+We employ five metrics for evaluation, where
+two measure the AE performance, two measure
+the AS performance, and one measures the overall performance. Following existing works for
+AE (Wang et al., 2017; Xu et al., 2018), we use
+Fl to measure the performance of aspect term extraction and opinion term extraction, which are
+denoted as Fl-a and F1-o respectively. Following existing works for AS (Chen et al., 2017; He
+et al., 2018b), we adopt accuracy and macro-F1 to
+measure the performance of AS. We denote them
+as acc-s and Fl-s. Since we are solving the integrated task without assuming that gold aspect
+terms are given, the two metrics are computed
+based on the correctly extracted aspect terms from
+AE. We compute the F1 score of the integrated
+task denoted as F1-I for measuring the overall performance. To compute F1-I, an extracted aspect
+term is taken as correct only when both the span
+and the sentiment are correctly identified. When
+computing Fl-a, we consider all aspect terms,
+while when computing acc-s, Fl-s, and F1-I, we
+ignore aspect terms with conflict sentiment labels.
+
+4.2 Models under Comparison
+
+Pipeline approach. We select two topperforming models from prior works for each of
+AE and AS, to construct 2 x 2 pipeline baselines. For AE, we use CMLA (Wang et al.,
+2017) and DECNN (Xu et al., 2018). CMLA
+was proposed to perform co-extraction of aspect and opinion terms by modeling their interdependencies. _DECNN is the state-of-the-art
+model for AE. It utilizes a multi-layer CNN
+structure with both general-purpose and domainspecific embeddings. We use the same structure as encoders in IMN. For AS, we use ATAELSTM (denoted as ALSTM for short) (Wang
+et al., 2016b) and the model from (He et al.,
+2018b) which we denote as dTrans. ALSTM
+is a representative work with an attention-based
+LSTM structure. We compare with dTrans as it
+also utilizes knowledge from document corpora
+for improving AS performance, which achieves
+state-of-the-art results. Thus, we compare
+with the following pipeline methods: CMLAALSTM, CMLA-dTrans, DECNN-ALSTM,
+and DECNN-dTrans. We also compare with the
+pipeline setting of IMN, which trains AE and AS
+independently (1.e., without parameter sharing, information passing, and document-level corpora).
+We denote it as PIPELINE. The network structure for AE in PIPELINE is the same as DECNN.
+During testing of all methods, we perform AE in
+the first step, and then generate AS predictions on
+the correctly extracted aspect terms.
+
+Integrated Approach. We compare with two recently proposed methods that have achieved stateof-the-art results among integrated approaches:
+MNN (Wang et al., 2018) and the model from (Li
+et al., 2019) which we denote as INABSA (integrated network for ABSA). Both methods model
+
+the overall task as a sequence tagging problem
+with a unified tagging scheme. Since during testing, IMN only outputs the sentiment on the first
+token of an extracted aspect term to avoid sentiment inconsistency, to enable fair comparison,
+we also perform this operation on MNN and INABSA. We also show results for a version of IMN
+that does not use document-level corpora, denoted
+as IMN~¢. The structure of IMN~@ is shown as
+the solid lines in Figure |. It omits the information
+ys, ag, and aye propagated from the documentlevel tasks in Eq.(4).
+
+4.3 Results and Analysis
+
+Main results. Table 3 shows the comparison results. Note that IMN performs co-extraction of aspect and opinion terms in AE, which utilizes additional opinion term labels during training, while
+the baseline methods except CMLA do not consider this information in their original models. To
+enable fair comparison, we slightly modify those
+baselines to perform co-extraction as well, with
+opinion term labels provided. Further details on
+model comparison are provided in Appendix B.
+
+From Table 3, we observe that IMN~“ is able to
+significantly outperform other baselines on F1-I.
+IMN further boosts the performance and outperforms the best F1-I results from the baselines by
+2.29%, 1.77%, and 2.61% on D1, D2, and D3.
+Specifically, for AE (Fl-a and F1-o), IMN~¢ performs the best in most cases. For AS (acc-s and
+Fl-s), IMN outperforms other methods by large
+margins. PIPELINE, IMN~2, and the pipeline
+methods with dTrans also perform reasonably well
+on this task, outperforming other baselines by
+moderate margins. All these models utilize knowledge from larger corpora by either joint training
+of document-level tasks or using domain-specific
+embeddings. This suggests that domain-specific
+knowledge is very helpful, and both joint training and domain-specific embeddings are effective
+ways to transfer such knowledge.
+
+We also show the results of IMN~@ and IMN
+when only the general-purpose embeddings (without domain-specific embeddings) are used for initialization. They are denoted as IMN~¢/IMN wo
+DE. IMN wo DE performs only marginally below IMN. This indicates that the knowledge captured by domain-specific embeddings could be
+similar to that captured by joint training of the
+document-level tasks. IMN~¢@ is more affected
+ 
+
+ 
+
+ 
+
+= ~
+
+PF 2 GF & a
+
+A = 4 = sa
+
+— ame < so aa 2 Q
+
+< oc | | Z, < iS
+
+I T Z, Z, c m3 a °
+
+< < Z Z a 7 oA | ] 5
+
+> -£ 8 8 &£/2 €$|8 &€ & &
+
+2.4 4 3.9 3.9 9 83.92 | 83.95 84.01 83.50 83.33
+84.97 | 85.21 85.64 84.62 85.61
+79.68 | 79.65 81.56" 83.17* 83.89%
+68.38 | 69.32 71.90 73.44 75.66
+66.60 | 66.96 68.32" 69.11* 69.54"
+77.34 | 76.96 78.46 76.87 77.96
+76.62 | 76.85 78.14 77.04 77.51
+72.30 | 72.89 73.21 74.31* 75.36"
+68.24 | 67.26 69.92 70.76 72.02*
+55.88 | 56.25 57.66% 57.04* 58.37*
+69.40 | 69.23 69.80 68.23 70.04
+71.43 | 68.39 72.11* 70.09 71.94
+82.56 | 81.64 83.38 85.90" 85.64*
+58.81 | 57.51 60.65 71.67* 71.76*
+57.38 | 56.80 57.91* 58.82* 59.18*
+
+Table 3: Model comparison. Average results over 5 runs with random initialization are reported. * indicates the
+proposed method is significantly better than the other baselines (p < 0.05) based on one-tailed unpaired t-test.
+
+ 
+
+Model variants D1 D2 D3
+
+Vanilla model 66.66 55.63 56.24
++Opinion transmission 66.98 56.03 56.65
++Message passing-a (IMN~“) 68.32 57.66 57.91
++DS 68.48 57.86 58.03
++DD 68.65 57.50 58.26
++Message passing-d (IMN) 69.54 58.37 59.18
+
+Table 4: F1-I scores of different model variants. Average results over 5 runs are reported.
+
+without domain-specific embeddings, while it still
+outperforms all other baselines except DECNNdTrans. DECNN-dTrans is a very strong baseline as it exploits additional knowledge from larger
+corpora for both tasks. IMN~¢ wo DE is competitive with DECNN-dTrans even without utilizing
+additional knowledge, which suggests the effectiveness of the proposed network structure.
+
+Ablation study. To investigate the impact of different components, we start with a vanilla model
+which consists of fo,, fo,., and fe,, only without
+any informative message passing, and add other
+components one at a time. Table 4 shows the results of different model variants. +Opinion transmission denotes the operation of providing additional information P;" to the self-attention layer
+as shown in Eq.(1). +Message passing-a denotes
+propagating the outputs from aspect-level tasks
+only at each message passing iteration. +DS and
++DD denote adding DS and DD with parameter
+sharing only. +Message passing-d denotes involving the document-level information for message
+
+passing. We observe that +Message passing-a and
++Message passing-d contribute to the performance
+gains the most, which demonstrates the effectiveness of the proposed message passing mechanism.
+We also observe that simply adding documentlevel tasks (+DS/DD) with parameter sharing only
+marginally improves the performance of IMN~“.
+This again indicates that domain-specific knowledge has already been captured by domain embeddings, while knowledge obtained from DD and DS
+via parameter sharing could be redundant in this
+case. However, +Message passing-d is still helpful with considerable performance gains, showing
+that aspect-level tasks can benefit from knowing
+predictions of the relevant document-level tasks.
+
+Impact of 7’. We have demonstrated the effectiveness of the message passing mechanism. Here, we
+investigate the impact of the maximum number of
+iterations JT’. Table 6 shows the change of F1-I on
+the test sets as J’ increases. We find that convergence is quickly achieved within two or three iterations, and further iterations do not provide considerable performance improvement.
+
+Case study. To better understand in which conditions the proposed method helps, we examine the
+instances that are misclassified by PIPELINE and
+INABSA, but correctly classified by IMN.
+
+For aspect extraction, we find the message passing mechanism is particularly helpful in two scenarios. First, it helps to better recognize uncommon aspect terms by utilizing information from
+the opinion contexts. As shown in example | in
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+PIPELINE INABSA IMN
+Examples — — —
+Opinion | Aspect Opinion | Aspect Opinion Aspect
+Strong [build]p.; though which really a: we . wa.
+1. adds to its [durability pos. Strong [durability] pos Strong [durability ]pos Strong [build]pos, [durability ]pos
+Curioni’s Pizza has been around since . .
+2. the 1920's None [Pizza]neu None [Pizza] pos None None
+3. The [battery]pos is longer longer [battery ]neg longer [battery ]neg longer [battery ]pos
+4. The [potato balls]; were not dry at all dry [potato balls]neg | dry [potato balls]neg | dry [potato balls]pos
+That’s a good thing, but it’s made good, ‘ good, ‘ good, ‘
+>. from [aluminum ]neg that scratches easily’ | easily [aluminum |pos easily [aluminum|pos scratches easily [aluminum neg
+
+ 
+
+ 
+
+ 
+
+ 
+
+Table 5: Case analysis. The “Examples” column contains instances with gold labels. ’The “opinion” and “aspect”
+columns present the opinion terms and aspect terms with sentiments, generated by the corresponding model.
+
+T 0 1 Z 3 4 5
+
+D1 66.98 67.97 68.32 68.03 68.11 68.26
+D2 56.03 57.14 57.66 57.82 57.78 57.33
+D3 56.65 57.60 57.91 57.66 57.41 57.48
+
+Table 6: FI scores with different 7’ values using
+IMN~¢. Average results over 5 runs are reported.
+
+Table 5, PIPELINE and INABSA fail to recognize
+“build” as it is an uncommon aspect term in the
+training set while IMN is able to correctly recognize it. We find that when no message passing iteration is performed, IMN also fails to recognize “build”. However, when we analyze the
+predicted sentiment distribution on each token in
+the sentence, we find that except “durability”, only
+“build” has a strong positive sentiment, while the
+sentiment distributions on the other tokens are
+more uniform. This is an indicator that “build” is
+also an aspect term. IMN is able to aggregate such
+knowledge with the message passing mechanism,
+such that it is able to correctly recognize “build” in
+later iterations. Due to the same reason, the mesSage passing mechanism also helps to avoid extracting terms on which no opinion is expressed.
+As observed in example 2, both PIPELINE and
+INABSA extract “Pizza”. However, since no opinion is expressed in the given sentence, “Pizza”
+should not be considered as an aspect term. IMN
+avoids extracting this kind of terms by aggregating
+knowledge from opinion prediction and sentiment
+prediction.
+
+For aspect-level sentiment, since IMN is trained
+on larger document-level labeled corpora with
+balanced sentiment classes, in general it better
+captures the meaning of domain-specific opinion
+words (example 3), better captures sentiments of
+complex expressions such as negation (example
+4), and better recognizes minor sentiment classes
+in the aspect-level datasets (negative and neutral
+in our cases). In addition, we find that knowledge
+
+propagated by the document-level tasks through
+message passing is helpful. For example, the
+sentiment-relevant attention weights are helpful
+for recognizing uncommon opinion words, and
+which further help on correctly predicting the sentiments of the aspect terms. As observed in example 5, PIPELINE and INABSA are unable to
+recognize “scratches easily” as the opinion term,
+and they also make wrong sentiment prediction
+on the aspect term “aluminum”. IMN learns that
+“scratches” is sentiment-relevant through know]edge from the sentiment-relevant attention weights
+aggregated via previous iterations of message
+passing, and is thus able to extract “scratches easily”. Since the opinion predictions from AE are
+sent to the self-attention layer in the AS component, correct opinion predictions further help to infer the correct sentiment towards “aluminum”.
+
+5 Conclusion
+
+We propose an interactive multi-task learning network IMN for jointly learning aspect and opinion term co-extraction, and aspect-level sentiment
+classification. The proposed IMN introduces a
+novel message passing mechanism that allows informative interactions between tasks, enabling the
+correlation to be better exploited. In addition,
+IMN is able to learn from multiple training data
+sources, allowing fine-grained token-level tasks to
+benefit from document-level labeled corpora. The
+proposed architecture can potentially be applied to
+similar tasks such as relation extraction, semantic
+role labeling, etc.
+
+Acknowledgments
+
+This research is supported by the National Research Foundation Singapore under its AI Singapore Programme grant AISG-RP-2018-006.
+References
+
+Stefanos Angelidis and Mirella Lapata. 2018. Summarizing opinions: Aspect extraction meets sentiment
+prediction and they are both weakly supervised. In
+Conference on Empirical Methods in Natural Language Processing.
+
+Anurag Arnab, Shuai Zheng, Sadeep Jayasumana,
+Bernardino Romera-Paredes, Mans Larsson,
+Alexander Kirillov, Bogdan Savchynskyy, Carsten
+Rother, Fredrik Kahl, and Philip HS Torr. 2018.
+Conditional random fields meet deep neural networks for semantic segmentation: Combining
+probabilistic graphical models with deep learning
+for structured prediction. [EEE Signal Processing
+Magazine, 35(1):37-52.
+
+Peng Chen, Zhonggian Sun, Lidong Bing, and Wei
+Yang. 2017. Recurrent attention network on memory for aspect sentiment analysis. In Conference on
+Empirical Methods in Natural Language Process
+ing.
+
+Jiajun Cheng, Shenglin Zhao, Jiani Zhang, Irwin King,
+Xin Zhang, and Hui Wang. 2017. Aspect-level sentiment classification with heat (hierarchical attention) network. In ACM on Conference on Information and Knowledge Management.
+
+Ronan Collobert and Jason Weston. 2008. A unified
+architecture for natural language processing: Deep
+neural networks with multitask learning. In /nternational Conference on Machine Learning.
+
+Li Dong, Furu Wei, Chuanqgi Tan, Duyu Tang, Ming
+Zhou, and Ke Xu. 2014. Adaptive recursive neural
+network for target-dependent Twitter sentiment classification. In Annual Meeting of the Association for
+Computational Linguistics.
+
+Matthew R Gormley, Mark Dredze, and Jason Eisner.
+2015. Approximation-aware dependency parsing by
+belief propagation. Transactions of the Association
+for Computational Linguistics, 3:489-501.
+
+Ruidan He, Wee Sun Lee, Hwee Tou Ng, and Daniel
+DahlImeier. 2017. An unsupervised neural attention
+model for aspect extraction. In Annual Meeting of
+the Association for Computational Linguistics.
+
+Ruidan He, Wee Sun Lee, Hwee Tou Ng, and Daniel
+DahlImeier. 2018a. Effective attention modeling for
+aspect-level sentiment classification. In International Conference on Computational Linguistics.
+
+Ruidan He, Wee Sun Lee, Hwee Tou Ng, and Daniel
+DahImeier. 2018b. Exploiting document knowledge
+for aspect-level sentiment classification. In Annual
+Meeting of the Association for Computational Linguistics.
+
+Xin Li, Lidong Bing, Wai Lam, and Bei Shi. 2018a.
+Transformation networks for target-oriented sentiment classification. In Annual Meeting of the Association for Computational Linguistics.
+
+Xin Li, Lidong Bing, Piji Li, and Wai Lam. 2019. A
+unified model for opinion target extraction and target sentiment prediction. In AAAI Conference on
+Artificial Intelligence.
+
+Xin Li, Lidong Bing, Piji Li, Wai Lam, and Zhimou
+Yang. 2018b. Aspect term extraction with history
+attention and selective transformation. In /nternational Joint Conference on Artificial Intelligence.
+
+Xin Li and Wai Lam. 2017. Deep multi-task learning for aspect term extraction with memory interaction. In Conference on Empirical Methods in Natural Language Processing.
+
+Jiangming Liu and Yue Zhang. 2017. Attention modeling for target sentiment. In Conference of the European Chapter of the Association for Computational
+Linguistics.
+
+Yang Liu, Sujian Li, Xiaodong Zhang, and Zhifang Sui.
+2016. Implicit discourse relation classification via
+multi-task neural networks. In AAAI Conference on
+Artificial Intelligence.
+
+Minh-Thang Luong, Quoc V. Le, Ilya Sutskever, Oriol
+Vinyals, and Lukasz Kaiser. 2015. Multi-task sequence to sequence learning. In International Conference on Learning Representation.
+
+Yukun Ma, Haiyun Peng, and Erik Cambira. 2018.
+Targeted aspect-based sentiment analysis via embedding commonsense knowledge into an attentive
+
+LSTM. In AAAI Conference on Artificial Intelligence.
+Thien Hai Nguyen and Kiyoaki Shirai. 2015.
+
+PhraseRNN: Phrase recursive neural network for
+aspect-based sentiment analysis. In Conference on
+Empirical Methods in Natural Language Process
+ing.
+
+Jeffrey Pennington, Richard Socher, and Christopher D
+Manning. 2014. GloVe: Global vectors for word
+representation. In Conference on Empirical Methods in Natural Language Processing.
+
+Maria Pontiki, Dimitrios Galanis, Haris Papageorgiou,
+Suresh Manandhar, and Ion Androutsopoulos. 2015.
+SemEval-2015 task 12: Aspect based sentiment
+analysis. In International Workshop on Semantic
+Evaluation.
+
+Maria Pontiki, Dimitrios Galanis, John Pavlopoulos, Haris Papageorgiou, Ion Androutsopoulos, and
+Suresh Manandhar. 2014. SemEval-2014 task 4:
+Aspect based sentiment analysis. In /nternational
+Workshop on Semantic Evaluation.
+
+Guang Qiu, Bing Liu, Jiajun Bu, and Chun Chen.
+2011. Opinion word expansion and target extraction
+through double propagation. Computational Linguistics, 37(1):9-27.
+Duyu Tang, Bing Qin, Xiaocheng Feng, and Ting Liu.
+2016. Effective LSTMs for target-dependent sentiment classification. In International Conference on
+Computational Linguistics.
+
+Yi Tay, Luu Anh Tuan, and Siu Cheung Hui. 2018.
+Learning to attend via word-aspect associative fusion for aspect-based sentiment analysis. In AAAJ
+Conference on Artificial Intelligence.
+
+Duy-Tin Vo and Yue Zhang. 2015. Target-dependent
+Twitter sentiment classification with rich automatic
+features. In International Joint Conference on Artificial Intelligence.
+
+Feixiang Wang, Man Lan, and Wenting Wang. 2018.
+Towards a one-stop solution to both aspect extraction and sentiment analysis tasks with neural multitask learning. In International Joint Conference on
+Neural Networks.
+
+Wenya Wang, Sinno Jialin Pan, Daniel DahImeier, and
+Xiaokui Xiao. 2016a. Recursive neural conditional
+random fields for aspect-based sentiment analysis.
+In Conference on Empirical Methods in Natural
+Language Processing.
+
+Wenya Wang, Sinno Jialin Pan, Daniel DahImeier, and
+Xiaokui Xiao. 2017. Coupled multi-layer attentions
+for co-extraction of aspect and opinion terms. In
+AAAI Conference on Artificial Intelligence.
+
+Yequan Wang, Minlie Huang, Li Zhao, and Xiaoyan
+Zhu. 2016b. Attention-based LSTM for aspect-level
+sentiment classification. In Conference on Empirical Methods in Natural Language Processing.
+
+Hu Xu, Bing Liu, Lei Shu, and Philip S. Yu. 2018.
+Double embeddings and CNN-based sequence labeling for aspect extraction. In Annual Meeting of
+the Association for Computational Linguistics.
+
+Yichun Yin, Furu Wei, Li Dong, Kaimeng Xu, Ming
+Zhang, and Ming Zhou. 2016. Unsupervised word
+and dependency path embeddings for aspect term
+extraction. In International Joint Conference on Artificial Intelligence.
+
+Meishan Zhang, Yue Zhang, and Duy-Tin Vo. 2015.
+Neural networks for open domain targeted sentiment. In Conference on Empirical Methods in Natural Language Processing.
+
+Meishan Zhang, Yue Zhang, and Duy-Tin Vo. 2016.
+Gated neural networks for targeted sentiment analysis. In AAAI Conference on Artificial Intelligence.
+
+A Implementation Details
+
+CNN-based Encoder
+
+We adopt the multi-layer-CNN structure from (Xu
+et al., 2018) as the CNN-based encoders for both
+the shared CNNs and the task-specific ones in the
+
+proposed network. Each CNN layer has many 1Dconvolution filters, and each filter has a fixed kernel size k = 2c + 1, such that each filter performs
+convolution operation on a window of & word representations, and compute the representation for
+the 2th word along with 2c nearby words in its context.
+
+Following the settings in the original paper, the
+first CNN layer in the shared encoder has 128 filters with kernel sizes k = 3 and 128 filters with
+kernel sizes k = 5. The other CNN layers in
+the shared encoder and the CNN layers in each
+task-specific encoder have 256 filters with kernel
+sizes k = 5 per layer. ReLu is used as the activation function for each CNN layer. Dropout with
+p = 0.5 is employed after the embedding layer
+and each CNN layer.
+
+Opinion Transmission
+
+To alleviate the problem of unreliable predictions
+of opinion labels in the early stage of training, we
+adopt scheduled sampling for opinion transmission at training phase. We send gold opinion labels rather than the predicted ones generated by
+AE to AS in the probability of €;. The probability €; depends on the number of epochs 7 during
+training, for which we employ an inverse sigmoid
+decay ¢; = 5/(5 + exp(7/5)).
+
+B Model Comparison Details
+
+For CMLA®, ALSTM”, dTrans'°, and INABSA"',
+we use the officially released source codes for
+experiments. For MNN, we re-implement the
+model following the descriptions in the paper as
+the source code is not available. We run each baseline multiple times with random initializations and
+save their predicted results. We use an unified
+evaluation script for measuring the outputs from
+different baselines as well as the proposed method.
+
+The proposed IMN performs co-extraction of
+aspect terms and opinion terms in AE, which utilizes additional opinion term labels during model
+training. In the baselines, the two integrated methods MNN and INABSA, and the pipeline methods with DECNN as the AE component do not
+
+Snttps://github.com/happywwy /
+Coupled-Multi-layer-Attentions
+
+"https: //www.wangyequan.com/
+publications /
+
+Mnttps://github.com/ruidan/
+Aspect-level-sentiment
+
+Nnttps://github.com/lixin4ever/
+HZE- TBSA
+ 
+
+ 
+
+ 
+
+Methods bl BS i
+Fl-a acc-s Fl-s F1-I Fl-a acc-s Fl-s F1-I Fl-a acc-S Fl-s Fl1-I
+
+DECNN-ALSTM | 83.33 77.63 70.09 64.32 | 80.28 69.98 66.20 55.92 68.72 79.22 54.40 54.22
+DECNN-dTrans 83.33 79.45 73.08 66.15 80.28 =71.51 68.03 57.28 68.72 82.09 68.35 56.08
+PIPELINE 83.33 79.39 69.45 65.96 | 80.28 72.12 68.56 57.29 68.72 81.85 58.74 56.04
+MNN 83.20 77.57 68.19 64.26 | 76.33 70.62 65.44 53.77 69.29 80.86 55.45 55.93
+INABSA 83.12 79.06 68.77 65.94 | 77.67 = 71.72 68.36 55.95 68.79 80.96 57.10 55.45
+IMN~ 83.89 80.69 72.09 67.27" | 78.43 72.49 69.71 57.13 70.35* 81.86 56.88  57.86*
+IMN 83.04 83.05* 73.30 68.71" | 77.69 75.12* 71.35* 58.04* 69.25 84.53* 70.85* 58.18*
+
+ 
+
+ 
+
+Table 7: Model comparison in a setting without opinion term labels. Average results over 5 runs with random
+initialization are reported. * indicates the proposed method is significantly better than the other baselines (p <
+
+0.05) based on one-tailed unpaired t-test.
+
+take take opinion information during training. To
+make fair comparison, we add labels {BP, IP}
+to the original label sets of MNN, INABSA, and
+DECNN, indicating the beginning of and inside of
+an opinion term. We train those models on training sets with both aspect and opinion term labels
+to perform co-extraction as well. In addition, for
+pipeline methods, we also make the gold opinion terms available to the AS models (ALSTM
+and dTrans) during training. To make ALSTM
+and dTrans utilize the opinion label information,
+we modify their attention layer to assign higher
+weights to tokens that are more likely to be part of
+an opinion term. This is reasonable since the objective of the attention mechanism in an AS model
+is to find the relevant opinion context. The attention weight of the 7th token before applying softmax normalization in an input sentence 1s modified as:
+
+a, = a; * PP?
+
+(7)
+
+where a; denotes the attention weight computed
+by the original attention layer, p;” denotes the
+probability that the 2th token belongs to any
+opinion term. aj denotes the modified attention
+weights. At the training phase, since the gold
+opinion terms are provided, p;” = 1 for the tokens that are part of the gold opinion terms, while
+p;’ = 0 for the other tokens. At the testing phase,
+p;” is computed based on the predictions from the
+AE model in the pipeline method. It is computed
+by summing up the predicted probabilities on the
+opinion-related labels BP and IP for the 7th token.
+
+We also present the comparison results in a
+setting without using opinion term labels in Table 7'*. In this setting, we modify the proposed
+IMN and IMN~“ to recognize aspect terms only
+
+'?We exclude the results of the pipeline methods with
+CMLA, as CMLA relies on opinion term labels during training. It is difficult to modify it.
+
+in AE. The opinion transmission operation, which
+sends the opinion term predictions from AE to AS,
+is omitted as well.
+
+Both IMN~¢ and IMN still significantly outperform other baselines in most cases under this
+setting. In addition, when compare the results
+in Table 7 and Table 3, we observe that IMN~@
+and IMN consistently yield better F1-I scores on
+all datasets in Table 3, when opinion term extraction is also considered. Consistent improvements are not observed in other baseline methods
+when trained with opinion term labels. These findings suggest that knowledge obtained from learning opinion term extraction is indeed beneficial,
+however, a carefully-designed network structure 1s
+needed to utilize such information. IMN is designed to exploit task correlations by explicitly
+modeling interactions between tasks, and thus it
+better integrates knowledge obtained from training
+different tasks.
+

@@ -1,0 +1,56 @@
+{
+  "has" : {
+    "Model" : {
+      "present" : {
+        "neural attentionbased multiple context fixing attachment" : {
+          "name" : "MCFA",
+          "is" : {
+            "series of modules" : {
+              "uses" : {
+                "all the sentence vectors" : { 
+                  "e.g." : "Arabic , English , Korean",
+                  "as" : "context",
+                  "to fix" : "sentence vector ( e.g. Korean )"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "Based on these observations , we present a neural attentionbased multiple context fixing attachment ( MCFA ) .
+MCFA is a series of modules that uses all the sentence vectors ( e.g. Arabic , English , Korean , etc. ) as context to fix a sentence vector ( e.g. Korean ) ."
+      
+      },
+      "Fixing the vectors" : {
+        "is done" : {
+          "by" : {
+            "selectively moving the vectors" : {
+              "to a location" : {
+                "in the same vector space" : {
+                  "that better separates" : "the class"
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "Fixing the vectors is done by selectively moving the vectors to a location in the same vector space that better separates the class , as shown in ."
+      },
+      "has" : {
+        "MCFA" : {
+          "computes" : {
+            "two sentence usability metrics" : {
+              "to control" : {
+                "noise" : {
+                  "when" : "fixing vectors"
+                }
+              },
+              "name" : ["self usability", "relative usability"]
+            }
+          },
+          "from sentence" : "MCFA computes two sentence usability metrics to control the noise when fixing vectors : ( a ) self usability ? i ( a ) weighs the confidence of using sentence a in solving the task .
+( b ) relative usability ? r ( a , b ) weighs the confidence of using sentence a in fixing sentence b."          
+        
+        }
+      }
+    }
+  }
+}

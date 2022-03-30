@@ -1,0 +1,46 @@
+113	4	26	n	best performing system
+113	27	29	p	in
+113	34	51	n	SemEval 2017 task
+114	0	3	p	For
+114	8	12	n	ASTD
+114	19	40	n	best reported results
+114	45	47	p	by
+114	60	75	n	ensemble system
+114	76	95	p	combining output of
+114	96	127	n	CNN and Bi - LSTM architectures
+27	19	26	p	present
+27	27	34	n	Mazajak
+27	42	81	n	Online Arabic sentiment analysis system
+27	87	95	p	utilises
+27	96	109	n	deep learning
+27	114	144	n	massive Arabic word embeddings
+28	14	26	p	available as
+28	30	40	n	online API
+28	53	60	p	used by
+28	61	78	n	other researchers
+2	20	45	n	Arabic Sentiment Analyser
+4	0	25	n	Sentiment analysis ( SA )
+14	0	18	n	Sentiment analysis
+17	8	10	n	SA
+118	24	37	n	Mazajak model
+118	38	50	p	outperformed
+118	55	92	n	current state - of - the - art models
+118	93	95	p	on
+118	100	125	n	SemEval and ASTD datasets
+119	17	25	p	achieved
+119	28	44	n	high performance
+119	45	47	p	on
+119	52	65	n	ArSAS dataset
+120	4	19	n	reported scores
+120	24	35	p	higher than
+120	36	55	n	current top systems
+120	56	59	p	for
+120	60	85	n	all the evaluation scores
+120	88	97	p	including
+120	98	135	n	average recall , F P N , and accuracy
+121	44	47	p	for
+121	48	56	n	our tool
+121	57	67	p	represents
+121	72	102	n	current state - of - the - art
+121	103	106	p	for
+121	107	116	n	Arabic SA

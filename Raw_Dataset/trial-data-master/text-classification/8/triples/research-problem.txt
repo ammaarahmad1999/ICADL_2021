@@ -1,0 +1,3 @@
+(Contribution||has research problem||Simple Word - Embedding - Based Models)
+(Contribution||has research problem||model the compositionality in text sequences)
+(Contribution||has research problem||model the compositionality in variable - length text sequences)

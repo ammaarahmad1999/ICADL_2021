@@ -1,0 +1,8 @@
+title
+abstract
+Introduction
+Related Work
+Proposed Methodology
+Datasets, Experiments and Analysis
+Conclusion
+Acknowledgment

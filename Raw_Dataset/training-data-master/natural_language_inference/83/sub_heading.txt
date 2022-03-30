@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Predicting Story Ending
+Measuring Consistency
+Hidden Coherence Model
+Empirical Evaluation
+Dataset
+Baselines
+Quantitative Results
+Ablation Study
+Qualitative Results
+Discussion
+Related Work
+Story understanding:
+Events-centered learning:
+Textual Coherence:
+Conclusion

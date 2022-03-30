@@ -1,0 +1,1527 @@
+1906.01704v1 [q-bio.NC] 11 May 2019
+
+ar X1V
+
+A Novel Bi-hemispheric Discrepancy Model for
+EEG Emotion Recognition
+
+Yang Li, Student Member, IEEE, Wenming Zheng*, Senior Member, IEEE, Lei Wang, Senior Member, IEEE,
+Yuan Zong, Lei Qi, Zhen Cui, Member, IEEE, Tong Zhang, Tengfei Song
+
+Abstract—The neuroscience study |1] has revealed the discrepancy of emotion expression between left and right hemispheres
+of human brain. Inspired by this study, in this paper, we
+propose a novel bi-hemispheric discrepancy model (BiHDM) to
+learn the asymmetric differences between two hemispheres for
+electroencephalograph (EEG) emotion recognition. Concretely,
+we first employ four directed recurrent neural networks (RNNs)
+based on two spatial orientations to traverse electrode signals
+on two separate brain regions, which enables the model to
+obtain the deep representations of all the EEG electrodes’ signals
+while keeping the intrinsic spatial dependence. Then we design
+a pairwise subnetwork to capture the discrepancy information
+between two hemispheres and extract higher-level features for
+final classification. Besides, in order to reduce the domain shift
+between training and testing data, we use a domain discriminator
+that adversarially induces the overall feature learning module
+to generate emotion-related but domain-invariant feature, which
+can further promote EEG emotion recognition. We conduct
+experiments on three public EEG emotional datasets, and the
+experiments show that the new state-of-the-art results can be
+achieved.
+
+Index Terms—EEG emotion recognition, bi-hemispheric discrepancy, spatial-temporal network
+
+I. INTRODUCTION
+
+Emotion, as a common mental phenomenon, is closely
+related to our daily life. Although it is easy to sense other
+people’s emotion in human-human interaction, it is still difficult for machines to understand the complicated emotions of
+human beings [2]. As the first step to make machines capture
+human emotions, emotion recognition has received substantial
+attention from human-machine-interaction (HMI) and pattern
+recognition research communities in recent years [3], [4], (5).
+
+Human emotional expressions are mostly based on verbal behavior methods (e.g., speech), and nonverbal behavior
+methods (e.g., facial expression). Thus, a large body of literature concentrates on learning the emotional components
+
+Yang Li and Tengfei Song are with the Key Laboratory of Child Development and Learning Science (Ministry of Education), and the Department of
+Information Science and Engineering, Southeast University, Nanjing, Jiangsu,
+210096, China.
+
+Wenming Zheng and Yuan Zong are with the Key Laboratory of Child
+Development and Learning Science (Ministry of Education), School of
+Biological Sciences and Medical Engineering, Southeast University, Nanjing,
+Jiangsu, 210096, China.(* Corresponding author: Wenming Zheng (E-mail:
+wenming_zheng @ seu.edu.cn).)
+
+Lei Wang is with the School of Computing and Information Technology,
+University of Wollongong, NSW, 2500, Australia.
+
+Lei Qi is with the State Key Laboratory for Novel Software Technology,
+Nanjing University, Nanjing, Jiangsu, 210096, China.
+
+Tong Zhang and Zhen Cui are with the School of Computer Science and
+Engineering, Nanjing University of Science and Technology, Nanjing, Jiangsu,
+210096, China.
+
+from speech and facial expression data. However, from the
+viewpoint of neuroscience, humans emotion originates from
+a variety of brain cortex regions, such as the orbital frontal
+cortex, ventral medial prefrontal cortex, and amygdala [6],
+which provides us a potential approach to decode emotion
+by recording the continuous human brain activity signals
+over these brain regions. For example, by placing the EEG
+electrodes on the scalp, we can record the neural activities in
+the brain, which can be used to recognize human emotions.
+
+Most existing EEG emotion recognition methods focus on
+two fundamental challenges. One is how to extract discriminative features related to emotions. Typically, EEG features
+can be extracted from the time domain, frequency domain, and
+time-frequency domain. In [7], Jenke et al. evaluated all the
+existing features by using machine learning techniques on a
+self-recorded dataset. The other challenge is how to classify
+the features correctly. Many EEG emotion recognition models
+and methods have been proposed over the past years [8], [9].
+For example, Zheng et al. proposed a group sparse canonical correlation analysis method for simultaneous EEG channel
+selection and emotion recognition. Li et al. fused the
+information propagation patterns and activation difference in
+the brain to improve the performance of emotional recognition.
+These techniques have shown excellent performance on some
+EEG emotional datasets.
+
+Recently, many researchers have attempted to consider the
+neuroscience findings of emotion as the prior knowledge
+to extract features or develop models, effectively enhancing
+the performance of EEG emotion recognition. For example,
+Hinrikus et al. used EEG spectral asymmetry index for
+the depression detection. It is well realized through neuroscience study that although the anatomy of human brain
+looks like symmetric, the left and right hemispheres have
+different responses to emotions. For example, from the view
+of neuroscience, Dimond et al. [1], Davidson et al. [13], and
+Herrington et al. have studied the asymmetry of emotion
+expression, and Schwartz et al. [15], Wager et al. [16], and
+Costanzo et al.[17] have discussed the emotion lateralization. Furthermore, the literature of EEG emotion recognition
+has seen the use of asymmetry to classify EEG emotional
+signal. Lin et al. investigated the relationships between
+emotional states and brain activities, and extracted power
+spectrum density, differential asymmetry power, and rational
+asymmetry power as the features. Motivated by their previous
+findings of critical brain areas for emotion recognition, Zheng
+et al. selected six symmetrical temporal lobe electrodes
+as the critical channels for EEG emotion recognition. Li et
+al. separately extracted two brain hemispheric features
+and achieved the state-of-the-art classification performance.
+The above researches demonstrate that it is a promising
+and fruitful way to integrate the unique characteristics of
+EEG signal into the machine learning algorithms. It will be
+an interesting and meaningful topic of how to utilize this
+discrepancy property of two brain hemispheres to improve
+EEG emotion recognition.
+
+Thus, in this paper, we propose a novel neural network
+model BiHDM to learn the bi-hemispheric discrepancy for
+EEG emotion recognition. BiHDM aims to obtain the deep
+discrepant features between the left and right hemispheres,
+which is expected to contain more discriminative information
+to recognize the EEG emotion signals. To achieve this goal,
+we need to solve two major problems, 1.e., how to extract
+the features for each hemispheric EEG data and meanwhile
+measure the difference between them. Unlike other data structures such as skeletal action data, in which the position of
+each node varies with time, the EEG data consists of several
+electrodes that are set under the predefined coordinates on the
+scalp. Hence, to avoid losing this intrinsic graph structural
+information of EEG data, we can simplify the graph structure
+learning process by using the horizontal and vertical traversing
+RNNs, which will construct a complete relationship graph
+and generate discriminative deep features for all the EEG
+electrodes. After obtaining these deep features of each electrodes, we can extract the asymmetric discrepancy information
+between two hemispheres by performing specific pairwise
+operations for any paired symmetric electrodes. The concrete
+process is as follows:
+
+(1) Firstly, we employ individual two RNN modules to separately scan all spatial electrodes’ data on the left and right
+hemispheres and generate deep feature representations for
+all the EEG electrodes. Herein, when the RNN module
+traverses the spatial regions, it will walk under two
+predefined stack strategies determined with respect to the
+horizontal and vertical direction streams;
+
+In each stream, we will obtain the deep features of
+all the electrodes, and perform specific pairwise operations for the paired electrodes. Herein, the rule of
+identifying the paired electrodes refers to the symmetric
+locations on the brain scalp, and the pairwise operations
+include subtraction, division, and inner product. These
+operations will model the discrepancy information from
+different aspects. Subsequently, another RNN summarizes
+all the asymmetric discrepancy information and produces
+a global deep representation in each directional stream;
+Finally, we integrate the global features from horizon
+and vertical streams with learnable linear transformation
+matrices and use a classifier to map this representation
+into the label space. Considering the tremendous data
+distribution shift of EEG emotional signal, especially in
+the case of subject-independent task where the source
+(training) and target (testing) data come from different subjects, we leverage a domain discriminator that
+works cooperatively with the classifier to encourage the
+emotion-related but domain-invariant data representation
+
+(2)
+
+(3)
+
+appeared.
+
+To the best of our knowledge, this is the first work to
+integrate the electrodes’ discrepancy relation on two hemispheres into deep learning models to improve EEG emotion
+recognition. The experimental results verify the discrimination
+and effectiveness of this differential information between the
+left and right hemispheres for EEG emotion recognition.
+
+The remainder of this paper is organized as follows: In
+section we specify the method of BiHDM as well as
+its application to EEG emotion recognition. In section (11
+we conduct extensive experiments to evaluate the proposed
+method for EEG emotion recognition. In sections [IV] and
+we discuss the paper and conclude it.
+
+II. THE PROPOSED MODEL FOR EEG EMOTION
+RECOGNITION
+
+A. The BiHDM model
+
+To specify the proposed method clearly, we illustrate the
+framework of the BiHDM model in Fig. [I] Its goal is to
+capture the asymmetric differential information between two
+hemispheres. We adopt three steps to achieve this goal. First,
+we obtain the deep representations of all the electrodes’ data.
+Subsequently, we characterize the relationship between the
+identified paired electrodes on two hemispheres, and generate
+a more discriminative and higher-level discrepancy feature
+for final classification. Third, we leverage a classifier and
+a discriminator to corporately induce the above process to
+generate the emotion-related but domain-invariant features.
+The overall process is described as follows.
+
+1) Obtaining the deep representation for each electrode: In
+BiHDM, we attempt to separately extract the EEG electrodes’
+deep features on left and right brain hemispheres by using
+two independent RNN modules. To avoid losing the intrinsic
+graph structural information of EEG data, for each hemispheric
+EEG data, we build the RNN module traversing the spatial
+regions under two predefined stacks, which are determined
+with respect to horizontal and vertical directions. These two
+directional RNNs are actually complementary for simplifying
+the technology to construct a complete relationship graph of
+electrodes’ locations. Concretely, for an EEG sample X,, it
+can be split as X;=[X!, XT] =[xt,--- xv, xt,---  xw]e
+IR?*‘, where X! and X? denote the EEG electrodes’ data
+on the left and right hemispheres, d is the dimension of each
+EEG electrode’s data and N is the number of electrodes. When
+modeling spatial dependencies, two graphs, i.e., G'={N!, BE}
+
+and G” = {N’,E"}, are used to separately represent the
+electrodes’ spatial relations on the left and right hemispheres,
+where N’ = {x!} and N” = {xt}, (i = 1,2,--- , 4) denote
+
+the electrode sets, while E! = {ei} and E” = {e7,,} represent
+the edges between spatially neighboring electrodes. Then
+we traverse through G! and G” separately with a predefined
+forward evolution sequence so that the input state and the
+previous states can be defined for an RNN unit. This process
+can be formulated as
+
+N/2
+ss = o(Uxi+ 7 ey Visi tbe R™™!, (1)
+
+N/2
+sp = (Ux) +) ey W"sj +b") ER, 2)
+   
+
+   
+    
+     
+ 
+
+    
+   
+      
+     
+      
+
+    
+
+ 
+   
+
+Horizontal
+_ Stream |
+Fp 1 FPZ FP2
+i AF 4
+f.. nate
+FS F3 ey pz Fa FA
+FI7 FT8
+Re pei ecz pepe t*
+Tees & €i cz @ CH 6 Ts
+cp1 CPZ cP2
+wp7 Ps 3 CP4 CPG ty,
+p3 Pl PZ P2 pag
+ey big
+PO3POZ P04
+vo * P06 bog
+CB1 01 oz O2 CB2
+- Vertical ©
+_ stream _
+
+ 
+
+ 
+
+Gh
+S;
+
+  
+
+Gv
+S;
+
+Fig. 1: The framework of BiHDM. BiHDM consists of four RNN modules to capture each hemispheric EEG electrodes’
+information from horizontal and vertical streams. Then all the electrodes’ data representations interact and construct the final
+
+vector for the classifier and discriminator.
+
+if x; € N (x;) ,
+otherwise,
+
+(3)
+
+fil
+
+where si, s’ and d), d, are the hidden units and the dimensions of RNN modules on the left and right hemispheres,
+respectively; o(-) denotes the nonlinear operation such as
+Sigmoid function; {U!ER®*?, ViER&*%, blER"*!) and
+{UT ER*®*4, V" ERY 4, b” CR4*+1 are the learnable
+transformation matrices of the two hemispheric RNN modules;
+and A (x;) denotes the set of predecessors of the node x;.
+Here d; =d,. As the RNN modules traverse all the nodes in
+N! and N", the obtained hidden states s! and s’ can be used
+as the deep features to represent the i-th electrode’s data on
+two hemispheres.
+
+Particularly, for the left and right hemispheric RNN modules, they traverse the spatial regions under two predefined
+horizontal and vertical stacks. Therefore, we will obtain two
+paired deep feature sets, i.e., (S!”,S7”) and (S!”, St”), where
+Sih — fslh\ eRUXN/2) and STP = {sr} eRe X(N/2) represent the left and right hemispheric electrodes’ deep features
+under horizontal direction, while S!” = {s!”} RY * 4/2) and
+sr’ = {s?} ¢ R4&r*(/2) represent the deep features under
+vertical direction. So far, we obtain the deep representation
+of each electrode, which has the emotional discriminative
+information and keeps the location structural relation.
+
+2) Interaction between the paired electrodes on two hemispheres: After obtaining the deep features of every electrode
+above, i.e., (S!", St”) and (S!’,S?”), we perform a specific
+pairwise operation on the paired electrodes referring to the
+symmetric locations on the brain scalp to identify the asym
+metric differential information between two hemispheres. This
+operation can be expressed as
+
+Si = F(Si",S;") = F({si"}, {s7"}) e RX), (4)
+Sf = F(S)", St") = F({s}}, {s7?}) e ROX, 5)
+where S? = {8"} and S? = {8} are the deep asymmetric differential features, (-) denotes the pairwise operation between
+any two paired electrodes’ data representations. Concretely, for
+
+any paired data (s!',s’"), we perform subtraction, division and
+inner product on it, which can be formulated as
+
+F({st }, {si })
+{st — sl} e RMX,
+= ¢ {sb /st} € Ri2*, (6)
+
+. . . N
+{sj - shy te +s! } EC R%sXo,
+
+’
+
+r
+2 2)
+
+|Z ‘
+
+where d,, = dy, = dj and dy, = if]
+
+To further capture the higher-level discrepancy discriminative features, we utilize another RNN module that performs
+on the obtained differential asymmetric features {8”} and
+{s’} from the horizontal and vertical streams. Formally, the
+operations on them can be written as
+s? = o(U"s? + Vv"s"_, +b") e RY, (7)
+
+1 v
+
+s? = o (U's? + V"s?_, +b”) € RY*!, (8)
+
+u
+
+where {U" € Ré@s*4, VW" © Ro9*4s, b” © R4s*!} and
+{U" E R94, V" ERs%*4s, b” € R%9*"1 are the learnable
+
+'Precisely, division operation models the differential information in terms
+
+of the relative ratio of magnitude; the (minus) inner product operation models
+such information in terms of (dis) similarity.
+parameter matrices, and d, is the hidden unit’s dimension
+of the high-level RNN module. Moreover, to automatically
+detect the salient information related to emotion among these
+paired differential features, projection matrices are applied to
+the higher-level discrepancy discriminative features {8”} and
+{s?} obtained by Eq. and (8). Denoting the projection
+matrices for the horizontal and vertical traversing directions by
+Ww = [we )uN/2)xK and W” = |wi,|(v/2)xK«, the projection
+can be written as
+
+N/2
+
+=~h __
+
+S}. =o()
+N/2
+
+Si =o
+
+Finally, we use two learnable mapping matrices G” €
+R%*4s and G? € R%*4s to summarize the stimulus S? =
+{s?} © R%** and S? = {s?} € R¢7** from two directional
+streams, namely,
+
+she — G’sh + GPS? ce ReX*,
+
+wh, s? +b") E R%9*?, k=1,2,--- _K, (9)
+
+w?,8? +b’) € R4*!, k=1,2,---,K. (10)
+
+(1)
+
+Until now, for an input EEG sample X;, the output feature
+S’” is obtained.
+
+3) Discriminative prediction and domain adversarial strategy: Like most supervised models, we add a supervision term
+into the network by applying the softmax function to the output
+feature SP’= {sh}, (k=1,--- , K) to predict the class label.
+
+Let o = [(s?”)T, (sh?)T,.-- , (s2?)T] © RI**4 denotes
+the output feature vector, then
+
+y =oP + b° = {y1, y2,°°: yoh ERX, (12)
+
+where P € R*%*° and b°€R!*° are the transform matrices,
+and C’ is the number of emotion types.
+
+Finally, the output vector of BiHDM is fed into the softmax
+layer for emotion classification, which can be written as
+
+P(c|X1) = expe)/ D> _,
+
+where P(c|X;) denotes the predicted probability that the input
+sample X; belongs to the c-th class. As a result, the label /;
+of sample X; is predicted as
+
+exp(yi), (13)
+
+ly = arg max P(c|X;). (14)
+
+Consequently, the loss function of the classifier can be
+expressed as
+
+Le(X4; 95, Oc yy T(lz,¢) x logP(c|Xz), (15)
+k=1 c=1
+1, if; = c,
+T(lts¢) = ‘ 0 otherwise. 1)
+
+Here 6, and 6, denote the learnable parameters of the feature
+extraction module and the classifier, while /; and //, are the
+ground-truth label of sample X; and the number of training
+samples. By minimizing the above loss function, discriminative features could be extracted for emotion recognition.
+
+To align the feature distributions between source and target
+domains, we adopt the domain adversarial strategy by adding a
+discriminator into the network. It works cooperatively with the
+
+classifier to induce the feature extraction process to generate
+emotion-distinguishable but domain-invariant features.
+
+Concretely, we predefine the source domain label set Ds =
+{0,0,--- ,0} € Z™*! and target domain label set Dp =
+f1,1,---,1} ¢ Z”2*!, where Mz is the number of testing
+samples. Then through maximizing the loss function of the
+discriminator, which can be denoted as
+
+La(X?, Xi °F Aa)
+
+=— =o" _ logP( (0|X?) —
+
+the feature extraction process expects to have the ability to
+generate the data representation to confuse the discriminator
+to distinguish which domain the input comes from (i.e., the
+domain-invariant features). Here X? and X7 denote the t-th
+and t’-th sample in the source and target data set respectively,
+and 64 represents the learnable parameter of discriminator.
+
+logP(1|Xi), (17)
+
+B. The optimization of BiHDM
+
+The overall optimization of BiHDM can be expressed as
+
+min D(X; 6¢, 6, Aa)
+= min L.(X*°; 05,0.) + max Lqa(X°, X"; 67,04), (18)
+
+where L(-) is the loss function of the overall model, and X denotes the entire data set that consists of the source data set X*°
+and target data set X7, i.e., K=[K°, X7] ERIxN* (MM) |
+
+This max-minimizing loss function will force the parameters
+of feature extraction module to generate emotion-related but
+domain-invariant data representation, which benefits for EEG
+emotion recognition because of the tremendous data distribution shift for EEG emotional signal, especially in the case
+of subject-independent task where the source and target data
+come from different subjects.
+
+Specifically, the maximizing problem can be transferred
+to a minimizing problem by using a gradient reversal layer
+(GRL) before the discriminator, which can be optimized
+by using stochastic gradient descent (SGD) algorithm [20
+easily. GRL acts as an identity transform in the forwardpropagation but reverses the gradient sign while performing
+the back-propagation operation. The overall optimization process follows the rules below
+
+ 
+
+ 
+
+OL. OLa
+— — a— 1
+dO. @. “50.” O41 < Oa © 564. (19)
+OLe OLa
+= = = —— 2
+Of <— OF «56, 5, ), (20)
+
+where a is the learning rate. In this way, we can iteratively
+train the classifier and the discriminator to update the parameters with the similar approach of standard deep learning
+methods by chain rule.
+
+Ill. EXPERIMENTS
+A. Setting up
+
+To evaluate the proposed BiHDM model, in this section,
+we will conduct experiments on three public EEG emotional
+datasets. All the three datasets were collected when the participants sat in front of a monitor comfortably and watched
+emotional video clips. The EEG signals are recorded from 62
+electrode channels using ESI NeuroScan with a sampling rate
+of 1000 Hz. The locations of electrodes are on the basis of
+the international 10-20 system. Thus in the experiment, we
+perform the pairwise operation on the 31 paired electrodes
+based on the symmetric locations on the left and right brain
+hemispheric scalps. The detailed information of these datasets
+are described as follows:
+
+(1) SEED [21]. SEED dataset contains 15 subjects, and each
+subject has three sessions. During the experiment, the
+participants watched three kinds of emotional film clips,
+1,e, happy, neutral and sad, where each emotion has 5
+film clips. Consequently, there are totally 15 trails, and
+each trail has 185-238 samples for one session of each
+subject. Then there are totally about 3400 samples in
+one session;
+
+(2) SEED-IV?| (5. SEED-IV dataset also contains 15 subjects, and each subject has three sessions. But it includes
+four emotion types with the extra emotion fear compared
+with SEED, and each emotion has 6 film clips. Thus
+there are totally 24 trails, and each trail has 12-64
+samples for one session of each subject. Then there are
+totally about 830 samples in one session;
+
+(3) MPED2! [22]. MPED dataset contains 30 subjects and
+each subject has one session. It includes seven refined
+emotion types, i.e., joy, funny, neutral, sad, fear, disgust
+and anger, and each emotion has 4 film clips. There are
+totally 28 trails, and each trail has 120 samples. There
+are totally 3360 samples in one subject.
+
+To evaluate the proposed BiHDM model adequately, we design two kinds of experiments including the subject-dependent
+and subject-independent ones. We use the released handcrafted
+features, 1.e., the differential entropy (DE) in SEED and SEEDIV, and the Short-Time Fourier Transform (STFT) in MPED,
+as the input to feed our model. Thus the sizes dx N of
+the input sample X; are 5x 62, 5x62 and 1x62 for these
+three datasets, respectively. Moreover, in the experiment, we
+respectively set the dimension d; of each electrode’s deep
+representation to 32; the parameters d, and K of the global
+high-level feature to 32 and 6; and the dimension d, of the
+output feature to 16 without elaborate traversal. Specifically,
+we implemented BiHDM using TensorFlow on one Nvidia
+1080Ti GPU. The learning rate, momentum and weight decay
+rate are set as 0.003, 0.9 and 0.95 respectively. The network
+is trained using SGD with batch size of 200. In addition, we
+adopt the subtraction as the pairwise operation of the BiHDM
+model in the experiment section, and discuss the other two
+
+types of operations in section |ITI-D
+
+B. The EEG emotion recognition experiments
+
+1) The subject-dependent experiment: In this experiment,
+we adopt the same protocols as [21], [5] and [22]. Namely,
+for SEED, we use the former nine trails of EEG data per
+session of each subject as source (training) domain data while
+
+*Note that both SEED-IV and MPED are multi-modal datasets. MPED
+consists of 30 subjects’ EEG data, among which 23 subjects contain multimodal data. In this experiment, we only use the EEG modal data.
+
+using the remaining six trials per session as target (testing)
+domain data; for SEED-IV, we use the first sixteen trials per
+session of each subject as the training data, and the last eight
+trials containing all emotions (each emotion with two trials)
+as the testing data; for MPED, we use twenty-one trials of
+EEG data as training data and the rest seven trails consist of
+seven emotions as testing data for each subject. The mean
+accuracy (ACC) and standard deviation (STD) are used as the
+final evaluation metrics for all the subjects in the dataset.
+
+To validate the superiority of BiHDM, we also conduct the same experiments using twelve methods, including
+linear support vector machine (SVM) [23], random forest
+(RF) [24], canonical correlation analysis (CCA) [25], group
+sparse canonical correlation analysis (GSCCA) [10], deep
+believe network (DBN) [21], graph regularization sparse linear
+regression (GRSLR) [26], graph convolutional neural network (GCNN) [27], dynamical graph convolutional neural
+network (DGCNN) [28], domain adversarial neural networks
+(DANN) [19], bi-hemisphere domain adversarial neural network (BiDANN) [29], EmotionMeter [5], and attention-long
+short-term memory (A-LSTM) [22]. All the methods compared in our paper are the representative ones in the previous
+studies. We directly take (or reproduce) their results from the
+literature to ensure a convincing comparison with the proposed
+method. The results are summarized in Table
+
+TABLE I: The classification performance for  subjectdependent EEG emotion recognition on SEED, SEED-IV and
+MPED datasets.
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+“jana
+SVM 83.99/09.72 | 56.61/20.05* | 32.39/09.53*
+RF 78.46/11.77 | 50.97/16.22* | 23.83/06.82*
+CCA 77.63/13.21 | 54.47/18.48* | 29.08/07.96*
+GSCCA 36.78/07.76*
+DBN 86.08/08.34 | 66.77/07.38* | 35.07/11.25*
+GRSLR 87.39/08.64 | 69.32/19.57* | 34.58/08.41*
+DANN 91.36/08.30 | 63.07/12.66* | 35.04/06.52*
+BiDANN 92.38/07.04 | 70.29/12.63*
+A-LSTM 88.61/10.16* | 69.50/15.65* | 38.99/07.53*
+BiHDM 93.12/06.06 | 74.35/14.09
+
+ 
+
+* Indicates the experiment results obtained are based on our own
+implementation.
+— indicates the experiment results are not reported on that dataset.
+
+From Table [I] we can see that the proposed BiHDM model
+outperforms all the compared methods on all the three public
+EEG emotional datasets, which verifies the effectiveness of
+BiHDM. Especially for the result on SEED-IV, the proposed
+method improves over the state-of-the-art method EmotionMeter by 4%. Besides, we can see that the compared method
+BiDANN, which also considers the bi-hemispheric asymmetry,
+achieves a comparable performance. The main difference
+between BiDANN and BiHDM is that the former adopts two
+hemispheric local discriminators to separately narrow the left
+and right hemispheric data distribution gaps in either source
+or target domain but not directly captures the discrepancy
+information. In contrast, the latter (1.e., the proposed BiHDM)
+focuses on constructing model to learn the discrepancy relation
+between two hemispheres and these differential components
+are beneficial for emotion recognition. Meanwhile, both the
+results of BiHDM and BiDANN indicate the importance of
+considering the difference between the left and right cerebral
+hemispheric data for EEG emotion recognition.
+
+To test if the proposed BiHDM is statistically significantly
+better than the baseline method, paired t-test statistical analysis
+is conducted at the significant level of 0.05. When the improvement of BiHDM over the method is statistically significant, the
+results will be underlined in the table. Table[I]shows the t-test
+statistical analysis results, from which we can see BiHDM is
+significantly better than the baseline method.
+
+TABLE II: The t-test statistics analysis between BiHDM and
+the baseline method at the significance level of 0.05. When
+the improvement of BiHDM over the method is statistically
+significant, the result will be underlined.
+
+Method
+SEED SEED-IV MPED
+
+0.0580 0.0344 0.04882
+0.0451 0.0188  0.0091°
+
+BiHDM vs. BiDANN
+
+a and 6 indicate the subject-dependent and independent
+experiment results respectively.
+
+ 
+
+Besides, although the representative methods DANN and
+BiDANN in Table |I| have used the unlabelled testing data to
+enhance their performance, some compared baseline methods
+only use the labelled training data to learn the model. To
+have a fair comparison with them, we follow their setting
+by taking off the discriminator and only using the labelled
+training data to conduct the same experiments. The accuracy
+becomes 91.07%, 72.22% and 38.55% on SEED, SEED-IV
+and MPED datasets, which still achieves comparable performance. This indicates our differential features are indeed more
+discriminative.
+
+2) The subject-independent experiment: In this experiment,
+we adopt the leave-one-subject-out (LOSO) cross-validation
+strategy to evaluate the proposed BiHDM model. LOSO
+strategy uses the EEG signals of one subject as testing data and
+the rest subjects’ EEG signals as training data. This procedure
+is repeated such that the EEG signals of each subject will be
+used as testing data once. Again, the mean accuracy (ACC) and
+standard deviation (STD) are used as the evaluation metrics.
+
+In addition, for comparison purpose, we use twelve methods
+including Kullback-Leibler importance estimation procedure
+(KLIEP) [31], unconstrained least-squares importance fitting
+(ULSIF) [32], selective transfer machine (STM) [33], linear
+SVM, transfer component analysis (TCA) [34], transfer component analysis (TCA) [35], geodesic flow kernel (GFK) [36],
+DANN, DGCNN, deep adaptation network (DAN) [37],
+BiDANN, and A-LSTM, to conduct the same experiments.
+Note that the distribution gap in the subject-independent task
+is much larger than the subject-dependent one, so that transfer learning methods always achieve promising performance.
+
+Therefore, in the subject-independent task, we include lots of
+domain adaptation methods in the comparison. By doing so,
+we can effectively validate the state-of-the-art performance of
+our method. The results are shown in Table
+
+TABLE UI: The classification performance for subjectindependent EEG emotion recognition on SEED, SEED-IV
+and MPED datasets.
+
+ACC / STD (%)
+SEED SEED-IV MPED
+45.71/17.76 31.46/09.20* 18.92/04.54*
+
+51.18/13.57 32.99/11.05* 19.63/03.81*
+51.23/14.82 39.39/12.40* 20.89/03.62*
+
+56.73/16.29 37.99/12.52* 19.66/03 .96*
+63.64/14.88
+
+56.56/13.77* 19.50/03.61*
+69.00/10.89
+
+Method
+
+ 
+
+ 
+
+KLIEP
+ULSIF
+STM
+SVM
+TCA
+SA
+GFK
+A-LSTM
+DANN
+
+ 
+
+64.44/09.46* 20.74/04.17*
+64.38/11.41* 20.27/04.34*
+55.03/09.28* 24.06/04.58*
+47.59/10.01* 22.36/04.37*
+52.82/09.23* 25.12/04.20*
+58.87/08.13 =
+
+83.81/08.56
+BiDANN [29] | 83.28/09.60 65.59/10.39* | 25.86/04.92*
+
+BiHDM 85.40/07.53 69.03/08.66 28.27/04.99
+
+* indicates the experiment results obtained are based on our own
+implementation.
+— indicates the experiment results are not reported on that dataset.
+
+ 
+
+71.31/14.09
+
+DAN
+
+ 
+
+ 
+
+ 
+
+From Table it can be clearly seen that the proposed
+BiHDM method achieves the best performance in the three
+public datasets, which verifies the effectiveness of B1HDM in
+dealing with subject-independent EEG emotion recognition.
+For the three datasets, the improvements on accuracy are 2.2%,
+3.5% and 2.4%, respectively, when compared with the existing
+state-of-the-art methods. On the other hand, we also perform
+the paired t-test between BiHDM and the baseline method
+at the significant level of 0.05 to see whether Bi1HDM has
+an improvement of recognition rate. Table |II| shows the t-test
+statistical analysis results, from which we can see BiHDM is
+significantly better than the baseline method.
+
+C. Confusion matrix
+
+To see the confusions of BiHDM in recognizing different
+emotions, we depict the confusion matrices of the above two
+experiments in Fig. [2| from which, we have two observations:
+(1) From Fig. [2(a)|and Fig. (2(d)| corresponding to the SEED
+
+dataset, we can see that the emotions happy and neutral
+are much easier to be recognized than sad. But comparing
+the results between these two kinds of experiments, it is
+easy to see that in the subject-independent experiment,
+when the training and testing data come from different
+people, the recognition rates of emotions neutral and sad
+will decrease about 10% and 9% while the emotion happy
+only decreases 3%. We can also observe the same case
+
+3Note that the subspace based methods, such as TCA, SA and GFK, are
+problematic to handle a large amount of EEG data due to the computer
+memory limitation and computational issue. Therefore, to compare with them
+we have to randomly select 3000 EEG feature samples from the training data
+set to train these methods.
+from the two confusion matrices of the SEED-IV dataset
+from Fig. [2(b)|and Fig. This shows that the emotion
+happy causes more similar brain reflection over different
+people than neutral and sad;
+
+(2) For MPED, which consists of seven emotion types, it is
+much more complicated than the other two datasets. For
+the subject-dependent experimental result in Fig.
+we can find that the emotions funny, neutral and
+sad are much easier to be recognized than the other
+four emotions. However, comparing it with the subjectindependent confusion matrix in Fig. we can see
+that the recognition rate of sad decreases significantly,
+which is same as the case observed in the above (..e.,
+point (1)). It is possibly because the pattern of emotion
+sad varies considerably from one subject to another.
+Moreover, it is interesting to see that the recognition rate
+of emotion funny decreases significantly but the emotion
+anger increases, which may be because the participants
+share common response to the anger emotional videos
+but have different interpretation about funny.
+
+D. Different pairwise operations
+
+In this section, we investigate the performance of using
+different pairwise operations in BiHDM, as shown in Eq. (6).
+Here, we denote the subtraction, division and inner product
+variants as BiH DM-S, BiH DM-D, and BiHDM-I, respectively.
+The results are shown in Fig. [3] As seen, the subtraction operation achieves the best performance among the three pairwise
+operations. This may be because the subtraction operation
+directly measure the discrepancy between two hemispheres,
+whereas the other two operations describe the difference
+from various aspects. However, both Bi1HDM-I and BiHDMD achieve comparable performance compared with the other
+methods shown in Table [I] and [II] which can show the effectiveness of considering the differential information between
+two cerebral hemispheres. We will explore more pairwise
+operations such as nonlinear kernel functions in the future
+work.
+
+To further verify the performance of pairwise operations,
+we conduct additional experiments for subject-dependent
+EEG emotion recognition on SEED, SEED-IV and MPED
+datasets by replacing subtraction with concatenation, and obtain 90.52%, 72.68% and 37.89% in accuracy. It is clearly inferior to the proposed subtraction operation (93.12%, 74.35%
+and 40.34%). This shows that using pairwise operation to
+explicitly extract the discrepancy indeed helps EEG emotion
+recognition.
+
+IV. DISCUSSION
+A. The activity maps of the paired EEG electrodes
+
+To explore the contribution of the differential information
+from various brain areas for emotion expression, we depict the
+electrode activity maps in Fig. |4| The contribution is evaluated by computing each column’s 2-norm of the_asymmetric
+differential features Sh and S’ in Eq. and for all the
+testing data and mapping these values into the corresponding
+electrodes. The two electrodes in a pair share the same value.
+
+  
+
+ 
+
+4.11
+
+  
+  
+
+happy BRR 2.06
+
+  
+
+neutral 4.20 eRe 4.86 7.00
+
+   
+
+ 
+
+  
+
+neutral | 1.99 3.84 |
+
+     
+  
+
+sad 2.12 4.23 fyemst} 12.78
+
+6.61
+
+sa 3.52 fear 10.02 18.23 11.00 [alerée)
+
+  
+   
+     
+
+ 
+ 
+
+ 
+
+happy __ neutral sad happy neutral sad fear
+(a) SEED (b) SEED-IV
+
+joy 3283 5.28 486 7.19 9.56 2.44
+
+funny 6.9 314 5.78 492 7.14 5.31
+neutral! 22.94 3.44 617 7A7 7.11 3.00.
+sad 4.83 8.64 3.00 [PERIN 1669 6.28 15.25
+fear 8.97 9.36 13.39 15.44 3297) 7.92 11.94.
+disgust 12.08 22.81 4.53 19.81 12.42 2249 6.17
+anger 7.97 15.17 8.47 14.06 16.28 5.94 | 3241_
+joy funny neutral sad fear disgust anger
+
+(c) MPED
+
+(1) Subject-dependent experiment results
+
+—
+
+7.24 |
+
+happy [eXRe0] 16.75 13.15 6.60
+
+ 
+
+  
+   
+
+happy BR¢hesm 2.13
+
+    
+  
+   
+
+5.53 (ZR) 14.75 5.29
+
+neutral
+
+neutral | 9.83
+
+  
+
+5.67
+
+    
+
+sad’ 5.58 13.990@@) 7.70
+mace 80.83
+
+sad
+
+  
+
+7.72 14.19 19.97 bexcmes
+
+fear
+
+ 
+
+ 
+
+ 
+
+happy neutral sad happy neutral sad fear
+
+(d) SEED (e) SEED-IV
+joy 717 849 13.49 10.67
+funny - 7.59 7.60 9.67 11.58
+neutral - 7.33 9.67 8.03 11.53
+sad 6.99 10.80 16.88 18.53 12.82 11.64 | 22.33
+fear 7.58 11.40 20.17 12.39 18.79 11.69 17.98
+disgust- 11.35 17.12 16.46 9.84 10.22 20.11 14.90
+
+anger’ 5.10 12.33 12.88 12.00 11.83 7.19
+joy funny neutral sad fear disgust anger
+
+(f) MPED
+
+(2) Subject-independent experiment results
+
+Fig. 2: The confusion matrices of the experiments.
+
+From Fig. |4} we can see that the frontal EEG asymmetry appears to serve as a more important role in emotion recognition
+for all the three datasets, which is consistent with the cognition
+observation in biological psychology [38]. Moreover, for the
+MPED dataset, which consists of more emotion types, the
+temporal lobe asymmetry also makes important contribution
+as the frontal asymmetry.
+
+Specifically, to explore where the differential information
+coming from in terms of the emotion expressed, we separately depict the electrode activity maps corresponding to
+each emotion in Fig. {5} Although it looks quite similar with
+Fig.|4} 1.e., the asymmetry on frontal and temporal lobes make
+more contribution to discriminate different emotions, we can
+observe some delicate distinctions from these maps of different
+emotions:
+
+(1) For the positive emotions (happy in SEED and SEED-IV,
+joy and funny in MPED), we can see that the asymmetry
+on temporal lobe actives as same as (or even more than)
+ 
+
+95 75 | ——
+MB BiHDM-s
+Mj BiHDM-D
+(JBiHDM-1
+
+‘MBiHDM-s|
+[/ BiHDM-D
+
+   
+
+      
+    
+
+ 
+
+(BiHDM- ||
+
+ 
+
+90
+
+85
+
+ 
+
+80
+Dependent Independent Dependent Independent
+(a) SEED (b) SEED-IV
+45, - 7
+MI BiHDM-S
+40; (OS BiHDM-D  
+| |BiHDM-|
+
+35}
+
+30;
+
+25)
+
+20 Dependent Independent
+(c) MPED
+
+Fig. 3: The experimental results by using BiHDM-S, BiH DMD and BiHDM-I models on three datasets.
+
+ee
+
+(a) SEED (b) SEED-IV (c) MPED
+
+   
+
+Fig. 4: The EEG electrode activity maps of the subjectdependent experiments. Darker red denotes more significant
+contribution. Note that these maps are symmetric because it
+shows the value computed by pairwise operation shared by
+paired electrodes. (Best Viewed in Color)
+
+the frontal lobe;
+
+(2) On the contrary, for the neutral emotion (Fig.
+Fig. and Fig. [5(j)), the asymmetry on frontal lobe
+contributes more than temporal lobe;
+
+(3) For the sad emotion (Fig. Fig. [5(f)] and Fig. [5(k)p,
+the asymmetry on frontal lobe basically dominates this
+emotion expression. But we can find that there is a
+broad activation area closing to the frontal-central lobe,
+especially in SEED-IV and MPED which contains more
+types of emotions than SEED;
+
+(4) For the fear emotion (Fig. |5(g)), the asymmetry on
+frontal lobe dominates the emotion expression. But on
+MPED dataset, which includes more negative emotions
+(anger and disgust), the temporal lobe will have the same
+contribution with the frontal lobe.
+
+B. Electrodes reduction
+
+For the emotion recognition system in real-world applications, fewer electrodes will be preferred considering the
+
+feasibility and comfort. Thus in this section, we investigate
+how the performance varies with relatively small numbers
+of electrodes. Motivated by the results from Fig. [4] and
+we Select the paired electrodes on four brain areas referring
+to the locations of frontal and temporal lobes, denoted b
+
+Frontal (6), Frontal (10), Temporal (6) and Temporal (9) Fi
+The experimental results are shown in Table [IV] We can have
+two observation from this table:
+
+(1) The obtained recognition results based on fewer electrodes are comparable with that based on all the 31 paired
+electrodes especially on SEED dataset, which agrees with
+the observation of Fig. [4] and [5] It also verifies that the
+frontal and temporal lobes’ asymmetry indeed contributes
+more to the EEG emotion recognition than the other brain
+areas. It is possible to consider utilizing fewer electrodes
+in EEG emotion recognition systems;
+
+(2) Comparing between these two important brain regions,
+we can see the results based on temporal lobe electrodes
+outperform that based on frontal lobe. It seems temporal lobe associated more with emotion expression than
+frontal lobe for EEG emotion recognition;
+
+TABLE IV: The classification performance based on the
+frontal and temporal lobe EEG data for subject-dependent
+and subject-independent EEG emotion recognition on SEED,
+SEED-IV and MPED datasets.
+
+(a) Subject-dependent experiment results
+
+ACC / STD (%)
+Electrode area
+SEED SEED-IV MPED
+80.15/09.86 | 57.93/13.88 | 29.02/05.68
+Frontal (10) 84.49/08.83 | 63.02/16.95 | 32.37/06.79
+Temporal (6) 88.16/08.03 | 64.88/15.76 | 33.61/07.19
+Temporal (9) 90.16/07.44 | 65.19/16.03 | 33.13/07.06
+
+All (31) 93.12/06.06 | 74.35/14.09 | 40.34/07.59
+
+Frontal (6)
+
+ 
+
+ 
+
+ 
+
+(b) Subject-independent experiment results
+ACC / STD (%)
+SEED SEED-IV MPED
+74.33/08.70 | 67.28/08.19 | 23.54/02.73
+
+80.28/09.94 | 68.16/07.85 | 25.44/04.95
+
+ 
+
+Electrode area
+
+ 
+
+Frontal (6)
+Frontal (10)
+Temporal (6)
+
+85.04/07.13 | 65.07/08.74 | 26.07/04.32
+
+66.92/08.74
+69.03/08.66
+
+26.43/04.55
+28.27/04.99
+
+Temporal (9)
+All (31)
+
+ 
+
+ 
+
+ 
+
+ 
+
+84.09/07.78
+85.40/07.53
+
+C. The performance based on single hemispheric EEG data
+
+From the above discussion, we can see the discrepancy
+information between the left and right hemispheres indeed
+contributes to the EEG emotion recognition task. On the other
+hand, it will be interesting to investigate which hemisphere
+is more tightly associated to emotion recognition. Therefore,
+
+4Concretely, Frontal (6) includes the paired electrodes of FP1-Fp2, AF3AF4, F7-F8, F5-F6, F3-F4 and FI1-F2; Frontal (10) includes the paired
+electrodes of Frontal (6) and FT7-FT8, FCS5-FC6, FC3-FC4 and FC1-FC2;
+Temporal (6) includes the paired electrodes of FT7-FT8, FC5-FC6, T7-T8,
+C5-C6, TP7-TP8 and CP5-CP6; Temporal (9) includes the paired electrodes
+of Temporal (6) and FC3-FC4, C3-C4 and CP3-CP4.
+ 
+
+  
+
+ 
+
+000 66606
+
+  
+
+(a) Happy (b) Neutral (c) Sad (d) Happy (e) Neutral (f) Sad (g) Fear
+(1) SEED (2) SEED-IV
+(h) Joy (i) Funny (j) Neutral (k) Sad (1) Fear (m) Anger (n) Disgust
+(3) MPED
+
+Fig. 5: The EEG electrode activity maps in terms of different emotions based on the results of subject-dependent experiments.
+Darker red denotes more significant contribution. (a)-(c), (d)-(g), and (h)-(n) are the results on SEED, SEED-IV, and MPED
+datasets respectively. Note that these maps are symmetric because it shows the value computed by pairwise operation shared
+
+by paired electrodes. (Best Viewed in Color)
+
+in this section, we focus on this problem and conduct the
+same experiments by separately feeding our BiHDM with the
+left and right hemispheric data. The obtained experimental
+results are shown in Table from which we can see the
+left hemisphere is superior to the right for EEG emotion
+recognition, especially in the experiments on SEED-IV and
+MPED datasets. Besides, comparing it with the results in
+Table which are based on feeding the model with less
+symmetric electrodes’ data, we can observe that results are
+comparable or even better than this experiment based on single
+hemisphere data. This verifies the effectiveness of discrepancy
+information for EEG emotion recognition from another aspect.
+
+TABLE V: The classification performance based on single
+hemispheric EEG data for subject-dependent EEG emotion
+recognition on SEED, SEED-IV and MPED datasets.
+
+ACC / STD (%)
+SEED-IV
+64.48/15.34
+
+ 
+
+Hemisphere
+SEED
+
+86.63/08.88
+
+MPED
+35.92/07.26
+
+ 
+
+BiHDM-left
+
+BiHDM-right 86.39/07.54 | 60.11/13.53 | 33.08/08.30
+BiHDM-overall | 93.12/06.06 | 74.35/14.09 | 40.34/07.59
+
+ 
+
+ 
+
+D. The effect of two directional RNNs to extract spatial
+information
+
+In BiHDM, the horizontal and vertical RNNs are adopted
+to model the structural relation between the electrodes. To
+evaluate the effect of this spatial information extraction for
+emotion recognition, we modified the framework of BiHDM
+with a single directional RNN, denoted by BiHDM-h and
+BiHDM-v respectively, to conduct the same experiments. The
+results are summarized in Table from which we can see
+that the predefined strategy of traversing the spatial region
+
+with horizontal and vertical RNNs achieves much better performance than the single directional RNN. This shows that the
+proposed spatial feature learning method is helpful to extract
+the discriminative information for EEG emotion recognition.
+
+TABLE VI: The classification performance of different spatial
+feature extraction methods for EEG emotion recognition on
+SEED, SEED-IV and MPED datasets.
+
+(a) Subject-dependent experiment results
+
+ACC / STD (%)
+SEED SEED-IV MPED
+
+BiHDM-h 87.47/09.17 | 62.06/15.01 | 36.24/08.41
+BiHDM-v 86.75/07.09 | 65.57/15.43 | 36.69/08.20
+
+BiHDM 93.12/06.06 | 74.35/14.09 | 40.34/07.59
+
+Electrode area
+
+ 
+
+ 
+
+ 
+
+(b) Subject-independent experiment results
+
+ACC / STD (%)
+
+SEED SEED-IV MPED
+82.38/09.33
+
+66.80/08.22 | 28.05/04.98
+
+Electrode area
+
+ 
+
+BiHDM-h
+
+BiHDM-v 81.03/10.28 | 66.96/08.28 | 27.86/05.06
+BiHDM 85.40/07.53 | 69.03/08.66 | 28.27/04.99
+
+ 
+
+V. CONCLUSION
+
+In this paper, we propose a novel bi-hemispheric discrepancy model (BiHDM) for EEG emotion recognition. The proposed framework is easy to implement and generally achieves
+the state-of-the-art performance. This shows the effectiveness
+of incorporating the asymmetric differential information into
+EEG emotion recognition. In the future work, we will further
+investigate more left and right hemispheric differential operations to explore the potential efficacy of cerebral hemisphere
+asymmetry in EEG emotion recognition.
+[4]
+
+[5]
+
+[7]
+
+[8]
+[9]
+
+[10]
+
+[11]
+
+[12]
+
+[13]
+
+[14]
+
+[15]
+
+[16]
+
+[17]
+
+[18]
+
+[19]
+
+[20]
+
+[21]
+
+REFERENCES
+
+S. J. Dimond, L. Farrington, and P. Johnson, “Differing emotional
+response from right and left hemispheres,” Nature, vol. 261, no. 5562,
+p. 690, 1976.
+
+R. W. Picard, Affective computing. MIT press, 2000.
+
+R. Cowie, E. Douglas-Cowie, N. Tsapatsoulis, G. Votsis, S. Kollias,
+W. Fellenz, and J. G. Taylor, “Emotion recognition in human-computer
+interaction,” JEEE Signal processing magazine, vol. 18, no. 1, pp. 32-80,
+2001.
+
+Y.-P. Lin, C.-H. Wang, T.-P. Jung, T.-L. Wu, S.-K. Jeng, J.-R. Duann, and
+J.-H. Chen, “Eeg-based emotion recognition in music listening,’ [EEE
+Transactions on Biomedical Engineering, vol. 57, no. 7, pp. 1798-1806,
+2010.
+
+W.-L. Zheng, W. Liu, Y. Lu, B.-L. Lu, and A. Cichocki, “Emotionmeter:
+A multimodal framework for recognizing human emotions,” JEEE
+transactions on cybernetics, vol. 49, pp. 1110-1122, 2019.
+
+J. C. Britton, K. L. Phan, S. F. Taylor, R. C. Welsh, K. C. Berridge,
+and I. Liberzon, “Neural correlates of social and nonsocial emotions:
+An fmri study,’ Neuroimage, vol. 31, no. 1, pp. 397-409, 2006.
+
+R. Jenke, A. Peer, and M. Buss, “Feature extraction and selection
+for emotion recognition from eeg,’ JEEE Transactions on Affective
+Computing, vol. 5, no. 3, pp. 327-339, 2014.
+
+S. M. Alarcao and M. J. Fonseca, “Emotions recognition using eeg
+signals: a survey,” IEEE Transactions on Affective Computing, 2017.
+B. Garcia-Martinez, A. Martinez-Rodrigo, R. Alcaraz, and
+A. Fernandez-Caballero, “A review on nonlinear methods using
+electroencephalographic recordings for emotion recognition,’ JEEE
+Transactions on Affective Computing, 2019.
+
+W. Zheng, “Multichannel eeg-based emotion recognition via group
+sparse canonical correlation analysis,’ [EEE Transactions on Cognitive
+and Developmental Systems, vol. 9, no. 3, pp. 281-290, 2017.
+
+P. Li, H. Liu, Y. Si, C. Li, F Li, X. Zhu, X. Huang, Y. Zeng, D. Yao,
+Y. Zhang et al., “Eeg based emotion recognition by combining functional
+connectivity network and local activations,’ JEEE Transactions on
+Biomedical Engineering, 2019.
+
+H. Hinrikus, A. Suhhova, M. Bachmann, K. Aadamsoo, U. Vohma,
+J. Lass, and V. Tuulik, “Electroencephalographic spectral asymmetry
+index for detection of depression,’ Medical & Biological Engineering
+& Computing, vol. 47, no. 12, p. 1291, 2009.
+
+R. J. Davidson, P. Ekman, C. D. Saron, J. A. Senulis, and W. V. Friesen,
+“Approach-withdrawal and cerebral asymmetry: emotional expression
+and brain physiology: I.” Journal of personality and social psychology,
+vol. 58, no. 2, p. 330, 1990.
+
+J. D. Herrington, W. Heller, A. Mohanty, A. S. Engels, M. T. Banich,
+A. G. Webb, and G. A. Miller, “Localization of asymmetric brain
+function in emotion and depression,’ Psychophysiology, vol. 47, no. 3,
+pp. 442-454, 2010.
+
+G. E. Schwartz, R. J. Davidson, and F. Maer, “Right hemisphere lateralization for emotion in the human brain: Interactions with cognition,”
+Science, vol. 190, no. 4211, pp. 286-288, 1975.
+
+T. D. Wager, K. L. Phan, I. Liberzon, and S. F. Taylor, “Valence,
+gender, and lateralization of functional brain anatomy in emotion: a
+meta-analysis of findings from neuroimaging,’ Neuroimage, vol. 19,
+no. 3, pp. 513-531, 2003.
+
+E. Y. Costanzo, M. Villarreal, L. J. Drucaroff, M. Ortiz-Villafafie,
+M. N. Castro, M. Goldschmidt, A. E. Wainsztein, M. S. Ladrén-de
+Guevara, C. Romero, L. I. Brusco et al., “Hemispheric specialization in
+affective responses, cerebral dominance for language, and handedness:
+lateralization of emotion, language, and dexterity,’ Behavioural brain
+research, vol. 288, pp. 11-19, 2015.
+
+Y. Li, W. Zheng, Y. Zong, Z. Cui, T. Zhang, and X. Zhou, “A bihemisphere domain adversarial neural network model for eeg emotion
+recognition,’ IEEE Transactions on Affective Computing, 2018.
+
+Y. Ganin, E. Ustinova, H. Ajakan, P. Germain, H. Larochelle, F. Laviolette, M. Marchand, and V. Lempitsky, “Domain-adversarial training
+of neural networks,’ Journal of Machine Learning Research, vol. 17,
+no. 59, pp. 1-35, 2016.
+
+L. Bottou, “Large-scale machine learning with stochastic gradient descent,” in Proceedings of COMPSTAT’2010. Springer, 2010, pp. 177186.
+
+W.-L. Zheng and B.-L. Lu, “Investigating critical frequency bands and
+channels for eeg-based emotion recognition with deep neural networks,”
+IEEE Transactions on Autonomous Mental Development, vol. 7, no. 3,
+pp. 162-175, 2015.
+
+[22]
+
+[23]
+[24]
+[25]
+
+[26]
+
+[27]
+
+[28]
+
+[29]
+
+[30]
+
+[31]
+
+[32]
+
+[33]
+
+[34]
+
+[35]
+
+[36]
+
+[37]
+
+[38]
+
+10
+
+T. Song, W. Zheng, C. Lu, Y. Zong, X. Zhang, and Z. Cui, “Mped:
+A multi-modal physiological emotion database for discrete emotion
+recognition,’ IEEE Access, vol. 7, pp. 12 177-12 191, 2019.
+
+J. A. Suykens and J. Vandewalle, “Least squares support vector machine
+classifiers,’ Neural Processing Letters, vol. 9, no. 3, pp. 293-300, 1999.
+L. Breiman, “Random forests,’ Machine Learning, vol. 45, no. 1, pp.
+5-32, 2001.
+
+B. Thompson, “Canonical correlation analysis,’ Encyclopedia of Statistics in Behavioral Science, 2005.
+
+Y. Li, W. Zheng, Z. Cui, Y. Zong, and S. Ge, “Eeg emotion recognition
+based on graph regularized sparse linear regression,” Neural Processing
+Letters, pp. 1-17, 2018.
+
+M. Defferrard, X. Bresson, and P. Vandergheynst, “Convolutional neural
+networks on graphs with fast localized spectral filtering,’ in Advances in
+Neural Information Processing Systems (NIPS), 2016, pp. 3844-3852.
+
+T. Song, W. Zheng, P. Song, and Z. Cui, “Eeg emotion recognition using
+dynamical graph convolutional neural networks,” JEEE Transactions on
+Affective Computing, 2018.
+
+Y. Li, W. Zheng, Z. Cui, T. Zhang, and Y. Zong, “A novel neural network
+model based on cerebral hemispheric asymmetry for eeg emotion
+recognition.” in International Joint Conference on Artificial Intelligence
+(IJCAT), 2018, pp. 1561-1567.
+
+W.-L. Zheng and B.-L. Lu, “Personalizing eeg-based affective models
+with transfer learning,’ in International Joint Conference on Artificial
+Intelligence (IJCAI). AAAI Press, 2016, pp. 2732-2738.
+
+M. Sugiyama, S. Nakajima, H. Kashima, P. V. Buenau, and M. Kawanabe, “Direct importance estimation with model selection and its application to covariate shift adaptation,” in Advances in Neural Information
+Processing Systems (NIPS), 2008, pp. 1433-1440.
+
+T. Kanamori, S. Hido, and M. Sugiyama, “A least-squares approach
+to direct importance estimation,’ The Journal of Machine Learning
+Research, vol. 10, pp. 1391-1445, 2009.
+
+W.-S. Chu, F. De la Torre, and J. F. Cohn, “Selective transfer machine for
+personalized facial expression analysis,’ IEEE Transactions on Pattern
+Analysis and Machine Intelligence, vol. 39, no. 3, pp. 529-545, 2017.
+
+S.J. Pan, I. W. Tsang, J. T. Kwok, and Q. Yang, “Domain adaptation via
+transfer component analysis,’ IEEE Transactions on Neural Networks,
+vol. 22, no. 2, pp. 199-210, 2011.
+
+B. Fernando, A. Habrard, M. Sebban, and T. Tuytelaars, “Unsupervised
+visual domain adaptation using subspace alignment,” in JEEE International Conference on Computer Vision (ICCV). YEEE, 2013, pp. 2960—
+2967.
+
+B. Gong, Y. Shi, F. Sha, and K. Grauman, “Geodesic flow kernel for
+unsupervised domain adaptation,’ in JEEE Conference on Computer
+Vision and Pattern Recognition (CVPR). QUEEE, 2012, pp. 2066-2073.
+H. Li, Y.-M. Jin, W.-L. Zheng, and B.-L. Lu, “Cross-subject emotion
+recognition using deep adaptation networks,” in International Conference on Neural Information Processing. Springer, 2018, pp. 403-413.
+J. A. Coan and J. J. Allen, “Frontal eeg asymmetry as a moderator and
+mediator of emotion,” Biological psychology, vol. 67, no. 1-2, pp. 7-50,
+2004.
+

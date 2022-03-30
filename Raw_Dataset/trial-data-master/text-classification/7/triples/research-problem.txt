@@ -1,0 +1,3 @@
+(Contribution||has research problem||Text Classification)
+(Contribution||has research problem||Modeling articles or sentences computationally)
+(Contribution||has research problem||text categorization)

@@ -1,0 +1,17 @@
+title
+abstract
+Introduction
+Model Toolkit
+Encoders
+Transformer
+Deep Averaging Network (DAN)
+Encoder Training Data
+Transfer Tasks
+Transfer Learning Models
+Baselines
+Combined Transfer Models
+Experiments
+Results
+Discussion
+Resource Usage
+Conclusion

@@ -1,0 +1,152 @@
+26	19	26	p	propose
+26	29	45	n	generic approach
+26	46	54	p	to learn
+26	55	96	n	context - sensitive convolutional filters
+26	97	100	p	for
+26	101	131	n	natural language understanding
+31	30	77	n	novel bidirectional filter generation mechanism
+31	78	86	p	to allow
+31	87	122	n	interactions between sentence pairs
+31	123	141	p	while constructing
+31	142	177	n	context - sensitive representations
+27	38	59	n	convolution operation
+27	60	62	p	in
+27	63	76	n	our framework
+27	77	90	p	does not have
+27	93	113	n	fixed set of filters
+27	125	133	p	provides
+27	138	145	n	network
+27	146	150	p	with
+27	151	193	n	stronger modeling flexibility and capacity
+29	21	36	n	learned filters
+29	37	46	p	vary from
+29	47	67	n	sentence to sentence
+29	72	81	p	allow for
+29	82	121	n	more fine - grained feature abstraction
+28	18	27	p	introduce
+28	30	42	n	meta network
+28	43	54	p	to generate
+28	57	88	n	set of contextsensitive filters
+28	91	105	p	conditioned on
+28	106	130	n	specific input sentences
+166	0	3	p	For
+166	4	27	n	document classification
+166	33	41	p	consider
+166	42	65	n	several baseline models
+166	74	80	n	ngrams
+166	85	108	n	bag - of - means method
+166	109	117	p	based on
+166	118	139	n	TFIDF representations
+166	140	148	p	built by
+166	149	211	n	choosing the 500,000 most frequent n-grams ( up to 5 - grams )
+166	212	216	p	from
+166	221	233	n	training set
+166	238	241	p	use
+166	248	268	n	corresponding counts
+166	269	271	p	as
+166	272	280	n	features
+166	290	312	n	small / large word CNN
+166	315	358	n	6 layer word - based convolutional networks
+166	361	365	p	with
+166	366	383	n	256/1024 features
+166	384	386	p	at
+166	387	397	n	each layer
+166	450	458	n	deep CNN
+166	461	495	n	deep convolutional neural networks
+166	496	500	p	with
+166	501	516	n	9/17 /29 layers
+155	33	41	p	utilized
+155	2	29	n	one - layer architec - ture
+155	42	45	p	for
+155	46	86	n	both the CNN baseline and the ACNN model
+156	4	18	n	minibatch size
+156	19	28	p	is set as
+156	29	32	n	128
+156	41	53	n	dropout rate
+156	54	56	p	of
+156	57	60	n	0.2
+156	61	75	p	is utilized on
+156	80	95	n	embedding layer
+162	0	7	n	Dropout
+162	10	24	p	with a rate of
+162	25	28	n	0.5
+162	34	45	p	employed on
+162	50	70	n	word embedding layer
+164	0	10	n	All models
+164	15	31	p	implemented with
+164	32	42	n	TensorFlow
+164	51	64	p	trained using
+164	65	99	n	one NVIDIA GeForce GTX TITAN X GPU
+164	100	104	p	with
+164	105	117	n	12 GB memory
+152	0	3	p	For
+152	8	43	n	document classification experiments
+152	49	68	p	randomly initialize
+152	73	88	n	word embeddings
+152	89	105	p	uniformly within
+152	106	125	n	[ ? 0.001 , 0.001 ]
+152	130	141	p	update them
+152	142	157	n	during training
+153	8	25	n	generated filters
+153	31	34	p	set
+153	39	50	n	window size
+153	51	53	p	as
+153	54	59	n	h = 5
+153	62	66	p	with
+153	67	87	n	K = 100 feature maps
+158	8	31	n	sentence matching tasks
+158	37	48	p	initialized
+158	53	68	n	word embeddings
+158	69	73	p	with
+158	74	109	n	50 - dimensional Glove word vectors
+158	110	125	p	pretrained from
+158	126	155	n	Wikipedia 2014 and Gigaword 5
+159	3	6	p	for
+159	11	18	n	filters
+159	24	27	p	set
+159	32	43	n	window size
+159	44	46	p	as
+159	47	52	n	h = 5
+159	55	59	p	with
+159	60	80	n	K = 300 feature maps
+161	3	6	p	use
+161	7	11	n	Adam
+161	12	20	p	to train
+161	25	31	n	models
+161	34	38	p	with
+161	41	54	n	learning rate
+161	55	57	p	of
+161	58	65	n	3 10 ?4
+2	55	70	n	Text Processing
+6	73	137	n	learn contextsensitive convolutional filters for text processing
+173	0	23	n	Document Classification
+175	20	28	n	S - ACNN
+175	29	54	n	significantly outperforms
+175	55	62	n	S - CNN
+175	63	65	n	on
+175	66	79	n	both datasets
+175	82	112	n	demonstrating the advantage of
+175	117	140	n	filtergeneration module
+175	15	17	p	in
+175	144	162	n	our ACNN framework
+182	15	23	n	M - ACNN
+182	29	70	n	achieves slightly better performance than
+182	71	107	n	self - attentive sentence embeddings
+182	128	136	n	requires
+182	137	164	n	significant more parameters
+182	165	169	p	than
+182	170	180	n	our method
+179	17	20	p	use
+179	21	42	n	one convolution layer
+179	43	46	p	for
+179	51	61	n	ACNN model
+179	67	86	n	already outperforms
+179	87	113	n	other CNN baseline methods
+179	114	118	p	with
+179	119	144	n	much deeper architectures
+188	0	25	n	Answer Sentence Selection
+200	10	19	n	our model
+200	20	26	p	yields
+200	27	55	n	significantly better results
+200	56	60	p	than
+200	64	135	n	attentive pooling network and ABCNN ( attention - based CNN ) baselines

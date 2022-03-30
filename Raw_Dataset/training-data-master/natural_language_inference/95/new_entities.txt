@@ -1,0 +1,122 @@
+186	14	22	p	see that
+186	27	46	n	answer verification
+186	47	52	p	makes
+186	55	73	n	great contribution
+186	74	76	p	to
+186	81	101	n	over all improvement
+186	110	118	p	confirms
+186	119	133	n	our hypothesis
+186	134	138	p	that
+186	139	174	n	cross - passage answer verification
+186	178	184	n	useful
+186	185	188	p	for
+186	193	210	n	multi-passage MRC
+187	0	3	p	For
+187	8	16	n	ablation
+187	17	19	p	of
+187	24	37	n	content model
+187	43	50	n	analyze
+187	64	79	p	not only affect
+187	84	104	n	content score itself
+187	116	123	p	violate
+187	128	146	n	verification model
+188	26	42	p	jointly training
+188	47	59	n	three models
+188	64	71	p	provide
+188	72	86	n	great benefits
+188	95	105	p	shows that
+188	110	121	n	three tasks
+188	122	125	p	are
+188	135	150	n	closely related
+188	60	63	p	can
+188	159	164	p	boost
+188	165	175	n	each other
+188	176	180	p	with
+188	181	203	n	shared representations
+188	204	206	p	at
+188	207	220	n	bottom layers
+189	54	61	p	achieve
+189	65	76	n	improvement
+189	77	79	p	of
+189	80	95	n	nearly 3 points
+189	96	103	p	without
+189	108	131	n	yes / no classification
+145	0	3	p	For
+145	4	14	n	MS - MARCO
+145	20	30	p	preprocess
+145	35	41	n	corpus
+145	42	46	p	with
+145	51	71	n	reversible tokenizer
+145	72	76	p	from
+145	77	93	n	Stanford CoreNLP
+146	3	9	p	employ
+146	14	50	n	300 - D pre-trained Glove embeddings
+146	63	68	n	fixed
+146	69	75	p	during
+146	76	84	n	training
+147	4	24	n	character embeddings
+147	25	28	p	are
+147	29	49	n	randomly initialized
+147	50	54	p	with
+147	59	68	n	dimension
+147	69	71	p	as
+147	72	74	n	30
+51	63	74	p	consists of
+51	75	88	n	three modules
+51	23	25	p	of
+52	11	17	p	follow
+52	22	49	n	boundary - based MRC models
+52	50	57	p	to find
+52	61	77	n	answer candidate
+52	78	81	p	for
+52	82	94	n	each passage
+52	95	109	p	by identifying
+52	114	136	n	start and end position
+52	144	150	n	answer
+53	12	17	p	model
+53	22	30	n	meanings
+53	31	33	p	of
+53	38	55	n	answer candidates
+53	56	70	p	extracted from
+53	71	85	n	those passages
+53	90	93	p	use
+53	98	112	n	content scores
+53	113	123	p	to measure
+53	128	135	n	quality
+53	136	138	p	of
+53	143	153	n	candidates
+54	11	18	p	conduct
+54	23	42	n	answer verification
+54	43	54	p	by enabling
+54	55	76	n	each answer candidate
+54	77	86	p	to attend
+54	94	110	n	other candidates
+54	111	119	p	based on
+54	120	141	n	their representations
+56	16	28	n	final answer
+56	32	45	p	determined by
+56	46	59	n	three factors
+56	66	74	n	boundary
+56	81	88	n	content
+56	97	129	n	crosspassage answer verification
+57	20	33	p	modeled using
+57	34	51	n	different modules
+57	60	66	p	can be
+57	67	82	n	jointly trained
+57	83	85	p	in
+57	86	114	n	our end - to - end framework
+2	0	45	n	Multi - Passage Machine Reading Comprehension
+4	0	37	n	Machine reading comprehension ( MRC )
+5	14	17	n	MRC
+161	8	10	p	on
+161	11	19	n	DuReader
+165	7	15	p	see that
+165	21	38	n	paragraph ranking
+165	43	48	p	boost
+165	53	67	n	BiDAF baseline
+165	68	81	n	significantly
+166	67	94	n	our system ( single model )
+166	95	103	p	achieves
+166	104	123	n	further improvement
+166	124	126	p	by
+166	129	141	n	large margin

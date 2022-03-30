@@ -1,0 +1,1069 @@
+IARM: Inter-Aspect Relation Modeling with
+Memory Networks in Aspect-Based Sentiment Analysis
+
+Navonil Majumder’, Soujanya Poria*, Alexander Gelbukh’,
+Md. Shad Akhtar®, Erik Cambria*, Asif Ekbal®
+‘Centro de Investigacién en Computaci6on, Instituto Politécnico Nacional, Mexico
+*School of Computer Science and Engineering, Nanyang Technological Univerisity, Singapore
+®Computer Science and Engineering, Indian Institute of Technology, Patna, India
+
+navo@nlp.cic.ipn.mx, sporia@ntu.edu.sg, gelbukh@gelbukh.com,
+shad.pcs15@iitp.ac.in, cambria@ntu.edu.sg,asif@iitp.ac.in
+
+Abstract
+
+Sentiment analysis has immense implications
+in modern businesses through user-feedback
+mining. Large product-based enterprises like
+Samsung and Apple make crucial business decisions based on the large quantity of user reviews and suggestions available in different
+e-commerce websites and social media platforms like Amazon and Facebook. Sentiment
+analysis caters to these needs by summarizing user sentiment behind a particular object.
+In this paper, we present a novel approach of
+incorporating the neighboring aspects related
+information into the sentiment classification
+of the target aspect using memory networks.
+Our method outperforms the state of the art by
+1.6% on average in two distinct domains.
+
+1 Introduction
+
+Sentiment analysis plays a huge role in userfeedback extraction from different popular ecommerce websites like Amazon, eBay, etc. Large
+enterprises are not only interested in the overall
+user sentiment about a given product, but the sentiment behind the finer aspects of a product is also
+very important to them. Companies allocate their
+resources to research, development, and marketing
+based on these factors. Aspect-based sentiment
+analysis (ABSA) caters to these needs.
+
+Users tend to express their opinion on different aspects of a given product. For example, the
+sentence “Everything is so easy to use, Mac software is just so much simpler than Microsoft software.” expresses sentiment behind three aspects:
+“use”, “Mac software”, and “Microsoft software”
+to be positive, positive, and negative respectively.
+This leads to two tasks to be solved: aspect extraction (Shu et al., 2017) and aspect sentiment polarity detection (Wang et al., 2016). In this paper, we
+
+tackle the latter problem by modeling the relation
+among different aspects in a sentence.
+
+Recent works on ABSA does not consider the
+neighboring aspects in a sentence during classification. For instance, in the sentence “The menu is
+very limited - I think we counted 4 or 5 entries.”
+the sub-sentence “J think ... entries” does not reflect the true sentiment behind containing aspect
+“entries”, unless the other aspect “menu” is considered. Here, the negative sentiment of “menu”
+induces “entries” to have the same sentiment. We
+hypothesize that our architecture iteratively models the influence from the other aspects to generate
+accurate target aspect representation.
+
+In sentences containing multiple aspects, the
+main challenge an Aspect-Based-SentimentAnalysis (ABSA) classifier faces is to correctly
+connect an aspect to the corresponding sentimentbearing phrase (typically adjective). Let us
+consider this sentence “Coffee is a better deal
+than overpriced cosi sandwiches”. Here, we find
+two aspects: “coffee” and “cosi sandwiches”. It
+is clear in this sentence that the sentiment of “coffee” is expressed by the sentimentally charged
+word “better”; on the other hand, “overpriced”
+carries the sentiment of “cosi sandwiches”. The
+aim of the ABSA classifier is to learn these connections between the aspects and their sentiment
+bearing phrases.
+
+In this work, we argue that during sentiment
+prediction of an aspect (say “coffee” in this case),
+the knowledge of the existence and representation
+of the other aspects (“cosi sandwiches”) in the
+sentence is beneficial. The sentiment of an aspect
+in a sentence can influence the succeeding aspects
+due to the presence of conjunctions. In particular,
+for sentences containing conjunctions like and, not
+only, also, but, however, though, etc., aspects tend
+
+3402
+
+Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing, pages 3402-3411
+Brussels, Belgium, October 31 - November 4, 2018. ©2018 Association for Computational Linguistics
+to share their sentiments. In the sentence “Food is
+usually very good, though I wonder about freshness of raw vegetables”, the aspect “raw vegetables” does not have any trivial sentiment marker
+linked to it. However, the positive sentiment of
+“food”, due to the word “”’good’’, and presence of
+conjunction “though” determines the sentiment of
+“raw vegetables” to be negative. Thus, aspects
+when arranged as a sequence, reveal high correlation and interplay of sentiments.
+
+To model these scenarios, firstly, following
+Wang et al. (2016), we independently generate
+aspect-aware sentence representations for all the
+aspects using gated recurrent unit (GRU) (Chung
+et al., 2014) and attention mechanism (Luong
+et al., 2015). Then, we employ memory networks (Sukhbaatar et al., 2015) to repeatedly
+match the target aspect representation with the
+other aspects to generate more accurate representation of the target aspect. This refined representation is fed to a softmax classifier for final
+classification. We empirically show below that
+our method outperforms the current state of the
+art (Ma et al., 2017) by 1.6% on average in two
+distinct domains: restaurant and laptop.
+
+The rest of the paper structured as follows: Section 2 discusses previous works; Section 3 delves
+into the method we present; Section 4 mentions
+the dataset, baselines, and experimental settings;
+Section 5 presents and analyzes the results; finally,
+Section 6 concludes this paper.
+
+2 Related Works
+
+Sentiment analysis is becoming increasingly important due to the rise of the need to process
+textual data in wikis, micro-blogs, and other social media platforms. Sentiment analysis requires
+solving several related NLP problems, like aspect
+extraction (Poria et al., 2016). Aspect based sentiment analysis (ABSA) is a key task of sentiment
+analysis which focuses on classifying sentiment of
+each aspect in the sentences.
+
+In this paper, we focus on ABSA, which is a key
+task of sentiment analysis that aims to classify sentiment of each aspect individually in a sentence. In
+recent days, thanks to the increasing progress of
+deep neural network research (Young et al., 2018),
+novel frameworks have been proposed, achieving
+notable performance improvement in aspect-based
+sentiment analysis.
+
+The common way of doing ABSA is feeding the
+
+aspect-aware sentence representation to the neural
+network for classification. This was first proposed
+by Wang et al. (2016) where they appended aspect embeddings with the each word embeddings
+of the sentence to generate aspect-aware sentence
+representation. This representation was further fed
+to an attention layer followed by softmax for final
+classification.
+
+More recently, Ma et al. (2017) proposed a
+model where both context and aspect representations interact with each other’s attention mechanism to generate the overall representation. Tay
+et al. (2017) proposed word-aspect associations
+using circular correlation as an improvement over
+Wang et al. (2016)’s work. Also, Li et al. (2018)
+used transformer networks for target-oriented sentiment classification.
+
+ABSA has also been researched from a
+question-answering perspective where deep memory networks have played a major role (Tang et al.,
+2016b; Li et al., 2017). However, unlike our proposed method, none of these methods have tried to
+model the inter-aspect relations.
+
+3 Method
+
+In this section, we formalize the task and present
+our method.
+
+3.1 Problem Definition
+
+Input We are given a sentence S =
+[w1,wo,...,wz], where w; are the words and LD
+is the maximum number of words in a sentence.
+Also, the given aspect-terms for sentence S' are
+A,,Ao,...,Am, where A; = [we,--->Wktm-1],
+1<k<L,0<m< L-k+1, and M is the
+maximum number of aspects in a sentence.
+
+Output Sentiment polarity (1 for positive, 0 for
+negative, and 2 for neutral) for each aspect-term
+Aj.
+
+3.2 Model
+
+The primary distinction between our model and
+the literature is the consideration of the neighboring aspects in a sentence with the target aspect.
+We assume that our inter-aspect relation modeling
+(IARM) architecture! models the relation between
+the target aspect and surrounding aspects, while
+filtering out irrelevant information. Fig. 1 depicts
+our model.
+
+‘Implementation available on http://github.
+com/senticnet/IARM
+
+3403
+3.2.1 Overview
+
+Our IARM model can be summarized with the following steps:
+
+Input Representation We replace the words
+in the input sentences and aspect-terms with
+pre-trained Glove word embeddings (Pennington
+et al., 2014). For multi-worded aspect-terms, we
+take the mean of constituent word embeddings as
+aspect representation.
+
+Aspect-Aware Sentence Representation — Following Wang et al. (2016), all the words in a sentence are concatenated with the given aspect representation. These modified sequence of words are
+fed to a gated recurrent unit (GRU)’ for context
+propagation, followed by an attention layer to obtain the aspect-aware sentence representation; we
+obtain for all the aspects in a sentence.
+
+Inter-Aspect Dependency Modeling We employ memory network (Sukhbaatar et al., 2015)
+to model the dependency of the target aspect
+with the other aspects in the sentence. This
+is achieved through matching target-aspect-aware
+sentence representation with aspect-aware sentence representation of the other aspects. After a
+certain number of iterations of the memory network, we obtain a refined representation of the
+sentence that is relevant to the sentiment classification of the target aspect. Further, this representation is passed to a softmax layer for final classification. The following subsections discuss these
+steps in details.
+
+3.2.2 Input Representation
+
+The words (w,;) in the sentences are represented
+with 300 (D) dimensional Glove word embeddings (Pennington et al., 2014), resulting sentence
+SeR*?,
+
+Similarly, aspect terms are represented with
+word embeddings. Multi-worded aspect terms are
+averaged over the constituent words. This results
+aspect representation a; € R? for i" aspect term.
+
+3.2.3. Aspect-Aware Sentence Representation
+
+It would be fair to assume that not all the words in
+a sentence carry sentimental information of a particular aspect (e.g., stop words have no impact).
+This warrants a sentence representation that reflects the sentiment of the given aspect. To achieve
+
+*LSTM (Hochreiter and Schmidhuber, 1997) yields similar performance, but requires training more parameters
+
+this, we first concatenate aspect a; to all the words
+in the sentence S:
+
+€ RL*2P.
+(1)
+
+In order to propagate the context information
+within the sentence, we feed S,,, to a Gated Recurrent Unit (GRU) with output size D, (kindly refer
+to Table | for the value). We denote this GRU as
+GRU,. GRU _ is described as follows:
+
+Sa; = [Wi © aj, W2 Oaj,...,w, @aj|
+
+a
+
+z=0(a,U~* + 5:-1W~), (2)
+r=oa(a,U" + 5:-1W’), (3)
+hy = tanh(2,U" + (s,1*r)W"), (4)
+sp = (1-2) * het 2 * 84-1, (5)
+
+where hy and s; are the hidden outputs and the
+cell states respectively at time t. We obtain Ra, =
+GRU,(Sq,), where Ry, ¢ R**”s and the GRU,
+has the following parameters: UZ ¢ R??*?s,
+W2 C RPsxDs | Ur c R2DxDs | wr c RPsxDs |
+ur c R20xDs | we c RPsxPs.
+
+To amplify the sentimentally relevant words to
+aspect a;, we employ an attention layer to obtain
+the aspect-aware sentence representation (it is effectively a refined aspect representation) 7q,:
+
+a= Ra,Ws + bs, (6)
+
+a = softmax(z), (7)
+
+Ta, = 0 Raj, (8)
+
+where z = [2,29,...,2z] € R™,
+softmax(z) = [e™!/d,e%,e"?/d,e%,...],
+Qa = [a1,Q2,...,az] € REx), Ta; € R?s,
+
+W, € R?**!, and b, is a scalar.
+
+3.2.4 Inter-Aspect Dependency Modeling
+
+We feed R = [ra,,Tags-++sTay,] € R“*” toa
+GRU (GRU,) of size D, (kindly refer to Table 1
+for the value) to propagate aspect information
+among the aspect-aware sentence representations
+and obtain Q = GRU,(R), where Q « R“*?°
+and GRU, has the following parameters: UF «
+RPs*Do | W2 c RPoxDo | ur c RPsxPo | wr c
+RPxPo UM 6 RPs*P0, Wh ¢ R¥oXPo, This partially helps to model the dependency among aspects in a sentence.
+
+After this, in order to further inter-aspect dependency modeling, we employ memory networks (Sukhbaatar et al., 2015), where the targetaspect representation (target-aspect-aware sentiment representation) rq, 1s supplied as the query.
+
+3404
+| — mory Network ae aaa
+
+output memory
+eS
+
+Cp
+
+a
+(eee)
+(eee)
+(@e8@)
+(@e@)
+
+ot, POIOOBOL
+
+Attention-block
+
+ge = Qg’® wanes
+
+input memory
+
+ 
+
+ 
+
+ 
+
+ 
+
+388 § 88; —<
+GRU, LL LHL
+oo
+Input : S a, S dy S a,
+
+ 
+
+ 
+
+Negative
+Neutral
+Positive
+
+Classification
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Aspect-aware Sentence Representation
+
+Figure 1: The proposed IARM architecture; AASR stands for Aspect-Aware Sentence Representation.
+
+Tq, 1S transformed into internal query state (q) with
+a fully connected layer as
+
+q = tanh(ra,Wr + br), (9)
+
+where g € R?°, Wr « R?s*°, and br « RY.
+
+Input Memory Representation All the aspects
+in the sentence are stored in memory. Each aspect
+is represented by their corresponding aspect-aware
+sentence representation in Q. An attention mechanism is used to read these memories from Q (Weston et al., 2014). We compute the match between
+the query g and the memory slots in @ with inner
+product:
+
+z= qQ",
+2 = softmax(z),
+
+(10)
+(11)
+
+where z = [21,22,--.,2u] € R™*!, 8
+
+[ 31, 82,--., 8] ¢ R™*". Here, 8; is the measure
+of relatedness between target aspect and aspect 7
+1.e., the attention score.
+
+Output Memory Representation We choose
+the output memory vectors (Q’) to be a refined version of the input memory vectors (Q), obtained by
+applying a GRU of size D, (named GRU,,) on Q.
+Hence,
+
+Q' = GRUm(Q), (12)
+
+where GRU,,, has the following parameters: U;, €
+
+Do Do oO oO oO oO
+Rex , WZ, « RP%P0, UT ¢ RX Wr ¢
+RPoxDo uh € RPoxDo wh € RPoxDo
+
+’ m ’ m
+
+The response vector o is obtained by summing
+output vectors in Q’, weighted by the relatedness
+measures in (3:
+
+0=8'Q’, (13)
+
+where oc RY’.
+
+Final Classification (Single Hop) In the case of
+single hop, target aspect representation q is added
+with memory output o to generate refined target
+aspect representative. This sum is passed to a softmax classifier of size C' (C’ = 3 due to the classes
+of sentiment polarity):
+
+(14)
+(15)
+
+P = softmax((q + 0)Wemaz + Osmaz);
+y = argmax(P[i]),
+
+where Wemaz € R?°*”, bsman € RY, and G is the
+estimated sentiment polarity (0 for negative, 1 for
+positive, and 2 for neutral).
+
+Multiple Hops We use total H (kindly refer
+to Table | for the value) number of hops in our
+model. Each hop generates a finer aspect representation g. Hence, we formulate the hops in the
+following way:
+
+3405
+¢ Query (q) at the end of hop 7 is updated as
+
+gh) = g™ +0. (16)
+
+¢ Output memory vectors of hop T, Q’7), is
+updated as the input memory vectors of hop
+T+1:
+
+Qe)
+
+=Q!), (17)
+
+After H hops, g\#) becomes the target-aspectaware sentence representation vector for the final
+classification:
+
+P= softmax(q?*) Womaz + bsmax ),
+j= argmax(P[i]),
+
+(18)
+(19)
+
+where Wemax € R?°*", bsmax € RY, and g is the
+estimated sentiment polarity (0 for negative, 1 for
+positive, and 2 for neutral). The whole algorithm
+is summarized in Algorithm 1.
+
+3.3. Training
+
+We train the network for 30 epochs using categorical cross entropy with L2-regularizer as loss function (L):
+
+C> YizrlogP[k]+A@l,, (20)
+
+ave
+
+1
+ON:
+where JV is the number of samples, 7 is the sample
+
+index, k is the class value, A is the regularization
+weight (we set it to 10~*),
+
+1, if expected class value of sample 7 is k,
+Yik = ’
+0, otherwise,
+
+(21)
+
+and @ is the set of parameters to be trained, where
+
+0 = LUE amie Wes aan Ulsan}? fs,a,m}?
+OF sam Wham Wosbos Wr Br, Woma
+
+emacs } .
+
+As optimization algorithm, Stochastic Gradient
+Descent (SGD)-based ADAM algorithm (Kingma
+and Ba, 2014) is used with learning-rate 0.001 due
+to its parameter-wise adaptive learning scheme.
+
+Hyper-Parameters We employed grid-search
+to obtain the best hyper-parameter values. Table 1
+shows the best choice of these values.
+
+Algorithm 1 IARM algorithm
+
+1: procedure TRAINANDTESTMODEL(U, V)
+[> U =train set, V = test set
+
+Ze Aspect-aware sentence representation extraction:
+
+3: for i: [1,M@] do > generate for all the aspects in
+the sentence
+
+4: Ta, < AspectAwareSent Rep(S, a;)
+
+5: Query generation:
+
+6: q< FCLayer(ra,) > Transform the
+target-aspect-aware sentence representation to the query
+of memory network
+
+7: Memory networks:
+
+8: Q<— GRUa([Ta,;Ta.5--+5Tay,]) > initial input
+
+memory
+
+9: Q! — GRUm(Q)
+
+> initial output memory
+
+10: for i:[1,H] do [> memory network hops
+11: z<qQ? > match with target aspect
+12: B < softmaz(z)
+
+13: o< BQ’ [> response vector
+14: Q<«Q’ > input memory for the next hop
+15: q<qto > update target-aspect-aware
+
+sentence representation (query)
+
+16: Classification:
+17: y = argmax(softmax(q)|j]) > softmax
+J
+
+classification
+
+18: TestModel(V )
+
+19: procedure ASPECTAWARESENTREP(S,a) >
+generation of aspect-aware sentence representation
+
+20: Ra <— GRU; ([wi @a,w2 @a,...,wr Pal) P
+5 = [wi, we,.. .,wp |
+
+21: z< FCLayer(R.)
+
+22: a< softmax(z)
+
+23: ra’ Ra
+
+24: return 7,
+
+25: procedure TESTMODEL(V )
+
+20: Similar to the training phase, V is passed through
+the learnt models to get the classification outputs. Section 3.3 mentions the trainable parameters (0).
+
+4 Experiments
+
+In this section, we discuss the dataset used and different experimental settings devised for the evaluation of our model.
+
+4.1 Dataset Details
+
+We evaluate our model with SemEval-2014 ABSA
+dataset’. It contains samples from two different
+domains: Restaurant and Laptop. Table 2 shows
+the distribution of these samples by class labels.
+Also, Table 3 shows the count of the samples with
+single aspect sentence and multi-aspect sentence.
+
+Shttp://alt.qcri.org/semeval2014/task4
+
+3406
+4.2 Baseline Methods
+
+We compare our method against the following
+baseline methods:
+
+LSTM_ Following Wang et al. (2016), the sentence is fed to a long short-term memory (LSTM)
+network to propagate context among the constituent words. The mean of all the hidden outputs from the LSTM is taken as the sentence representation, which is fed to a softmax classifier.
+Aspect-terms have no participation in the classification process.
+
+TD-LSTM Following Tang et al. (2016a), sequence of words preceding (left context) and succeeding (right context) target aspect term are fed to
+two different LSTMs. Mean of the hidden outputs
+of the LSTMs are concatenated and fed to softmax
+classifier.
+
+AE-LSTM Following Wang et al. (2016), the
+sentence is fed to an LSTM for context propagation. Then, the hidden outputs are concatenated
+with target-aspect representation, from which attention scores are calculated. Hidden outputs are
+pooled based on the attention scores to generate
+intermediate aspect representation. Final representation is generated as the sum of the affine
+transformations of intermediate representation and
+final LSTM hidden output. This representation is
+fed to softmax classifier.
+
+ATAE-LSTM_ Following Wang et al. (2016),
+ATAE-LSTM is identical to AE-LSTM, except the
+LSTM is fed with the concatenation of aspect-term
+representation and word representation.
+
+IAN Following Ma et al. (2017), target-aspect
+and its context are sent to two distinct LSTMs and
+the means of the hidden outputs are taken as intermediate aspect representation and context representation respectively. Attention scores are generated from the hidden outputs of both LSTMs
+which is used to generate final aspect and context representation. The concatenation of these
+two vectors are sent to a softmax classifier for final
+classification.
+
+ 
+
+     
+  
+   
+
+   
+ 
+
+ 
+
+     
+
+| Hyper-Parameter | Restaurant | Laptop
+300 400
+Do 350 400
+Hop Count 3
+
+ 
+
+Table 1: Hyper-parameter choices.
+
+Train
+
+Domain
+
+ 
+
+Restaurant | 2164 728 805 196 633 196
+Laptop 987 341 866 128 460 169
+
+Table 2: Distribution of the samples by class labels
+in SemEval 2014 dataset.
+
+4.3 Experimental Settings
+
+In order to draw a comprehensive comparison between our IARM model and the baseline methods,
+we performed the following experiments:
+
+Overall Comparison JARM is compared with
+the baseline methods for both of the domains.
+
+Single Aspect and Multi Aspect Scenarios In
+this setup, samples with single aspect and multi
+aspect sentences are tested independently on the
+trained model. For IAN, we ran our own experiments for this scenario.
+
+Cross-Domain Evaluation Here, the model
+trained for restaurant domain is tested with the test
+set for laptop domain and vice versa. For IAN, we
+ran our own experiments for this scenario.
+
+5 Results and Discussion
+
+We discuss the results of different experiments below:
+
+Overall Comparison We present the overall
+performance of our model against the baseline
+methods in Table 4.
+
+It is evident from the results that our IARM
+model outperforms all the baseline models, including the state of the art, in both of the domains. We obtained bigger improvement in laptop domain, of 1.7%, compared to restaurant domain, of 1.4%. This shows that the inclusion of the
+neighboring aspect information and memory network has an overall positive impact on the classification process.
+
+Single Aspect and Miulti-Aspect Scenarios
+Following Table 5, our IARM model beats the
+
+Train Test
+
+SA MA | SA MA
+
+Domain
+
+ 
+
+Restaurant | 1007 2595 | 285 835
+Laptop 917 = =1396 | 259 379
+
+Table 3: Distribution of the samples by single
+aspect/multi aspect sentence criteria in SemEval
+2014 (SA: Single Aspect, MA: Multi Aspect).
+
+3407
+Moe
+Majority Voting
+LSTM 74.3
+
+TD-LSTM
+
+AE-LSTM
+ATAE-LSTM
+IAN (SoA)
+
+ 
+
+ 
+
+Table 4: Domain-wise accuracy (%) of the discussed models. Best accuracy for each domain is
+marked with bold font.
+
+state of the art in both single aspect and multiaspect scenarios in both of the domains. It is interesting that both model perform better in multiaspect scenario for restaurant domain. However,
+for laptop domain IAN performs better in single aspect scenario, even though there are more
+multi-aspect samples than single aspect samples
+(shown in Table 3). This indicates the failure of
+IAN model to learn multi-aspect scenario, where
+IARM model performs significantly better.
+
+Laptop
+
+Model “SA ~ M MA
+
+ 
+
+IAN (SoA) = 4 = : a 5 a 6
+IARM 78.6 | 80.48 | 73.4 | 74.1
+
+Table 5: Accuracy of the models for single aspect and multi aspect scenario; SA: Single Aspect,
+MA: Multi Aspect.
+
+Cross-Domain Evaluation Following Table 6,
+IARM outperforms the state of the art IAN by
+2% in both cross-domain scenarios. This indicates
+the ability of [ARM in learning general domainindependent semantic structures from the training
+data.
+
+Model
+
+[Model [Rest > Lap | Tap Rest |
+
+IAN (SoA) 64.6 72.0
+
+IARM 66.7 74.0
+Table 6: Accuracy for cross-domain evaluation;
+Rest: Restaurant domain, Lap: Laptop domain; A
+
+— B signifies train-set is the train-set of domain A
+and test-set is the test-set of domain B.
+
+5.1 Case Study
+
+We analyze and compare IARM and IAN with single aspect and multi-aspect samples from the SemEval 2014 dataset.
+
+Single Aspect Case It is evident from Table 5,
+that [ARM outperforms IAN in single-aspect scenario. For example, the sentence “J recommend
+any of their salmon dishes......” having aspect
+“salmon dishes’, with positive sentiment, fails to
+be correctly classified by IAN as the attention network focuses on the incorrect word “‘salmon’’, as
+shown in Fig. 2a. Since, “salmon” does not carry
+any sentimental charge, the network generates a
+ineffective aspect-aware sentiment representation,
+which leads to misclassification.
+
+On the other hand, [ARM succeeds in this case,
+because the word-level attention network generates correct attention value as a in Eq. (7). a@ for
+this case is depicted in Fig. 2b, where it is clear
+that the network emphasizes the correct sentimentbearing word “recommended”. This leads to effective aspect-aware sentence representation by the
+network, making correct final classification.
+
+Multi-Aspect Case IARM also outperforms
+IAN in multi-aspect scenario, which can be observed in Table 5. We suspect that the presence of
+multiple aspects in sentence makes JAN network
+perplexed as to the connection between aspect and
+the corresponding sentiment-bearing word in the
+sentence. For example, the sentence “Coffee is a
+better deal than overpriced cosi sandwiches” contains two aspects: “coffee” and “better”. Clearly,
+the sentiment behind aspect “coffee” comes from
+the word “better” and the same for aspect “cosi
+sandwiches” comes from “overpriced”. However,
+IAN fails to make this association for the aspect “cosi sandwiches’, evident from the attention
+weights of [AN shown in Fig. 3a where the emphasis is on “better”. This leads to imperfect aspectaware sentence representation generation, resulting misclassification of the target aspect to be positive.
+
+However, IARM resolves this issue with the
+combination of word-level aspect aware attention
+(a) and the memory network. Since, the memory
+network compares the target-aspect-aware sentence representation with the sentence representations for the other aspects repeatedly, eventually the correct representation for the target aspect
+emerges from the memory network.
+
+Also, the consideration of surrounding aspects forces the network to better distinguish
+the sentiment-bearing words for a particular aspect. These points are reflected in the a attention
+weights of the aspects “coffee” and “cosi sand
+3408
+ 
+
+0.2
+
+i recommend any of their salmon dishes
+(a) Attention weight for aspect “salmon dishes” for IAN.
+i recommend any of their salmon dishes......
+
+0.0
+
+Figure 2: Attention weights for IAN and IARM for “7 recommend any of their salmon dishes’.
+
+(b) Attention weight for aspect “salmon dishes” for [ARM.
+
+9
+
+coffee is a
+
+better
+
+deal than overpriced cosi sandwiches
+
+(a) Attention weights for aspect “cosi sandwiches” for IAN.
+
+0.8
+
+0.6
+
+coffee is a
+
+0.4
+0.2
+0.0
+is
+
+coffee a
+
+better
+
+deal than overpriced cosi sandwiches
+
+(b) Attention weights for aspect “cosi sandwiches” for [ARM.
+
+better
+
+deal than overpriced cosi sandwiches
+
+(c) Attention weights for aspect “coffee” for IARM.
+
+Figure 3: Attention weights for IAN and IARM for the sentence “Coffee is a better deal than overpriced
+
+cosi sandwiches’.
+
+wiches”’, shown in Fig. 3b and Fig. 3c respectively, where the network emphasizes the correct
+sentiment-bearing words for each aspect, “better”
+and “overpriced”, respectively. Again, the memory network compares the target aspect-aware sentence representation for “cosi sandwiches” with
+the same for “coffee” and incorporates relevant information into the target-aspect representation g in
+Eq. (16) along several hops.
+
+This phenomenon is indicated in Fig. 4a, where
+the degree of incorporation of the aspect terms 1s
+measured by the attention weights (6 in Eq. (11).
+Here, the network is incorporating information
+from aspect “coffee” into aspect “cosi sandwiches”
+over three hops. We surmise that this information
+is related to the sentiment-bearing word “better”
+of the aspect “coffee”, because a comparison using
+the word “better” implies the presence of a good
+(“coffee”) and a bad (“cosi sandwiches”) object.
+However, this semantics is misconstrued by IAN,
+which leads to aspect misclassification.
+
+IARM performs considerably well when conjunction plays a vital role in understanding the
+sentence structure and meaning for sentiment
+analysis. For example, “my favs here are the tacos
+pastor and the tostada de tinga’” where the aspects
+
+“tacos pastor” and “tostada de tinga” are connected using conjunction “and” and both rely on
+the sentiment bearing word favs. Such complex
+relation between the aspects and the corresponding sentiment-bearing word is grasped by [ARM
+as shown in Fig. 4b. Another example where the
+inter-aspect relation is necessary for the correct
+classification is shown in Fig. 5, where the aspects
+“atmosphere” and “service” both rely on the sentiment bearing word “good”, due to the conjunction “and”’.
+
+Heatmap of cosi sandwiches Heatmap of tostada de tinga
+
+1.0 1.0
+
+hop 1
+hop 1
+
+  
+
+hop 2
+hop 2
+
+coffee cosi sandwiches
+
+  
+
+hop 3
+hop 3
+
+0.0
+
+tacos pastor tostada de tinga
+
+(a) Memory network atten- (b) Memory network atten
+tion weights for the sentence “Coffee is a better deal
+than overpriced cosi sandwiches.”’.
+
+tion weights for the sentence
+“my favs here are the tacos
+pastor and the tostada de
+tinga.”’.
+
+Figure 4: Memory network attention weights for
+
+TARM.
+
+3409
+service was good and so was the
+Heatmap of service
+
+1.0
+0.8
+0.6
+0.4
+0.2
+0.0
+
+service atmosphere
+
+   
+
+atmosphere.
+
+Heatmap of atmosphere
+
+1.0
+0.8
+0.6
+0.4
+| 02
+0.0
+
+service atmosphere
+
+   
+
+Figure 5: Memory network attention weights for
+IARM for the sentence “service was good and
+so was the atmosphere.” The word importance
+heatmap is for the aspect “atmosphere”’.
+
+ 
+
+80.0 — restaurant
+
+ 
+
+ 
+
+ 
+
+ 
+
+2 4 6 8 10
+
+Figure 6: Hop-Accuracy plot for both domains.
+
+5.2. Error Analysis
+
+IARM also fails to correctly classify in some
+cases, e.g., in the sentence “They bring a sauce
+cart up to your table and offer you 7 or § choices
+of sauces for your steak (I tried them ALL).”, the
+aspect “choices of sauces” is misclassified by our
+network as neutral. This happened due to the
+IARM’s inability to correctly interpret the positive
+sentiment behind “7 or 8 choices of sauces” .
+
+Again, the IARM could not correctly classify
+aspect the “breads” to be positive in the sentence
+“Try the homemade breads.”. This happened, because the word “try” itself is not sentimentally
+charged, but can carry sentimental meaning given
+the right context. This context was not recognized
+by IARM, which led to misclassification.
+
+5.3. Hop-Performance Relation
+
+In our experiments, we tried different hop counts
+of the memory network. We observed that the network performs best with three hops for restaurant
+domain and ten hops for laptop domain, which is
+shown in the hop count - performance plot in Figure Fig. 6. It can be observed that the plot for
+restaurant domain is smoother than the plot for
+laptop domain. We assume that this is due to the
+restaurant domain having higher number of samples than laptop domain, as shown in Table 2.
+
+Also, the plot for restaurant domain shows a
+downward trend over the increasing number of
+hops, with spikes in hop 3, hop 10. This suggests a irregular cyclic nature of the memory network where those certain hop counts yields higher
+quality representations than their neighbor. The
+same cannot be said for laptop domain as the plot
+presents a zig-zag pattern.
+
+6 Conclusion
+
+In this paper, we presented a new framework,
+termed IARM, for aspect-based sentiment analysis. [ARM leverages recurrent memory networks
+with multihop attention mechanism. We empirically illustrate that an aspect in a sentence is influenced by its neighboring aspects. We exploit this
+property to obtain state-of-the-art performance in
+aspect-based sentiment analysis in two distinct domains: restaurant and laptop. However, there
+remains plenty of room for improvement in the
+memory network, e.g., for generation of better
+aspect-aware representations.
+
+References
+
+Junyoung Chung, Caglar Giilcehre, KyungHyun Cho,
+and Yoshua Bengio. 2014. Empirical Evaluation
+of Gated Recurrent Neural Networks on Sequence
+Modeling. CoRR, abs/1412.3555.
+
+1997.
+Neural computation,
+
+Sepp Hochreiter and Jiirgen Schmidhuber.
+Long short-term memory.
+9(8): 1735-1780.
+
+Diederik P. Kingma and Jimmy Ba. 2014. Adam:
+A Method for Stochastic Optimization. CoRR,
+abs/1412.6980.
+
+Cheng Li, Xiaoxiao Guo, and Qiaozhu Mei. 2017.
+Deep memory networks for attitude identification.
+In Proceedings of the Tenth ACM International Conference on Web Search and Data Mining, pages 671—
+680. ACM.
+
+3410
+Xin Li, Lidong Bing, Wai Lam, and Bei Shi. 2018.
+Transformation networks for target-oriented sentiment classification. In Proceedings of the 56th Annual Meeting of the Association for Computational
+Linguistics (Volume I: Long Papers), pages 946956, Melbourne, Australia. Association for Computational Linguistics.
+
+Thang Luong, Hieu Pham, and Christopher D. Manning. 2015. Effective Approaches to Attentionbased Neural Machine Translation. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing, pages 1412—
+1421, Lisbon, Portugal. Association for Computational Linguistics.
+
+Dehong Ma, Sujian Li, Xiaodong Zhang, and Houfeng
+Wang. 2017. Interactive Attention Networks for
+Aspect-Level Sentiment Classification. In Proceedings of the Twenty-Sixth International Joint Conference on Artificial Intelligence, IJCAI-17, pages
+4068-4074.
+
+Jeffrey Pennington, Richard Socher, and Christopher
+Manning. 2014. Glove: Global vectors for word
+representation. In Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP), pages 1532-1543.
+
+Soujanya Poria, Erik Cambria, and Alexander Gelbukh. 2016. Aspect extraction for opinion mining with a deep convolutional neural network.
+Knowledge-Based Systems, 108:42—49.
+
+Lei Shu, Hu Xu, and Bing Liu. 2017. Lifelong learning
+crf for supervised aspect extraction. arXiv preprint
+arXiv:1705.00251.
+
+Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston,
+and Rob Fergus. 2015. End-to-end Memory Networks. In Proceedings of the 28th International
+Conference on Neural Information Processing Systems - Volume 2, NIPS’ 15, pages 2440-2448, Cambridge, MA, USA. MIT Press.
+
+Duyu Tang, Bing Qin, Xiaocheng Feng, and Ting Liu.
+2016a. Effective LSTMs for Target-Dependent Sentiment Classification. In Proceedings of COLING
+2016, the 26th International Conference on Computational Linguistics: Technical Papers, pages 3298—
+3307, Osaka, Japan. The COLING 2016 Organizing
+Committee.
+
+Duyu Tang, Bing Qin, and Ting Liu. 2016b. Aspect
+level sentiment classification with deep memory network. arXiv preprint arXiv: 1605.08900.
+
+Yi Tay, Anh Tuan Luu, and Siu Cheung Hui. 2017.
+Learning to attend via word-aspect associative fusion for aspect-based sentiment analysis. arXiv
+preprint arXiv: 1712.05403.
+
+Yequan Wang, Minlie Huang, xiaoyan zhu, and
+Li Zhao. 2016. Attention-based Istm for aspect-level
+sentiment classification. In Proceedings of the 2016
+
+Conference on Empirical Methods in Natural Language Processing, pages 606-615, Austin, Texas.
+Association for Computational Linguistics.
+
+Jason Weston, Sumit Chopra, and Antoine Bordes. 2014. Memory networks. arXiv preprint
+arXiv: 1410.3916.
+
+Tom Young, Devamanyu Hazarika, Soujanya Poria,
+and Erik Cambria. 2018. Recent trends in deep
+learning based natural language processing. [EEE
+Computational Intelligence Magazine, 13(3):55—75.
+
+3411
+

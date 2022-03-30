@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+We adopt dropout with expectation-linear
+Proposed Model
+Word Embedding Layer
+Sentence Encoding Layer
+Context Enriching Layer
+Label Sequence Optimization Layer
+Experiments
+Datasets
+Training Settings
+Results and Discussion
+Conclusion
+Future Work

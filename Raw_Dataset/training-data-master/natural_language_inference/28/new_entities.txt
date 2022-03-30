@@ -1,0 +1,71 @@
+146	0	19	n	COPYING MEMORY TASK
+151	4	7	n	RUM
+151	8	16	p	utilizes
+151	19	53	n	different representation of memory
+151	54	58	p	that
+151	59	70	n	outperforms
+151	71	79	p	those of
+151	80	92	n	LSTM and GRU
+151	103	109	p	solves
+151	114	118	n	task
+151	119	129	n	completely
+165	0	23	n	ASSOCIATIVE RECALL TASK
+175	15	19	p	have
+175	24	50	n	same hidden state N h = 50
+175	51	54	p	for
+175	55	74	n	different lengths T
+176	3	6	p	use
+176	9	19	n	batch size
+176	20	23	n	128
+177	4	13	n	optimizer
+177	14	16	p	is
+177	17	24	n	RMSProp
+177	25	29	p	with
+177	32	45	n	learning rate
+177	46	51	n	0.001
+178	52	54	p	of
+178	3	12	p	find that
+178	13	17	n	LSTM
+178	18	23	n	fails
+178	24	32	p	to learn
+178	37	41	n	task
+179	0	25	n	NTM and Fast - weight RNN
+179	26	30	n	fail
+179	31	43	n	longer tasks
+180	0	18	n	QUESTION ANSWERING
+187	48	59	n	simple LSTM
+187	65	94	n	End - to - end Memory Network
+187	103	107	n	GORU
+188	3	12	p	find that
+188	13	16	n	RUM
+188	17	42	n	outperforms significantly
+188	43	56	n	LSTM and GORU
+188	61	69	p	achieves
+188	70	88	n	competitive result
+188	89	93	p	with
+188	94	109	n	those of MemN2N
+188	125	144	n	attention mechanism
+193	0	33	n	CHARACTER LEVEL LANGUAGE MODELING
+196	0	29	n	PENN TREEBANK CORPUS DATA SET
+215	0	12	n	FS - RUM - 2
+215	13	31	n	generalizes better
+215	32	36	p	than
+215	37	55	n	other gated models
+215	58	65	p	such as
+215	66	78	n	GRU and LSTM
+27	10	17	p	propose
+27	20	34	n	novel RNN cell
+27	40	63	n	resolves simultaneously
+27	70	80	n	weaknesses
+27	81	83	p	of
+27	84	93	n	basic RNN
+28	4	29	n	Rotational Unit of Memory
+28	30	32	p	is
+28	35	55	n	modified gated model
+28	56	61	p	whose
+28	62	82	n	rotational operation
+28	83	90	p	acts as
+28	91	109	n	associative memory
+28	129	146	n	orthogonal matrix
+4	92	125	n	Recurrent Neural Networks ( RNN )
+5	10	13	n	RNN

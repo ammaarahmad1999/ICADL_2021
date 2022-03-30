@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Related Work
+Model
+Word Representation Let a input sentence
+Self Attention The word representations are
+Experiments
+Experimental Results ‘Table |2} compares our
+Self Attention We can obtain the richer word
+Entity-aware Attention Figure [5|shows where
+Latent Entity Type Figure [6] visualizes latent
+Conclusion

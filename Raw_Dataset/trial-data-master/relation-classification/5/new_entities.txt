@@ -1,0 +1,52 @@
+94	3	10	p	provide
+94	18	48	n	results of a pipeline approach
+94	49	63	p	where we treat
+94	72	117	n	NER and RC components as independent networks
+94	124	134	p	train them
+94	135	145	n	separately
+96	3	12	p	find that
+96	17	52	n	joint approach does slightly better
+96	53	57	p	than
+96	62	79	n	pipeline approach
+96	80	82	p	in
+96	83	106	n	relation classification
+77	27	69	n	https : //github.com/datquocnguyen/jointRE
+72	25	30	p	using
+72	31	42	n	DYNET v 2.0
+73	3	11	p	optimize
+73	16	30	n	objective loss
+73	31	36	p	using
+73	37	41	n	Adam
+25	19	26	p	present
+25	29	62	n	novel end - to - end neural model
+25	63	66	p	for
+25	67	103	n	joint entity and relation extraction
+26	62	72	p	mixture of
+26	75	117	n	named entity recognition ( NER ) component
+26	124	164	n	relation classification ( RC ) component
+27	4	17	n	NER component
+27	18	25	p	employs
+27	28	53	n	BiLSTM - CRF architecture
+27	54	64	p	to predict
+27	65	73	n	entities
+27	74	78	p	from
+27	79	96	n	input word tokens
+28	65	77	n	RC component
+28	78	82	p	uses
+28	83	97	n	another BiLSTM
+28	98	106	p	to learn
+28	107	159	n	latent features relevant for relation classification
+30	31	49	p	takes into account
+30	50	77	n	second - order interactions
+30	78	82	p	over
+30	87	102	n	latent features
+30	103	106	p	via
+30	109	115	n	tensor
+31	16	19	p	for
+31	20	43	n	relation classification
+31	47	69	p	propose a novel use of
+31	74	107	n	deep biaffine attention mechanism
+2	0	41	n	End - to - end neural relation extraction
+4	38	99	n	joint extraction of named entities and relations between them
+8	0	62	n	Extracting entities and their semantic relations from raw text
+13	45	92	n	jointly learn to extract entities and relations

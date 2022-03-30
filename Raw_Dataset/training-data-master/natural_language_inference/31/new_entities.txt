@@ -1,0 +1,193 @@
+198	4	27	n	first ablation baseline
+198	28	33	p	shows
+198	39	62	n	without richer features
+198	63	65	p	as
+198	70	85	n	alignment input
+198	92	103	n	performance
+198	104	106	p	on
+198	107	119	n	all datasets
+198	120	142	n	degrades significantly
+200	19	34	n	second baseline
+200	35	39	p	show
+200	45	73	n	vanilla residual connections
+200	74	98	p	without direct access to
+200	103	130	n	original pointwise features
+200	131	134	p	are
+200	135	145	n	not enough
+200	146	154	p	to model
+200	159	168	n	relations
+200	169	171	p	in
+200	172	196	n	many text matching tasks
+201	4	26	n	simpler implementation
+201	27	29	p	of
+201	34	46	n	fusion layer
+201	47	55	p	leads to
+201	56	83	n	evidently worse performance
+203	36	44	p	see that
+203	45	60	n	parallel blocks
+203	61	68	p	perform
+203	69	74	n	worse
+203	75	79	p	than
+203	80	94	n	stacked blocks
+203	103	111	p	supports
+203	116	126	n	preference
+203	127	130	p	for
+203	131	144	n	deeper models
+203	145	149	p	over
+203	150	160	n	wider ones
+127	3	12	p	implement
+127	17	22	n	model
+127	23	27	p	with
+127	28	38	n	TensorFlow
+127	43	51	p	train on
+127	52	68	n	Nvidia P100 GPUs
+128	3	11	p	tokenize
+128	12	21	n	sentences
+128	22	26	p	with
+128	31	43	n	NLTK toolkit
+128	46	53	p	convert
+128	62	73	n	lower cases
+128	78	84	p	remove
+128	85	101	n	all punctuations
+130	0	15	n	Word embeddings
+130	20	36	p	initialized with
+130	37	48	n	840B - 300d
+131	0	19	n	Glo Ve word vectors
+131	24	36	p	fixed during
+131	37	45	n	training
+132	0	10	n	Embeddings
+132	11	13	p	of
+132	14	38	n	out - ofvocabulary words
+132	43	57	p	initialized to
+132	58	63	n	zeros
+133	0	20	n	All other parameters
+133	21	24	p	are
+133	25	36	n	initialized
+133	37	41	p	with
+133	42	59	n	He initialization
+133	64	74	n	normalized
+133	75	77	p	by
+133	78	98	n	weight normalization
+134	0	7	n	Dropout
+134	8	12	p	with
+134	15	31	n	keep probability
+134	32	34	p	of
+134	35	38	n	0.8
+134	42	56	p	applied before
+134	63	80	n	fully - connected
+134	84	103	n	convolutional layer
+135	4	15	n	kernel size
+135	16	18	p	of
+135	23	44	n	convolutional encoder
+135	48	54	p	set to
+135	55	56	n	3
+136	4	20	n	prediction layer
+136	21	23	p	is
+136	26	60	n	two - layer feed - forward network
+137	4	15	n	hidden size
+137	19	25	p	set to
+137	26	29	n	150
+138	0	11	n	Activations
+138	12	14	p	in
+138	15	42	n	all feed - forward networks
+138	43	46	p	are
+138	47	63	n	GeLU activations
+141	4	20	n	number of blocks
+141	24	32	p	tuned in
+141	35	40	n	range
+141	41	45	p	from
+141	46	52	n	1 to 3
+142	4	20	n	number of layers
+142	21	23	p	of
+142	28	49	n	convolutional encoder
+142	53	63	p	tuned from
+142	64	65	n	1
+142	66	68	p	to
+142	69	70	n	3
+144	3	6	p	use
+144	11	50	n	Adam optimizer ( Kingma and Ba , 2015 )
+144	58	94	n	exponentially decaying learning rate
+144	95	99	p	with
+144	102	115	n	linear warmup
+145	4	25	n	initial learning rate
+145	29	39	p	tuned from
+145	40	55	n	0.0001 to 0.003
+146	4	14	n	batch size
+146	18	28	p	tuned from
+146	29	38	n	64 to 512
+147	4	13	n	threshold
+147	14	17	p	for
+147	18	35	n	gradient clipping
+147	39	45	p	set to
+147	46	47	n	5
+140	3	8	p	scale
+140	13	22	n	summation
+140	23	25	p	in
+140	26	56	n	augmented residual connections
+140	57	59	p	by
+140	60	67	n	1 / ? 2
+140	68	72	p	when
+140	73	78	n	n ? 3
+140	79	90	p	to preserve
+140	95	103	n	variance
+140	104	109	p	under
+140	114	124	n	assumption
+140	125	129	p	that
+140	134	145	n	two addends
+140	146	150	p	have
+140	155	168	n	same variance
+21	11	19	p	presents
+21	20	23	n	RE2
+21	28	63	n	fast and strong neural architecture
+21	64	68	p	with
+21	69	97	n	multiple alignment processes
+21	98	101	p	for
+21	102	131	n	general purpose text matching
+25	6	16	n	components
+25	55	80	n	previous aligned features
+25	83	99	n	Residual vectors
+25	104	134	n	original point - wise features
+25	137	154	n	Embedding vectors
+25	163	182	n	contextual features
+25	185	200	n	Encoded vectors
+28	3	18	n	embedding layer
+28	25	31	p	embeds
+28	32	47	n	discrete tokens
+29	8	32	n	same - structured blocks
+29	33	46	p	consisting of
+29	47	55	n	encoding
+29	58	67	n	alignment
+29	72	85	n	fusion layers
+29	91	98	p	process
+29	103	112	n	sequences
+29	113	126	n	consecutively
+30	17	29	p	connected by
+30	33	74	n	augmented version of residual connections
+31	2	15	n	pooling layer
+31	16	26	p	aggregates
+31	27	53	n	sequential representations
+31	54	58	p	into
+31	59	66	n	vectors
+31	85	97	p	processed by
+31	100	116	n	prediction layer
+31	117	124	p	to give
+31	129	145	n	final prediction
+32	4	18	n	implementation
+32	19	21	p	of
+32	22	32	n	each layer
+32	36	40	p	kept
+32	41	62	n	as simple as possible
+2	21	34	n	Text Matching
+160	8	10	p	on
+160	11	25	n	WikiQA dataset
+163	3	9	p	obtain
+163	12	18	n	result
+163	19	30	p	on par with
+163	35	57	n	state - of - the - art
+165	4	10	n	method
+165	15	22	p	perform
+165	23	27	n	well
+165	28	30	p	in
+165	35	56	n	answer selection task
+165	57	64	p	without
+165	65	95	n	any taskspecific modifications

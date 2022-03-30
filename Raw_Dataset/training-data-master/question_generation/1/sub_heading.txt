@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Related Work
+Approach
+Method
+Multimodal Differential Network
+Decoder: Question Generator
+Cost function
+Variations of Proposed Method
+Dataset
+Inference
+Experiments
+Ablation Analysis
+Baseline and State-of-the-Art
+Statistical Significance Analysis
+Perceptual Realism
+Conclusion

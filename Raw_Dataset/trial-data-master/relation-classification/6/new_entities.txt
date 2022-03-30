@@ -1,0 +1,40 @@
+48	21	30	p	introduce
+48	33	61	n	novel recurrent neural model
+48	67	78	p	incorporate
+48	82	116	n	entity - aware attention mechanism
+48	117	121	p	with
+48	124	134	n	LET method
+49	29	40	p	consists of
+49	41	61	n	four main components
+49	64	83	n	Word Representation
+49	89	93	p	maps
+49	94	117	n	each word in a sentence
+49	118	122	p	into
+49	123	145	n	vector representations
+49	154	168	n	Self Attention
+49	174	182	p	captures
+49	187	227	n	meaning of the correlation between words
+49	228	236	p	based on
+49	237	257	n	multi-head attention
+49	266	271	n	BLSTM
+49	278	298	p	sequentially encodes
+49	303	342	n	representations of self attention layer
+49	351	375	n	Entity - aware Attention
+49	381	391	p	calculates
+49	392	409	n	attention weights
+49	410	425	p	with respect to
+49	430	524	n	entity pairs , word positions relative to these pairs , and their latent types obtained by LET
+2	0	32	n	Semantic Relation Classification
+4	0	64	n	Classifying semantic relations between entity pairs in sentences
+12	48	124	n	predicting a semantic relationship between two tagged entities in a sentence
+160	8	22	n	proposed model
+160	23	31	p	achieves
+160	35	43	n	F1-score
+160	44	46	p	of
+160	47	53	n	85.2 %
+160	60	71	p	outperforms
+160	72	116	n	all competing state - of - theart approaches
+160	117	123	p	except
+160	124	136	n	depLCNN + NS
+160	139	144	n	DRNNs
+160	151	166	n	Attention - CNN

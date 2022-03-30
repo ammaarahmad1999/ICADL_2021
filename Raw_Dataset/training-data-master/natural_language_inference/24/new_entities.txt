@@ -1,0 +1,108 @@
+127	4	14	n	spaCy tool
+127	20	27	p	used to
+127	28	36	n	tokenize
+127	41	45	p	both
+127	46	68	n	passages and questions
+127	75	83	p	generate
+127	84	89	n	lemma
+127	92	110	n	part - of - speech
+127	115	132	n	named entity tags
+129	4	19	n	mini-batch size
+129	23	29	p	set to
+129	30	32	n	32
+129	37	43	n	Adamax
+129	47	54	p	used as
+129	55	68	n	our optimizer
+130	4	17	n	learning rate
+130	21	27	p	set to
+130	28	33	n	0.002
+130	34	36	p	at
+130	37	42	n	first
+130	47	56	n	decreased
+130	57	59	p	by
+130	60	64	n	half
+130	65	70	p	after
+130	71	86	n	every 10 epochs
+128	3	6	p	use
+128	7	23	n	2 - layer BiLSTM
+128	24	28	p	with
+128	29	49	n	d = 128 hidden units
+128	50	53	p	for
+128	54	88	n	both passage and question encoding
+131	3	6	p	set
+131	11	23	n	dropout rate
+131	94	96	p	to
+131	97	100	n	0.4
+131	24	27	p	for
+131	28	48	n	all the hidden units
+131	49	51	p	of
+131	52	56	n	LSTM
+131	67	93	n	answer module output layer
+132	0	10	p	To prevent
+132	11	28	n	degenerate output
+132	34	45	p	ensure that
+132	46	63	n	at least one step
+132	64	66	p	in
+132	71	84	n	answer module
+132	85	87	p	is
+132	88	94	n	active
+132	95	101	p	during
+132	102	110	n	training
+18	18	24	p	derive
+18	28	75	n	alternative multi-step reasoning neural network
+18	76	79	p	for
+18	80	83	n	MRC
+19	0	6	p	During
+19	7	15	n	training
+19	21	24	p	fix
+19	29	54	n	number of reasoning steps
+19	61	68	p	perform
+19	69	87	n	stochastic dropout
+19	88	90	p	on
+19	95	136	n	answer module ( final layer predictions )
+20	7	15	n	decoding
+20	21	29	p	generate
+20	30	37	n	answers
+20	38	46	p	based on
+20	51	58	n	average
+20	59	61	p	of
+20	62	73	n	predictions
+20	74	76	p	in
+20	77	86	n	all steps
+20	89	100	p	rather than
+20	105	115	n	final step
+21	3	7	p	call
+21	15	48	n	stochastic answer network ( SAN )
+2	31	60	n	Machine Reading Comprehension
+8	0	37	n	Machine reading comprehension ( MRC )
+10	40	43	n	MRC
+146	3	10	p	observe
+146	16	19	n	SAN
+146	20	28	p	achieves
+146	29	38	n	76.235 EM
+146	43	52	n	84.056 F1
+146	55	68	n	outperforming
+146	69	85	n	all other models
+147	0	23	n	Standard 1 - step model
+147	29	37	p	achieves
+147	38	47	n	75.139 EM
+147	52	82	n	dynamic steps ( via ReasoNet )
+147	83	91	p	achieves
+147	92	106	n	only 75.355 EM
+148	0	3	n	SAN
+148	9	20	n	outperforms
+148	23	42	n	5 - step memory net
+148	43	47	p	with
+148	48	57	n	averaging
+152	25	30	p	other
+152	31	37	n	models
+152	38	49	p	in terms of
+152	50	71	n	K- best oracle scores
+156	3	11	p	see that
+156	12	15	n	SAN
+156	16	18	p	is
+156	19	35	n	very competitive
+156	36	38	p	in
+156	39	72	n	both single and ensemble settings
+156	75	81	p	ranked
+156	85	91	n	second

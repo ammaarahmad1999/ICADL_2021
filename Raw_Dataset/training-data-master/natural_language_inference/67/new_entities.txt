@@ -1,0 +1,144 @@
+159	8	17	p	replacing
+159	22	48	n	word - by - word attention
+159	49	53	p	with
+159	54	70	n	Attentive Reader
+159	71	86	n	style attention
+159	87	96	n	decreases
+159	101	109	n	EM score
+159	110	118	p	by about
+159	119	124	n	4.5 %
+161	11	16	p	shows
+161	22	73	n	POS feature ( 1 ) and question - word feature ( 3 )
+161	74	77	p	are
+161	82	109	n	two most important features
+162	10	19	p	combining
+162	24	33	n	DCR model
+162	34	38	p	with
+162	43	74	n	proposed POS - trie constraints
+162	75	81	p	yields
+162	84	89	n	score
+162	90	100	p	similar to
+162	128	137	n	DCR model
+162	138	142	p	with
+162	143	169	n	all possible n-gram chunks
+136	3	16	p	pre-processed
+136	21	34	n	SQuAD dataset
+136	35	40	p	using
+136	41	62	n	Stanford CoreNLP tool
+136	65	69	p	with
+136	74	89	n	default setting
+136	90	101	p	to tokenize
+136	106	110	n	text
+136	115	121	p	obtain
+136	126	148	n	POS and NE annotations
+137	24	28	p	used
+137	29	56	n	stochastic gradient descent
+137	57	61	p	with
+137	66	80	n	ADAM optimizer
+137	91	112	n	initial learning rate
+137	113	115	p	of
+137	116	121	n	0.001
+138	0	15	n	All GRU weights
+138	21	37	p	initialized from
+138	40	60	n	uniform distribution
+138	61	68	p	between
+138	69	86	n	( - 0.01 , 0.01 )
+139	4	21	n	hidden state size
+139	24	25	n	d
+139	32	38	p	set to
+139	39	42	n	300
+139	43	46	p	for
+139	47	55	n	all GRUs
+143	3	13	p	trained in
+143	14	30	n	mini-batch style
+143	33	50	n	mini - batch size
+143	51	53	p	is
+143	54	57	n	180
+143	64	71	p	applied
+143	72	86	n	zero - padding
+143	87	89	p	to
+143	94	121	n	passage and question inputs
+143	122	124	p	in
+143	125	135	n	each batch
+142	16	23	n	dropout
+142	24	31	p	of rate
+142	32	35	n	0.2
+142	36	38	p	to
+142	43	58	n	embedding layer
+142	59	61	p	of
+142	62	84	n	input bi - GRU encoder
+142	91	108	n	gradient clipping
+142	109	113	p	when
+142	118	122	n	norm
+142	123	125	p	of
+142	126	135	n	gradients
+142	136	144	p	exceeded
+142	145	147	n	10
+144	8	11	p	set
+144	16	38	n	maximum passage length
+144	39	44	p	to be
+144	45	55	n	300 tokens
+144	62	68	n	pruned
+144	69	83	n	all the tokens
+144	84	89	p	after
+144	94	108	n	300 - th token
+144	109	111	p	in
+144	116	128	n	training set
+147	3	10	p	trained
+147	15	20	n	model
+147	21	24	p	for
+147	25	42	n	at most 30 epochs
+148	0	3	p	For
+148	8	38	n	feature ranking - based system
+148	44	48	p	used
+148	49	63	n	jforest ranker
+148	108	112	p	with
+148	113	152	n	Lambda MART - Regression Tree algorithm
+25	21	27	p	called
+25	28	56	n	dynamic chunk reader ( DCR )
+26	18	22	p	uses
+26	23	36	n	deep networks
+26	37	45	p	to learn
+26	46	68	n	better representations
+26	69	72	p	for
+26	73	96	n	candidate answer chunks
+26	99	109	p	instead of
+26	116	145	n	fixed feature representations
+27	12	22	p	represents
+27	23	40	n	answer candidates
+27	41	43	p	as
+27	44	50	n	chunks
+27	82	92	p	instead of
+27	93	121	n	word - level representations
+27	124	131	p	to make
+27	136	141	n	model
+27	142	150	p	aware of
+27	155	173	n	subtle differences
+27	174	179	p	among
+27	180	190	n	candidates
+2	55	76	n	Reading Comprehension
+4	66	101	n	neural reading comprehension ( RC )
+9	0	57	n	Reading comprehension - based question answering ( RCQA )
+12	45	49	n	RCQA
+150	31	33	p	on
+150	38	51	n	SQuAD dataset
+151	119	122	p	are
+151	123	129	n	better
+151	37	66	n	our exact match ( EM ) and F1
+151	67	69	p	on
+151	74	89	n	development set
+151	158	168	n	comparable
+151	136	138	n	F1
+151	103	105	p	on
+151	110	118	n	test set
+154	28	47	n	our baseline system
+154	48	56	n	improves
+154	57	68	n	10 % ( EM )
+154	69	73	p	over
+154	90	120	n	feature - based ranking system
+155	13	24	p	compared to
+155	25	38	n	our DCR model
+155	55	63	n	baseline
+155	74	76	p	is
+155	77	98	n	more than 12 % ( EM )
+155	99	105	n	behind

@@ -1,0 +1,5 @@
+(Contribution||has||Ablation analysis)
+(Ablation analysis||evaluate||contribution of neural components)
+(contribution of neural components||including||pre-trained embeddings , the characterlevel LSTM and dropout layers)
+(pre-trained embeddings , the characterlevel LSTM and dropout layers||contribute significantly to||effectiveness of our model)
+(effectiveness of our model||in||all three datasets)

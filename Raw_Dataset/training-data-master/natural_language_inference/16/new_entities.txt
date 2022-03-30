@@ -1,0 +1,156 @@
+167	8	13	p	under
+167	18	35	n	Siamese framework
+167	41	50	p	implement
+167	51	70	n	two baseline models
+167	75	88	n	Siamese - CNN
+167	97	111	n	Siamese - LSTM
+171	15	17	p	on
+171	47	56	p	implement
+171	57	81	n	two more baseline models
+171	84	109	n	Multi - Perspective - CNN
+171	118	144	n	Multi - Perspective - LSTM
+173	172	174	p	on
+173	11	23	p	re-implement
+173	28	44	n	" L.D.C. " model
+173	65	67	p	is
+173	70	75	n	model
+173	76	81	p	under
+173	86	119	n	" matchingaggregation " framework
+163	82	112	n	paraphrase identification task
+164	9	22	p	experiment on
+164	27	59	n	" Quora Question Pairs " dataset
+175	7	15	p	see that
+175	16	82	n	" Multi - Perspective - CNN " ( or " Multi- Perspective - LSTM " )
+175	83	88	p	works
+175	89	100	n	much better
+175	101	105	p	than
+175	106	149	n	" Siamese - CNN " ( or " Siamese - LSTM " )
+176	0	19	n	Our " BiMPM " model
+176	20	31	n	outperforms
+176	36	52	n	" L.D.C. " model
+176	53	55	p	by
+176	56	77	n	more than two percent
+179	51	82	n	natural language inference task
+179	83	87	p	over
+179	92	104	n	SNLI dataset
+183	15	23	p	see that
+183	26	36	n	Only P ? Q
+183	39	65	n	works significantly better
+183	66	70	p	than
+183	73	83	n	Only P ? Q
+183	94	99	p	tells
+183	143	166	n	matching the hypothesis
+183	167	174	p	against
+183	179	186	n	premise
+183	187	189	p	is
+183	190	204	n	more effective
+183	205	209	p	than
+183	214	230	n	other way around
+184	9	28	n	our " BiMPM " model
+184	29	34	p	works
+184	35	46	n	much better
+184	47	51	p	than
+184	54	64	n	Only P ? Q
+186	12	22	n	our models
+186	23	30	p	achieve
+186	35	69	n	state - of - the - art performance
+186	70	77	p	in both
+186	78	107	n	single and ensemble scenarios
+186	108	111	p	for
+186	116	147	n	natural language inference task
+185	83	95	p	observe that
+185	96	122	n	our single model " BiMPM "
+185	126	137	p	on par with
+185	142	178	n	state - of - the - art single models
+185	185	209	n	our ' BiMPM ( Ensemble )
+185	212	217	p	works
+185	218	229	n	much better
+185	230	234	p	than
+185	239	247	n	Ensemble
+188	62	65	p	for
+188	66	97	n	answer sentence selection tasks
+190	3	16	p	experiment on
+190	17	29	n	two datasets
+190	32	41	n	TREC - QA
+190	46	52	n	WikiQA
+192	7	15	p	see that
+192	20	31	n	performance
+192	32	36	p	from
+192	37	46	n	our model
+192	47	49	p	is
+192	50	56	n	on par
+192	57	61	p	with
+192	66	95	n	state - of - the - art models
+130	3	13	p	initialize
+130	14	29	n	word embeddings
+130	30	32	p	in
+130	37	62	n	word representation layer
+130	63	67	p	with
+130	72	108	n	300 - dimensional GloVe word vectors
+130	109	124	p	pretrained from
+130	129	153	n	840B Common Crawl corpus
+131	0	3	p	For
+131	8	43	n	out - of - vocabulary ( OOV ) words
+131	49	59	p	initialize
+131	64	79	n	word embeddings
+131	80	88	n	randomly
+132	8	36	n	charactercomposed embeddings
+132	42	52	p	initialize
+132	53	67	n	each character
+132	68	70	p	as
+132	73	96	n	20 - dimensional vector
+132	103	110	p	compose
+132	111	120	n	each word
+132	121	125	p	into
+132	128	149	n	50 dimensional vector
+132	150	154	p	with
+132	157	167	n	LSTM layer
+133	3	6	p	set
+133	11	22	n	hidden size
+133	23	25	p	as
+133	26	29	n	100
+133	30	33	p	for
+133	34	51	n	all BiLSTM layers
+136	11	24	n	learning rate
+136	25	27	p	as
+136	28	33	n	0.001
+134	3	8	p	apply
+134	9	16	n	dropout
+134	17	19	p	to
+134	20	32	n	every layers
+134	42	45	p	set
+134	50	63	n	dropout ratio
+134	64	66	p	as
+134	67	70	n	0.1
+135	24	32	p	minimize
+135	37	50	n	cross entropy
+135	51	53	p	of
+135	58	70	n	training set
+135	77	80	p	use
+135	85	99	n	ADAM optimizer
+135	125	134	p	to update
+135	135	145	n	parameters
+137	0	6	p	During
+137	7	15	n	training
+137	21	34	p	do not update
+137	39	66	n	pre-trained word embeddings
+32	49	56	p	propose
+32	59	111	n	bilateral multi-perspective matching ( BiMPM ) model
+32	112	115	p	for
+32	116	126	n	NLSM tasks
+33	22	32	p	belongs to
+33	37	71	n	" matching aggregation " framework
+39	15	27	n	BiLSTM layer
+39	31	42	p	utilized to
+39	43	52	n	aggregate
+39	57	73	n	matching results
+39	74	78	p	into
+39	81	111	n	fixed - length matching vector
+40	10	18	p	based on
+40	23	38	n	matching vector
+40	43	51	n	decision
+40	55	67	p	made through
+40	70	91	n	fully connected layer
+4	0	34	n	Natural language sentence matching
+15	0	43	n	Natural language sentence matching ( NLSM )
+17	52	56	n	NLSM

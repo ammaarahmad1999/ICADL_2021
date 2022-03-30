@@ -1,0 +1,74 @@
+16	40	63	n	semisupervised approach
+16	75	86	p	not require
+16	87	110	n	additional labeled data
+17	3	6	p	use
+17	9	37	n	neural language model ( LM )
+17	40	54	p	pre-trained on
+17	57	81	n	large , unlabeled corpus
+17	82	92	p	to compute
+17	96	152	n	encoding of the context at each position in the sequence
+17	168	180	n	LM embedding
+17	187	196	p	use it in
+17	201	234	n	supervised sequence tagging model
+104	16	19	p	use
+104	24	38	n	Adam optimizer
+104	64	68	p	with
+104	69	83	n	gradient norms
+104	84	94	p	clipped at
+104	95	98	n	5.0
+106	61	75	n	early stopping
+106	76	86	p	to prevent
+106	87	99	n	over-fitting
+105	24	33	p	fine tune
+105	38	71	n	pre-trained Senna word embeddings
+105	76	79	p	fix
+105	80	91	n	all weights
+105	92	94	p	in
+105	99	126	n	pre-trained language models
+107	9	19	p	train with
+107	22	54	n	constant learning rate ? = 0.001
+2	0	32	n	Semi-supervised sequence tagging
+6	33	156	n	general semi-supervised approach for adding pretrained context embeddings from bidirectional language models to NLP systems
+118	0	2	p	In
+118	7	26	n	CoNLL 2003 NER task
+118	39	45	p	scores
+118	46	60	n	91.93 mean F 1
+119	7	31	n	CoNLL 2000 Chunking task
+119	41	49	p	achieves
+119	50	64	n	96.37 mean F 1
+75	0	14	n	CoNLL 2003 NER
+80	7	29	n	two bidirectional GRUs
+80	91	94	p	for
+80	99	122	n	token character encoder
+80	30	34	p	with
+80	35	50	n	80 hidden units
+80	55	90	n	25 dimensional character embeddings
+81	4	18	n	sequence layer
+81	19	23	p	uses
+81	28	46	n	bidirectional GRUs
+81	47	51	p	with
+81	52	73	n	300 hidden units each
+82	4	18	n	regularization
+82	24	27	p	add
+82	28	40	n	25 % dropout
+82	41	56	p	to the input of
+82	57	65	n	each GRU
+83	0	19	n	CoNLL 2000 chunking
+87	4	28	n	baseline sequence tagger
+87	29	33	p	uses
+87	34	69	n	30 dimensional character embeddings
+87	76	79	n	CNN
+87	80	84	p	with
+87	85	117	n	30 filters of width 3 characters
+87	118	129	p	followed by
+87	132	182	n	tanh non-linearity for the token character encoder
+88	4	18	n	sequence layer
+88	19	23	p	uses
+88	24	47	n	two bidirectional LSTMs
+88	57	69	p	hidden units
+88	53	56	n	200
+89	19	31	n	50 % dropout
+89	32	34	p	to
+89	39	59	n	character embeddings
+89	66	90	n	input to each LSTM layer
+89	136	166	n	output of the final LSTM layer

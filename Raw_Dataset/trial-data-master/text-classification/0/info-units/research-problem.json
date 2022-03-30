@@ -1,0 +1,6 @@
+{
+  "has research problem" : [
+    ["Text Classification", {"from sentence" : "Character - level Convolutional Networks for Text Classification"}],
+    ["assign predefined categories to free - text documents", {"from sentence" : "Text classification is a classic topic for natural language processing , in which one needs to assign predefined categories to free - text documents ."}]
+  ]
+}

@@ -1,0 +1,4 @@
+(Contribution||has||Baselines)
+(Baselines||has||Word - by - word translation ( WBW ))
+(Baselines||has||Lample et al .)
+(Baselines||has||Supervised training)

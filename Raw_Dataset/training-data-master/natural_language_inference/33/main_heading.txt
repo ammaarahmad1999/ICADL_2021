@@ -1,0 +1,10 @@
+title
+abstract
+Université de Montréal
+Microsoft Research Montreal
+CIFAR Senior Fellow
+Ecole Polytechnique de Montréal
+CONCLUSION & FUTURE WORK
+MODEL TRAINING
+VOCABULARY EXPANSION & REPRESENTATION POOLING
+MULTI-TASK MODEL DETAILS

@@ -1,0 +1,84 @@
+85	49	56	p	done on
+85	61	87	n	Google Colab 7 environment
+85	88	93	p	using
+85	94	118	n	Tesla T4 GPU accelerator
+19	8	13	p	build
+19	16	36	n	neural network model
+19	37	41	p	with
+19	42	57	n	four components
+20	10	14	p	uses
+20	15	106	n	ELMo ( which stands for Embeddings from Language Models ) pre-trained contextual embeddings
+20	107	109	p	as
+20	113	118	n	input
+20	123	129	p	builds
+20	130	161	n	sequence representation vectors
+20	176	186	p	to predict
+20	191	226	n	relation between the question pairs
+2	35	73	n	Semantic Question Similarity in Arabic
+4	54	87	n	semantic text question similarity
+10	0	32	n	Semantic Text Similarity ( STS )
+11	54	57	n	STS
+14	112	172	n	Semantic Question Similarity ( SQS ) for the Arabic language
+15	0	3	n	SQS
+100	27	36	n	GRU cells
+100	37	40	p	are
+100	45	59	n	most efficient
+100	66	81	n	ON - LSTM cells
+100	84	88	p	with
+100	89	101	n	chunk size 8
+100	104	107	p	are
+100	112	126	n	most effective
+100	129	140	p	in terms of
+100	141	164	n	all considered measures
+101	0	27	n	Effect of Data Augmentation
+106	11	15	p	show
+106	21	43	n	each augmentation step
+106	44	51	p	affects
+106	56	75	n	model 's efficiency
+106	76	86	n	negatively
+108	20	23	p	not
+108	24	43	n	each increment step
+108	50	65	n	positive effect
+108	66	68	p	on
+108	73	95	n	model 's effectiveness
+116	14	41	n	sequence weighted attention
+116	42	47	p	gives
+116	48	62	n	better results
+116	63	65	p	by
+116	66	79	n	about 1 point
+116	80	82	p	of
+116	87	95	n	F1-score
+114	14	19	p	using
+114	20	51	n	pre-trained FastText embeddings
+114	52	54	p	as
+114	58	63	n	input
+114	64	66	p	to
+114	67	76	n	our model
+114	77	83	p	yields
+114	84	97	n	worse F1score
+114	98	100	p	on
+114	106	137	n	public and private leaderboards
+114	138	142	p	with
+114	143	160	n	94.254 and 93.118
+114	178	191	p	compared with
+114	196	228	n	ELMo contextual embeddings model
+117	25	33	p	overcome
+117	38	46	n	weakness
+117	47	49	p	of
+117	54	71	n	Arabic ELMo model
+117	80	94	p	by translating
+117	99	103	n	data
+117	22	24	p	to
+117	107	114	n	English
+117	115	120	p	using
+117	121	137	n	Google Translate
+117	144	152	p	treating
+117	157	164	n	problem
+117	165	167	p	as
+117	171	190	n	English SQS problem
+117	209	220	p	results are
+117	221	231	n	much worse
+117	232	236	p	with
+117	237	266	n	88.868 and 87.504 F1 - scores
+117	267	269	p	on
+117	270	301	n	public and private leaderboards

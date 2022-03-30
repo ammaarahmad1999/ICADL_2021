@@ -1,0 +1,21 @@
+title
+abstract
+Introduction
+A Bag-of-Words Neural QA System
+Embedding
+Type Matching
+Context Matching
+Answer Span Scoring
+FastQA
+Encoding
+Answer Layer
+Comparison to Prior Architectures
+FastQA Extended
+Experimental Setup
+Implementation Details
+Results
+Model Component Analysis
+Comparing to State-of-the-Art
+Do we need additional interaction?
+Qualitative Analysis
+Conclusion

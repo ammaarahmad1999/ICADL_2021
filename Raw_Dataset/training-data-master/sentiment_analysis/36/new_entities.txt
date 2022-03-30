@@ -1,0 +1,200 @@
+192	6	14	p	removing
+192	19	38	n	deep transformation
+192	98	121	n	TNet - LF and TNet - AS
+192	126	136	p	reduced to
+192	137	160	n	TNet w/o transformation
+192	210	217	n	results
+192	218	225	p	in both
+192	226	250	n	accuracy and F 1 measure
+192	255	272	p	incomparable with
+192	282	286	n	TNet
+193	3	13	p	shows that
+193	18	29	n	integration
+193	30	32	p	of
+193	33	51	n	target information
+193	52	56	p	into
+193	61	89	n	word - level representations
+193	93	104	p	crucial for
+193	105	121	n	good performance
+194	0	9	p	Comparing
+194	14	21	n	results
+194	22	24	p	of
+194	25	50	n	TNet and TNet w/o context
+194	102	109	p	observe
+194	119	130	n	performance
+194	131	133	p	of
+194	134	150	n	TNet w/o context
+194	151	156	p	drops
+194	157	170	n	significantly
+194	171	173	p	on
+194	174	189	n	LAPTOP and REST
+194	200	202	p	on
+194	203	210	n	TWITTER
+194	213	229	n	TNet w/o context
+194	230	238	p	performs
+194	239	255	n	very competitive
+196	0	16	n	TNet w/o context
+196	17	25	p	performs
+196	26	45	n	consistently better
+196	46	50	p	than
+196	51	74	n	TNet w/o transformation
+198	11	28	n	produced p-values
+198	29	42	p	are less than
+198	43	47	n	0.05
+198	50	65	p	suggesting that
+198	70	82	n	improvements
+198	83	96	p	brought in by
+198	97	117	n	position information
+198	118	121	p	are
+198	122	133	n	significant
+150	0	3	n	SVM
+150	9	11	p	is
+150	14	60	n	traditional support vector machine based model
+150	61	65	p	with
+150	66	95	n	extensive feature engineering
+151	0	6	n	AdaRNN
+151	12	18	p	learns
+151	23	46	n	sentence representation
+151	47	53	p	toward
+151	54	60	n	target
+151	61	64	p	for
+151	65	85	n	sentiment prediction
+151	86	89	p	via
+151	90	110	n	semantic composition
+151	111	115	p	over
+151	116	131	n	dependency tree
+152	0	9	n	AE - LSTM
+152	40	42	p	is
+152	45	62	n	simple LSTM model
+152	63	76	p	incorporating
+152	81	97	n	target embedding
+152	98	100	p	as
+152	101	106	n	input
+152	16	27	n	ATAE - LSTM
+152	127	134	p	extends
+152	30	39	n	AE - LSTM
+152	145	149	p	with
+152	150	159	n	attention
+153	0	3	n	IAN
+153	10	17	p	employs
+153	18	27	n	two LSTMs
+153	28	36	p	to learn
+153	41	56	n	representations
+153	57	59	p	of
+153	64	93	n	context and the target phrase
+154	0	9	n	CNN - ASP
+155	3	5	p	is
+155	8	25	n	CNN - based model
+155	44	71	p	which directly concatenates
+155	72	93	n	target representation
+155	94	96	p	to
+155	97	116	n	each word embedding
+156	0	9	n	TD - LSTM
+157	3	10	p	employs
+157	11	20	n	two LSTMs
+157	21	29	p	to model
+157	34	57	n	left and right contexts
+157	58	60	p	of
+157	65	71	n	target
+157	90	98	p	performs
+157	99	110	n	predictions
+157	111	119	p	based on
+157	120	156	n	concatenated context representations
+158	0	6	n	MemNet
+158	12	19	p	applies
+158	20	39	n	attention mechanism
+158	40	44	p	over
+158	49	79	n	word embeddings multiple times
+158	84	92	p	predicts
+158	93	103	n	sentiments
+158	104	112	p	based on
+158	117	152	n	top - most sentence representations
+159	0	15	n	BILSTM - ATT -G
+159	21	27	p	models
+159	28	51	n	left and right contexts
+159	52	57	p	using
+159	58	85	n	two attention - based LSTMs
+159	90	100	p	introduces
+159	101	106	n	gates
+159	107	117	p	to measure
+159	122	190	n	importance of left context , right context , and the entire sentence
+159	191	194	p	for
+159	199	209	n	prediction
+160	0	3	n	RAM
+160	10	12	p	is
+160	15	38	n	multilayer architecture
+160	39	44	p	where
+160	45	55	n	each layer
+160	56	67	p	consists of
+160	68	114	n	attention - based aggregation of word features
+160	121	129	n	GRU cell
+160	130	138	p	to learn
+160	143	166	n	sentence representation
+29	3	10	p	propose
+29	13	29	n	new architecture
+29	32	37	p	named
+29	38	88	n	Target - Specific Transformation Networks ( TNet )
+30	0	4	n	TNet
+30	5	20	p	firstly encodes
+30	25	44	n	context information
+30	45	49	p	into
+30	50	65	n	word embeddings
+30	70	79	p	generates
+30	84	119	n	contextualized word representations
+30	120	124	p	with
+30	125	130	n	LSTMs
+31	73	83	p	introduces
+31	86	142	n	novel Target - Specific Transformation ( TST ) component
+31	143	157	p	for generating
+31	162	200	n	target - specific word representations
+31	0	12	p	To integrate
+31	17	35	n	target information
+31	36	40	p	into
+31	45	65	n	word representations
+32	161	164	n	TST
+32	173	182	p	generates
+32	183	208	n	different representations
+32	131	133	p	of
+32	75	81	n	target
+32	223	237	p	conditioned on
+32	134	158	n	individual context words
+32	273	285	p	consolidates
+32	286	303	n	each context word
+32	304	308	p	with
+32	313	348	n	tailor - made target representation
+32	349	358	p	to obtain
+32	363	394	n	transformed word representation
+37	121	127	p	design
+37	130	157	n	contextpreserving mechanism
+37	158	174	p	to contextualize
+37	179	227	n	generated target - specific word representations
+39	83	88	p	adopt
+39	91	109	n	proximity strategy
+39	0	7	p	To help
+39	12	33	n	CNN feature extractor
+39	34	40	p	locate
+39	41	61	n	sentiment indicators
+39	62	77	n	more accurately
+39	110	118	p	to scale
+39	123	128	n	input
+39	129	131	p	of
+39	132	151	n	convolutional layer
+39	152	156	p	with
+39	157	177	n	positional relevance
+39	178	185	p	between
+39	186	207	n	a word and the target
+2	28	70	n	Target - Oriented Sentiment Classification
+188	0	19	n	LSTM - based models
+188	20	30	p	relying on
+188	31	53	n	sequential information
+188	54	65	p	can perform
+188	66	70	n	well
+188	71	74	p	for
+188	75	91	n	formal sentences
+188	92	104	p	by capturing
+188	105	133	n	more useful context features
+189	0	3	p	For
+189	4	22	n	ungrammatical text
+189	25	43	n	CNN - based models
+189	44	52	p	may have
+189	53	68	n	some advantages

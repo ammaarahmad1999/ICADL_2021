@@ -1,0 +1,75 @@
+157	65	68	p	use
+157	73	91	n	BiLSTM - CRF model
+160	0	2	p	As
+160	7	27	n	base function f base
+160	33	36	p	use
+160	37	52	n	4 BiLSTM layers
+160	53	57	p	with
+160	58	86	n	300 dimensional hidden units
+173	7	25	n	objective function
+173	31	34	p	use
+173	39	53	n	crossentropy L
+173	65	69	p	with
+173	70	85	n	L2 weight decay
+161	3	11	p	optimize
+161	16	32	n	model parameters
+161	38	41	p	use
+161	42	46	n	Adam
+165	0	11	p	To validate
+165	16	33	n	model performance
+165	39	42	p	use
+165	43	71	n	two types of word embeddings
+166	0	23	n	Typical word embeddings
+166	26	31	n	SENNA
+166	95	99	n	ELMo
+171	6	16	n	embeddings
+171	21	33	p	fixed during
+171	34	42	n	training
+23	30	38	p	presents
+23	41	79	n	simple and accurate span - based model
+24	99	114	p	directly scores
+24	115	141	n	all possible labeled spans
+24	142	150	p	based on
+24	151	171	n	span representations
+24	172	184	p	induced from
+24	185	200	n	neural networks
+25	0	2	p	At
+25	3	16	n	decoding time
+25	22	37	p	greedily select
+25	38	66	n	higher scoring labeled spans
+26	4	20	n	model parameters
+26	25	35	p	learned by
+26	36	60	n	optimizing loglikelihood
+26	61	63	p	of
+26	64	85	n	correct labeled spans
+2	27	49	n	Semantic Role Labeling
+4	56	86	n	semantic role labeling ( SRL )
+11	42	45	n	SRL
+177	3	9	p	report
+177	10	25	n	averaged scores
+177	26	32	p	across
+177	33	52	n	five different runs
+177	53	55	p	of
+177	60	65	n	model
+179	14	41	n	span - based ensemble model
+179	42	47	p	using
+179	48	52	n	ELMo
+179	53	61	p	achieved
+179	66	80	n	best F1 scores
+179	83	102	n	87.4 F1 and 87.0 F1
+179	103	105	p	on
+179	110	148	n	CoNLL - 2005 and CoNLL - 2012 datasets
+183	0	30	n	Our single and ensemble models
+183	42	50	p	achieved
+183	55	70	n	best F 1 scores
+183	71	73	p	on
+183	74	91	n	all the test sets
+183	92	98	p	except
+183	103	117	n	Brown test set
+180	0	18	p	In comparison with
+180	23	47	n	CRF - based single model
+180	50	79	n	our span - based single model
+180	80	100	p	consistently yielded
+180	101	118	n	better F 1 scores
+180	119	132	p	regardless of
+180	137	169	n	word embeddings , SENNA and ELMO

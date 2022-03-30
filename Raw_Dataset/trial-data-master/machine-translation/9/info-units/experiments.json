@@ -1,0 +1,132 @@
+{
+  "has" : {
+    "Experiments" : {
+      "has" : {
+        "CODE LEARNING" : {
+          "has" : {
+            "Experimental setup" : {
+              "small batch of the embeddings" : {
+                "sampled uniformly" : {
+                  "from" : "baseline embedding matrix"
+                },
+                "from sentence" : "CODE LEARNING
+In each iteration , a small batch of the embeddings is sampled uniformly from the baseline embedding matrix ."
+
+              },
+              "batch size" : ["128", {"from sentence" : "In our experiments , the batch size is set to 128 ."}],
+              "use" : {
+                "Adam optimizer" : {
+                  "with" : {
+                    "fixed learning rate" : {
+                      "of" : "0.0001"
+                    }
+                  }
+                },
+                "from sentence" : "We use Adam optimizer with a fixed learning rate of 0.0001 ."
+              },
+              "training" : ["200K iterations", {"from sentence" : "The training is run for 200K iterations ."}],
+              "distribute" : {
+                "model training" : {
+                  "GPUs" : "4",
+                  "using" : "nccl package"
+                },
+                "from sentence" : "We evenly distribute the model training to 4 GPUs using the nccl package , so that one round of code learning takes around 15 minutes to complete ."
+              }
+            }
+          }
+        },
+        "SENTIMENT ANALYSIS" : {
+          "has" : {
+            "Hyperparameters" : {
+              "trained with" : {
+                "Adam optimizer" : {
+                  "for" : "15 epochs",
+                  "with" : {
+                    "fixed learning rate" : {
+                      "of" : "0.0001"
+                    }
+                  }
+                },
+                "from sentence" : "SENTIMENT ANALYSIS
+The models are trained with Adam optimizer for 15 epochs with a fixed learning rate of 0.0001 ."
+
+              }
+            },
+            "Results" : {
+              "achieved by" : {
+                "16 32 coding scheme" : {
+                  "maximum loss - free" : "compression rate"
+                },
+                "from sentence" : "For our proposed methods , the maximum loss - free compression rate is achieved by a 16 32 coding scheme ."
+              },
+              "substantially improved" : {
+                "classification accuracy" : {
+                  "with" : "slightly lower compression rate"
+                },
+                "from sentence" : "We also found the classification accuracy can be substantially improved with a slightly lower compression rate ."
+              }
+            }
+          }
+        },
+        "MACHINE TRANSLATION" : {
+          "has" : {
+            "Experimental setup" : {
+              "trained by" : {
+                "Nesterov 's accelerated gradient" : {
+                  "with" : {
+                    "initial learning rate" : {
+                      "of" : "0.25"
+                    }
+                  }
+                },
+                "from sentence" : "MACHINE TRANSLATION
+All models are trained by Nesterov 's accelerated gradient with an initial learning rate of 0.25 ."
+
+              },
+              "distributed" : {
+                "training" : {
+                  "GPUs" : [
+                    "4", 
+                    {"computes" : {"mini-batch" : "16 samples"}}
+                  ]
+                },
+                "from sentence" : "Similar to the code learning , the training is distributed to 4 GPUs , each GPU computes a mini-batch of 16 samples ."
+              }
+            },
+            "Results" : {
+              "on" : {
+                "ASPEC dataset" : {
+                  "by pruning" : {
+                    "90 % of the connections" : {
+                      "loss - free compression rate" : "reaches 92 %"
+                    }
+                  }
+                },
+                "from sentence" : "The loss - free compression rate reaches 92 % on ASPEC dataset by pruning 90 % of the connections ."              
+              },
+              "in" : {
+                "IWSLT14 dataset" : {
+                  "observed" : "modest performance loss"
+                },
+                "from sentence" : "However , with the same pruning ratio , a modest performance loss is observed in IWSLT14 dataset ."
+              },
+              "using" : {
+                "compositional coding" : {
+                  "loss - free compression rate" : {
+                    "94 %" : {
+                    "for" : "IWSLT14 dataset" 
+                    },
+                    "99 %" : {
+                      "for" : "ASPEC dataset"
+                    }
+                  }
+                },
+                "from sentence" : "For the models using compositional coding , the loss - free compression rate is 94 % for the IWSLT14 dataset and 99 % for the ASPEC dataset ."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

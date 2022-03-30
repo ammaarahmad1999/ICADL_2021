@@ -1,0 +1,158 @@
+178	0	4	n	RACE
+179	4	19	n	key competitors
+179	20	23	p	are
+179	28	69	n	Stanford Attention Reader ( Stanford AR )
+179	72	101	n	Gated Attention Reader ( GA )
+179	108	139	n	Dynamic Fusion Networks ( DFN )
+185	0	8	n	SearchQA
+186	4	28	n	main competitor baseline
+186	29	31	p	is
+186	36	48	n	AMANDA model
+190	0	11	n	NarrativeQA
+192	51	60	n	baselines
+192	61	64	p	are
+192	67	120	n	context - less sequence to sequence ( seq2seq ) model
+192	123	126	n	ASR
+192	131	136	n	BiDAF
+211	3	12	p	implement
+211	13	23	n	all models
+211	24	26	p	in
+211	27	37	n	TensorFlow
+212	0	15	n	Word embeddings
+212	20	36	p	initialized with
+212	37	56	n	300d Glo Ve vectors
+212	65	88	p	not fine - tuned during
+212	89	97	n	training
+213	0	12	n	Dropout rate
+213	16	29	p	tuned amongst
+213	30	49	n	{ 0.1 , 0.2 , 0.3 }
+213	50	52	p	on
+213	53	63	n	all layers
+213	64	73	p	including
+213	78	93	n	embedding layer
+217	4	14	n	batch size
+217	18	24	p	set to
+217	25	34	n	64/256/32
+218	4	28	n	maximum sequence lengths
+218	29	32	p	are
+218	33	45	n	500/200/1100
+220	31	49	n	runtime benchmarks
+220	54	62	p	based on
+220	65	76	n	TitanXP GPU
+216	3	8	p	adopt
+216	13	27	n	Adam optimizer
+216	53	57	p	with
+216	60	73	n	learning rate
+216	74	76	p	of
+216	77	96	n	0.0003/ 0.001/0.001
+216	97	100	p	for
+216	101	131	n	RACE / SearchQA / Narrative QA
+219	0	3	p	For
+219	4	16	n	Narrative QA
+219	22	25	p	use
+219	30	45	n	Rouge - L score
+219	46	53	p	to find
+219	58	81	n	best approximate answer
+219	82	93	p	relative to
+219	98	118	n	human written answer
+219	119	131	p	for training
+219	136	146	n	span model
+22	17	24	p	propose
+22	27	52	n	new compositional encoder
+22	69	76	p	be used
+22	77	85	n	in place
+22	86	88	p	of
+22	89	110	n	standard RNN encoders
+22	114	122	p	serve as
+22	125	135	n	new module
+22	144	160	p	complementary to
+22	161	190	n	existing neural architectures
+23	0	20	n	Our proposed encoder
+23	21	30	p	leverages
+23	31	51	n	dilated compositions
+23	52	60	p	to model
+23	61	74	n	relationships
+23	75	81	p	across
+23	82	104	n	multiple granularities
+26	4	10	n	output
+26	11	13	p	of
+26	18	47	n	dilated composition mechanism
+26	48	55	p	acts as
+26	56	72	n	gating functions
+26	90	103	p	used to learn
+26	104	133	n	compositional representations
+26	134	136	p	of
+26	141	155	n	input sequence
+24	10	13	p	for
+24	16	26	n	given word
+24	27	29	p	in
+24	34	49	n	target sequence
+24	52	63	n	our encoder
+24	64	72	p	exploits
+24	78	135	n	long - term ( far ) and short - term ( near ) information
+24	136	145	p	to decide
+24	155	166	n	information
+24	167	169	p	to
+24	170	176	n	retain
+2	71	92	n	Reading Comprehension
+5	52	80	n	reading comprehension ( RC )
+9	32	34	n	RC
+221	20	22	p	on
+221	27	49	n	RACE benchmark dataset
+222	0	22	n	Our proposed DCU model
+222	23	31	p	achieves
+222	36	47	n	best result
+222	48	51	p	for
+222	57	70	n	single models
+222	75	90	n	ensemble models
+225	4	27	n	best single model score
+225	28	32	p	from
+225	33	41	n	RACE - H
+225	46	54	n	RACE - M
+225	55	73	p	alternates between
+225	74	83	n	Sim - DCU
+225	88	91	n	DCU
+223	3	13	p	outperform
+223	14	35	n	highly complex models
+223	36	43	p	such as
+223	44	47	n	DFN
+224	8	21	p	pull ahead of
+224	22	44	n	other recent baselines
+224	69	71	p	by
+224	72	84	n	at least 5 %
+224	45	52	p	such as
+224	53	61	n	ElimiNet
+224	66	68	n	GA
+243	35	52	n	Search QA dataset
+245	3	10	p	achieve
+245	15	28	n	same accuracy
+245	29	31	p	as
+245	32	38	n	AMANDA
+245	39	52	p	without using
+245	57	76	n	LSTM or GRU encoder
+248	14	45	n	hybrid combination , DCU - LSTM
+248	46	71	p	significantly outperforms
+248	72	78	n	AMANDA
+248	79	81	p	by
+248	82	85	n	3 %
+249	76	97	n	NarrativeQA benchmark
+250	11	23	p	observe that
+250	24	32	n	300d DCU
+250	37	44	p	achieve
+250	45	67	n	comparable performance
+250	68	72	p	with
+250	73	78	n	BiDAF
+256	10	20	n	DCU - LSTM
+256	21	46	p	significantly outperforms
+256	47	57	n	all models
+256	58	69	p	in terms of
+256	70	79	n	ROUGE - L
+256	82	91	p	including
+256	92	97	n	BiDAF
+257	0	23	n	Performance improvement
+257	24	28	p	over
+257	33	53	n	vanilla BiLSTM model
+257	54	65	p	ranges from
+257	66	75	n	1 % ? 3 %
+257	76	82	p	across
+257	83	94	n	all metrics

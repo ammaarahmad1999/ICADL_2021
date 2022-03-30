@@ -1,0 +1,21 @@
+title
+abstract
+Tencent
+Our Model
+N-gram Convolutional Layer
+Primary Capsule Layer
+Dynamic Routing
+Convolutional Capsule Layer
+Fully Connected Capsule Layer
+The Architectures of Capsule Network
+Experimental Setup
+Experimental Datasets
+Implementation Details
+Baseline methods
+Experimental Results
+Quantitative Evaluation
+Ablation Study
+Single-Label to Multi-Label Text
+Connection Strength Visualization
+Related Work
+Conclusion

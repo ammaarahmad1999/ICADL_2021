@@ -1,0 +1,19 @@
+title
+abstract
+Introduction
+Related Work
+Model
+Input Embedding
+Bi-GRU Based Sentence Encoder
+Hierarchical Attention Based Fusion
+Output and Model Training
+Experiments
+Experiment Settings
+Compared Methods
+System Performance Comparision
+Effects of Position Embeddings
+Effects of the Information Fusion
+Effects of The Hierarchical Attention
+Case Study
+Discussion
+Conclusions

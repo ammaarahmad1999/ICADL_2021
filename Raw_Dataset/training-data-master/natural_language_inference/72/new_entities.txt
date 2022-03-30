@@ -1,0 +1,93 @@
+149	8	15	p	include
+149	18	41	n	distance - based method
+149	42	51	p	that uses
+149	52	67	n	word embeddings
+157	3	10	p	trained
+157	13	40	n	4 - gram Kneser - Ney model
+157	41	43	p	on
+157	44	63	n	CliCR training data
+157	66	70	p	with
+157	71	90	n	multi-word entities
+157	91	105	p	represented as
+157	108	120	n	single token
+157	123	128	p	using
+157	129	134	n	SRILM
+33	21	30	p	construct
+33	31	72	n	queries , answers and supporting passages
+33	73	77	p	from
+33	78	94	n	BMJ Case Reports
+34	2	13	n	case report
+34	14	16	p	is
+34	19	39	n	detailed description
+34	40	42	p	of
+34	45	58	n	clinical case
+34	64	74	p	focuses on
+34	75	88	n	rare diseases
+34	91	132	n	unusual presentation of common conditions
+34	137	160	n	novel treatment methods
+35	12	20	p	contains
+35	23	46	n	Learning points section
+35	49	60	p	summarizing
+35	65	75	n	key pieces
+35	76	78	p	of
+35	79	90	n	information
+37	3	6	p	use
+37	13	28	n	learning points
+37	29	38	p	to create
+37	39	46	n	queries
+37	47	62	p	by blanking out
+37	65	79	n	medical entity
+39	12	20	p	contains
+39	21	43	n	around 100,000 queries
+39	44	46	p	on
+39	47	66	n	12,000 case reports
+39	73	94	n	long support passages
+39	134	142	p	includes
+39	143	150	n	answers
+39	151	160	p	which are
+39	161	199	n	single - or multiword medical entities
+2	47	76	n	Machine Reading Comprehension
+4	29	50	n	machine comprehension
+208	3	11	p	see that
+208	12	29	n	answer prediction
+208	30	38	p	based on
+208	39	64	n	contextual representation
+208	65	67	p	of
+208	68	104	n	queries and passages ( sim -entity )
+208	105	113	p	achieves
+208	116	139	n	strong base performance
+208	140	147	p	that is
+208	153	165	n	outperformed
+208	166	168	p	by
+208	169	171	n	GA
+211	4	18	n	language model
+211	19	27	p	performs
+211	28	34	n	poorly
+211	35	37	p	on
+211	38	47	n	EM and F1
+211	58	82	n	embedding - metric score
+211	83	85	p	is
+211	86	92	n	higher
+213	4	13	n	GA reader
+213	14	22	p	performs
+213	23	27	n	well
+213	28	34	p	across
+213	35	55	n	all entity set - ups
+223	16	25	n	SA reader
+223	26	29	p	are
+223	30	39	n	far below
+223	44	56	n	per-formance
+223	57	59	p	of
+223	60	69	n	GA reader
+224	20	28	p	performs
+224	29	40	n	much better
+224	41	43	p	on
+224	44	63	n	anonymized entities
+224	64	71	p	than on
+224	72	91	n	non-anonymized ones
+215	61	74	p	observed that
+215	75	85	n	GA - NoEnt
+215	86	102	p	tends to predict
+215	103	117	n	longer answers
+215	118	122	p	than
+215	123	140	n	GA - Ent / Anonym

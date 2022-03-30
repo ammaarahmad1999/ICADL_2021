@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Reading comprehension with discrete reasoning
+Semantic Parsing
+Setup
+Learning Method
+Task Setup
+Multi-Mention Reading Comprehension
+Reading Comprehension with Discrete
+Experiments
+Multi-mention Reading Comprehension
+Reading Comprehension with Discrete
+SQL Query Generation
+Analysis
+Conclusion

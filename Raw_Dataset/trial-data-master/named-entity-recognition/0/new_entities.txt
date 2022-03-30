@@ -1,0 +1,45 @@
+48	19	26	p	propose
+48	30	65	n	accelerated robust subset selection
+49	17	20	p	use
+49	25	68	n	p ( 0 < p ? 1 ) - norm based robust measure
+49	69	72	p	for
+49	77	96	n	representation loss
+51	7	15	p	based on
+51	20	31	n	observation
+51	32	36	p	that
+51	37	91	n	data size is generally much larger than feature length
+51	108	115	p	propose
+51	118	132	n	speedup solver
+52	25	33	p	owing to
+52	38	104	n	Augmented Lagrange Multiplier ( ALM ) and an equivalent derivation
+52	22	24	p	is
+52	4	21	n	main acceleration
+203	35	41	p	server
+203	47	86	n	64 - core Intel Xeon E7-4820 @ 2.00 GHz
+203	95	100	p	Cache
+203	89	94	n	18 Mb
+203	114	117	p	RAM
+203	105	113	n	0.986 TB
+203	120	125	p	using
+203	126	137	n	Matlab 2012
+210	0	17	p	Speed Comparisons
+215	0	22	n	Speed vs. increasing N
+221	37	42	p	curve
+221	54	90	n	surprisingly lower and highly stable
+221	156	170	p	over growing N
+221	123	155	n	almost no rise of selection time
+226	0	18	n	Speed with fixed N
+226	48	50	p	is
+228	20	37	n	fastest algorithm
+241	0	19	p	Prediction Accuracy
+242	0	19	n	Accuracy comparison
+249	47	54	p	achieve
+249	58	79	n	appreciable advantage
+252	0	38	n	Prediction accuracies vs. increasing K
+256	66	77	p	K increases
+256	22	62	n	prediction accuracies generally increase
+258	40	54	p	among the best
+258	22	26	n	ARSS
+2	14	49	n	Accelerated Robust Subset Selection
+4	0	34	n	Subset selection from massive data
+7	20	36	n	subset selection

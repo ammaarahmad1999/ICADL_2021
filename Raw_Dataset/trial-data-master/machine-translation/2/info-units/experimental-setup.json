@@ -1,0 +1,66 @@
+{
+  "has" : {
+    "Experimental setup" : {
+      "has" : {
+        "Hardware and Schedule" : {
+          "trained" : {
+            "models" : {
+              "on" : {
+                "one machine" : {
+                  "with" : "8 NVIDIA P100 GPUs"
+                }
+              },
+              "from sentence" : "Hardware and Schedule
+			  We trained our models on one machine with 8 NVIDIA P100 GPUs ."
+			  
+            },
+            "base models" : {
+              "for" : "total of 100,000 steps or 12 hours",
+              "from sentence" : "We trained the base models for a total of 100,000 steps or 12 hours ."
+            },
+            "big models" : {
+              "for" : "300,000 steps ( 3.5 days )",
+              "from sentence" : "The big models were trained for 300,000 steps ( 3.5 days ) ."
+            }
+          }
+        },
+        "Optimizer" : {
+          "used" : {
+            "Adam optimizer" : {
+              "with" : "? 1 = 0.9 , ? 2 = 0.98 and = 10 ?9",
+              "from sentence" : "Optimizer
+			  We used the Adam optimizer with ? 1 = 0.9 , ? 2 = 0.98 and = 10 ?9 ."
+			  
+            },
+            "warmup_steps" : {
+              "=" : "4000",
+              "from sentence" : "We used warmup_steps = 4000 ."
+            }
+          }
+        },
+        "Regularization" : {
+          "has" : {
+            "Residual Dropout" : {
+              "apply" : {
+                "dropout" : {
+                  "to" : ["output of each sub - layer", {"sums of the embeddings and the positional encodings" : {"in" : "both the encoder and decoder stacks"}}]
+                }
+              },
+              "from sentence" : "Regularization
+Residual Dropout
+We apply dropout to the output of each sub - layer , before it is added to the sub - layer input and normalized .
+In addition , we apply dropout to the sums of the embeddings and the positional encodings in both the encoder and decoder stacks ."
+            
+            },
+            "Label Smoothing" : {
+              "employed" : "value ls = 0.1",
+              "from sentence" : "Label Smoothing
+During training , we employed label smoothing of value ls = 0.1 ."
+
+            }
+          }
+        }
+      }
+    }
+  }
+}

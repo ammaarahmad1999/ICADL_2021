@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Related Work
+Models
+Baseline Pointer+Coverage Model
+Two Auxiliary Tasks
+Multi-Task Learning
+Layer-Specific Sharing Mechanism
+Soft vs. Hard Parameter Sharing
+Fast Multi-Task Training
+Experimental Setup
+Results
+Summarization (Primary Task) Results
+Human Evaluation
+Generalizability Results (DUC-2002)
+Auxiliary Task Results
+Ablation and Analysis Studies

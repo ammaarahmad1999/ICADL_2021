@@ -1,0 +1,729 @@
+1707.09098v1 [cs.AI] 28 Jul 2017
+
+ar X1V
+
+MEMEN: Multi-layer Embedding with Memory Networks for Machine
+Comprehension
+
+Boyuan Pan*,, Hao Li*,, Zhou Zhao’, Bin Cao', Deng Cai*, Xiaofei He*
+*State Key Lab of CAD&CG, College of Computer Science, Zhejiang University, Hangzhou, China
+‘College of Computer Science, Zhejiang University, Hangzhou, China
+‘Rigen Technologies, Hangzhou, China
+{panby, haolics, zhaozhou}@zju.edu.cn, bincao @aidigger.com, {dengcai, xiaofeihe } @ gmail.com,
+
+Abstract
+
+Machine comprehension(MC) style question answering
+is a representative problem in natural language processing. Previous methods rarely spend time on the improvement of encoding layer, especially the embedding
+of syntactic information and name entity of the words,
+which are very crucial to the quality of encoding. Moreover, existing attention methods represent each query
+word as a vector or use a single vector to represent
+the whole query sentence, neither of them can handle
+the proper weight of the key words in query sentence.
+In this paper, we introduce a novel neural network architecture called Multi-layer Embedding with Memory
+Network(MEMEN) for machine reading task. In the encoding layer, we employ classic skip-gram model to the
+syntactic and semantic information of the words to train
+anew kind of embedding layer. We also propose a memory network of full-orientation matching of the query
+and passage to catch more pivotal information. Experiments show that our model has competitive results
+both from the perspectives of precision and efficiency in
+Stanford Question Answering Dataset(SQuAD) among
+all published results and achieves the state-of-the-art results on TriviaQA dataset.
+
+Introduction
+
+Machine comprehension(MC) has gained significant popularity over the past few years and it is a coveted goal in
+the field of natural language processing and artificial intelligence 2016). Its task is to
+teach machine to understand the content of a given passage
+and then answer the question related to it. Figure 1 shows a
+
+simple example from the popular dataset SQUAD (Rajpurkar
+2016).
+
+Many significant works are based on this task, and most of
+them focus on the improvement of a sequence model that is
+augmented with an attention mechanism. However, the encoding of the words is also crucial and a better encoding
+layer can lead to substantial difference to the final perfor
+mance. Many powerful methods 2017|
+2017| 2016) only represent their words in
+
+two ways, word-level embeddings and character-level embeddings. They use pre-train vectors, like GloVe(Pennington|
+
+A\The majority of the work was done while the authors were 1nterning at the Eigen Technologies .
+
+Context: This was the first Super Bowl to feature a
+quarterback on both teams who was the #1 pick in their draft
+classes. Manning was the #1 selection of the 1998 NFL draft,
+
+while Newton was picked first in 2011. The matchup also pits
+the top two picks of the 2011 draft against each other: Newton
+
+for Carolina and Von Miller for Denver.
+
+Question: Who was considered to be the first choice in the
+NEL draft of 1998?
+
+Answer: Manning
+
+Figure 1: An example from the SQuAD dataset. The answer
+is a Segment text of context.
+
+2014), to do the word-level embeddings, which ignore
+syntactic information and name entity of the words. [Liu e7|
+
+construct a sequence of syntactic nodes for the
+words and encodes the sequence into a vector representation. However, they neglected the optimization of the initial
+embedding and didn’t take the semantic information of the
+words into account, which are very important parts in the
+vector representations of the words. For example, the word
+“Apple” is a fixed vector in GloVe and noun in syntactics
+whatever it represents the fruit or the company, but name
+entity tags can help recognize.
+
+Moreover, the attention mechanism can be divided into
+two categories: one dimensional attention (Chen et al.||2016)
+Dhingra et al. Kadlec et al.\|2016) and two dimensional attention (Cui et al.
+\al.|/2016). In one dimensional attention, the whole query is
+represented by one embedding vector, which is usually the
+last hidden state in the neural network. However, using only
+one vector to represent the whole query will attenuate the
+attention of key words. On the contrary, every word in the
+query has its own embedding vector in the situation of two
+dimensional attention, but many words in the question sentence are useless even if disturbing, such as the stopwords.
+
+In this paper, we introduce the Multi-layer Embedding
+with Memory Networks(MEMEN), an end-to-end neural
+network for machine comprehension task. Our model consists of three parts: 1) the encoding of context and query, in
+
+     
+
+  
+      
+Multi-Layer Embedding
+
+ 
+
+ 
+
+ 
+
+ 
+
+Hierarchical Attention vectors
+
+Memory Networks of Full-Orientation Matching
+
+ 
+
+Prediction Layer
+
+    
+
+BiLSTM BiLSTM
+
+Hierarchical Attention vectors
+
+Figure 2: MEMEN structure overview. In the figure above, there are two hops in the memory network.
+
+which we add useful syntactic and semantic information in
+the embedding of every word, 2) the high-efficiency multilayer memory network of full-orientation matching to match
+the question and context, 3) the pointer-network based answer boundary prediction layer to get the location of the answer in the passage. The contributions of this paper can be
+summarized as follows.
+
+e First, we propose a novel multi-layer embedding of the
+words in the passage and query. We use skip-gram model
+to train the part-of-speech(POS) tags and name-entity
+recognition(NER) tags embedding that represent the syntactic and semantic information of the words respectively.
+The analogy inference provided by skip-gram model can
+make the similar attributes close in their embedding space
+such that more adept at helping find the answer.
+
+e Second, we introduce a memory networks of fullorientation matching.To combines the advantages of one
+dimensional attention and two dimensional attention, our
+novel hierarchical attention vectors contain both of them.
+Because key words in query often appear at ends of
+the sentence, one-dimensional attention, in which the bi1directional last hidden states are regarded as representation, is able to capture more useful information compared
+to only applying two dimensional attention. In order to
+deepen the memory and better understand the passage according to the query, we employ the structure of multihops to repeatedly read the passage. Moreover, we add a
+gate to the end of each memory to improve the speed of
+convergence.
+
+e Finally, the proposed method yields competitive results on
+the large machine comprehension bench marks SQUAD
+and the state-of-the-art results on TriviaQA dataset. On
+
+SQuAD, our model achieves 75.37% exact match and
+82.66% F1 score. Moreover, our model avoids the high
+computation complexity self-matching mechanism which
+is popular in many previous works, thus we spend much
+less time and memory when training the model.
+
+Model Structure
+
+As Figure 2 shows, our machine reading model consists of
+three parts. First, we concatenate several layers of embedding of questions and contexts and pass them into a bidirectional RNN(Mikolov et al.||2010). Then we obtain the
+relationship between query and context through a novel fullorientation matching and apply memory networks in order to
+deeply understand. In the end, the output layer helps locate
+the answer in the passage.
+
+Encoding of Context and Query
+
+In the encoding layer, we represent all tokens in the context
+and question as a sequence of embeddings and pass them as
+the input to a recurrent neural network.
+
+Word-level embeddings and character-level embeddings are first applied.We use pre-trained word vectors
+GloVe(Pennington et al.||2014) to obtain the fixed word embedding of each word.The character-level embeddings are
+generated by using Convolutional Neural Networks(CNN)
+which is applied to the characters of each word(Kim, et al.,
+2014). This layer maps each token to a high dimensional
+vector space and is proved to be helpful in handling out-ofvocab(OOV) words.
+
+We also use skip-gram model to train the embeddings
+of part-of-speech(POS) tags and named-entity recognition(NER) tags. We first transform all of the given trainOriginal: Bill Gates was bornin Seattle
+
+NER Tags: PERSON PERSON O O O LOCATION O
+
+| | |
+
+CC VBD NNP
+
+POS Tags: NNP NNP  VBD VBN IN NNP
+
+and created Microsoft
+
+O ORGANIZATION O O O
+
+after he quitted from Harvard
+
+| |
+
+O ORGANIZATION O
+
+| |
+
+IN PRP VBD _ IN NNP
+
+Figure 3: The passage and its according transformed “passages”. The first row(green) is the original sentence from the passage,
+the second row(red) is the name-entity recognition(NER) tags, and the last row(blue) is the part-of-speech(POS) tags.
+
+ing set into their part-of-speech(POS) tags and namedentity recognition(NER) tags, which can be showed in Figure 3. Then we employ skip-sram model, which is one of
+the core algorithms in the popular off-the-shelf embedding
+word2vec(Mikolov et al.| (2013), to the transformed “passage” just like it works in word2vec for the normal passage.
+Given a sequence of training words in the transformed passage: W 1, W2,..-, Wy, the objective of the skip-gram model
+is to maximize the average log probability:
+
+N
+x Ss” Ss” log P(Wn+i|Wn)
+
+n=1 —c<i<c,p£0
+
+where c is the size of the context which can be set manually, a large c means more accurate results and more training
+time. The p(w,,4;|w,) is defined by:
+
+(wo|wr) exp(v's,Uwr)
+wo|wr) = —S————
+BE She eepo"h0w,)
+
+where v,, and v’,,, are the input and output vector of w, and
+V is the vocabulary size.
+
+We finally get the fixed length embedding of each tag. AlIthough the number of tags limits the effect of word analogy
+inference, it still be very helpful compared to simple one hot
+embedding since similar tags have similar surroundings.
+
+In the end, we use a BiLSTM to encode both the context and query embeddings and obtain their representations
+
+{rP\"_, and {2}, and the last hidden state of both directions of query representation u@.
+
+ri = BiLSTM([w7 3c} 3s; ]),¢ € [1,...,n]
+
+re = BiLSTM((w@; c#; s@]),t € [1,...,m]
+
+where w, c, s represent word-level embedding, characterlevel embedding and tags embedding respectively. u® is the
+concatenation of both directions’ last hidden state.
+
+Memory Network of Full-Orientation Matching
+
+Attention mechanism is a common way to link and blend
+the content between the context and query. Unlike previous
+methods that are either two dimensional matching or one
+dimensional matching, we propose a full-orientation matching layer that synthesizes both of them and thus combine
+the advantages of both side and hedge the weakness. After
+concatenating all the attention vectors, we will pass them
+into a bi-directional LSTM. We start by describing our
+model in the single layer case, which implements a single
+
+memory hop operation. We then show it can be stacked to
+give multiple hops in memory.
+
+Integral Query Matching The input of this step is the
+representations {r?}"_,, {r?}”™, and u®. At first we obtain the importance of each word in passage according to the
+integral query by means of computing the match between
+u® and each representation r?’ by taking the inner product
+followed by a softmax:
+
+c, = softmax((u?, r?))
+
+Subsequently the first matching module is the sum of the
+inputs {rj }"_, weighted by attention c;:
+
+m' = ) qr,
+t
+
+Query-Based Similarity Matching We then obtain an
+
+alignment matrix A € R”*" between the query and con
+text by A;; = wi [r?:r?:r? or], wy is the weight paramy J 1a j 1 j gnt p
+
+eter, o is elementwise multiplication. Like Seo et al. (2017),
+we use this alignment matrix to compute whether the query
+words are relevant to each context word. For each context
+word, there is an attention weight that represents how much
+it is relevant to every query word:
+
+B = softmax;oy(A) € R"*™
+
+softmax;ow(A) means the softmax function is performed across the row vector, and each attention vector is
+M? = B. re , which is based on the query embedding.
+Hence the second matching module is M*, where each M?
+is the column of M/?.
+
+Context-Based Similarity Matching When we consider
+the relevance between context and query, the most representative word in the query sentence can be chosen by e =
+MaX;ow(A) € R”, and the attention is d = softmax(e).
+Then we obtain the last matching module
+
+m? = ) ry dy
+t
+
+which is based on the context embedding. We put all of
+the memories in a linear function to get the integrated hierarchical matching module:
+
+M = f(M', M?,M?)
+where f is an simple linear function, M+ and M® are
+matrixes that are tiled n times by m! and m?.
+
+Moreover, (2017) add an additional gate to
+the input of RNN:
+
+ge = sigmoid(W,M)
+M*=G0M
+
+The gate is based on the integration of hierarchical attention vectors, and it effectively filtrates the part of tokens that
+are helpful in understanding the relation between passage
+and query. Additionally, we add a bias to improve the estimation:
+
+ge = sigmoid(W,M + b)
+
+Experiments prove that this gate can also accelerate the
+speed of convergence. Finally, the integrated memory // is
+passed into a bi-directional LSTM, and the output will captures the interaction among the context words and the query
+words:
+
+O; = BiLSTM(O;_1, M)
+
+In multiple layers, the integrated hierarchical matching
+module M can be regarded as the input {r/'}"_, of next
+layer after a dimensionality reduction processing. We call
+this memory networks of full-orientation matching.
+
+Output layer
+
+In this layer, we follow |Wang and Jiang} (2016) to use the
+boundary model of pointer networks (Vinyals et al.) |2015)
+to locate the answer in the passage. Moreover, we follow
+
+(20177) to initialize the hidden state of the pointer
+
+network by a query-aware representation:
+By = s*tanh(W@re + b®)
+
+exp(z;)
+jai XP(2;)
+
+m
+io — Ss ar?
+i=1
+
+where s! ,W® and b@ are parameters, 1° is the initial hidden
+state of the pointer network. Then we use the passage representation along with the initialized hidden state to predict the
+indices that represent the answer’s location in the passage:
+
+ay =
+
+z} =c' tanh(W’O; + W"°)
+
+k
+0)
+
+n k
+© j=l exp(zj )
+
+k k k
+
+p’ = argmax(aj,...,a>)
+
+where W” is parameter, k = 1,2 that respectively represent the start point and the end point of the answer, O,; is the
+vector that represents j-th word in the passage of the final
+output of the memory networks. To get the next layer of hidden state, we need to pass O weighted by current predicted
+
+probability a® to the Gated Recurrent Unit(GRU)(Chung et
+
+al., 2014):
+v* = Saf 0;
+i=1
+
+li — GRU(Ii_,, v")
+For the loss function, we minimize the sum of the negative
+
+probabilities of the true start and end indices by the predicted
+distributions.
+
+Experiment
+Implementation Settings
+
+The tokenizers we use in the step of preprocessing data are
+from Stanford CoreNLP (Manning et al., 2014). We also use
+part-of-speech tagger and named-entity recognition tagger
+in Stanford CoreNLP utilities to transform the passage and
+question. For the skip-gram model, our model refers to the
+word2vec module in open source software library, Tensorflow, the skip window is set as 2. The dataset we use to train
+the embedding of POS tags and NER tags are the training set
+given by SQuAD, in which all the sentences are tokenized
+and regrouped as a list. To improve the reliability and stabllity, we screen out the sentences whose length are shorter
+than 9. We use 100 one dimensional filters for CNN in the
+character level embedding, with width of 5 for each one. We
+set the hidden size as 100 for all the LSTM and GRU layers
+and apply dropout(Srivastava et al.| between layers
+with a dropout ratio as 0.2. We use the AdaDelta
+optimizer with a initial learning rate as 0.001. For the
+memory networks, we set the number of layer as 3.
+
+TriviaQA Results
+We first evaluate our model on a large scale reading com
+prehension dataset TriviaQA version1.0O(Joshi et al.}|2017).
+
+TriviaQA contains over 650K question-answer-evidence
+triples, that are derived from Web search results and
+Wikipedia pages with highly differing levels of information
+redundancy. TriviaQA is the first dataset where questions are
+authored by trivia enthusiasts, independently of the evidence
+documents.
+
+.
+
+Figure 4: The performance of our MEMEN and baselines on
+TriviaQA dataset.
+
+iki
+MEMEN
+ee
+
+ 
+Model EM Fl
+LR Baseline(Rajpurkar et al., 2016) 40.4 51.0
+Dynamic Chunk Reader (Yu et al., 2016) 62.50 70.95
+Fine-Grained Gating (Yang et al., 2017) 62.45 73.33
+Match-LSTM with Ans-Ptr* (Wang et al., 2017) 67.90 77.02
+RaSoR (Lee et al., 2016) 69.64 77.69
+FastQAExt (Weissenborn et al., 2017) 70.85 78.86
+Document Reader (Chen et al., 2017) 70.73. T7935
+Ruminating Reader (Gong and Bowman, 2017) 70.64 79.45
+Dynamic Coattention Networks* (Xiong et al., 2017) 71.63 80.38
+Multi-Perspective Matching* (Wang et al., 2016) 73.77 81.26
+jNet* (Zhang et al., 2017) WOL S152
+BiDAF* (Seo et al., 2017) 73.74 81.53
+SEDT+BiDAF* (Liu et al., 2017) 7:72 B153
+Mnemonic Reader* (Hu et al., 2017) 73.67 81.69
+ReasoNet* (Shen et al., 2016) 7823 $3255
+MEMEN* (Ours) 75.37 82.66
+r-net* (MSRA, 2017) 76.92 84.01
+
+Figure 5: The performance of our MEMEN and competing approaches on SQuAD dataset as we submitted our model (May,
+
+22, 2017). * indicates ensemble models.
+
+There are two different metrics to evaluate model accuracy: Exact Match(EM) and F1 Score, which measures the
+weighted average of the precision and recall rate at character
+level. Because the evidence is gathered by an automated process, the documents are not guaranteed to contain all facts
+needed to answer the question. In addition to distant supervision evaluation, we also evaluate models on a verified subsets. Because the test set is not released, we train our model
+on training set and evaluate our model on dev set. As we
+can see in Figure 4, our model outperforms all other baselines and achieves the state-of-the-art result on all subsets on
+TriviaQA.
+
+SQuAD Results
+
+We also use the Stanford Question Answering Dataset
+(SQuAD) v1.1 to conduct our experiments. Passages in
+the dataset are retrieved from English Wikipedia by means
+of Project Nayuki’s Wikipedia’s internal PageRanks. They
+sampled 536 articles uniformly at random with a wide range
+of topics, from musical celebrities to abstract concepts.The
+dataset is partitioned randomly into a training set(80%), a
+development set(10%), and a hidden test set(10%). The host
+of SQuAD didn’t release the test set to the public, so everybody has to submit their model and the host will run it on
+the test set for them.
+
+Figure 5 shows the performance of our model and competing approaches on the SQuAD. The results of this dataset
+are all exhibited on a leaderboard, and top methods are
+almost all ensemble models, our model achieves an exact
+match score of 75.37% and an F1 score of 82.66%, which is
+competitive to state-of-the-art method.
+
+Ensemble Details
+
+The main current ensemble methods in the machine comprehension is simply choosing the answer with the highest sum
+of confidence scores among several single models which are
+exactly identical except the random initial seed. However,
+the performance of ensemble model can obviously be better if there is some diversity among single models. In our
+SQuAD experiment, we get the value of learning rate and
+dropout ratio of each model by a gaussian distribution, in
+which the mean value are 0.001 and 0.2 respectively.
+
+learning rate ~ N(0.001, 0.0001)
+dropout ~ N(0.2, 0.05)
+
+To keep the diversity in a reasonable scope, we set the variance of gaussian distribution as 0.0001 and 0.05 respectively. Finally, we build an ensemble model which consists
+of 14 single models with different parameters.
+
+Speed and Efficiency
+Compared to (Wang et al.\|2017), which achieves state-of
+the-art result on the SQuAD test set, our model doesn’t contain the self-matching attention layer which is stuck with
+high computational complexity. Our MEMEN was trained
+with NVIDIA Titan X GPU, and the training process of
+the 3-hops model took roughly 5 hours on a single GPU.
+However, an one-hop model took 22 hours when we added
+self-matching layer in attention memory. Although the accuracy is improved a little compared to one-hop MEMEN
+model, it declined sharply as the number of hops increased,
+not to speak of the disadvantage of running time. The reason
+might be that multi-hops model with self-matching layer is
+too complex to efficiently learn the features for this dataset.
+As a result, our model is competitive both in accuracy and
+efficiency.
+
+Hops and Ablations
+
+Figure 6 shows the performance of our single model on
+SQuAD dev set with different number of hops in the memory network. As we can see, both the EM and FI score increase as the number of hops enlarges until it arrives 3. After the model achieves the best performance with 3 hops, the
+performance gets worse as the number of hops gets large,
+which might result in overfitting.
+
+We also run the ablations of our single model on SQUAD
+dev set to evaluate the individual contribution. As Figure
+7 shows, both syntactic embeddings and semantic embeddings contribute towards the model’s performance and the
+POS tags seem to be more important. The reason may be
+that the number of POS tags is larger than that of NER tags
+so the embedding is easier to train. For the full-orientation
+matching, we remove each kind of attention vector respectively and the linear function can handle any two of the rest
+hierarchical attention vectors. For ablating integral query
+matching, the result drops about 2% on both metrics and it
+shows that the integral information of query for each word
+in passage is crucial. The query-based similarity matching
+accounts for about 10% performance degradation, which
+proves the effectiveness of alignment context words against
+query. For context-based similarity matching, we simply
+took out the MM? from the linear function and it is proved to
+be contributory to the performance of full-orientation matching.
+
+Hops EM Fl
+l 68.42 78.08
+
+ps 69.67 79.75
+3 70.98 80.36
+4 69.22 79.23
+5 68.04 77.89
+
+Figure 6: Performance comparison among different number
+of hops on the SQuAD dev set.
+
+ 
+
+Ablation Part EM Fl
+
+Syntactic Embedding 69.92 79.77
+Semantic Embedding 70.57 80.13
+Integral Query Matching 68.43 78.72
+Query-Based Similarity Matching 61.26 72.25
+Context-Based Similarity Matching 67.40 76.34
+MEMEN 70.98 80.36
+
+Figure 7: Ablation results on the SQuAD dev set.
+
+Related Work
+Machine Reading Comprehension Dataset.
+
+Several benchmark datasets play an important role in
+progress of machine comprehension task and question answering research in recent years. MCTest(Richardson et al.|
+2013) is one of the famous and high quality datasets. There
+are 660 fictional stories and 4 multiple choice questions per
+story contained in it, and the labels are all made by humans. Researchers also released cloze-style datasets(Hill et
+2015} Onishi er af,|[2016} Paperno
+2016). However, these datasets are either not large
+enough to support deep neural network models or too easy
+to challenge natural language.
+
+Recently, released the Stanford
+Question Answering dataset (SQuAD), which is almost two
+orders of magnitude larger than all previous hand-annotated
+datasets. Moreover, this dataset consists 100,000+ questions
+posed by crowdworkers on a set of Wikipedia articles, where
+the answer to each question is a segment of text from the
+corresponding passage, rather than a limited set of multiple choices or entities. TriviaQA is also
+a large and high quality dataset, and the crucial difference
+between TriviaQA and SQuAD is that TriviaQA questions
+have not been crowdsourced from pre-selected passages.
+
+Attention Based Models for Machine Reading
+
+Many works are based on the task of machine reading comprehension, and attention mechanism have been particularly
+
+successful(Xiong ef al} 2016 2016}
+[Seo etal 2076, Hu et als 2017, Shen etal. 2016
+
+2017). (2016) present a coattention
+ore and Trane decoder to locate the answer.
+
+2016) propose a two side attention mechanism to compute
+the matching between the passage and query. /Wang et al.|
+(2016) match the passage and query from several perspectives and predict the answer by globally normalizing probability distributions.|Seo et al.|(2016) propose a bi-directional
+attention flow to achieve a query-aware context representa
+tion. (2017) propose self-aware representation and
+multi-hop query-sensitive pointer to predict the answer span.
+
+Shen et al.| (2016) propose iterarively inferring the answer
+with a dynamic number of steps trained with reinforcement
+
+learning. employ gated self-matching
+attention to obtain the relation between the question and
+passage. Our MEMEN construct a hierarchical orientation
+attention mechanism to get a wider match while applying
+
+memory network(Sukhbaatar et al.\|2015) for deeper under
+Stand.
+
+     
+   
+
+  
+  
+
+ 
+
+ 
+
+Conclusion
+
+In this paper, we introduce MEMEN for Machine comprehension style question answering. We propose the multilayer embedding to encode the document and the memory
+network of full-orientation matching to obtain the interaction of the context and query. The experimental evaluation
+shows that our model achieves the state-of-the-art result on
+TriviaQA dataset and competitive result in SQUAD. Moreover, the ablations and hops analysis demonstrate the importance of every part of the hierarchical attention vectors
+and the benefit of multi-hops in memory network. For future work, we will focus on question generative method and
+sentence ranking in machine reading tasks.
+
+References
+
+Danqi Chen, Jason Bolton, and Christopher D Manning. A
+thorough examination of the cnn/daily mail reading comprehension task. arXiv preprint arXiv: 1606.02858, 2016.
+
+Yiming Cui, Zhipeng Chen, Si Wei, Shiin Wang, Ting
+Liu, and Guoping Hu. Attention-over-attention neural
+networks for reading comprehension. arXiv preprint
+arXiv: 1607.04423, 2016.
+
+Bhuwan Dhingra, Hanxiao Liu, Zhilin Yang, William W
+Cohen, and Ruslan Salakhutdinov. Gated-attention
+readers for text comprehension. arXiv preprint
+arXiv: 1606.01549, 2016.
+
+Karl Moritz Hermann, Tomas Kocisky, Edward Grefenstette, Lasse Espeholt, Will Kay, Mustafa Suleyman, and
+Phil Blunsom. Teaching machines to read and comprehend. In Advances in Neural Information Processing Systems, pages 1693-1701, 2015.
+
+Felix Hill, Antoine Bordes, Sumit Chopra, and Jason Weston. The goldilocks principle: Reading children’s books
+with explicit memory representations. arXiv preprint
+arXiv: 1511.02301, 2015.
+
+Minghao Hu, Yuxing Peng, and Xipeng Qiu. Mnemonic
+reader for machine comprehension. arXiv preprint
+arXiv: 1705.02798, 2017.
+
+Mandar Joshi, Eunsol Choi, Daniel S Weld, and Luke Zettlemoyer. Triviaga: A large scale distantly supervised challenge dataset for reading comprehension. arXiv preprint
+arXiv: 1705.03551, 2017.
+
+Rudolf Kadlec, Martin Schmid, Ondrej Bajgar, and Jan
+Kleindienst. Text understanding with the attention sum
+reader network. arXiv preprint arXiv: 1603.01547, 2016.
+
+Rui Liu, Junjie Hu, Wei Wei, Zi Yang, and Eric Nyberg.
+Structural embedding of syntactic trees for machine comprehension. arXiv preprint arXiv: 1703.00572, 2017.
+
+Tomas Mikolov, Martin Karafiat, Lukas Burget, Jan Cernocky, and Sanjeev Khudanpur. Recurrent neural network
+based language model. In /nterspeech, volume 2, page 3,
+2010.
+
+Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg S Corrado,
+and Jeff Dean. Distributed representations of words and
+phrases and their compositionality. In Advances in neural
+information processing systems, pages 3111-3119, 2013.
+
+Takeshi Onishi, Hai Wang, Mohit Bansal, Kevin Gimpel, and David McAllester. Who did what: A largescale person-centered cloze dataset. arXiv preprint
+arXiv: 1608.05457, 2016.
+
+Denis Paperno, German Kruszewski, Angeliki Lazaridou,
+Quan Ngoc Pham, Raffaella Bernardi, Sandro Pezzelle,
+Marco Baroni, Gemma Boleda, and Raquel Fernandez.
+
+The lambada dataset: Word prediction requiring a broad
+discourse context. arXiv preprint arXiv:1606.06031,
+2016.
+
+Jeffrey Pennington, Richard Socher, and Christopher D.
+Manning. Glove: Global vectors for word representation.
+In Empirical Methods in Natural Language Processing
+(EMNLP), pages 1532-1543, 2014.
+
+Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and
+Percy Liang. Squad: 100,000+ questions for machine
+comprehension of text. arXiv preprint arXiv: 1606.05250,
+2016.
+
+Matthew Richardson, Christopher JC Burges, and Erin Renshaw. Mctest: A challenge dataset for the open-domain
+machine comprehension of text. In EMNLP, volume 3,
+page 4, 2013.
+
+Minjoon Seo, Aniruddha Kembhavi, Ali Farhadi, and Hannaneh Hajishirzi. Bidirectional attention flow for machine
+comprehension. arXiv preprint arXiv: 1611.01603, 2016.
+
+Yelong Shen, Po-Sen Huang, Jianfeng Gao, and Weizhu
+Chen. Reasonet: Learning to stop reading in machine
+comprehension. arXiv preprint arXiv: 1609.05284, 2016.
+
+Nitish Srivastava, Geoffrey E Hinton, Alex Krizhevsky, Ilya
+Sutskever, and Ruslan Salakhutdinov. Dropout: a simple
+way to prevent neural networks from overfitting. Journal
+of Machine Learning Research, 15(1):1929-1958, 2014.
+
+Sainbayar Sukhbaatar, Jason Weston, Rob Fergus, et al.
+End-to-end memory networks. In Advances in neural information processing systems, pages 2440-2448, 2015.
+
+Oriol Vinyals, Meire Fortunato, and Navdeep Jaitly. Pointer
+networks. In Advances in Neural Information Processing
+Systems, pages 2692-2700, 2015.
+
+Shuohang Wang and Jing Jiang. Machine comprehension
+using match-lstm and answer pointer. arXiv preprint
+arXiv: 1608.07905, 2016.
+
+Zhiguo Wang, Haitao Mi, Wael Hamza, and Radu Florian.
+Multi-perspective context matching for machine comprehension. arXiv preprint arXiv: 1612.04211, 2016.
+
+Wenhui Wang, Nan Yang, Furu Wei, Baobao Chang, and
+Ming Zhou. Gated self-matching networks for reading
+comprehension and question answering. In Proceedings
+of the 55th Annual Meeting of the Association for Computational Linguistics, 2017.
+
+Caiming Xiong, Victor Zhong, and Richard Socher. Dynamic coattention networks for question answering. arXiv
+preprint arXiv: 1611.01604, 2016.
+
+Matthew D Zeiler. Adadelta: an adaptive learning rate
+method. arXiv preprint arXiv: 1212.5701, 2012.
+

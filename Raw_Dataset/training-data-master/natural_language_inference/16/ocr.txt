@@ -1,0 +1,765 @@
+arXiv:1702.03814v3 [cs.AI] 14 Jul 2017
+
+Bilateral Multi-Perspective Matching for Natural Language Sentences
+
+Zhiguo Wang, Wael Hamza, Radu Florian
+IBM T.J. Watson Research Center
+{zhigwang,whamza,raduf} @us.ibm.com
+
+Abstract
+
+Natural language sentence matching is a fundamental technology for a variety of tasks. Previous approaches either match sentences from a single direction or only apply single granular (wordby-word or sentence-by-sentence) matching. In
+this work, we propose a bilateral multi-perspective
+matching (BiMPM) model. Given two sentences P
+and @, our model first encodes them with a BiLSTM encoder. Next, we match the two encoded
+sentences in two directions P against Q and Q
+against P. In each matching direction, each time
+step of one sentence is matched against all timesteps of the other sentence from multiple perspectives. Then, another BiLSTM layer is utilized to
+aggregate the matching results into a fixed-length
+matching vector. Finally, based on the matching
+vector, a decision is made through a fully connected layer. We evaluate our model on three tasks:
+paraphrase identification, natural language inference and answer sentence selection. Experimental results on standard benchmark datasets show
+that our model achieves the state-of-the-art performance on all tasks.
+
+1 Introduction
+
+Natural language sentence matching (NLSM) is the task of
+comparing two sentences and identifying the relationship between them. It is a fundamental technology for a variety of
+tasks. For example, in a paraphrase identification task, NLUSM
+is used to determine whether two sentences are paraphrase
+or not [Yin et al., 2015). For a natural language inference
+task, NLSM is utilized to judge whether a hypothesis sentence can be inferred from a premise sentence
+. For question answering and information retrieval
+tasks, NLSM is employed to assess the relevance between
+
+query-answer pairs and rank all the candidate answers
+feral, 20164. For machine comprehension tasks, NLSM is
+used for matching a passage with a question and pointing out
+the conrect answer span {Wang 2tal, 20166).
+
+With the renaissance of neural network models |[LeCun
+
+et al., 2015} |Peng et al., 2015a} |Peng et al., 2016), two
+
+types of deep learning frameworks were proposed for NLSM.
+
+The first framework is based on the “Siamese” architecture [Bromley ef al., 1993}. In this framework, the same
+neural network encoder (e.g., a CNN or a RNN) is applied
+to two input sentences individually, so that both of the two
+sentences are encoded into sentence vectors in the same embedding space. Then, a matching decision is made solel
+based on the two sentence vectors
+Tan et al., 2015]. The advantage of this framework 1s that
+sharing parameters makes the model smaller and easier to
+train, and the sentence vectors can be used for visualization, sentence clustering and many other purposes
+al., 2016c. However, a disadvantage is that there is no explicit interaction between the two sentences during the encoding procedure, which may lose some important information.
+To deal with this problem, a second framework “matchingaggregation” has been proposed
+Wang er al 2016d). Under this framework, smaller units
+(such as words or contextual vectors) of the two sentences
+are firstly matched, and then the matching results are aggregated (by a CNN or a LSTM) into a vector to make the
+final decision. The new framework captures more interactive features between the two sentences, therefore it acquires
+significant improvements. However, the previous “matchingaggregation” approaches still have some limitations. First,
+some of the approaches only explored the word-by-word
+matching but ignored other granular matchings (e.g., phrase-by-sentence); Second, the matching is only performed in a single direction (e.g., matching P
+against Q) [Wang and fiang, 2015], but neglected the reverse
+direction (e.g., matching @ against P).
+
+In this paper, to tackle these limitations, we propose a bilateral multi-perspective matching (BiMPM) model for NLSM
+tasks. Our model essentially belongs to the “matchingaggregation” framework. Given two sentences P and Q, our
+model first encodes them with a bidirectional Long ShortTerm Memory Network (BiLSTM). Next, we match the two
+encoded sentences in two directions P + Q and P < Q.
+In each matching direction, let’s say P — Q, each time
+step of Q is matched against all time-steps of P from multiple perspectives. Then, another BiLSTM layer is utilized to
+aggregate the matching results into a fixed-length matching
+vector. Finally, based on the matching vector, a decision is
+made through a fully connected layer. We evaluate our model
+on three NLSM tasks: paraphrase identification, natural language inference and answer sentence selection. Experimental
+results on standard benchmark datasets show that our model
+achieves the state-of-the-art performance on all tasks.
+
+In following parts, we start with a brief definition of the
+NLSM task (Section 2), followed by the details of our model
+(Section 3). Then we evaluate our model on standard benchmark datasets (Section 4). We talk about related work in Section 5, and conclude this work in Section 6.
+
+2 Task Definition
+
+Formally, we can represent each example of the NLSM task
+as a triple (P,Q, y), where P = (pj,...,p;,.--, Pas) is a sentence with a length M, Q = (q1,-.., di, ---, gn) 1s the second
+sentence with a length N, y € J is the label representing
+the relationship between P and Q, and ¥y is a set of taskspecific labels. The NLSM task can be represented as estimating a conditional probability Pr (y|P,@Q) based on the
+training set, and predicting the relationship for testing examples by y* = argmax,<y Pr(y|P,Q). Concretely, for
+a paraphrase identification task, P and Q are two sentences,
+Y = {0,1}, where y = 1 means that P and Q are paraphrase
+of each other, and y = O otherwise. For a natural language
+inference task, P is a premise sentence, @ is a hypothesis
+sentence, and Y = {entailment, contradiction, neutral}
+where entailment indicates Q can be inferred from P,
+contradiction indicates © cannot be true condition on P,
+and neutral means P and Q are irrelevant to each other. In
+an answer sentence selection task, P is a question, @ is a
+candidate answer, and VY = {0,1} where y = 1 means Q is a
+correct answer for P, and y = 0 otherwise.
+
+3 Method
+
+In this section, we first give a high-level overview of
+our model in Sub-section and then give more details
+about our novel multi-perspective matching operation in Sub
+section [3.2]
+
+3.1 Model Overview
+
+We propose a bilateral multi-perspective matching (BiMPM)
+model to estimate the probability distribution Pr(y|P, Q).
+Our model belongs to the “matching-aggregation” framework [Wang and Jiang, 2016. Contrarily to previous
+“matching-aggregation” approaches, our model matches P
+and Q in two directions (P + Q and P + Q). In each individual direction, our model matches the two sentences from
+multiple perspectives. Figure[I]shows the architecture of our
+model. Given a pair of sentences P and Q, the BiMPM model
+estimates the probability distribution Pr(y|P, Q) through the
+following five layers.
+
+Word Representation Layer. The goal of this layer is to
+represent each word in P and @ with a d-dimensional vector. We construct the d-dimensional vector with two components: a word embedding and a character-composed embedding. The word embedding is a fixed vector for each indi
+vidual word, which is pre-trained with GloVe [Pennington er
+al., 2014\ or word2vec |Mikolov et al., 2013. The character
+composed embedding is calculated by feeding each character (represented as a character embedding) within a word
+
+Pr(y|P, Q)
+
+sofa
+
+Prediction Layer
+
+Aggregation Layer
+
+Matching Layer
+
+Context Representation
+Layer
+
+ 
+
+ 
+
+Word Representation
+Layer Pi P2 Pi
+
+"1 92 Uo. IN
+
+Figure 1: Architecture for Bilateral Multi-Perspective Matching
+(BiMPM) Model, where & is the multi-perspective matching operation described in sub-section[3.2|
+
+into a Long Short-Term Memory Network (LSTM)
+iter and Schmidhuber, 1997]. where the character embeddings are randomly initialized and learned jointly with other
+network parameters from NLSM tasks. The output of this
+layer are two sequences of word vectors P : |p,,...,pj,| and
+Q: (ay, dn
+
+Context Representation Layer. The purpose of this layer
+is to incorporate contextual information into the representation of each time step of P and Q. We utilize a bi-directional
+LSTM (BiLSTM) to encode contextual embeddings for each
+time-step of P.
+
+—> —_>
+
+h? =LSTM(h®_,,p;) 1=1,...,M (1)
+
+<— stu <—
+
+h* = LSTM(h {1 ,p;) 1=M,...,1
+Meanwhile, we apply the same BiLSTM to encode Q:
+
+— ————;
+
+h* =LSTM(h %_,,4;) jg =1,...,N
+
+4 _ tema (2)
+
+hi= STM(h %.4,9;) g=QN,...,1
+
+Matching Layer. This is the core layer within our model.
+The goal of this layer is to compare each contextual embedding (time-step) of one sentence against all contextual embeddings (time-steps) of the other sentence. As shown in Figure
+we will match the two sentences P and Q in two directions: match each time-step of P against all time-steps of Q,
+and match each time-step of © against all time-steps of P. To
+match one time-step of a sentence against all time-steps of the
+other sentence, we design a multi-perspective matching operation ®. We will give more details about this operation in
+Sub-section [3.2| The output of this layer are two sequences
+of matching vectors (right above the operation & in Figure
+(1), where each matching vector corresponds to the matching
+result of one time-step against all time-steps of the other sentence.
+
+h
+Aggregation Layer. This layer is employed to aggregate
+the two sequences of matching vectors into a fixed-length
+matching vector. We utilize another BiLSTM model, and apply it to the two sequences of matching vectors individually.
+Then, we construct the fixed-length matching vector by concatenating (the four green) vectors from the last time-step of
+the BiLSTM models.
+
+Prediction Layer. The purpose of this layer is to evaluate
+the probability distribution Pr(y| P,Q). To this end, we employ a two layer feed-forward neural network to consume the
+fixed-length matching vector, and apply the softmaz function in the output layer. The number of nodes in the output
+layer is set based on each specific task described in Section|2|
+
+3.2 Multi-perspective Matching Operation
+
+We define the multi-perspective matching operation © in following two steps:
+
+First, we define a multi-perspective cosine matching function f,, to compare two vectors
+
+m = fm(v1, v2; W) (3)
+
+where v1 and vs are two d-dimensional vectors, W € R*4
+is a trainable parameter with the shape / x d, / is the number
+of perspectives, and the returned value m™ is a /[-dimensional
+vector m = [m},..., Mx, ---, MM]. Each element mz, € misa
+matching value from the k-th perspective, and it is calculated
+by the cosine similarity between two weighted vectors
+
+Mz = cosine(W; 0 v1, Wz © V2) (4)
+
+where o is the element-wise multiplication, and Wz, is the
+k-th row of W, which controls the k-th perspective and
+assigns different weights to different dimensions of the ddimensional space.
+
+Second, based on f,,, we define four matching strategies to
+compare each time-step of one sentence against all time-steps
+of the other sentence. To avoid repetition, we only define
+these matching strategies for one matching direction P —
+(). The readers can infer equations for the reverse direction
+easily.
+
+(1) Full-Matching. Figure[2|(a) shows the diagram of this
+matching strategy. In this strategy, each forward (or back
+ward) contextual embedding h? (or h?’) is compared with
+the last time step of the forward (or backward) representation
+
+of the other sentence h 4, (or h{).
+
+7 >, >
+mp = fin( RP, Bs W")
+inf = fn(h?, ht; W?) 6)
+
+(2) Maxpooling-Matching. Figure[2](b) gives the diagram
+of this matching strategy. In this strategy, each forward (or
+backward) contextual embedding h?} (or h?) is compared
+with every forward (or backward) contextual embeddings of
+the other sentence h % (or h4) for j € (1...N), and only the
+maximum value of each dimension is retained.
+
+element-wise maximum
+
+  
+  
+  
+
+ 
+   
+ 
+
+ 
+
+|
+He
+
+(b) Maxpooling-Matching
+
+   
+
+i-}- . -}- a
+
+(a) Full-Matching
+
+| weighted-sum |
+
+He
+
+(c) Attentive-Matching
+
+[aa
+Het
+
+(d) Max-Attentive-Matching
+
+Figure 2: Diagrams for different matching strategies, where fm is
+the multi-perspective cosine matching function in Eq.(3), the input
+includes one time step of one sentence (left orange block) and all the
+time-steps of the other sentence (right blue blocks), and the output is
+a vector of matching values (top green block) calculated by Eq.(3).
+
+mre — max Im(h?, ht; W?)
+j€(1...N)
+
+finan — n?, ht: Ww! 6
+
+m je Fn i ho, W") (6)
+
+where max is element-wise maximum.
+
+jeE(1...N
+
+(3) Attentive-Matching. Figure[2|(c) shows the diagram of
+this matching strategy. We first calculate the cosine similarities between each forward (or backward) contextual embed
+—>
+ding h* (or h*) and every forward (or backward) contextual
+—>
+embeddings of the other sentence hi (or hn’):
+
+>,
+ai; = cosine(h®, h*) j=l,..,N
+
+(7)
+Wig = cosine(h?, h4)
+
+j=1,..,N
+
++
+Then, we take a ij (or aij) as the weight of h& (or hn’),
+and calculate an attentive vector for the entire sentence Q by
+weighted summing all the contextual embeddings of Q:
+
+N => Tq
+Rmean dja1 Cig: hi;
+a N —
+dja 84,3
+N &..-h? 8
+mean __ j=l O45 hn! ( )
+a — N &
+dja O63
+Finally, we match each forward (or backward) contextual
+
+>
+. p p . . . .
+embedding of h; (or h;) with its corresponding attentive
+vector:
+
+matt _ fn( B®, Rime. WwW?)
+matt _ fn( h?, nmen. w®) (9)
+
+(4) Max-Attentive-Matching. Figure [2] (d) shows the diagram of this matching strategy. This strategy is similar to the
+Attentive-Matching strategy. However, instead of taking the
+weighed sum of all the contextual embeddings as the attentive
+vector, we pick the contextual embedding with the highest cosine similarity as the attentive vector. Then, we match each
+contextual embedding of the sentence P with its new attentive vector.
+
+We apply all these four matching strategies to each timestep of the sentence P, and concatenate the generated eight
+vectors as the matching vector for each time-step of P. We
+also perform the same process for the reverse matching direction.
+
+4 Experiments
+
+In this section, we evaluate our model on three tasks: paraphrase identification, natural language inference and answer
+sentence selection. We will first introduce the general setting
+of our BiMPM models in Sub-section|4.1} Then, we demonstrate the properties of our model through some ablation studies in Sub-section [4.2] Finally, we compare our model with
+state-of-the-art models on some standard benchmark datasets
+
+in Sub-section|4.3]|4.4]and[4.5]
+
+4.1 Experiment Settings
+
+We initialize word embeddings in the word representation
+layer with the 300-dimensional GloVe word vectors pretrained from the 840B Common Crawl corpus
+let al., 2014]. For the out-of-vocabulary (OOV) words, we
+initialize the word embeddings randomly. For the charactercomposed embeddings, we initialize each character as a
+20-dimensional vector, and compose each word into a 50dimensional vector with a LSTM layer. We set the hidden
+size as 100 for all BiLSTM layers. We apply dropout to every layers in Figure{]] and set the dropout ratio as 0.1. To train
+the model, we minimize the cross entropy of the training set,
+and use the ADAM optimizer to update parameters. We set the learning rate as 0.001. During
+training, we do not update the pre-trained word embeddings.
+
+For all the experiments, we pick the model which works the
+best on the dev set, and then evaluate it on the test set.
+
+4.2 Model Properties
+
+To demonstrate the properties of our model, we choose the
+paraphrase identification task, and experiment on the “Quora
+Question Pairs” dataset This dataset consists of over
+
+'https://data.quora.com/First-Quora-Dataset-Release-QuestionPairs
+
+89
+88.5
+88
+87.5
+87
+86.5
+
+86
+
+Figure 3: Influence of the multi-perspective cosine matching func
+tion in Eq.(3) ;
+
+400,000 question pairs, and each question pair is annotated
+with a binary value indicating whether the two questions are
+paraphrase of each other. We randomly select 5,000 paraphrases and 5,000 non-paraphrases as the dev set, and sample
+another 5,000 paraphrases and 5,000 non-paraphrases as the
+test set. We keep the remaining instances as the training set||
+
+First, we study the influence of our multi-perspective cosine matching function in Eq.(3). We_vary the number of
+perspectives / among {1, 5, 10, 15, 20} and keep the other
+options unchanged. We also build a baseline model by replacing Eq.(3) with the vanilla cosine similarity function. Figure
+[3] shows the performance curve on the dev set, where / = 0
+corresponds to the performance of our baseline model. We
+can see that, even if we only utilize one perspective (/ = 1),
+our model gets a significant improvement. When increasing
+the number of perspectives, the performance improves significantly. Therefore, our multi-perspective cosine matching
+function is really effective for matching vectors.
+
+Second, to check the effectiveness of bilateral matching,
+we build two ablation models to matching sentences in only
+a single direction: 1) “Only P — Q” which only matches P
+against Q; 2) “Only P < Q” which only matches Q against
+P. Table [1] shows the performance on the dev set. Comparing the two ablation models with the “Full Model”, we can
+observe that single direction matching hurts the performance
+for about 1 percent. Therefore, matching sentences in two directions is really necessary for acquiring better performance.
+
+Third, we evaluate the effectiveness of different matching strategies. To this end, we construct four ablation
+models (w/o Full-Matching, w/o Maxpooling-Matching, w/o
+Attentive-Matching, w/o Max-Attentive-Matching) by eliminating a matching strategy at each time. Table [1] shows the
+performance on the dev set. We can see that eliminating any
+of the matching strategies would hurt the performance significantly.
+
+"We will release our source code and the dataset partition at
+https://zhiguowang.github.io/ .
+
+>Due to practical limitations, we did not experiment with more
+perspectives.
+Models Accuracy
+Only P > Q 87.74
+Only P+ Q 87.47
+w/o Full-Matching 87.86
+w/o Maxpooling-Matching 87.64
+w/o Attentive-Matching 87.87
+w/o MaxAttentive-Matching 87.98
+Full Model 88.69
+
+Table 1: Ablation studies on the dev set.
+
+Models Accuracy
+Siamese-CNN 79.60
+Multi-Perspective-CNN 81.38
+Siamese-LSTM 82.58
+Multi-Perspective-LSTM 83.21
+L.D.C. 85.55
+BiMPM 88.17
+
+Table 2: Performance for paraphrase identification on the Quora
+dataset.
+
+4.3 Experiments on Paraphrase Identification
+
+In this Sub-section, we compare our model with state-of-theart models on the paraphrase identification task. We still experiment on the “Quora Question Pairs” dataset, and use the
+same dataset partition as Sub-section [4.2] This dataset is a
+brand-new dataset, and no previous results have been published yet. Therefore, we implemented three types of baseline
+models.
+
+First, under the Siamese framework, we implement two
+baseline models: “Siamese-CNN” and “Siamese-LSTM”.
+Both of the two models encode two input sentences into sentence vectors with a neural network encoder, and make a decision based on the cosine similarity between the two sentence vectors. But they implement the sentence encoder with
+a CNN and a LSTM respectively. We design the ie and
+the sa model according to the architectures in
+
+Socom based on the two baseline models, we implement two more baseline models “Multi-Perspective-CNN”
+and “Multi-Perspective-LSTM”. In these two models, we
+change the cosine similarity calculation layer with our multiperspective cosine matching function in Eq.(3), and apply a
+fully-connected layer (with sigmoid function on the top) to
+make the prediction.
+
+Third, we re-implement the “L.D.C.” model proposed by
+(Wang et al, 2016dl which is a model under the “matchingaggregation” framework and acquires the state-of-the-art performance on several tasks.
+
+Table|2|shows the performances of all baseline models and
+our “BiMPM” model. We can see that “Multi-PerspectiveCNN” (or “Multi-Perspective-LSTM”) works much better
+than “Siamese-CNN” (or “Siamese-LSTM’’), which further
+indicates that our multi-perspective cosine matching func
+ 
+
+Models Accuracy
+77.6
+[Vendrov ef al., 2015 81.4
+ee 82.1
+83.5
+85.0
+85.1
+86.1
+86.3
+86.8
+87.3
+87.5
+87.7
+88.3
+Only P > Q 85.6
+Only P+ Q 86.3
+BiMPM 86.9
+BiMPM (Ensemble) 88.8
+
+Table 3: Performance for natural language inference on the SNLI
+dataset.
+
+tion (Eq.(3)) is very effective for matching vectors. Our
+“BiMPM” model outperforms the “L.D.C.” model by more
+than two percent. Therefore, our model is very effective for
+the paraphrase identification task.
+
+4.4 Experiments on Natural Language Inference
+
+In this Sub-section, we evaluate our model on the natural lansuage inference task over the SNLI dataset
+Bois), We test four variations of our model on this dataset,
+where “Only P — Q” and “Only P < Q” are the single direction matching models described in Sub-section [4.2]
+“BiMPM” is our full model, and “BiMPM (Ensemble)”’ is
+an ensemble version of our “BiMPM” model. We design the
+ensemble model by simply averaging the probability distributions of four "BiMPM™
+models, and each of the “BiMPM” model has the same architecture, but is initialized with a different seed.
+
+Table |3| shows the performances of the state-of-the-art
+models and our models. First, we can see that “Only P + Q”
+works significantly better than “Only P — Q”, which tells us
+that, for natural language inference, matching the hypothesis against the premise is more effective than the other way
+around. Second, our “BiMPM” model works much better
+than “Only P < Q”, which reveals that matching premise
+against the hypothesis can also bring some benefits. Finally,
+comparing our models with all the state-of-the-art models, we
+can observe that our single model “BiMPM” is on par with
+the state-of-the-art single models, and our “~BiMPM (Ensemble)” works much better than “(Chen et al., 2016] (Ensemble)’. Therefore, our models achieve the state-of-the-art performance in both single and ensemble scenarios for the natural language inference task.
+ 
+ 
+ 
+   
+
+    
+ 
+
+  
+  
+
+ 
+
+      
+
+TREC-QA WikiQA
+Models MAP MRR MAP MRR
+[Yang et al., 2015 0.695 0.763 0.652 0.665
+[Tan ef al., 2015 0.728 0.832 — Wang and Itty. 12015 0.746 0.820 = =
+0.753 0.851 0.689 0.696
+Yin eral., 2015 = ~ 0,692 0.711
+|Miao ef al., 2016 - — 0.689 0.707
+[Wane ef al., 20lod 0.771 0.845 0.706 0.723
+0.777 0.836 0.709 0.723
+0.801 0.877 0.701 0.718
+[Wane e/ al. - ~ 0.734 (0.742
+= — 0.743 0.755
+BiMPM 0.802 0.875 0.718 0.731
+
+Table 4: Performance for answer sentence selection on TREC-QA
+and WikiQA datasets.
+
+4.5 Experiments on Answer Sentence Selection
+
+In this Sub-section, we study the effectiveness of our model
+for answer sentence selection tasks. The answer sentence selection task is to rank a list of candidate answer sentences
+based on their similarities to the question, and the performance is measured by the mean average precision (MAP) and
+mean reciprocal rank (MRR). We experiment on two datasets:
+TREC-QA and WikiQA [Yang et al.,
+2015}. Experimental results of the state-of-the-art models |")
+and our “BiMPM” model are listed in Table{4] where the performances are evaluated with the standard trec_eval-8.0 script
+We can see that the performance from our model is on par
+with the state-of-the-art models. Therefore, our model is also
+effective for answer sentence selection tasks.
+
+5 Related Work
+
+Natural language sentence matching (NLSM) has been studied for many years. Early approaches focused on designing
+
+hand-craft features to capture n-gram overlapping, word reordering and syntactic alignments phenomena
+(Wang and Iitycheriah, 2015]. This Kind of
+method can work well on a specific task or dataset, but it’s
+hard to generalize well to other tasks.
+
+With the — availabilit of large-scale annotated
+datasets (Bowman er al, 2015], many deep learning models
+were proposed for NLSM. The first kind of framework
+is based the Siamese architecture [Bromley er al., 1993},
+where sentences are encoded into sentence vectors based
+on some neural network encoders, and then the relationship
+between two sentences was decided solely based on the two
+(Tan et al., 2015]. However, this kind of framework ignores
+the fact that the lower level interactive features between two
+
+*|Rao et al., 2016] pointed out that there are two versions of
+
+TREC-QA dataset: raw-version and clean-version. In this work,
+
+we utilized the clean-version. Therefore, we only compare with ap
+proaches reporting performance on this dataset.
+http://trec.nist.gove/trec_eval/
+
+sentences are indispensable. Therefore, many neural network
+
+models were proposed to match sentences from multiple
+level of granularity FYin er al., 2015}|Wang and Jiang, 2016
+Wang et al., 2016d]. Experimental results on many tasks
+have proofed that the new framework works significantly
+better than the previous methods. Our model also belongs
+to this framework, and we have shown its effectiveness in
+
+Section|4]
+
+6 Conclusion
+
+In this work, we propose a bilateral miulti-perspective
+matching (BiMPM) model under the “matching-aggregation”
+framework. Different from the previous “matchingaggregation” approaches, our model matches sentences P
+and @ in two directions (P + Q and P < Q). And, in
+each individual direction, our model matches the two sentences from multiple perspectives. We evaluated our model
+on three tasks: paraphrase identification, natural language inference and answer sentence selection. Experimental results
+on standard benchmark datasets show that our model achieves
+the state-of-the-art performance on all tasks.
+
+References
+
+[Bowman et al., 2015] Samuel R Bowman, Gabor Angeli,
+Christopher Potts, and Christopher D Manning. A large
+annotated corpus for learning natural language inference.
+arXiv preprint arXiv: 1508.05326, 2015.
+
+[Bromley et al., 1993] Jane Bromley, James W. Bentz, Léon
+Bottou, Isabelle Guyon, Yann LeCun, Cliff Moore, Eduard
+Sackinger, and Roopak Shah. Signature verification using
+a”’siamese”’ time delay neural network. 1/PRAI, 7(4):669—
+688, 1993.
+
+[Chen et al., 2016] Qian Chen, Xiaodan Zhu, Zhenhua Ling,
+Si Wei, and Hui Jiang. Enhancing and combining sequential and tree Istm for natural language inference. arXiv
+preprint arXiv: 1609.06038, 2016.
+
+[Cheng et al., 2016] Jianpeng Cheng, Li Dong, and Mirella
+Lapata. Long short-term memory-networks for machine
+reading. arXiv preprint arXiv: 1601.06733, 2016.
+
+[He and Lin, 2016] Hua He and Jimmy Lin. Pairwise word
+interaction modeling with deep neural networks for semantic similarity measurement. In NAACL, 2016.
+
+[Heilman and Smith, 2010] Michael Heilman and Noah A
+Smith. Tree edit models for recognizing textual entailments, paraphrases, and answers to questions. In NAACL,
+2010.
+
+[Hochreiter and Schmidhuber, 1997] Sepp Hochreiter and
+Jiirgen Schmidhuber. Long short-term memory. Neural
+computation, 9(8):1735—1780, 1997.
+
+[Kingma and Ba, 2014] Diederik Kingma and Jimmy Ba.
+Adam: A method for stochastic optimization. arXiv
+preprint arXiv: 1412.6980, 2014.
+
+[LeCun et al., 2015] Yann LeCun, Yoshua Bengio, and Geoffrey Hinton. Deep learning. Nature, 521(7553):436444, 2015.
+[Liu et al., 2016a] Pengfei Liu, Xipeng Qiu, and Xuanjing
+Huang. Modelling interaction of sentence pair with
+coupled-lstms. arXiv preprint arXiv: 1605.05573, 2016.
+
+[Liu et al., 2016b] Yang Liu, Chengjie Sun, Lei Lin, and Xiaolong Wang. Learning natural language inference using bidirectional Istm model and inner-attention. arXiv
+preprint arXiv: 1605.09090, 2016.
+
+[Miao et al., 2016] Yishu Miao, Lei Yu, and Phil Blunsom.
+Neural variational inference for text processing. In ICML,
+2016.
+
+[Mikolov et al., 2013] Tomas Mikolov, Ilya Sutskever, Kai
+Chen, Greg S Corrado, and Jeff Dean. Distributed representations of words and phrases and their compositional
+ity. In Advances in neural information processing systems,
+pages 3111-3119, 2013.
+
+[Mou et al., 2015] Lili Mou, Rui Men, Ge Li, Yan Xu,
+Lu Zhang, Rui Yan, and Zhi Jin. Natural language inference by tree-based convolution and heuristic matching.
+arXiv preprint arXiv: 1512.08422, 2015.
+
+[Munkhdalai and Yu, 2016] Tsendsuren Munkhdalai and
+Hong Yu. Neural tree indexers for text understanding.
+arXiv preprint arXiv: 1607.04492, 2016.
+
+[Parikh et al., 2016] Ankur P Parikh, Oscar Tackstrém, Dipanjan Das, and Jakob Uszkoreit. A decomposable attention model for natural language inference. arXiv preprint
+arXiv: 1606.01933, 2016.
+
+[Peng et al.,2015a] Xi Peng, Junzhou Huang, Qiong Hu,
+Shaoting Zhang, Ahmed Elgammal, and Dimitris
+Metaxas. From circle to 3-sphere: Head pose estimation
+by instance parameterization. Computer Vision and Image
+Understanding, 136:92—102, 2015.
+
+[Peng et al.,2015b] Xi Peng, Shaoting Zhang, Yu Yang, and
+Dimitris N Metaxas. Piefa: Personalized incremental and
+ensemble face alignment. In Proceedings of the IEEE In
+ternational Conference on Computer Vision, pages 3880—
+3888, 2015.
+
+[Peng et al., 2016] Xi Peng, Rogerio S Feris, Xiaoyu Wang,
+and Dimitris N Metaxas. A recurrent encoder-decoder network for sequential face alignment. In European Conference on Computer Vision, pages 38-56. Springer International Publishing, 2016.
+
+[Peng et al., 2017] Xi Peng, Shaoting Zhang, Yang Yu, and
+Dimitris N Metaxas. Toward personalized modeling: Incremental and ensemble alignment for sequential faces in
+
+the wild. International Journal of Computer Vision, pages
+1-14, 2017.
+
+[Pennington et al., 2014] Jeffrey Pennington,
+
+Socher, and Christopher D Manning. Glove:
+vectors for word representation. In EMNLP, 2014.
+
+[Rao et al., 2016] Jinfeng Rao, Hua He, and Jimmy Lin.
+Noise-contrastive estimation for answer selection with
+deep neural networks. In CIKM, 2016.
+
+[Rocktdschel et al., 2015] Tim Rocktdschel, Edward Grefenstette, Karl Moritz Hermann, Tomas KoC¢isky, and Phil
+
+Richard
+Global
+
+Blunsom. Reasoning about entailment with neural attention. arXiv preprint arXiv: 1509.06664, 2015.
+
+[Santos et al., 2016] Cicero dos Santos, Ming Tan, Bing Xiang, and Bowen Zhou. Attentive pooling networks. arXiv
+preprint arXiv: 1602.03609, 2016.
+
+[Sha et al., 2016] Lei Sha, Baobao Chang, Zhifang Sui, and
+Sujian Li. Reading and thinking: Re-read Istm unit for
+textual entailment recognition. In COLING, 2016.
+
+[Tan et al., 2015] Ming Tan, Cicero dos Santos, Bing Xiang, and Bowen Zhou. Lstm-based deep learning models for non-factoid answer selection. arXiv preprint
+arXiv: 1511.04108, 2015.
+
+[Vendrov et al., 2015] Ivan Vendrov, Ryan Kiros, Sanja Fidler, and Raquel Urtasun. Order-embeddings of images
+and language. arXiv preprint arXiv: 1511.06361, 2015.
+
+[Wang and Ittycheriah, 2015] Zhiguo Wang and Abraham Ittycheriah. Faq-based question answering via word alignment. arXiv preprint arXiv: 1507.02628, 2015.
+
+[Wang and Jiang, 2015] Shuohang Wang and Jing Jiang.
+Learning natural language inference with Istm. arXiv
+preprint arXiv: 1512.08849, 2015.
+
+[Wang and Jiang, 2016] Shuohang Wang and Jing Jiang. A
+compare-aggregate model for matching text sequences.
+arXiv preprint arXiv: 1611.01747, 2016.
+
+[Wang et al., 2007] Menggiu Wang, Noah A Smith, and
+Teruko Mitamura. What is the jeopardy model? a quasisynchronous grammar for ga. In EMNLZP, 2007.
+
+[Wang et al.,2016a] Bingning Wang, Kang Liu, and Jun
+Zhao. Inner attention based recurrent neural networks for
+answer selection. In ACL, 2016.
+
+[Wang et al., 2016b] Zhiguo Wang, Haitao Mi, Wael Hamza,
+and Radu Florian. Multi-perspective context matching for machine comprehension. arXiv preprint
+arXiv: 1612.04211, 2016.
+
+[Wang et al., 2016c] Zhiguo Wang, Haitao Mi, and Abraham
+Ittycheriah. Semi-supervised clustering for short text via
+deep representation learning. In CoNLL, 2016.
+
+[Wang et al., 2016d] Zhiguo Wang, Haitao Mi, and Abraham Ittycheriah. Sentence similarity learning by lexical
+decomposition and composition. In COLING, 2016.
+
+[Yang et al., 2015] Yi Yang, Wen-tau Yih, and Christopher
+Meek. Wikiga: A challenge dataset for open-domain question answering. In EMNLP, 2015.
+
+[Yin et al., 2015] Wenpeng Yin, Hinrich Schiitze, Bing Xiang, and Bowen Zhou. Abcnn: Attention-based convolutional neural network for modeling sentence pairs. arXiv
+preprint arXiv: 1512.05193, 2015.
+

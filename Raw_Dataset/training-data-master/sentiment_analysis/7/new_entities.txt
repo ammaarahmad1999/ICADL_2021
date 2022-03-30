@@ -1,0 +1,68 @@
+15	3	10	p	explore
+15	11	52	n	various deep learning based architectures
+16	8	23	p	combine them in
+16	27	54	n	ensemble based architecture
+16	55	63	p	to allow
+16	68	76	n	training
+16	77	83	p	across
+16	88	108	n	different modalities
+16	109	114	p	using
+16	119	161	n	variations of the better individual models
+17	0	12	n	Our ensemble
+17	13	24	p	consists of
+17	25	56	n	Long Short Term Memory networks
+17	59	86	n	Convolution Neural Networks
+17	89	130	n	fully connected Multi - Layer Perceptrons
+17	154	170	p	using techniques
+17	179	186	n	Dropout
+17	189	208	n	adaptive optimizers
+17	171	178	p	such as
+17	217	221	n	Adam
+17	224	291	n	pretrained word - embedding models and Attention based RNN decoders
+18	5	17	p	allows us to
+18	18	37	n	individually target
+18	38	42	p	each
+18	43	51	n	modality
+18	61	83	n	perform feature fusion
+18	84	86	p	at
+18	91	102	n	final stage
+64	8	23	n	text transcript
+64	24	26	p	of
+64	27	48	n	each of the utterance
+64	52	55	p	use
+64	56	83	n	pretrained Glove embeddings
+64	84	86	p	of
+64	87	100	n	dimension 300
+64	103	113	p	along with
+64	118	141	n	maximum sequence length
+64	142	144	p	of
+64	145	148	n	500
+64	149	158	p	to obtain
+64	161	179	n	( 500,300 ) vector
+64	180	183	p	for
+64	184	198	n	each utterance
+65	0	3	p	For
+65	8	18	n	Mocap data
+65	21	24	p	for
+65	25	44	n	each different mode
+65	45	52	p	such as
+65	53	80	n	face , hand , head rotation
+65	84	90	p	sample
+65	99	113	n	feature values
+65	114	121	p	between
+65	126	154	n	start and finish time values
+65	159	174	p	split them into
+65	175	197	n	200 partitioned arrays
+66	8	23	p	average each of
+66	28	38	n	200 arrays
+66	39	44	p	along
+66	49	110	n	columns ( 165 for faces , 18 for hands , and 6 for rotation )
+66	125	158	p	concatenate all of them to obtain
+66	159	187	n	( 200,189 ) dimension vector
+66	188	191	p	for
+66	197	206	n	utterance
+2	0	33	n	MULTI - MODAL EMOTION RECOGNITION
+4	0	19	n	Emotion recognition
+97	0	15	n	Our performance
+97	16	23	p	matches
+97	28	50	n	prior state of the art

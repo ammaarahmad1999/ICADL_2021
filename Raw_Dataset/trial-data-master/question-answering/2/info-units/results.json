@@ -1,0 +1,58 @@
+{
+  "has" : {
+    "Results" : {
+      "On" : {
+        "main benchmark WebQuestions" : {
+          "has" : {
+            "best results" : {
+              "use" : "all data sources"
+            }
+          },
+          "from sentence" : "On the main benchmark WebQuestions , our best results use all data sources , the bigger extract from Freebase and the CANDS AS NEGS setting ."          
+        }
+      },
+      "notice" : {
+        "models" : {
+          "trained on" : {
+            "single QA dataset" : {
+              "perform" : {
+                "poorly" : {
+                  "on" : "other datasets"
+                }
+              }
+            }
+          },
+          "from sentence" : "We first notice that models trained on a single QA dataset perform poorly on the other datasets ( e.g. 46.6 % accuracy on SimpleQuestions for the model trained on WebQuestions only ) , which shows that the performance on We-bQuestions does not necessarily guarantee high coverage for simple QA ."
+        }
+      },
+      "training on" : {
+        "both datasets" : {
+          "improves" : "performance",
+          "is able to capture" : {
+            "all question patterns" : {
+              "of" : "two datasets"
+            }
+          }
+        },
+        "from sentence" : "On the other hand , training on both datasets only improves performance ; in particular , the model is able to capture all question patterns of the two datasets ; there is no \" negative interaction \" ."
+      },
+      "has" : {
+        "Transfer learning on Reverb" : {
+          "test" : {
+            "our ability" : {
+              "to rerank" : {
+                "answers" : {
+                  "on" : "companion QA set"
+                }
+              }
+            },
+            "from sentence" : "Transfer learning on Reverb
+In this set of experiments , all Reverb facts are added to the memory , without any retraining , and we test our ability to rerank answers on the companion QA set ."
+
+          },
+          "best results" : ["67 % accuracy", {"68 %" : {"for" : "ensemble of 5 models"}}, {"from sentence" : "Our best results are 67 % accuracy ( and 68 % for the ensemble of 5 models ) , which are better than the 54 % of the original paper and close to the stateof - the - art 73 % of ."}]
+        }
+      }
+    }
+  }
+}

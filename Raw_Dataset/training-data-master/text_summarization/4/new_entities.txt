@@ -1,0 +1,187 @@
+189	0	3	p	For
+189	8	24	n	Gigaword dataset
+189	30	53	p	compare our models with
+190	0	5	n	ABS +
+190	6	10	p	is a
+190	11	36	n	fine tuned version of ABS
+190	43	47	p	uses
+190	51	72	n	attentive CNN encoder
+190	80	92	n	NNLM decoder
+190	95	101	n	Feat2s
+190	130	135	p	is an
+190	136	170	n	RNN sequence - to - sequence model
+190	171	175	p	with
+190	176	208	n	lexical and statistical features
+190	209	211	p	in
+190	216	223	n	encoder
+190	226	237	n	Luong - NMT
+190	238	242	p	is a
+190	243	283	n	two - layer LSTM encoder - decoder model
+190	286	297	n	RAS - Elman
+190	298	302	p	uses
+190	306	327	n	attentive CNN encoder
+190	335	352	n	Elman RNN decoder
+190	359	364	n	SEASS
+190	365	369	p	uses
+190	370	384	n	BiGRU encoders
+190	389	401	n	GRU decoders
+190	402	406	p	with
+190	407	425	n	selective encoding
+191	8	19	n	CNN dataset
+191	25	48	p	compare our models with
+192	0	8	n	Lead - 3
+192	35	43	p	extracts
+192	48	85	n	first three sentences of the document
+192	86	88	p	as
+192	89	96	n	summary
+192	99	106	n	LexRank
+192	107	115	p	extracts
+192	116	121	n	texts
+192	122	127	p	using
+192	128	135	n	LexRank
+192	138	146	n	Bi - GRU
+192	9	13	p	is a
+192	152	226	n	non-hierarchical one - layer sequence - to - sequence abstractive baseline
+192	229	245	n	Distraction - M3
+192	246	250	p	uses
+192	253	295	n	sequence - to - sequence abstractive model
+192	296	300	p	with
+192	301	329	n	distraction - based networks
+192	336	339	n	GBA
+192	147	151	p	is a
+192	345	395	n	graph - based attentional neural abstractive model
+177	31	37	p	reduce
+177	42	94	n	size of the input , output , and entity vocabularies
+177	95	97	p	to
+177	98	110	n	at most 50 K
+177	131	138	p	replace
+177	139	158	n	less frequent words
+177	159	161	p	to
+177	164	171	n	< unk >
+178	64	74	p	initialize
+178	79	102	n	word and entity vectors
+178	3	6	p	use
+178	41	60	n	pre-trained vectors
+178	7	17	n	300D Glove
+178	24	38	n	1000D wiki2vec
+179	0	3	p	For
+179	4	8	n	GRUs
+179	14	17	p	set
+179	22	32	n	state size
+179	33	35	p	to
+179	36	39	n	500
+180	4	7	n	CNN
+180	13	16	p	set
+180	17	30	n	h = 3 , 4 , 5
+180	31	35	p	with
+180	36	64	n	400 , 300 , 300 feature maps
+181	4	18	n	firm attention
+181	26	31	p	tuned
+181	21	22	n	k
+181	32	46	p	by calculating
+181	51	61	n	perplexity
+181	62	64	p	of
+181	69	74	n	model
+181	75	88	p	starting with
+181	89	142	n	smaller values ( i.e. k = 1 , 2 , 5 , 10 , 20 , ... )
+181	147	160	p	stopping when
+181	165	202	n	perplexity of the model becomes worse
+181	203	207	p	than
+181	212	226	n	previous model
+183	3	6	p	use
+183	7	14	n	dropout
+183	15	17	p	on
+183	18	44	n	all non-linear connections
+183	45	49	p	with
+183	52	71	n	dropout rate of 0.5
+187	7	18	n	beam search
+187	19	26	p	of size
+187	27	29	n	10
+187	30	41	p	to generate
+187	46	53	n	summary
+184	3	6	p	set
+184	11	22	n	batch sizes
+184	23	25	p	of
+184	26	51	n	Gigaword and CNN datasets
+184	52	54	p	to
+184	55	64	n	80 and 10
+185	0	20	p	Training is done via
+185	21	48	n	stochastic gradient descent
+185	49	53	p	over
+185	54	75	n	shuffled mini-batches
+185	76	80	p	with
+185	85	105	n	Adadelta update rule
+185	113	157	n	l 2 constraint ( Hinton et al. , 2012 ) of 3
+186	3	10	p	perform
+186	11	25	n	early stopping
+186	26	31	p	using
+186	34	73	n	subset of the given development dataset
+31	27	33	p	method
+31	37	70	n	effectively apply linked entities
+31	71	73	p	in
+31	74	102	n	sequence - tosequence models
+31	105	111	p	called
+31	112	132	n	Entity2Topic ( E2T )
+32	9	15	p	module
+32	0	3	n	E2T
+33	11	18	p	encodes
+33	23	64	n	entities extracted from the original text
+33	65	67	p	by
+33	71	100	n	entity linking system ( ELS )
+33	103	113	p	constructs
+33	116	122	n	vector
+33	123	135	p	representing
+33	140	145	n	topic
+33	146	148	p	of
+33	153	176	n	summary to be generated
+33	183	190	p	informs
+33	195	202	n	decoder
+33	203	208	p	about
+33	213	237	n	constructed topic vector
+35	23	28	p	using
+35	29	44	n	entity encoders
+35	45	49	p	with
+35	50	74	n	selective disambiguation
+35	82	94	p	constructing
+35	95	108	n	topic vectors
+35	109	114	p	using
+35	115	129	n	firm attention
+2	45	70	n	Abstractive Summarization
+13	0	18	n	Text summarization
+198	0	2	p	In
+198	3	19	n	Gigaword dataset
+198	20	25	p	where
+198	30	45	n	texts are short
+198	48	62	n	our best model
+198	63	71	p	achieves
+198	74	96	n	comparable performance
+198	97	101	p	with
+198	106	136	n	current state - of - the - art
+199	3	14	n	CNN dataset
+199	15	20	p	where
+199	25	41	n	texts are longer
+199	44	58	n	our best model
+199	59	70	p	outperforms
+199	71	94	n	all the previous models
+201	10	13	n	E2T
+201	14	22	p	achieves
+201	25	48	n	significant improvement
+201	49	53	p	over
+201	58	77	n	baseline model BASE
+201	80	84	p	with
+201	85	101	n	at least 2 ROUGE
+201	104	121	n	1 points increase
+201	122	124	p	in
+201	129	145	n	Gigaword dataset
+201	150	157	n	6 ROUGE
+201	160	177	n	1 points increase
+201	178	180	p	in
+201	185	196	n	CNN dataset
+203	0	5	p	Among
+203	10	24	n	model variants
+203	31	50	n	CNN - based encoder
+203	51	55	p	with
+203	56	80	n	selective disambiguation
+203	85	99	n	firm attention
+203	100	108	p	performs
+203	113	117	n	best

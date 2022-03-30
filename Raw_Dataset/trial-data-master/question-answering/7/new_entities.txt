@@ -1,0 +1,175 @@
+127	15	28	p	trained using
+127	29	33	n	Adam
+128	3	8	p	chose
+128	9	29	n	two one - layer LSTM
+128	30	33	p	for
+128	34	54	p	read / write modules
+128	55	57	p	on
+128	62	81	n	tasks other than QA
+129	77	89	p	obtained for
+129	94	109	p	word embeddings
+129	4	42	n	pre-trained 300 - D Glove 840B vectors
+129	47	71	n	100 - D Glove 6B vectors
+132	3	14	p	crop or pad
+132	19	33	n	input sequence
+132	34	36	p	to
+132	39	51	n	fixed length
+134	16	30	p	regularized by
+134	37	45	n	dropouts
+134	53	69	n	l 2 weight decay
+18	17	24	p	propose
+18	25	74	n	a novel class of memory augmented neural networks
+18	75	81	p	called
+18	82	114	n	Neural Semantic Encoders ( NSE )
+18	115	118	p	for
+18	119	149	n	natural language understanding
+20	0	3	n	NSE
+20	10	40	n	variable sized encoding memory
+20	64	73	p	to access
+20	74	95	n	entire input sequence
+20	96	102	p	during
+20	107	122	n	reading process
+20	135	157	p	efficiently delivering
+20	158	191	n	long - term dependencies overtime
+22	4	26	p	sequentially processes
+22	27	36	n	the input
+22	41	49	p	supports
+22	50	71	n	word compositionality
+23	8	30	p	read from and write to
+23	33	81	n	set of relevant encoding memories simultaneously
+23	103	109	p	access
+23	112	134	n	shared encoding memory
+23	147	157	p	supporting
+23	158	194	n	knowledge and representation sharing
+21	4	19	n	encoding memory
+21	20	27	p	evolves
+21	28	36	n	overtime
+21	41	50	p	maintains
+21	55	61	n	memory
+21	62	64	p	of
+21	69	83	n	input sequence
+21	84	91	p	through
+21	92	127	n	read , compose and write operations
+4	49	79	n	natural language understanding
+24	52	55	n	NLU
+135	0	26	p	Natural Language Inference
+142	28	40	p	hidden layer
+142	46	56	n	1024 units
+142	41	45	p	with
+142	62	77	n	ReLU activation
+142	84	98	n	sof tmax layer
+143	11	21	p	batch size
+143	25	28	n	128
+143	35	56	p	initial learning rate
+143	60	66	n	3e - 4
+143	71	95	p	l 2 regularizer strength
+143	99	106	n	3 e - 5
+143	113	118	p	train
+143	134	143	n	40 epochs
+158	4	29	n	MMA - NSE attention model
+160	11	19	p	obtained
+160	20	41	n	85.4 % accuracy score
+162	0	25	p	Answer Sentence Selection
+173	11	21	p	batch size
+173	25	26	n	4
+173	35	56	p	initial learning rate
+173	60	67	n	1 e - 5
+173	74	93	p	train the model for
+173	94	103	n	10 epochs
+174	3	7	p	used
+174	8	21	n	40 % dropouts
+174	22	31	p	afterword
+174	32	42	n	embeddings
+174	47	49	p	no
+174	50	66	n	l 2 weight decay
+175	4	19	p	word embeddings
+175	20	23	p	are
+175	24	62	n	pre-trained 300 - D Glove 840B vectors
+176	18	38	n	linear mapping layer
+176	39	49	p	transforms
+176	54	77	n	300 - D word embeddings
+176	78	80	p	to
+176	85	103	n	512- D LSTM inputs
+181	4	29	n	MMA - NSE attention model
+181	30	37	p	exceeds
+181	42	46	n	NASM
+181	47	63	p	by approximately
+181	64	67	n	1 %
+181	68	70	p	on
+181	71	74	n	MAP
+181	79	84	n	0.8 %
+181	85	87	p	on
+181	88	91	n	MRR
+186	0	23	p	Sentence Classification
+191	4	26	p	first layer of the MLP
+191	31	46	n	ReLU activation
+191	51	68	n	1024 or 300 units
+191	69	72	p	for
+191	73	105	n	binary or fine - grained setting
+192	4	16	p	second layer
+192	22	36	n	sof tmax layer
+193	4	24	p	read / write modules
+193	29	49	n	two one - layer LSTM
+193	50	54	p	with
+193	55	71	n	300 hidden units
+193	80	95	p	word embeddings
+193	104	142	n	pre-trained 300 - D Glove 840B vectors
+194	11	21	p	batch size
+194	25	27	n	64
+194	34	55	p	initial learning rate
+194	59	65	n	3e - 4
+194	70	94	p	l 2 regularizer strength
+194	98	105	n	3 e - 5
+194	112	117	p	train
+194	133	142	n	25 epochs
+199	0	9	n	Our model
+199	10	22	p	outperformed
+199	27	30	n	DMN
+199	35	38	p	set
+199	43	73	n	state - of - the - art results
+199	74	76	p	on
+199	77	90	n	both subtasks
+200	0	27	p	Document Sentiment Analysis
+204	3	8	p	stack
+204	11	22	n	NSE or LSTM
+204	23	36	p	on the top of
+204	37	48	n	another NSE
+204	49	52	p	for
+204	53	70	n	document modeling
+207	0	17	n	The whole network
+207	21	55	p	trained jointly by backpropagating
+207	60	78	n	cross entropy loss
+208	3	7	p	used
+208	8	24	n	one - layer LSTM
+208	25	29	p	with
+208	30	46	n	100 hidden units
+208	47	50	p	for
+208	55	75	p	read / write modules
+208	84	120	n	pre-trained 100 - D Glove 6B vectors
+209	11	21	p	batch size
+209	25	27	n	32
+209	34	55	p	initial learning rate
+209	59	65	n	3e - 4
+209	70	94	p	l 2 regularizer strength
+209	98	105	n	1 e - 5
+209	112	119	p	trained
+209	135	144	n	50 epochs
+221	0	19	p	Machine Translation
+241	16	35	p	trained to minimize
+241	36	67	n	word - level cross entropy loss
+241	77	91	p	regularized by
+241	92	111	n	20 % input dropouts
+241	120	140	n	30 % output dropouts
+242	11	21	p	batch size
+242	25	28	n	128
+242	35	56	p	initial learning rate
+242	60	66	n	1e - 3
+242	67	70	p	for
+242	71	82	n	LSTM - LSTM
+242	87	93	n	3e - 4
+242	94	97	p	for
+242	102	114	n	other models
+242	119	143	p	l 2 regularizer strength
+242	147	154	n	3 e - 5
+242	161	166	p	train
+242	182	191	n	40 epochs

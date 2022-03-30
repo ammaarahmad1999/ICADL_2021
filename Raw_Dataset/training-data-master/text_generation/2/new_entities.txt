@@ -1,0 +1,151 @@
+33	55	61	p	called
+33	62	70	n	Leak GAN
+33	71	81	p	to address
+33	82	134	n	both the non-informativeness and the sparsity issues
+34	0	7	n	LeakGAN
+34	24	33	p	providing
+34	34	52	n	richer information
+34	53	57	p	from
+34	62	75	n	discriminator
+34	76	78	p	to
+34	83	92	n	generator
+34	93	105	p	by borrowing
+34	110	125	n	recent advances
+34	126	128	p	in
+34	129	164	n	hierarchical reinforcement learning
+36	4	11	n	MANAGER
+36	15	20	p	along
+36	21	54	n	shortterm memory network ( LSTM )
+36	59	68	p	serves as
+36	71	79	n	mediator
+37	18	26	p	receives
+37	27	77	n	generator D 's high - level feature representation
+37	131	135	p	form
+37	140	152	n	guiding goal
+37	153	156	p	for
+37	161	174	n	WORKER module
+35	36	45	p	introduce
+35	48	72	n	hierarchical generator G
+35	81	92	p	consists of
+35	95	122	n	high - level MANAGER module
+35	129	154	n	low - level WORKER module
+40	7	12	p	given
+40	17	31	n	goal embedding
+40	32	43	p	produced by
+40	48	58	n	MAN - AGER
+40	65	71	n	WORKER
+40	72	85	p	first encodes
+40	86	109	n	current generated words
+40	110	114	p	with
+40	115	127	n	another LSTM
+40	130	143	p	then combines
+40	148	154	n	output
+40	155	157	p	of
+40	158	189	n	the LSTM and the goal embedding
+40	190	197	p	to take
+40	200	212	n	final action
+40	213	215	p	at
+40	216	229	n	current state
+163	0	11	n	GAN Setting
+164	27	33	p	choose
+164	38	54	n	CNN architecture
+164	55	57	p	as
+164	62	105	n	feature extractor and the binary classifier
+166	0	3	p	For
+166	8	33	n	synthetic data experiment
+166	40	55	n	CNN kernel size
+166	56	62	p	ranges
+166	63	74	n	from 1 to T
+170	8	17	n	generator
+170	23	28	p	adopt
+170	29	33	n	LSTM
+170	34	36	p	as
+170	41	76	n	architectures of MANAGER and WORKER
+170	77	87	p	to capture
+170	92	120	n	sequence context information
+167	4	13	p	number of
+167	14	25	n	each kernel
+167	29	36	p	between
+167	37	48	n	100 and 200
+168	19	34	n	feature of text
+168	35	37	p	is
+168	40	64	n	1,720 dimensional vector
+169	0	7	n	Dropout
+169	58	76	p	performed to avoid
+169	77	88	n	overfitting
+169	8	12	p	with
+169	17	31	n	keep rate 0.75
+169	36	53	n	L2 regularization
+171	4	11	n	MANAGER
+171	12	20	p	produces
+171	25	71	n	16 - dimensional goal embedding feature vector
+171	75	80	p	using
+171	85	96	n	feature map
+171	97	109	p	extracted by
+171	110	113	n	CNN
+172	4	24	n	goal duration time c
+172	25	29	p	is a
+172	30	44	n	hyperparameter
+172	45	51	p	set as
+172	52	53	n	4
+172	54	59	p	after
+172	60	88	n	some preliminary experiments
+2	5	20	n	Text Generation
+4	0	66	n	Automatically generating coherent and semantically meaningful text
+178	0	26	n	Synthetic Data Experiments
+182	6	8	p	In
+182	13	31	n	pre-training stage
+182	34	41	n	LeakGAN
+182	46	59	p	already shown
+182	60	94	n	observable performance superiority
+182	95	106	p	compared to
+182	107	119	n	other models
+183	14	40	n	adversarial training stage
+183	43	51	n	Leak GAN
+183	52	57	p	shows
+183	60	87	n	better speed of convergence
+183	115	123	p	explores
+183	98	111	n	local minimum
+183	124	126	p	is
+183	127	147	n	significantly better
+183	148	152	p	than
+183	153	169	n	previous results
+185	0	41	n	Long Text Generation : EMNLP2017 WMT News
+196	0	2	p	In
+196	3	23	n	all measured metrics
+196	26	33	n	LeakGAN
+196	34	39	p	shows
+196	40	68	n	significant performance gain
+196	69	80	p	compared to
+196	81	96	n	baseline models
+198	0	44	n	Middle Text Generation : COCO Image Captions
+208	12	14	p	of
+208	19	30	n	BLEU scores
+208	31	33	p	on
+208	38	50	n	COCO dataset
+208	51	59	p	indicate
+208	65	73	n	Leak GAN
+208	74	82	p	performs
+208	83	103	n	significantly better
+208	104	108	p	than
+208	109	124	n	baseline models
+208	125	127	p	in
+208	128	159	n	mid-length text generation task
+209	0	37	n	Short Text Generation : Chinese Poems
+214	29	37	p	indicate
+214	43	50	n	LeakGAN
+214	51	71	p	successfully handles
+214	76	103	n	short text generation tasks
+223	0	33	n	Turing Test and Generated Samples
+231	4	15	n	performance
+231	16	18	p	on
+231	19	31	n	two datasets
+231	32	46	p	indicates that
+231	51	70	n	generated sentences
+231	71	73	p	of
+231	74	82	n	Leak GAN
+231	139	152	p	than those of
+231	153	159	n	SeqGAN
+231	87	89	p	of
+231	90	115	n	higher global consistency
+231	120	138	n	better readability

@@ -1,0 +1,13 @@
+title
+abstract
+Introduction
+Background
+Proposed Approach
+Structured Prediction with BERT for
+Entity-Aware Self-Attention based on
+Experiments
+Settings
+Results on ACE 2005
+Results on SemEval 2018 Task 7
+Additional SRE Results
+Conclusion

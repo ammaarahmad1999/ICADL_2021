@@ -1,0 +1,12 @@
+title
+abstract
+Introduction
+Related Work
+Methods
+Word Embedding
+Sequence Encoder
+Composition Layer
+Top-layer Classifier
+Experimental Setup
+Results
+Summary and Future Work

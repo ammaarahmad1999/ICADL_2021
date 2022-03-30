@@ -1,0 +1,7 @@
+(Contribution||has||Results)
+(Results||has||Number of weight - sharing layers)
+(Number of weight - sharing layers||When||all of the four layers are shared)
+(all of the four layers are shared||get||poor translation performance)
+(poor translation performance||in||all of the three translation tasks)
+(Number of weight - sharing layers||achieved||best translation performance)
+(best translation performance||when||only one layer is shared in our system)

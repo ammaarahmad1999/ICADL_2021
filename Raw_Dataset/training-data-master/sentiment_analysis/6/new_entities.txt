@@ -1,0 +1,77 @@
+36	66	73	p	develop
+36	76	85	n	framework
+36	86	94	p	based on
+36	95	125	n	long shortterm memory ( LSTM )
+36	131	136	p	takes
+36	139	161	n	sequence of utterances
+36	162	164	p	as
+36	165	170	n	input
+36	175	183	p	extracts
+36	184	218	n	contextual utterancelevel features
+40	10	19	p	preserves
+40	24	40	n	sequential order
+40	41	43	p	of
+40	44	54	n	utterances
+40	59	66	p	enables
+40	67	89	n	consecutive utterances
+40	90	98	p	to share
+40	99	110	n	information
+40	118	127	p	providing
+40	128	150	n	contextual information
+40	151	153	p	to
+40	158	208	n	utterance - level sentiment classification process
+2	0	38	n	Context - Dependent Sentiment Analysis
+4	84	122	n	identification of sentiments in videos
+9	0	18	n	Sentiment analysis
+11	0	19	n	Emotion recognition
+22	37	66	n	multimodal sentiment analysis
+237	14	50	n	trained contextual unimodal features
+237	51	55	p	help
+237	60	89	n	hierarchical fusion framework
+237	90	103	p	to outperform
+237	108	134	n	non-hierarchical framework
+240	4	26	n	non-hierarchical model
+240	27	38	p	outperforms
+240	43	61	n	baseline uni - SVM
+243	6	15	n	bc - LSTM
+243	16	29	p	has access to
+243	39	74	n	preceding and following information
+243	75	77	p	of
+243	82	100	n	utterance sequence
+243	106	114	p	performs
+243	115	134	n	consistently better
+243	135	137	p	on
+243	138	169	n	all the datasets over sc - LSTM
+245	4	27	n	performance improvement
+245	28	30	p	is
+245	31	43	n	in the range
+245	44	46	p	of
+245	47	61	n	0.3 % to 1.5 %
+245	62	64	p	on
+245	65	87	n	MOSI and MOUD datasets
+248	0	26	n	Every LSTM network variant
+248	31	43	p	outperformed
+248	48	66	n	baseline uni - SVM
+248	67	69	p	on
+248	70	86	n	all the datasets
+248	87	103	p	by the margin of
+248	104	114	n	2 % to 5 %
+242	12	17	p	noted
+242	23	51	n	both sc - LSTM and bc - LSTM
+242	52	59	p	perform
+242	60	70	n	quite well
+242	71	73	p	on
+242	78	140	n	multimodal emotion recognition and sentiment analysis datasets
+246	0	2	p	On
+246	7	22	n	IEMOCAP dataset
+246	29	52	n	performance improvement
+246	53	55	p	of
+246	56	79	n	bc - LSTM and sc - LSTM
+246	80	84	p	over
+246	85	92	n	h- LSTM
+246	96	111	p	in the range of
+246	112	122	n	1 % to 5 %
+255	24	28	p	show
+255	38	53	n	proposed method
+255	54	69	p	outperformes by
+255	72	90	n	significant margin

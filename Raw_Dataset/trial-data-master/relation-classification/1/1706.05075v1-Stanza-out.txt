@@ -1,0 +1,246 @@
+title
+Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme
+abstract
+Joint extraction of entities and relations is an important task in information extraction .
+To tackle this problem , we firstly propose a novel tagging scheme that can convert the joint extraction task to a tagging problem .
+Then , based on our tagging scheme , we study different end - toend models to extract entities and their relations directly , without identifying entities and relations separately .
+We conduct experiments on a public dataset produced by distant supervision method and the experimental results show that the tagging based methods are better than most of the existing pipelined and joint learning methods .
+What 's more , the end - to - end model proposed in this paper , achieves the best results on the public dataset .
+Introduction
+Joint extraction of entities and relations is to detect entity mentions and recognize their semantic relations simultaneously from unstructured text , as shows .
+Different from open information extraction ( Open IE ) ) whose relation words are extracted from the given sentence , in this task , relation words are extracted from a predefined relation set which may not appear in the given sentence .
+It is an important issue in knowledge extraction and automatic construction of knowledge base .
+Traditional methods handle this task in a pipelined manner , i.e. , extracting the entities first and then recognizing their relations .
+This separated framework makes the task easy to deal with , and each component can be more flexible .
+But it neglects the relevance between these two sub - tasks and each subtask is an independent model .
+The results of entity recognition may affect the performance of relation classification and lead to erroneous delivery .
+Different from the pipelined methods , joint learning framework is to extract entities together with relations using a single model .
+It can effectively integrate the information of entities and relations , and it has been shown to achieve better results in this task .
+However , most existing joint methods are feature - based structured systems .
+They need complicated feature engineering and heavily rely on the other NLP toolkits , which might also lead to error propagation .
+In order to reduce the manual work in feature extraction , recently , presents a neural network - based method for the end - to - end entities and relations extraction .
+Although the joint models can represent both entities and relations with shared parameters in a single model , they also extract the entities and relations separately and produce redundant information .
+For instance , the sentence in contains three entities : " United States " , " Trump " and " Apple Inc " .
+But only " United States " and " Trump " hold a fix relation " Country - President " .
+Entity " Apple Inc " has no obvious relationship with the other entities in this sentence .
+Hence , the extracted result from this sentence is { United States e 1 , Country - President r , Trump e 2 } , which called triplet here .
+In this paper , we focus on the extraction of triplets thatare composed of two entities and one relation between these two entities .
+Therefore , we can model the triplets directly , rather than extracting the entities and relations separately .
+Based on the motivations , we propose a tagging scheme accompanied with the end - to - end model to settle this problem .
+We design a kind of novel tags which contain the information of entities and the relationships they hold .
+Based on this tagging scheme , the joint extraction of entities and relations can be transformed into a tagging problem .
+In this way , we can also easily use neural networks to model the task without complicated feature engineering .
+Recently , end - to - end models based on LSTM have been successfully applied to various tagging tasks :
+Named Entity Recognition , CCG
+Supertagging , Chunking et al .
+LSTM is capable of learning long - term dependencies , which is beneficial to sequence modeling tasks .
+Therefore , based on our tagging scheme , we investigate different kinds of LSTM - based end - to - end models to jointly extract the entities and relations .
+We also modify the decoding method by adding a biased loss to make it more suitable for our special tags .
+The method we proposed is a supervised learning algorithm .
+In reality , however , the process of manually labeling a training set with a large number of entity and relation is too expensive and error-prone .
+Therefore , we conduct experiments on a public dataset 1 which is produced by distant supervision method to validate our approach .
+The experimental results show that our tagging scheme is effective in this task .
+In addition , our end - to - end model can achieve the best results on the public dataset .
+The major contributions of this paper are : ( 1 ) A novel tagging scheme is proposed to jointly extract entities and relations , which can easily transform the extraction problem into a tagging task .
+( 2 ) Based on our tagging scheme , we study different kinds of end - to - end models to settle the problem .
+The tagging - based methods are better than most of the existing pipelined and joint learning methods .
+( 3 ) Furthermore , we also develop an end - to - 1 https://github.com/shanzhenren/Co
+Type end model with biased loss function to suit for the novel tags .
+It can enhance the association between related entities .
+Related Works
+Entities and relations extraction is an important step to construct a knowledge base , which can be benefit for many NLP tasks .
+Two main frameworks have been widely used to solve the problem of extracting entity and their relationships .
+One is the pipelined method and the other is the joint learning method .
+The pipelined method treats this task as two separated tasks , i.e. , named entity recognition ( NER ) and relation classification ( RC ) .
+Classical NER models are linear statistical models , such as Hidden Markov Models ( HMM ) and Conditional Random Fields ( CRF ) .
+Recently , several neural network architectures have been successfully applied to NER , which is regarded as a sequential token tagging task .
+Existing methods for relation classification can also be divided into handcrafted feature based methods and neural network based methods .
+While joint models extract entities and relations using a single model .
+Most of the joint methods are feature - based structured systems .
+Recently , uses a LSTMbased model to extract entities and relations , which can reduce the manual work .
+Different from the above methods , the method proposed in this paper is based on a special tagging manner , so that we can easily use end - toend model to extract results without NER and RC .
+end - to - end method is to map the input sentence into meaningful vectors and then back to produce a sequence .
+It is widely used in machine translation and sequence tagging tasks .
+Most methods apply bidirectional LSTM to encode the input sentences , but the decoding methods are always different .
+For examples , use a CRF layers to decode the tag sequence , while apply LSTM layer to produce the tag sequence .
+Method
+We propose a novel tagging scheme and an end -toend model with biased objective function to jointly extract entities and their relations .
+In this section , we firstly introduce how to change the extraction problem to a tagging problem based on our tagging method .
+Then we detail the model we used to extract results .
+is an example of how the results are tagged .
+Each word is assigned a label that contributes to extract the results .
+Tag " O " represents the " Other " tag , which means that the corresponding word is independent of the extracted results .
+In addition to " O " , the other tags consist of three parts : the word position in the entity , the relation type , and the relation role .
+We use the " BIES " ( Begin , Inside , End , Single ) signs to represent the position information of a word in the entity .
+The relation type information is obtained from a predefined set of relations and the relation role information is represented by the numbers " 1 " and " 2 " .
+An extracted result is represented by a triplet : ( Entity 1 , Relation T ype , Entity 2 ) .
+" 1 " means that the word belongs to the first entity in the triplet , while " 2 " belongs to second entity that behind the relation type .
+Thus , the total number of tags is N t = 2 * 4 * | R | + 1 , where | R | is the size of the predefined relation set .
+is an example illustrating our tagging method .
+The input sentence contains two triplets : { United States , Country - President , Trump } and { Apple Inc , Company - Founder , Steven Paul Jobs } , where " Country - President " and " Company - Founder " are the predefined relation types .
+The Tagging Scheme
+The words " United " , " States " , " Trump " , " Apple " , " Inc " , " Steven " , " Paul " and " Jobs " are all related to the final extracted results .
+Thus they are tagged based on our special tags .
+For example , the word of " United " is the first word of entity " United States " and is related to the relation " Country - President " , so its tag is " B - CP - 1 " .
+The other entity " Trump " , which is corresponding to " United States " , is labeled as " S - CP - 2 " .
+Besides , the other words irrelevant to the final result are labeled as " O " .
+From Tag Sequence To Extracted Results
+From the tag sequence in , we know that " Trump " and " United States " share the same relation type " Country - President " , " Apple Inc " and " Steven Paul Jobs " share the same relation type " Company - Founder " .
+We combine entities with the same relation type into a triplet to get the final result .
+Accordingly , " Trump " and " United States " can be combined into a triplet whose relation type is " Country - President " .
+Because , the relation role of " Trump " is " 2 " and " United States " is " 1 " , the final result is { United States , Country - President , Trump } .
+The same applies to { Apple Inc , Company - Founder , Steven Paul Jobs } .
+Besides , if a sentence contains two or more triplets with the same relation type , we combine every two entities into a triplet based on the nearest principle .
+For example , if the relation type " Country - President " in is " Company - Founder " , then there will be four entities in the given sentence with the same relation type .
+" United States " is closest to entity " Trump " and the " Apple Inc " is closest to " Jobs " , so the results will be { United States , Company - Founder , Trump } and { Apple Inc , Company - Founder , Steven Paul Jobs } .
+In this paper , we only consider the situation where an entity belongs to a triplet , and we leave identification of overlapping relations for future work .
+The End - to - end Model
+In recent years , end - to - end model based on neural network is been widely used in sequence tagging task .
+In this paper , we investigate an end - toend model to produce the tags sequence as shows .
+It contains a bi-directional Long Short Term Memory ( Bi - LSTM ) layer to encode the input sentence and a LSTM - based decoding layer with biased loss .
+The biased loss can enhance the relevance of entity tags .
+The Bi - LSTM Encoding Layer .
+In sequence tagging problems , the Bi - LSTM encoding layer has been shown the effectiveness to capture the semantic information of each word .
+It contains forward lstm layer , backward lstm layer and the concatenate layer .
+The word embedding layer converts the word with 1 - hot representation to an embedding vector .
+Hence , a sequence of words can be represented as : Gold standard annotation for an example sentence based on our tagging scheme , where " CP " is short for " Country - President " and " CF " is short for " Company - Founder " .
+corresponding to the t - th word in the sentence and n is the length of the given sentence .
+After word embedding layer , there are two parallel LSTM layers : forward LSTM layer and backward LSTM layer .
+The LSTM architecture consists of a set of recurrently connected subnets , known as memory blocks .
+Each time - step is a LSTM memory block .
+The LSTM memory block in Bi - LSTM encoding layer is used to compute current hidden vector ht based on the previous hidden vector h t?1 , the previous cell vector c t?1 and the current input word embedding wt .
+It s structure diagram is shown in , and detail operations are defined as follows :
+where i , f and o are the input gate , forget gate and output gate respectively , b is the bias term , c is the cell memory , and W ( . ) are the parameters .
+For each word wt , the forward LSTM layer will encode wt by considering the contextual information from word w 1 tow t , which is marked as ? ? ht .
+In the similar way , the backward LSTM layer will encode wt based on the contextual information from w n tow t , which is marked as ? ? ht .
+Finally , we concatenate ? ?
+ht and ? ?
+ht to represent word t 's encoding information , denoted as
+The LSTM Decoding Layer .
+We also adopt a LSTM structure to produce the tag sequence .
+When detecting the tag of word wt , the inputs of decoding layer are : ht obtained from Bi - LSTM encoding layer , former predicted tag embedding T t?1 , former cell value c ( 2 ) t? 1 , and the former hidden vector in decoding layer h ( 2 ) t?1 .
+The structure diagram of the memory block in LSTM dis shown in , and detail operations are defined as follows :
+The final softmax layer computes normalized entity tag probabilities based on the tag predicted vector T t :
+where W y is the softmax matrix , N t is the total number of tags .
+Because T is similar to tag embedding and LSTM is capable of learning long - term dependencies , the decoding manner can model tag interactions .
+The Bias Objective Function .
+We train our model to maximize the log-likelihood of the data and the optimization method we used is RM - Sprop proposed by Hinton in .
+The objective function can be defined as :
+where | D| is the size of training set , L j is the length of sentence x j , y ( j ) t is the label of word tin sentence x j and p ( j ) t is the normalized probabilities of tags which defined in Formula 15 .
+Besides , I ( O ) is a switching function to distinguish the loss of tag ' O ' and relational tags that can indicate the results .
+It is defined as follows :
+?
+is the bias weight .
+The larger ?
+is , the greater influence of relational tags on the model .
+Experiments
+Experimental setting
+Dataset
+To evaluate the performance of our methods , we use the public dataset NYT 2 which is produced by distant supervision method .
+A large amount of training data can be obtained by means of distant supervision methods without manually labeling .
+While the test set is manually labeled to ensure its quality .
+In total , the training data contains 353 k triplets , and the test set contains 3 , 880 triplets .
+Besides , the size of relation set is 24 .
+Evaluation
+We adopt standard Precision ( Prec ) , Recall ( Rec ) and F 1 score to evaluate the results .
+Different from classical methods , our method can extract triplets without knowing the information of entity types .
+In other words , we did not use the label of entity types to train the model , therefore we do not need to consider the entity types in the evaluation .
+A triplet is regarded as correct when its relation type and the head offsets of two corresponding entities are both correct .
+Besides , the groundtruth relation mentions are given and " None " label is excluded as did .
+We create a validation set by randomly sampling 10 % data from test set and use the remaining data as evaluation based on ) 's suggestion .
+We run 10 times for each experiment then report the average results and their standard deviation as shows .
+Hyperparameters
+Our model consists of a Bi - LSTM encoding layer and a LSTM decoding layer with bias objective function .
+The word embeddings used in the encoding part are initialed by running word2vec 3 on NYT training corpus .
+The dimension of the word embeddings is d = 300 .
+We regularize our network using dropout on embedding layer and the dropout ratio is 0.5 .
+The number of lstm units in encoding layer is 300 and the number in decoding layer is 600 .
+The bias parameter ?
+corresponding to the results in is 10 .
+2
+The dataset can be downloaded at : https://github.com/shanzhenren/CoType.
+There are three data sets in the public resource and we only use the NYT dataset .
+Because more than 50 % of the data in BioInfer has overlapping relations which is beyond the scope of this paper .
+As for dataset Wiki - KBP , the number of relation type in the test set is more than that of the train set , which is also not suitable for a supervised training method .
+Details of the data can be found in is the pipelined methods and the second part ( row 4 to 6 ) is the jointly extracting methods .
+Our tagging methods are shown in part three ( row 7 to 9 ) .
+In this part , we not only report the results of precision , recall and F1 , we also compute their standard deviation .
+Baselines
+We compare our method with several classical triplet extraction methods , which can be divided into the following categories : the pipelined methods , the jointly extracting methods and the end - to - end methods based our tagging scheme .
+For the pipelined methods , we follow ) 's settings :
+The NER results are obtained by CoType then several classical relation classification methods are applied to detect the relations .
+These methods are :
+( 1 ) DS-logistic ) is a distant supervised and feature based method , which combines the advantages of supervised IE and unsupervised IE features ; ( 2 ) LINE is a network embedding method , which is suitable for arbitrary types of information networks ;
+( 3 ) FCM ) is a compositional model that combines lexicalized linguistic context and word embeddings for relation extraction .
+The jointly extracting methods used in this paper are listed as follows : ( 4 ) DS - Joint ) is a supervised method , which jointly extracts entities and relations using structured perceptron on human - annotated dataset ; ( 5 ) MultiR is a typical distant supervised method based on multi-instance learning algorithms to combat the noisy training data ; ( 6 ) CoType ) is a domain independent framework by jointly embedding entity mentions , relation mentions , text features and type labels into meaningful representations .
+In addition , we also compare our method with two classical end - to - end tagging models : LSTM- CRF and LSTM - LSTM .
+LSTM - CRF is proposed for entity recognition by using a bidirectional LSTM to encode input sentence and a conditional random fields to predict the entity tag sequence .
+Different from LSTM - CRF , LSTM - LSTM uses a LSTM layer to decode the tag sequence instead of CRF .
+They are used for the first time to jointly extract entities and relations based on our tagging scheme .
+Experimental Results
+We report the results of different methods as shown in .
+It can be seen that our method , LSTM - LSTM - Bias , outperforms all other methods in F 1 score and achieves a 3 % improvement in F 1 over the best method CoType .
+It shows the effectiveness of our proposed method .
+Furthermore , from , we also can see that the jointly extracting methods are better than pipelined methods , and the tagging methods are better than most of the jointly extracting methods .
+It also validates the validity of our tagging scheme for the task of jointly extracting entities and relations .
+When compared with the traditional methods , the precisions of the end - to - end models are significantly improved .
+But only LSTM - LSTM - Bias can be better to balance the precision and recall .
+The reason maybe that these end - to - end models all use a Bi - LSTM encoding input sentence and different neural networks to decode the results .
+The methods based on neural networks can well fit the data .
+Therefore , they can learn the common features of the training set well and may lead to the lower expansibility .
+We also find that the LSTM - LSTM model is better than LSTM - CRF model based on our tagging scheme .
+Because , LSTM is capable of learning long - term dependencies and CRF is good at capturing the joint probability of the entire sequence of labels .
+The related tags may have along distance from each other .
+Hence ,
+LSTM decoding manner is a little better than CRF .
+LSTM - LSTM - Bias adds a bias weight to enhance the effect of entity tags and weaken the effect of invalid tag .
+Therefore , in this tagging scheme , our method can be better than the common LSTM - decoding methods .
+Analysis and Discussion
+Error Analysis
+In this paper , we focus on extracting triplets composed of two entities and a relation .
+has shown the predict results of the task .
+It treats an triplet is correct only when the relation type and the head offsets of two corresponding entities are both correct .
+In order to find out the factors that affect the results of end - to - end models , we analyze the performance on predicting each element in the triplet as shows .
+E1 and E2 represent the performance on predicting each entity , respectively .
+If the head offset of the first entity is correct , then the instance of E1 is correct , the same to E2 .
+Regardless of relation type , if the head offsets of two corresponding entities are both correct , the instance of ( E1 , E2 ) is correct .
+As shown in , ( E1 , E2 ) has higher precision when compared with E1 and E2 .
+But its recall result is lower than E1 and E2 .
+It means that some of the predicted entities do not form a pair .
+They only obtain E1 and do not find its corresponding E2 , or obtain E2 and do not find its corresponding E1 .
+Thus it leads to the prediction of more single E and less ( E1 , E2 ) pairs .
+Therefore , entity pair ( E1 , E2 ) has higher precision and lower recall than single E. Besides , the predicted results of ( E1 , E2 ) in have about 3 % improvement when compared predicted results in Table 1 , which means that 3 % of the test data is pre-dicted to be wrong because the relation type is predicted to be wrong .
+Analysis of Biased Loss
+Different from LSTM - CRF and LSTM - LSTM , our approach is biased towards relational labels to enhance links between entities .
+In order to further analyze the effect of the bias objective function , we visualize the ratio of predicted single entities for each end - to - end method as .
+The single entities refer to those who can not find their corresponding entities .
+shows whether it is E1 or E2 , our method can get a relatively low ratio on the single entities .
+It means that our method can effectively associate two entities when compared LSTM - CRF and LSTM - LSTM which pay little attention to the relational tags .
+Single E1
+Single Besides , we also change the Bias Parameter ?
+from 1 to 20 , and the predicted results are shown in .
+If ?
+is too large , it will affect the accuracy of prediction and if ?
+is too small , the recall will decline .
+When ? = 10 , LSTM - LSTM - Bias can balance the precision and recall , and can achieve the best F 1 scores .
+Case Study
+In this section , we observe the prediction results of end - to - end methods , and then select several representative examples to illustrate the advantages and dis advantages of the methods as shows .
+Each example contains three row , the first row is the gold standard , the second and the third rows are the extracted results of model LSTM - LSTM and LSTM - LSTM - Bias respectively .
+S1 represents the situation that the distance between the two interrelated entities is faraway from each other , which is more difficult to detect their relationships .
+When compared with LSTM - LSTM , LSTM - LSTM - Bias uses a bias objective function which enhance the relevance between entities .
+Therefore , in this example , LSTM - LSTM - Bias can extract two related entities , while LSTM - LSTM can only extract one entity of " Florida " and can not detect entity " Panama City Beach " .
+S2 is a negative example that shows these methods may mistakenly predict one of the entity .
+There are no indicative words between entities Nuremberg and Germany .
+Besides , the patten " a * of * " between Germany and M iddle Ages maybe easy to mislead the models that there exists a relation of " Contains " between them .
+The problem can be solved by adding some samples of this kind of expression patterns to the training data .
+S3 is a case that models can predict the entities ' head offset right , but the relational role is wrong .
+LSTM - LSTM treats both " Stephen A. Schwarzman " and " Blackstone Group " as entity E1 , and can not find its corresponding E2 .
+Although , LSTM - LSMT - Bias can find the entities pair ( E1 , E2 ) , it reverses the roles of " Stephen A. Schwarzman " and " Blackstone Group " .
+It shows that LSTM - LSTM - Bias is able to better on pre-dicting entities pair , but it remains to be improved in distinguishing the relationship between the two entities .
+Conclusion
+In this paper , we propose a novel tagging scheme and investigate the end - to - end models to jointly extract entities and relations .
+The experimental results show the effectiveness of our proposed method .
+But it still has shortcoming on the identification of the overlapping relations .
+In the future work , we will replace the softmax function in the output layer with multiple classifier , so that a word can has multiple tags .
+In this way , a word can appear in multiple triplet results , which can solve the problem of overlapping relations .
+Although , our model can enhance the effect of entity tags , the association between two corresponding entities still requires refinement in next works .

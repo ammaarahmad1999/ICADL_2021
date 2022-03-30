@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Character-level Convolutional Networks
+Key Modules
+Character quantization
+Model Design
+Data Augmentation using Thesaurus
+Comparison Models
+Traditional Methods
+Deep Learning Methods
+Choice of Alphabet
+Large-scale Datasets and Results
+Discussion
+Conclusion and Outlook

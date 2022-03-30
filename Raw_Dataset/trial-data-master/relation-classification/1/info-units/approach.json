@@ -1,0 +1,58 @@
+{
+  "has" : {
+    "Approach" : {
+      "propose" : [
+        "novel tagging scheme", 
+        {"end -toend model" : {
+          "with" : {
+            "biased objective function" : {
+              "to jointly extract" : "entities and their relations"}}}}, 
+        {"from sentence" : "We propose a novel tagging scheme and an end -toend model with biased objective function to jointly extract entities and their relations ."}
+      ],
+      "has" : {
+        "Tag \" O \"" : {
+          "represents" : {
+            "\" Other \" tag" : {
+              "means" : "corresponding word is independent of the extracted results"
+            }
+          },
+          "from sentence" : "Tag \" O \" represents the \" Other \" tag , which means that the corresponding word is independent of the extracted results ."              
+        },
+        "End - to - end Model" : {
+          "produce" : ["tags sequence", {"from sentence" : "In this paper , we investigate an end - toend model to produce the tags sequence as shows ."}],
+          "contains" : {
+            "bi-directional Long Short Term Memory ( Bi - LSTM ) layer" : {
+              "to encode" : "input sentence"
+            },
+            "LSTM - based decoding layer" : {
+              "with" : {
+                "biased loss" : {
+                  "enhance" : "relevance of entity tags"
+                }
+              }
+            }             
+          },
+          "from sentence" : "The End - to - end Model
+It contains a bi-directional Long Short Term Memory ( Bi - LSTM ) layer to encode the input sentence and a LSTM - based decoding layer with biased loss .
+The biased loss can enhance the relevance of entity tags ."
+          
+        }          
+      },
+      "use" : {
+        "BIES" : {
+          "name" : "Begin , Inside , End , Single",
+          "represent" : {
+            "position information" : {
+              "of a" : {
+                "word" : {
+                  "in" : "entity"
+                }
+              }
+            }  
+          }
+        },
+        "from sentence" : "We use the \" BIES \" ( Begin , Inside , End , Single ) signs to represent the position information of a word in the entity ."                
+      }
+    }
+  }
+}

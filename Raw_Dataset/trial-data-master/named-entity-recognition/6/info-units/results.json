@@ -1,0 +1,65 @@
+{
+  "has" : {
+    "Results" : {
+      "on" : {
+        "CONLL" : {
+          "significantly outperforms" : {
+            "models" : {
+              "use" : "extensive sets of handcrafted features"
+            },
+            "from sentence" : "Results on CONLL
+First , we observe that our model significantly outperforms models that use extensive sets of handcrafted features ) as well as the system of Standard deviation on the test set is reported in 2015 ) that uses NE and Entity Linking annotations to jointly optimize the performance on both tasks ."
+
+          },
+          "outperforms" : {
+            "other NN models" : {
+              "that only use" : {
+                "standard word embeddings" : {
+                  "indicates" : "our lexical feature vector is complementary to standard word embeddings"
+                }
+              }
+            },
+            "from sentence" : "Second , our model outperforms as well other NN models that only use standard word embeddings , which indicates that our lexical feature vector is complementary to standard word embeddings ."
+          },
+          "matches" : {
+            "state - of - the - art performances" : {
+              "of" : {
+                "models" : {
+                  "that use" : ["more complex architectures", "more elaborate features"]
+                }
+              },
+              "from sentence" : "Third , our system matches state - of - the - art performances of models that use either more complex architectures or more elaborate features ."            
+            }            
+          }
+        },
+        "ONTONOTES" : {
+          "significantly outperforms" : {
+            "Bi - LSTM - CNN - CRF models of ( Chiu and Nichols , 2016 )" : {
+              "by" : {
+                "an absolute gain" : { 
+                  "of" : "1.68 and 0.96 points respectively"
+                }
+              }
+            },
+            "from sentence" : "Results on ONTONOTES
+In particular , our system significantly outperforms the Bi - LSTM - CNN - CRF models of ( Chiu and Nichols , 2016 ) and by an absolute gain of 1.68 and 0.96 points respectively ."
+
+          },
+          "surpasses" : {
+            "systems with hand - crafted features" : {
+              "including" : "use gazetteers"
+            },
+            "system of which uses coreference annotation" : {
+              "in" : {
+                "ONTONOTES" : {
+                  "to jointly model" : "NER , entity linking , and coreference resolution tasks"
+                }
+              }
+            },
+            "from sentence" : "Less surprisingly , it surpasses systems with hand - crafted features , including that use gazetteers , and the system of which uses coreference annotation in ONTONOTES to jointly model NER , entity linking , and coreference resolution tasks ."
+          }
+        }
+      }
+    }
+  }
+}

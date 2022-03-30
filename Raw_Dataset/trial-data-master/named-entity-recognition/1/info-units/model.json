@@ -1,0 +1,37 @@
+{
+  "has" : {
+    "Model" : {
+      "has" : {
+        "LSTM - CRF" : {
+          "has" : {
+            "bidirectional LSTM" : {
+              "above it" : "sequential conditional random layer"
+              }
+            }
+        },
+        "S - LSTM" : {
+          "constructs and labels" : {
+            "chunks of input sentences" : {
+              "using" : {
+                "algorithm inspired by transition - based parsing with states" : {
+                  "represented by" : "stack LSTMs"
+                }
+              }
+            }
+          },
+          "from sentence" : "We compare two models here , ( i ) a bidirectional LSTM with a sequential conditional random layer above it ( LSTM - CRF ; 2 ) , and ( ii ) a new model that constructs and labels chunks of input sentences using an algorithm inspired by transition - based parsing with states represented by stack LSTMs ( S - LSTM ; 3 ) ."          
+        }
+      },
+      "To capture" : {
+        "orthographic sensitivity" : {
+          "use" : {
+            "character - based word representation model" : {
+              "with" : "distributional representations"
+            }
+          }
+        },
+        "from sentence" : "To capture orthographic sensitivity , we use character - based word representation model to capture distributional sensitivity , we combine these representations with distributional representations ."
+      }      
+    }
+  }
+}

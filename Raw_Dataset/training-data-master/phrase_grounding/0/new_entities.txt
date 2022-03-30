@@ -1,0 +1,173 @@
+202	36	41	p	using
+202	42	69	n	level - attention mechanism
+202	70	78	p	based on
+202	79	103	n	multi-level feature maps
+202	104	126	p	significantly improves
+202	131	142	n	performance
+202	143	147	p	over
+202	148	190	n	single visual - textual feature comparison
+204	37	45	p	see that
+204	46	64	n	non-linear mapping
+204	65	67	p	in
+204	72	77	n	model
+204	78	80	p	is
+204	81	97	n	really important
+204	104	113	p	replacing
+204	114	125	n	any mapping
+204	126	130	p	with
+204	133	143	n	linear one
+204	144	166	p	significantly degrades
+204	171	182	n	performance
+205	7	20	p	also see that
+205	21	39	n	non-linear mapping
+205	40	45	p	seems
+205	46	60	n	more important
+205	61	63	p	on
+205	68	79	n	visual side
+208	36	40	p	show
+208	45	55	n	importance
+208	56	64	p	of using
+208	67	103	n	strong contextualized text embedding
+208	104	106	p	as
+208	111	122	n	performance
+208	123	142	n	drops significantly
+209	86	94	p	applying
+209	25	32	n	softmax
+209	103	111	p	leads to
+209	114	134	n	very negative effect
+209	33	35	p	on
+209	142	153	n	performance
+168	3	6	p	use
+168	9	19	n	batch size
+168	20	22	p	of
+168	23	29	n	B = 32
+171	7	15	n	D = 1024
+171	16	19	p	for
+171	20	50	n	common space mapping dimension
+171	55	63	n	? = 0.25
+171	64	67	p	for
+171	68	78	n	Leaky ReLU
+171	79	81	p	in
+171	86	105	n	non-linear mappings
+169	0	21	n	Image - caption pairs
+169	26	33	p	sampled
+169	34	42	n	randomly
+169	43	47	p	with
+169	50	70	n	uniform distribution
+176	0	40	n	Both visual and textual networks weights
+176	45	57	p	fixed during
+176	58	66	n	training
+176	76	104	n	common space mapping weights
+176	41	44	p	are
+176	109	118	n	trainable
+170	3	8	p	train
+170	13	20	n	network
+170	21	24	p	for
+170	25	34	n	20 epochs
+170	35	39	p	with
+170	44	58	n	Adam optimizer
+170	59	63	p	with
+170	64	74	n	lr = 0.001
+170	75	80	p	where
+170	85	98	n	learning rate
+170	102	112	p	divided by
+170	113	114	n	2
+170	115	122	p	once at
+170	127	140	n	10 - th epoch
+170	145	153	p	again at
+170	158	171	n	15 - th epoch
+172	3	13	p	regularize
+172	14	21	n	weights
+172	22	24	p	of
+172	29	37	n	mappings
+172	38	42	p	with
+172	43	61	n	l 2 regularization
+172	62	66	p	with
+172	67	85	n	reg value = 0.0005
+173	0	3	p	For
+173	4	7	n	VGG
+173	13	17	p	take
+173	18	25	n	outputs
+173	26	30	p	from
+173	31	74	n	{ conv 4 1 , conv 4 3 , conv5 1 , conv5 3 }
+173	79	85	p	map to
+173	86	107	n	semantic feature maps
+173	108	122	p	with dimension
+173	123	131	n	18181024
+173	138	141	p	for
+173	142	152	n	PNAS - Net
+173	156	160	p	take
+173	161	168	n	outputs
+173	169	173	p	from
+173	174	212	n	{ Cell 5 , Cell 7 , Cell 9 , Cell 11 }
+24	29	45	p	explicitly learn
+24	48	66	n	non-linear mapping
+24	67	69	p	of
+24	74	103	n	visual and textual modalities
+24	104	108	p	into
+24	111	123	n	common space
+24	136	138	p	at
+24	139	160	n	different granularity
+24	161	164	p	for
+24	165	176	n	each domain
+26	5	25	n	common space mapping
+26	29	41	p	trained with
+26	42	58	n	weak supervision
+26	63	75	p	exploited at
+26	76	87	n	test - time
+26	88	92	p	with
+26	95	139	n	multi - level multimodal attention mechanism
+26	142	147	p	where
+26	150	167	n	natural formalism
+26	168	181	p	for computing
+26	182	200	n	attention heatmaps
+26	201	203	p	at
+26	204	214	n	each level
+26	217	234	n	attended features
+26	239	257	n	pertinence scoring
+26	274	279	p	solve
+26	284	305	n	phrase grounding task
+26	306	331	n	elegantly and effectively
+2	51	75	n	Image - Phrase Grounding
+4	26	42	n	phrase grounding
+187	12	21	p	show that
+187	26	32	n	method
+187	33	58	n	significantly outperforms
+187	59	93	n	all state - of - the - art methods
+187	94	96	p	in
+187	97	128	n	all conditions and all datasets
+192	18	27	n	3rd level
+192	28	37	p	dominates
+192	42	51	n	selection
+192	62	71	n	4th level
+192	80	93	p	important for
+192	94	112	n	several categories
+192	113	120	p	such as
+192	121	138	n	scene and animals
+193	4	13	n	1st level
+193	17	37	p	exploited mostly for
+193	42	71	n	animals and people categories
+188	278	280	p	on
+188	281	291	n	Flickr30 k
+188	62	67	n	model
+188	248	270	n	state - of - the - art
+189	3	15	p	observe that
+189	16	26	n	our method
+189	27	34	p	obtains
+189	37	55	n	higher performance
+189	56	58	p	on
+189	59	80	n	almost all categories
+190	10	18	p	based on
+190	19	26	n	PNASNet
+190	27	51	n	consistently outperforms
+190	79	81	p	on
+190	82	96	n	all categories
+190	100	112	n	both metrics
+194	4	27	n	full sentence selection
+194	28	44	p	relies mostly on
+194	49	58	n	3rd level
+194	75	78	p	for
+194	79	93	n	some sentences
+194	98	107	n	4th model
+194	112	116	p	been
+194	117	125	n	selected

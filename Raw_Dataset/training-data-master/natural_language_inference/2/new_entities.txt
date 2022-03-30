@@ -1,0 +1,110 @@
+174	3	11	p	tokenize
+174	16	23	n	corpora
+174	24	28	p	with
+174	29	33	n	NLTK
+175	3	6	p	use
+175	11	24	n	300 dimension
+175	25	49	n	pre-trained word vectors
+175	50	54	p	from
+175	55	60	n	GloVe
+177	7	21	n	50 - dimension
+177	22	57	n	character - level embedding vectors
+179	7	14	n	dropout
+179	17	21	p	with
+179	22	37	n	probability 0.3
+179	38	41	p	for
+179	42	63	n	every learnable layer
+182	11	25	n	Adam optimizer
+182	26	30	p	with
+182	31	44	n	learning rate
+182	45	47	p	of
+182	48	53	n	0.001
+182	58	66	n	clipnorm
+182	67	69	p	of
+182	70	71	n	5
+176	4	31	n	out - of - vocabulary words
+176	36	52	p	initialized with
+176	53	65	n	zero vectors
+178	4	26	n	number of hidden units
+178	27	29	p	in
+178	30	43	n	all the LSTMs
+178	44	46	p	is
+178	47	50	n	150
+180	0	3	p	For
+180	4	35	n	multi-factor attentive encoding
+180	41	47	p	choose
+180	48	57	n	4 factors
+181	0	6	p	During
+181	7	15	n	training
+181	22	36	n	minibatch size
+181	40	48	p	fixed at
+181	49	51	n	60
+33	18	25	p	propose
+33	29	93	n	end - to - end question - focused multi-factor attention network
+33	94	97	p	for
+33	98	133	n	document - based question answering
+33	136	142	n	AMANDA
+33	153	162	p	learns to
+33	163	172	n	aggregate
+33	173	181	n	evidence
+33	182	200	p	distributed across
+33	201	219	n	multiple sentences
+33	224	234	p	identifies
+33	239	263	n	important question words
+33	264	271	p	to help
+33	272	279	n	extract
+33	284	290	n	answer
+34	14	20	n	AMANDA
+34	21	29	p	extracts
+34	34	40	n	answer
+34	50	65	p	by synthesizing
+34	66	80	n	relevant facts
+34	81	85	p	from
+34	90	97	n	passage
+34	107	132	p	by implicitly determining
+34	137	157	n	suitable answer type
+34	158	164	p	during
+34	165	175	n	prediction
+2	57	75	n	Question Answering
+4	44	69	n	question answering ( QA )
+6	103	105	n	QA
+13	3	65	n	machine comprehension - based ( MC ) question answering ( QA )
+185	0	10	p	shows that
+185	11	17	n	AMANDA
+185	18	29	p	outperforms
+185	30	64	n	all the stateof - the - art models
+185	65	67	p	by
+185	70	88	n	significant margin
+185	89	91	p	on
+185	96	112	n	New s QA dataset
+186	0	5	p	shows
+186	10	17	n	results
+186	18	20	p	on
+186	25	41	n	TriviaQA dataset
+191	0	5	p	shows
+191	11	17	n	AMANDA
+191	18	26	p	achieves
+191	27	55	n	state - of the - art results
+191	56	58	p	in
+191	64	88	n	Wikipedia and Web domain
+191	89	91	p	on
+191	92	130	n	distantly supervised and verified data
+193	8	10	p	on
+193	15	32	n	Search QA dataset
+200	0	6	n	AMANDA
+200	7	18	p	outperforms
+200	19	31	n	both systems
+200	34	48	p	especially for
+200	49	78	n	multi-word - answer questions
+200	79	81	p	by
+200	84	95	n	huge margin
+202	18	26	p	performs
+202	27	33	n	better
+202	34	38	p	than
+202	39	64	n	any of the ablated models
+202	71	78	p	include
+202	83	91	n	ablation
+202	92	94	p	of
+202	95	125	n	multifactor attentive encoding
+202	128	175	n	max - attentional question aggregation ( q ma )
+202	182	218	n	question type representation ( q f )

@@ -1,0 +1,103 @@
+104	4	29	n	answer position indicator
+104	46	51	p	plays
+104	54	66	n	crucial role
+104	67	69	p	in
+104	70	104	n	answer focused question generation
+109	6	15	p	show that
+109	16	52	n	word case , POS and NER tag features
+109	53	67	p	contributes to
+109	68	87	n	question generation
+71	0	12	n	PCFG - Trans
+72	4	23	n	rule - based system
+74	0	10	n	s 2 s+ att
+75	3	12	p	implement
+75	15	37	n	seq2seq with attention
+76	0	3	n	NQG
+77	3	9	p	extend
+77	14	23	n	s 2s+ att
+77	24	28	p	with
+77	33	55	n	feature - rich encoder
+77	56	64	p	to build
+77	69	79	n	NQG system
+78	0	5	n	NQG +
+78	24	35	p	incorporate
+78	36	50	n	copy mechanism
+78	54	63	p	deal with
+78	64	82	n	rare words problem
+79	0	14	n	NQG + Pretrain
+79	15	23	p	Based on
+79	24	29	n	NQG +
+79	35	45	p	initialize
+79	50	71	n	word embedding matrix
+79	72	76	p	with
+79	77	102	n	pre-trained GloVe vectors
+80	0	13	n	NQG + STshare
+80	14	22	p	Based on
+80	23	28	n	NQG +
+80	34	38	p	make
+80	43	62	n	encoder and decoder
+80	63	68	p	share
+80	73	94	n	same embedding matrix
+81	0	6	n	NQG ++
+82	0	8	p	Based on
+82	9	14	n	NQG +
+82	20	23	p	use
+82	29	73	n	pre-train word embedding and STshare methods
+82	76	94	p	to further improve
+82	99	110	n	performance
+16	109	119	p	denoted as
+16	124	168	n	Neural Question Generation ( NQG ) framework
+16	171	182	p	to generate
+16	183	219	n	natural language questions from text
+16	220	227	p	without
+16	228	245	n	pre-defined rules
+17	4	40	n	Neural Question Generation framework
+17	41	48	p	extends
+17	53	84	n	sequence - to - sequence models
+17	85	97	p	by enriching
+17	102	109	n	encoder
+17	110	114	p	with
+17	115	121	n	answer
+17	126	142	n	lexical features
+17	143	154	p	to generate
+17	155	179	n	answer focused questions
+18	17	24	n	encoder
+18	25	30	p	reads
+18	44	58	n	input sentence
+18	74	99	n	answer position indicator
+18	104	120	n	lexical features
+19	4	27	n	answer position feature
+19	28	35	p	denotes
+19	40	51	n	answer span
+19	52	54	p	in
+19	59	73	n	input sentence
+20	4	20	n	lexical features
+20	86	101	p	to help produce
+20	102	126	n	better sentence encoding
+20	21	28	p	include
+20	29	55	n	part - of - speech ( POS )
+20	60	85	n	named entity ( NER ) tags
+21	13	20	n	decoder
+21	21	25	p	with
+21	26	45	n	attention mechanism
+21	46	55	p	generates
+21	59	83	n	answer specific question
+21	84	86	p	of
+21	91	99	n	sentence
+2	0	36	n	Neural Question Generation from Text
+4	0	29	n	Automatic question generation
+10	0	56	n	Automatic question generation from natural language text
+11	44	63	n	question generation
+89	4	17	n	NQG framework
+89	18	29	p	outperforms
+89	34	71	n	PCFG - Trans and s 2s + att baselines
+89	72	74	p	by
+89	77	89	n	large margin
+92	23	29	n	NQG ++
+92	36	56	n	1.11 BLEU score gain
+92	57	61	p	over
+92	62	67	n	NQG +
+91	0	16	p	With the help of
+91	17	31	n	copy mechanism
+91	34	39	n	NQG +
+91	46	67	n	2.05 BLEU improvement

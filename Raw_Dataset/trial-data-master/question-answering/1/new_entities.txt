@@ -1,0 +1,130 @@
+142	0	9	n	WORDEMBED
+142	21	30	p	represent
+142	31	48	n	each short - text
+142	49	51	p	as
+142	56	101	n	sum of the embedding of the words it contains
+143	44	54	p	calculated
+143	4	18	n	matching score
+143	19	21	p	of
+143	22	39	n	two short - texts
+143	55	59	p	with
+143	63	66	n	MLP
+143	67	71	p	with
+143	76	115	n	embedding of the two documents as input
+143	118	127	n	DEEPMATCH
+143	133	137	p	take
+143	142	156	n	matching model
+143	164	175	p	train it on
+143	176	188	n	our datasets
+143	189	193	p	with
+143	194	258	n	3 hidden layers and 1,000 hidden nodes in the first hidden layer
+143	261	270	n	URAE+ MLP
+144	3	6	p	use
+144	11	42	n	Unfolding Recursive Autoencoder
+144	46	49	p	get
+144	52	89	n	100 dimensional vector representation
+144	90	92	p	of
+144	93	106	n	each sentence
+144	113	116	p	put
+144	117	123	n	an MLP
+144	124	140	p	on the top as in
+144	141	150	n	WORDEMBED
+144	153	170	n	SENNA + MLP / SIM
+145	3	6	p	use
+145	11	38	n	SENNA - type sentence model
+145	39	42	p	for
+145	43	66	n	sentence representation
+146	0	6	n	SENMLP
+146	12	16	p	take
+146	21	35	n	whole sentence
+146	36	38	p	as
+146	39	44	n	input
+146	47	51	p	with
+146	52	87	n	word embedding aligned sequentially
+146	96	99	p	use
+146	103	106	n	MLP
+146	107	116	p	to obtain
+146	121	139	n	score of coherence
+127	20	23	p	use
+127	24	51	n	stochastic gradient descent
+127	52	55	p	for
+127	60	82	n	optimization of models
+131	7	38	n	50 - dimensional word embedding
+131	39	51	p	trained with
+131	56	65	n	Word2 Vec
+136	7	11	n	ReLu
+136	12	14	p	as
+136	19	38	n	activation function
+136	39	42	p	for
+136	43	80	n	all of models ( convolution and MLP )
+136	89	95	p	yields
+136	96	124	n	comparable or better results
+136	125	127	p	to
+136	128	152	n	sigmoid - like functions
+136	159	168	p	converges
+136	169	175	n	faster
+134	7	22	n	3 - word window
+134	23	33	p	throughout
+134	34	49	n	all experiments
+134	58	62	p	test
+134	63	94	n	various numbers of feature maps
+134	97	111	p	typically from
+134	112	122	n	200 to 500
+134	127	130	p	for
+134	131	150	n	optimal performance
+128	24	43	p	perform better with
+128	44	77	n	mini-batch ( 100 ? 200 in sizes )
+128	84	90	p	can be
+128	98	110	n	parallelized
+128	111	113	p	on
+128	114	128	n	single machine
+128	129	133	p	with
+128	134	145	n	multi-cores
+129	0	18	p	For regularization
+129	59	73	n	early stopping
+129	34	37	p	for
+129	88	94	n	models
+129	95	99	p	with
+129	100	111	n	medium size
+129	116	135	n	large training sets
+129	138	142	p	with
+129	143	162	n	over 500K instances
+16	22	29	p	propose
+16	30	56	n	deep neural network models
+16	65	70	p	adapt
+16	75	97	n	convolutional strategy
+16	140	142	p	to
+16	143	159	n	natural language
+17	0	18	p	To further explore
+17	23	31	n	relation
+17	32	39	p	between
+17	40	80	n	representing sentences and matching them
+17	86	92	p	devise
+17	95	106	n	novel model
+17	243	247	p	with
+17	252	283	n	same convolutional architecture
+17	112	130	p	can naturally host
+17	140	178	n	hierarchical composition for sentences
+17	187	242	n	simple - to - comprehensive fusion of matching patterns
+2	47	82	n	Matching Natural Language Sentences
+4	0	17	n	Semantic matching
+11	0	54	n	Matching two potentially heterogenous language objects
+15	13	32	n	sentence - matching
+173	0	8	n	ARC - II
+173	9	46	p	outperforms others significantly when
+173	51	93	n	training instances are relatively abundant
+176	35	86	n	convolutional models ( ARC - I & II , SENNA + MLP )
+176	87	109	p	perform favorably over
+176	110	133	n	bag - of - words models
+177	58	78	n	ARC - I and ARC - II
+177	79	98	p	trained purely with
+177	99	115	n	random negatives
+177	116	166	p	automatically gain some ability in telling whether
+177	171	196	n	words in a given sentence
+177	201	203	p	in
+177	204	226	n	right sequential order
+179	16	61	n	simple sum of embedding learned via Word2 Vec
+179	62	68	p	yields
+179	69	92	n	reasonably good results
+179	93	95	p	on
+179	96	111	n	all three tasks

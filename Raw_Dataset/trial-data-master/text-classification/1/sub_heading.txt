@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Preliminary
+Supervised LSTM for text categorization
+Elimination of the word embedding layer
+More simplifications
+Experiments (supervised)
+Semi-supervised LSTM
+Two-view embedding (tv-embedding) [JZ15b]
+Learning LSTM tv-embeddings
+Combining LSTM tv-embeddings and CNN
+Semi-supervised experiments
+Experiments combining CNN tv-embeddings and
+Comparison with the previous best results
+Conclusion

@@ -1,0 +1,4 @@
+(Contribution||has research problem||COMPRESSING WORD EMBEDDINGS)
+(Contribution||has research problem||compressing the word embeddings without any significant sacrifices in performance)
+(Contribution||has research problem||constructing word embeddings with drastically fewer parameters)
+(Contribution||has research problem||compress the size of NLP models)

@@ -1,0 +1,35 @@
+{
+  "has" : {
+    "Ablation analysis" : {
+      "on" : {
+        "TACRED dev set" : {
+          "find" : {
+            "entity representations and feedforward layers" : {
+              "contribute" : "1.0 F 1"
+            },
+            "from sentence" : "To study the contribution of each component in the C - GCN model , we ran an ablation study on the TACRED dev set ) .
+We find that : The entity representations and feedforward layers contribute 1.0 F 1 ."
+
+          },
+          "remove" : {
+            "dependency structure" : {
+              "score drops by" : "3.2 F 1",
+              "from sentence" : "( 2 ) When we remove the dependency structure ( i.e. , setting to I ) , the score drops by 3.2 F 1 ."
+            },
+            "feedforward layers , the LSTM component and the dependency structure altogether" : {
+              "F 1 drops by" : "10.3",
+              "from sentence" : "( 3 ) F 1 drops by 10.3 when we remove the feedforward layers , the LSTM component and the dependency structure altogether ."  
+            }
+          },
+          "Removing" : {
+            "pruning" : {
+              "using" : "full trees as input",
+              "hurts the result by" : "another 9.7 F 1"
+            },
+            "from sentence" : "( 4 ) Removing the pruning ( i.e. , using full trees as input ) further hurts the result by another 9.7 F 1 ."
+          }
+        }
+      }
+    }
+  }
+}

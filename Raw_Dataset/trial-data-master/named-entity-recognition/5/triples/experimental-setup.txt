@@ -1,0 +1,4 @@
+(Contribution||has||Experimental setup)
+(Experimental setup||has||experiments)
+(experiments||conducted using||GeForce GTX 1080 GPU)
+(GeForce GTX 1080 GPU||with||8 GB memory)

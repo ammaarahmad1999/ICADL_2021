@@ -1,0 +1,938 @@
+arXiv:1801.10296v2 [cs.CL] 5 Jul 2018
+
+Reinforced Self-Attention Network:
+a Hybrid of Hard and Soft Attention for Sequence Modeling
+
+Tao Shen’, Tianyi Zhou”, Guodong Long’, Jing Jiang’, Sen Wang’, Chengqi Zhang
+
+1
+
+' Centre for Artificial Intelligence, School of Software, University of Technology Sydney
+2 Paul G. Allen School of Computer Science & Engineering, University of Washington
+> School of Information and Communication Technology, Griffith University
+tao.shen @ student.uts.edu.au, tianyizh@uw.edu, guodong.long @uts.edu.au,
+jing.jiang @uts.edu.au, sen.wang @ eriffith.edu.au, chengqi.zhang @uts.edu.au
+
+Abstract
+
+Many natural language processing tasks solely rely
+on sparse dependencies between a few tokens in a
+sentence. Soft attention mechanisms show promising performance in modeling local/global dependencies by soft probabilities between every two tokens, but they are not effective and efficient when
+applied to long sentences. By contrast, hard attention mechanisms directly select a subset of tokens
+but are difficult and inefficient to train due to their
+combinatorial nature. In this paper, we integrate
+both soft and hard attention into one context fusion
+model, “reinforced self-attention (ReSA)’, for the
+mutual benefit of each other. In ReSA, a hard attention trims a sequence for a soft self-attention to
+process, while the soft attention feeds reward signals back to facilitate the training of the hard one.
+For this purpose, we develop a novel hard attention called “reinforced sequence sampling (RSS)’,
+selecting tokens in parallel and trained via policy gradient. Using two RSS modules, ReSA efficiently extracts the sparse dependencies between
+each pair of selected tokens. We finally propose
+an RNN/CNN-free sentence-encoding model, “reinforced self-attention network (ReSAN)’, solely
+based on ReSA. It achieves state-of-the-art performance on both Stanford Natural Language Inference (SNLI) and Sentences Involving Compositional Knowledge (SICK) datasets.
+
+1 Introduction
+
+Equipping deep neural networks (DNN) with attention mechanisms provides an effective and parallelizable approach for
+context fusion and sequence compression. It achieves compelling time efficiency and state-of-the-art performance in
+a broad range of natural language processing (NLP) tasks,
+such as neural machine translation |Bahdanau et al., 2015)
+
+Luong et al., 2015], dialogue generation |Shang et al., 2015
+
+machine reading/comprehension Seo et al., 2017], natural
+
+   
+  
+   
+    
+
+language inference [Liu et al., 2016), sentiment classification
+(Liver al., 2017D), etc. Recently, some neural nets based solely
+on attention, especially self-attention, outperform traditional
+recurrent or convolutional |Dong et
+neural networks on NLP tasks, such as machine
+translation [Vaswani et al., 2017] and sentence embedding
+
+Shen et al., 2018], which further demonstrates the power of
+attention mechanisms in capturing contextual dependencies.
+
+Soft and hard attention are the two main types of attention
+mechanisms. In soft attention (Bahdanau ef al., 2015). a categorical distribution is calculated over a sequence of elements.
+The resulting probabilities reflect the importance of each element and are used as weights to produce a context-aware
+encoding that is the weighted sum of all elements. Hence,
+soft attention only requires a small number of parameters and
+less computation time. Moreover, soft attention mechanism
+is fully differentiable and thus can be easily trained by endto-end back-propagation when attached to any existing neural
+net. However, the softmax function usually assigns small but
+non-zero probabilities to trivial elements, which will weaken
+the attention given to the few truly significant elements.
+
+Unlike the widely-studied soft attention, in hard attention
+IXu et al., 2015], a subset of elements is selected from an
+input sequence. Hard attention mechanism forces a model
+to concentrate solely on the important elements, entirely discarding the others. In fact, various NLP tasks solely rely
+on very sparse tokens from a long text input. Hard attention is well suited to these tasks, because it overcomes the
+weaknesses associated with soft attention in long sequences.
+However, hard attention mechanism is time-inefficient with
+sequential sampling and non-differentiable by virtue of their
+combinatorial nature. Thus, it cannot be optimized through
+back-propagation and more typically rely on policy gradient,
+e.g., REINFORCE (Williams, 1993}. As a result, training a
+hard attention model is usually an inefficient process — some
+even find convergence difficult — and combining them with
+other neural nets in an end-to-end manner is problematic.
+
+However, soft and hard attention mechanisms might be integrated into a single model to benefit each other in overcoming their inherent disadvantages, and this notion motivates our
+study. Specifically, a hard attention mechanism is used to encode rich structural information about the contextual dependencies and trims a long sequence into a much shorter one
+for a soft attention mechanism to process. Conversely, the
+soft one is used to provide a stable environment and strong
+reward signals to help in training the hard one. Such method
+would improve both the prediction quality of the soft attention
+mechanism and the trainability of the hard attention mechanism, while boosting the ability to model contextual dependencies. To the best of our knowledge, the idea of combining
+hard and soft attention within a model has not yet been studied. Existing works focus on only one of the two types.
+
+In this paper, we first propose a novel hard attention mechanism called “reinforced sequence sampling (RSS)’, which
+selects tokens from an input sequence in parallel, and differs
+from existing ones in that it is highly parallelizable without
+any recurrent structure. We then develop a model, “reinforced
+self-attention (ReSA)”’, which naturally combines the RSS
+with a soft self-attention. In ReSA, two parameter-untied
+RSS are respectively applied to two copies of the input sequence, where the tokens from one and another are called
+dependent and head tokens, respectively. ReSA only models
+the sparse dependencies between the head and dependent tokens selected by the two RSS modules. Finally, we build an
+sentence-encoding model, “reinforced self-attention network
+(ReSAN)”’, based on ReSA without any CNN/RNN structure.
+
+We test ReSAN on natural language inference and semantic relatedness tasks. The results show that ReSAN achieves
+the best test accuracy among all sentence-encoding models on the official leaderboard of the Stanford Natural Language Inference (SNLI) dataset, and state-of-the-art performance on the Sentences Involving Compositional Knowledge
+(SICK) dataset. Compared to the commonly-used models,
+ReSAN is more efficient and has better prediction quality
+than existing recurrent/convolutional neural networks, selfattention networks, and even well-designed models (e.g., semantic tree or external memory based models). All the experiments codes are released at
+
+Notation: 1) lowercase denotes a vector; 2) bold lowercase
+denotes a sequence of vectors (stored as a matrix); and 3)
+uppercase denotes a matrix or a tensor.
+
+2 Background
+
+2.1 Attention
+
+Given an input sequence x = [%1,...,%n] € Rex" (4, €
+IR%e denotes the embedded vector of i-th element), and the
+vector representation of a query qg, an vanilla attention mechanism uses a parameterized compatibility function f(x;, q) to
+computes an alignment score between q and each token x; as
+the attention of q to <; [Bahdanau er al, 2015). A softmax
+function is then applied to the alignment scores a € IR”
+over all tokens to generate a categorical distribution p(v|x, q),
+
+where v = 2 implies that token x; is selected according to its
+relevance to query q. This can be formally written as
+
+a=([f (ai, a)» (1)
+p(v|x,q) = softmax(a). (2)
+
+The output of attention, s, is the expectation of sampling a
+token according to the categorical distribution p(v|ax, q), ie.,
+
+nm
+
+s= Srv = oat, @ ats = Egaopteslar, oh [ai] (3)
+i=1
+
+Multi-dimensional (multi-dim) attention mechanism |Shen
+extends the vanilla one |Bahdanau eg al., 2015]
+to a feature-wise level, i.e., each feature of every token has
+an alignment score. Hence, rather than a scalar, the output of
+f (xi, q) is a vector with the same dimensions as the input, and
+the resulting alignment scores compose a matrix a € R%&*”.
+Such feature-level attention has been verified in terms of its
+ability to capture the subtle variances of different contexts.
+
+2.2 Self-Attention
+
+Self-attention is a special case of attention where the query
+q stems from the input sequence itself. Hence, self-attention
+mechanism can model the dependencies between tokens from
+the same sequence. Recently, a variety of self-attention mechanisms have been developed, each serving a distinct purpose, but most can be roughly categorized into two types,
+token2token self-attention and source2token self-attention.
+Token2token self-attention mechanisms aim to produce a
+context-aware representation for each token in light of its dependencies on other tokens in the same sequence. The query
+q is replaced with the token x;, and the dependency of x; on
+another token x; is computed by f(;,2,;). There are two
+
+proposed self-attentions in this type, i.e., scaled dot-product
+attention which composes the multi-head attention
+and masked self-attention which leads to directional self-attention [Shen er al., 2018}. Because the latter
+experimentally outperforms the former, we select the masked
+self-attention as our fundamental soft self-attention module.
+Masked Self-Attention is more sophisticated than scaled
+dot-product attention in that, it uses multi-dim and multi
+layer perceptron with an additional position mask, rather than
+a scaled dot-product, as the compatibility function, 1.e.,
+
+f(@i,2;) —
+c- tanh (Wa; +Wa, + b/c) + Mi, (A)
+
+where c is a scalar and VW is the mask with each entry M/;; €
+{—co,0}. When M/;,; = —oo, applying the softmax function
+to a results in a zero probability, p(z = i|x,x;) = 0, which
+switches off the attention of 7; to x;. An asymmetric mask
+where M;; # M,; enforces directional attention between 2;
+and x;, which can encode temporal order information. Two
+positional masks have been designed to encode the forward
+and backward temporal order, respectively, 1.e.,
+
+fw — J OQ, <j bw J O, ~>J
+Mis = ‘ —oo, otherwise Mis = ‘ —oo, otherwise
+In forward and backward masks, /;; = —oo. Thus, the at
+tention of a token to itself is blocked, so the output of masked
+self-attention mechanism comprises the features of the context around each token rather than context-aware features.
+Directional self-attention uses a fusion gate to combine the
+embedding of each token with its context. Specifically, a fusion gate combines the input and output of a masked self
+attention to produce context-aware representations. This idea
+is similar to the highway network [Srivastava et al., 2015].
+Source2token self-attention mechanisms |Shen ef al.,
+
+remove the query qg from the compatibility function
+in Eq.(i) and directly compresses a sequence into a vector
+representation calculated from the dependency between each
+token x, and the entire input sequence x. Hence, this form of
+self-attention is highly data- and task- driven.
+
+3 Proposed Models
+
+This section begins by introducing a hard attention mechanism called RSS in Section [3.1] followed by integrating the
+RSS with a soft self-attention mechanism into a context fusion model called ReSA in Section Finally, a model
+named ReSAN, based on ReSA, is designed for sentence encoding tasks in Section[3.3]
+
+3.1 Reinforced Sequence Sampling (RSS)
+
+The goal of hard attention mechanism is to select a subset
+of critical tokens that provides sufficient information to complete downstream tasks, so any further computations on the
+trivial tokens can be saved. In the following, we introduce
+a hard attention mechanism called RSS. Given an input sequence @ = [21,...,2n], RSS generates an equal-length sequence of binary random variables z = [z1,..., Zn] where
+z;, = 1 1mplies that x; 1s selected whereas z; = 0 indicates
+that x; 1s discarded. In RSS, the elements of z are sampled in
+parallel according to probabilities computed by a learned attention mechanism. This is more efficient than using MCMC
+with iterative sampling. The particular aim of RSS is to learn
+the following product distribution.
+
+nm
+
+p(z\a;6,) = | | p(zilx; 4), (5)
+
+i=l
+where p(zi|a; 0,-) = g(f(@; 45 )i; Ay).
+
+The function f(-;6,) denotes a context fusion layer, e.g., BiLSTM, Bi-GRU, etc., producing context-aware representation for each x;. Then, g(-;6,) maps f(-;6) to the probability of selecting the token. Note we can sample all z;
+for different 2 in parallel because the probability of z; (ie.,
+whether x; is selected) does not depends on z;_;. This is because the context features given by f(-;6,) already take the
+sequential information into account, so the conditionally independent sampling does not discard any useful information.
+
+To fully explore the high parallelizability of attention, we
+avoid using recurrent models in this paper. Instead we apply a
+
+more efficient f(-; 0) inspired by source2token self-attention
+and intra-attention |Liu et al., 2016], i.e.,
+f(x; 6¢)i = (xi; pooling(x); x; © pooling(x)], (6)
+g(hi; 99) = sigmoid(w? o(Wh, +b) +b), (7)
+
+where © denotes the element-wise product, and the
+pooling(-) represents the mean-pooling operation along the
+
+ 
+ 
+     
+  
+
+[| Unselected = 0
+
+[| Selected = 1
+Dx] Excluded
+
+gee SS ae SSS Se =
+
+ 
+ 
+ 
+
+fralfizle + + fin
+Fan
+
+ 
+
+ 
+
+ 
+
+Figure 1: Reinforced self-attention (ReSA) model. f;,; denotes the
+alignment score obtained from f(x;,2;).
+
+sequential axis. RSS selects a subset of tokens by sampling z; according to the probability given by g(h;;6,) for
+all2 = 1,2,..., in parallel.
+
+For the training of RSS, there are no ground truth labels to
+indicate whether or not a token should be selected, and the
+discrete random variables in z lead to a non-differentiable
+objective function. Therefore, we formulate learning the RSS
+parameter 6, as a reinforcement learning problem, and apply the policy gradient method. Further details on the model
+training are presented in Section|4]
+
+3.2 Reinforced Self-Attention (ReSA)
+
+The fundamental idea behind this paper is that the hard and
+soft attention mechanisms can mutually benefit each other to
+overcome their inherent disadvantages via interaction within
+an integrated model. Based on this idea, we develop a novel
+self-attention termed ReSA. On the one hand, the proposed
+RSS provides a sparse mask to a self-attention module that
+only needs to model the dependencies for the selected token
+pairs. Hence, heavy memory loads and computations associated with soft self-attention can be effectively relieved. On
+the other hand, ReSA uses the output of the soft self-attention
+module for prediction, whose correctness (as compared to the
+ground truth) is used as reward signal to train the RSS. This
+alleviates the difficulty of training hard attention module.
+Figure |1|shows the detailed architecture of ReSA. Given
+the token embedding in an input sequence, # = |[71,..., 2p],
+ReSA aims to produce token-wise context-aware representations, uw = [u,,..., Un]. Unlike previous self-attention mechanisms, ReSA only selects a subset of head tokens, and generates their context-aware representations by only relating each
+head token to a small subset of dependent tokens. This notion
+is based on the observation that for many NLP tasks, the final
+prediction only relies on a small set of key words and their
+contexts, and each key word only depends on a small set of
+other words. Namely, the dependencies between tokens from
+the same sequence are sparse.
+
+In ReSA, we use two RSS modules, as outlined in Section
+to generate two sequences of labels for the selections of
+head and dependent tokens, respectively, 1.e.,
+
+gh — [sh ..., "| ~ RSS(a; 6-n), (8)
+24 — [27 84) ~ RSS(a; 6,4), (9)
+
+We use 2” and 2% sampled from the two independent (parameter untied) RSS to generate ann x nm mask M"°**, 1e.,
+
+J —OOo, otherwise.
+
+The resulting mask is then applied as an extra mask to the
+masked self-attention mechanism introduced in Section
+Specifically, we add M/"** to Eq.(4) and use
+
+f°°* (xi, £;) = f (wi,@;) + Mi;° (11)
+
+to generate the alignment scores. For each head token x;, a
+softmax function is applied to f"°*(-,x,;), which produces a
+categorical distribution over all dependent tokens, 1.e.,
+
+P) = softmax([f"**(a;, 7;)|/"_), forj =1,...,n. (12)
+
+(10)
+
+The context features of x; is computed by
+
+n
+8; =) P! ©ay, for j =1,...,n, (13)
+i=1
+where © denotes a broadcast product in the vanilla attention
+or an element-wise product in the multi-dim attention.
+
+For a selected head token, as formulated in Eq.(10), the attention from a token to itself is disabled in /"**, so the s;
+for the selected head token encodes only the context features
+but not the desired context-ware embedding. For an unselected head token x; with a = 0, its alignment scores over
+all dependent tokens are equal to —oo, which leads to the
+equal probabilities in P/ produced by the softmax function.
+Hence, s; for each unselected token x; can be regarded as the
+result of mean-pooling over all dependent tokens.
+
+To merge the word embedding with its context feature for
+the selected heads, and distinguish the representations from
+others for the unselected heads, a fusion gate is used to combine s with the input embedding = in parallel and generate
+the final context-aware representations for all tokens, 1.e.,
+
+F = sigmoid (Ww) fw; s] + o()) . (14)
+u=Foa+(1—-F)os, (15)
+
+where W‘f), b{/) are the learnable parameters. The contextaware representations, u = |uj,...,Un], are final output.
+One primary advantage of ReSA is that it generates better
+predictions using less time and memory than existing selfattention mechanisms. In particular, major computations of
+ReSA are 1) the inference of self-attention over a shorter subsequence, and 2) the mean-pooling over the remaining elements. This is much more time- and memory- efficient than
+computing the self-attention over the entire input sequence.
+
+3.3. Applications of the Proposed Models
+
+To adapt ReSA for sentence encoding tasks, we build
+an RNN/CNN-free network, called reinforced self-attention
+network (ReSAN), which is solely based on ReSA and
+source2token self-attention (Section (2.2). In particular, we
+pass the output sequence of ReSA into a source2token selfattention module to generate a compressed vector representation, e € IR%, which encodes the semantic and syntactic
+knowledge of the input sentence and can be used for various
+downstream NLP tasks.
+
+Further, we propose two simplified variants of ReSAN with
+a simpler structure or fewer parameters, i.e., 1) ReSAN w/o
+unselected heads which only applies the soft self-attention
+to the selected head and dependent tokens, and 2) ReSAN
+w/o dependency restricted which use only one RSS to select
+tokens for both heads and dependents. Both variants entirely
+discard the information of the unselected tokens and hence
+are more time-efficient. However, neither can be used for
+context fusion, because the input and output sequences are
+not equal in length.
+
+4 Model Training
+
+The parameters in ReSAN can be divided into two parts, 6,
+for the RSS modules and @, for the rest parts which includes
+word embeddings, soft self-attention module, and classification/regression layers. Learning 0, is straightforward and can
+be completed by back-propagation in an end-to-end manner.
+However, Optimizing 6,. is more challenging because the RSS
+modules contain discrete variables z and, thus, the objective
+function is non-differentiable w.r.t. 6,.
+
+In supervised classification settings, we use the crossentropy loss plus L2 regularization penalty as the loss, 1.e.,
+
+Is(9s) = Eve y*)~p[— log p(y = y*|a*; Os,r)] + WGI e
+
+where (a*,y*) denotes a sample from dataset D. The loss
+above is used for learning 0, by back-propagation algorithm.
+Optimizing 0, is formulated as a reinforcement learning
+problem solved by the policy gradient method (1.e., REINFORCE algorithm). In particular, RSS plays as an agent and
+takes action of whether to select a token or not. After going
+through the entire sequence, it receives a loss value from the
+classification problem, which can be regarded as the negative
+delay reward to train the agent. Since the overall goal of RSS
+is to select a small subset of tokens for better efficiency and
+meanwhile retain useful information, a penalty limiting the
+number of selected tokens is included in the reward FR, 1.e.,
+
+R = log p(y = y*|@*;0s,0r) —AY_ 4;/len(x*), (17)
+
+where A is the penalty weight and is fine-tuned with values
+from {0.005, 0.01, 0.02} in all experiments. Then, the objective of learning 0, is to maximize the expected reward, i.e.,
+
+1
+Jn(Or) = Ee y+)~{E2lR]} © S” Ez[R] (18)
+a* y*
+
+where the 2 = (£", 24) ~ p(z|ax*: 6,),)p(z4|x*; Ora) =
+(2; x*;0,.) and N is sample number in the dataset. Based
+Model |A|
+
+ 
+  
+   
+ 
+
+ 
+
+     
+    
+  
+      
+
+ 
+   
+
+300D LSTM encoders [Bowman et al., 2016 3.0m
+300D SPINN-PI encoders [Bowman ef al., 2016 3.7m
+600D Bi-LSTM encoders O16 2.0m
+600D Bi-LSTM +intra-attention [Liu ef al., 2016 2.8m
+300D NSE encoders 3.0m
+600D Deep Gated Attn. [Chen ef al., 2017) 11.6m
+600D Gumbel TreeLST 10m
+600D Residual stacked encoders |Nie and Bansal, 2017! 29m
+Bi-LSTM 2.9m
+Bi-GRU | 5 2.5m
+Multi-window CNN |Kim, 2014 1.4m
+Hierarchical CNN [Gehring et al., 2017 3.4m
+Multi-head | Vaswani ef al., 20 2.0m
+DiSAN | O18 2.4m
+300D ReSAN 3.1m
+
+T(s)/epoch Inference T(s) Train Accuracy Test Accuracy
+
+83.9 80.6
+89.2 83.2
+86.4 83.3
+84.5 84.2
+86.2 84.6
+90.5 85.5
+93.1 86.0
+91.0 86.0
+2080 D2 90.4 85.0
+1728 9.3 91.9 84.9
+284 2.4 89.3 83.2
+343 Dud 91.3 83.9
+345 3.0 89.6 84.2
+587 7.0 91.1 85.6
+622 5.5 92.6 86.3
+
+Table 1: Experimental results for different methods on SNLI. |9|: the number of parameters (excluding word embedding part). T(s)/epoch:
+average training time (second) per epoch. Inference T(s): average inference time (second) for all dev data on SNLI with a batch size of 100.
+
+on REINFORCE, the policy gradient of J,.(6,.) w.r.t 6, is
+
+1 ——
+Vo, Jr(O,) = v 2 dR Ve, m(2;2*;6,) (19)
+
+1 ——
+= S— Ez[R Vo, log (2; @*; 0,)]. (20)
+
+r* sy*
+
+Although theoretically feasible, it is not practical to optimize 6, and 6,. simultaneously, since the neural nets cannot
+provide accurate reward feedback to the hard attention at the
+beginning of the training phrase. Therefore, in early stage,
+the RSS modules are not updated, but rather forced to select
+all tokens (i.e., z = 1). And, 6, is optimized for several beginning epochs until the loss over development set does not
+decrease significantly. The resulting ReSAN now can provide a solid environment for training RSS modules through
+reinforcement learning. 6, and 6, are then optimized simultaneously to pursue a better performance by selecting critical
+token pairs and exploring their dependencies.
+
+Training Setup: All experiments are conducted in Python
+with Tensorflow and run on a Nvidia GTX 1080Ti. We
+use Adadelta as optimizer, which performs more stable than
+Adam on ReSAN. All weight matrices are initialized by Glorot Initialization and the biases
+are initialized as zeros. We use 300D GloVe 6B pre-trained
+vectors [Pennington er al., 2014] to initialize the word embeddings [Liu et al., 2018]. The words which do not appear in GloVe from the training set are initialized by sam
+pling from uniform distribution between |—0.05, 0.05]. We
+choose Dropout [Srivastava et al., 2014] keep probability
+from {0.65, 0.70, 0.75, 0.8} for all models and report the best
+
+result. The weight decay factor y for L2 regularization is set
+to 5 x 107°. The number of hidden units is 300.
+
+5 Experiments
+
+We implement ReSAN, its variants and baselines on two NLP
+tasks, language inference in Section|5.1jand semantic related
+ness in Section|5.2| A case study is then given to provide the
+insights into model.
+
+The baselines are listed as follows: 1) Bi-LSTM: 600D
+bi-directional LSTM (300D forward LSTM + 300D backward LSTM) [Graves et al., 2013]; 2) Bi-GRU: 600D bidirectional GRU [Chung er al., 2014]; 3) Multi-window
+CNN: 600D CNN sentence embedding model (200D for each
+of 3, 4, 5-gram) Kim, 2014]; 4) Hierarchical CNN: 3layer 300D CNN [Gehring et al., 2017] with kernel length
+5. GLU [Dauphin er al., 2016] and residual connection
+are applied; 5) Multi-head: 600D multi-head
+attention (8 heads, each has 75 hidden units), where the positional encoding method is applied to the input
+(2017); 6) DiSAN: 600D directional self-attention network
+(forward+backward masked self-attn) [Shen eg al., 2018}.
+
+5.1 Natural Language Inference
+
+  
+    
+ 
+ 
+ 
+
+The goal of natural language inference is to infer the semantic relationship between a pair of sentences, 1.e., a premise
+and the corresponding hypothesis. The possible relationships are entailment, neutral or contradiction. This experiment is conducted on the Stanford Natural Language Inference (SNLI) dataset which consists of
+549,367/9,842/9,824 samples for training/dev/test.
+
+In order to apply sentence encoding model to SNLI, we
+follow and use two parameter-tied sentence encoding models to respectively produce the premise
+and the hypothesis encodings, i.e., s”, s’. Their semantic relationship is represented by the concatenation of s?, s”, s?—s”
+and s?@s", which is passed to a classification module to generate a categorical distribution over the three classes.
+
+The experimental results for different methods from leaderboard and our baselines are shown in Table[]] Compared to
+the methods from official leaderboard, ReSAN outperforms
+all the sentence encoding based methods and achieves the best
+test accuracy. Specifically, compared to the last best models, i.e., 600D Gumbel TreeLSTM encoders and 600D Residual stacked encoders, ReSAN uses far fewer parameters with
+Model |0| Inference T(s) Test Accu.
+ReSAN 3.1m 5.5 86.3
+ReSAN w/o unselected heads 3.1m 5.3 86.1
+ReSAN w/o dependency restricted 2.8m 4.6 85.6
+ReSAN w/o hard attention 2.5m 7.0 86.0
+ReSAN w/o soft self-attention 1.0m 1.6 83.4
+ReSAN w/o all attentions 0.5m 1.8 83.1
+
+Table 2: An ablation study of ReSAN.
+
+better performance. Moreover, in contrast to the RNN/CNN
+based models with attention or memory module, ReSAN uses
+attention-only modules with equal or fewer parameters but
+outperforms them by a large margin, e.g., 600D Bi-LSTM
++ intra-attention (+3.0%), 300D NSE encoders (+1.7%) and
+600D Deep Gated Attn (+0.8%). Furthermore, ReSAN even
+outperforms the 300D SPINN-PI encoders by 3.1%., which is
+a recursive model and uses the result of an external semantic
+parsing tree as an extra input.
+
+In addition, we compare ReSAN with recurrent, convolutional, and attention-only baseline models in terms of the
+number of parameters, training/inference time and test accuracy. Compared to the recurrent models (e.g., Bi-LSTM
+and Bi-GRU), ReSAN shows better prediction quality and
+more compelling efficiency due to parallelizable computations. Compared to the convolutional models (1.e., Multiwindow CNN and Hierarchical CNN), ReSAN significantly
+outperforms them by 3.1% and 2.4% respectively due to the
+weakness of CNNs in modeling long-range dependencies.
+Compared to the attention-based models, multi-head attention and DiSAN, ReSAN uses a similar number of parameters
+with better test performance and less time cost.
+
+Further, we conduct an ablation study of ReSAN, as shown
+in Table |2} to evaluate the contribution of each component.
+One by one, each component is removed and the changes in
+test accuracy are recorded. In addition to the two variants
+of ReSAN introduced in Section [3.3] we also remove 1) the
+hard attention module, 2) soft self-attention module and 3)
+both hard attention and soft self-attention modules. In terms
+of prediction quality, the results show that 1) the unselected
+head tokens do contribute to the prediction, bringing 0.2%
+improvement; 2) using separate RSS modules to select the
+head and dependent tokens improves accuracy by 0.5%; and
+3) hard attention and soft self-attention modules improve the
+accuracy by 0.3% and 2.9% respectively. In terms of inference time, it shows that 1) the two variants are more timeefficient but have poorer performance; and 2) applying the
+RSS modules to self-attention or attention improves not only
+performance but also time efficiency.
+
+5.2 Semantic Relatedness
+
+Semantic relatedness aims to predict the similarity degree of
+a given pair of sentences, which is formulated as a regression
+problem. We use s! and s? to denote the encodings of the
+two sentences, and assume the similarity degree is a scalar between [1, K]. Following |Tai e7 al.|[2015], the relationship between the two sentences is represented as a concatenation of
+s'@s? and |s'—s?|. The representation is fed into a classifica
+Model Pearson’s r Spearman’s p MSE
+Meaning Factory“ 8268 7721 3224
+ECNU? 8414 / /
+DT-RNN® .7923 (.0070) .7319 (.0071) .3822 (.0137)
+SDT-RNN® .7900 (.0042) .7304 (.0042) .3848 (.0042)
+Cons. Tree-LSTM® .8582 (.0038) .7966 (.0053) .2734 (.0108)
+Dep. Tree-LSTM% .8676 (.0030) .8083 (.0042) .2532 (.0052)
+Bi-LSTM .8473 (.0013) .7913 (.0019) .3276 (.0087)
+Bi-GRU 8572 (.0022) .8026 (.0014) .3079 (.0069)
+Multi-window CNN .8374 (.0021) .7793 (.0028) .3395 (.0086)
+Hierarchical CNN _ .8436 (.0014) .7874 (.0022) .3162 (.0058)
+Multi-head 8521 (.0013) .7942 (.0050) .3258 (.0149)
+DiSAN .8695 (.0012) .8139 (.0012) .2879 (.0036)
+ReSAN 8720 (.0014) .8163 (.0018) .2623 (.0053)
+
+Table 3: Experimental results for different methods on SICK semantic relatedness dataset. The reported accuracies are the mean of five
+
+runs (standard deviations in parentheses). Cons. and Dep. represent
+Constituency and Dependency, respectively. “|Bierva et al., 2014],
+°|Zhao et al., 2014], “l|Socher et al., 2014}, “|Tai et al., 2015
+
+tion module with K-way categorical distribution output. We
+implement ReSAN and baselines on the Sentences Involving Compositional Knowledge (SICK)
+dataset, which provides the ground truth as similarity degree
+between [1,5]. SICK come with a standard training/dev/test
+split of 4,500/500/4,927 samples.
+
+The results in Table {3} show that the ReSAN achieves
+state-of-the-art or competitive performance for all three metrics. Particularly, ReSAN outperforms the feature engineering method by a large margin, e.g., Meaning Factory and
+ECNU. ReSAN also significantly outperforms the recursive
+models, which is widely used in semantic relatedness task,
+especially ones that demand external parsing results, e.g.,
+DT/SDT-RNN and Tree-LSTMs. Further, ReSAN achieves
+the best results among all the recurrent, convolutional and
+self-attention models listed as baselines. This thoroughly
+demonstrates the capability of ReSAN in context fusion and
+sentence encoding.
+
+5.3. Case Study
+
+To gain an insights into how the hard/soft attention and fusion
+gate work within ReSA, we visualize their resulting values in
+this section. Note that only the values at token level are illustrated. If the attention probabilities and the gate values are
+feature-level, we average the probabilities over all features.
+Two sentences from the SNLI test set serve as examples
+for this case study: 1) “The three men sit and talk about their
+lives.” and 2) “A group of adults are waiting for an event.”
+The head and dependent tokens selected by RSS modules
+are show in Figure[2|(a small square with color white denotes
+unselection and vice versa). It shows that more dependent tokens are selected than the head tokens, because all non-trivial
+dependents should be retained to adequately modify the corresponding heads, e.g., three, their in sentence | and group
+in sentence 2, whereas only the key heads should be kept to
+compose the trunk of a sentence. It also shows that most stop
+words (1.e., articles, conjunctions, prepositions, etc.) are seY 4
+oY(F oxsga 2 # § &
+AS ES TLE SS <§ 58 88 sé
+-The a at
+three -arou
+_-men Ce Pp
+L| ae © sit Ww OW -aduts
+“and -are
+i BW itak a W BE cwaiting
+| BD | -about -for
+-their -an
+n aD
+
+Bl | a -lives
+
+-event
+
+(a) Sentence 1 (b) Sentence 2
+
+Figure 2: Attention probabilities of soft self-attention in ReSA. The
+tokens aligned in horizontal axis are heads, and the tokens aligned
+in vertical axis are dependents.
+
+lected as neither head tokens nor dependent tokens.
+
+We also visualize the probability distributions of the soft
+self-attention module in Figure |2}(the depth of color blue).
+From the figure, we observe that 1) the semantically important words (e.g., noun and verb) usually receive great attention from all the other tokens, e.g., sit, talk, lives in sentence
+1 and adults, waiting, event in sentence 2; and 2) the attention score increases if the token pair can be constituted to a
+sense-group, e.g., (sit, talk) in sentence | and (adults, waiting), (waiting, event) in sentence 2.
+
+6 Related Work
+
+Applying reinforcement learning (RL) to natural language
+processing (NLP) tasks recently attracts enormous interests
+for two main purposes, i.e., optimizing the model according
+to non-differentiable objectives and accelerating the model
+
+speed. propose a method to select a sub
+set of a review passage for sentiment analysis from a specific aspect. IHe er al 12016a] use RL method to fine-tune
+
+a bilingual machine translation model by well-trained mono
+lingual language models. 12016] use built
+in transition-based parsing module to generate semantic constituency parsing tree for downstream NLP tasks by using RL.
+12017] propose a RL-based skim reading method,
+which is implemented on recurrent models, to skim the in
+significant time slots to achieve higher time efficiency.
+!2017al separately implement a hard attention or a soft
+
+attention on a question answering task to generate the document summary.|Shen ef al,|[2017} use dynamic episode number determined by RL rather than fixed one to attend memory
+for efficient machine comprehension. employ policy gradient method to optimize the model for nondifferentiable objectives of machine comprehension, 1.e., Fl
+score of matching the prediction with the ground truth.
+propose a service dialog system to sell movie
+tickets, where the agent in RL is used to select which user’s
+information should be obtained in next round for minimum
+number of dialog rounds to sell the ticket.
+simplify a sentence with objectives of maximum
+simplicity, relevance and fluency, where all three objectives
+are all non-differentiable w.r.t the parameters of model.
+
+7 Conclusions
+
+This study presents a context fusion model, reinforced selfattention (ReSA), which naturally integrates a novel form of
+highly-parallelizable hard attention based on reinforced sequence sampling (RSS) and soft self-attention mechanism for
+the mutual benefit of overcoming the intrinsic weaknesses associated with hard and soft attention mechanisms. The hard
+attention modules could be used to trim a long sequence into a
+much shorter one and encode rich dependencies information
+for a soft self-attention mechanism to process. Conversely,
+the soft self-attention mechanism could be used to provide
+a stable environment and strong reward signals, which improves the feasibility of training the hard attention modules. Based solely on ReSA and a source2token self-attention
+mechanism, we then propose an RNN/CNN-free attention
+model, reinforced self-attention network (ReSAN), for sentence encoding. Experiments on two NLP tasks — natural
+language inference and semantic relatedness — demonstrate
+that ReSAN deliver a new best test accuracy for the SNLI
+dataset among all sentence-encoding models and state-of-theart performance on the SICK dataset. Further, these results
+are achieved with equal or fewer parameters and in less time.
+
+Acknowledgments
+
+This research was funded by the Australian Government
+through the Australian Research Council (ARC) under grants
+1) LP160100630 partnership with Australia Government
+Department of Health and 2) LP150100671 partnership
+with Australia Research Alliance for Children and Youth
+(ARACY) and Global Business College Australia (GBCA).
+We also acknowledge the support of NVIDIA Corporation
+and MakeMagic Australia with the donation of GPU.
+
+References
+
+[Bahdanau et al., 2015] Dzmitry Bahdanau, Kyunghyun Cho, and
+Yoshua Bengio. Neural machine translation by jointly learning
+to align and translate. In JCLR, 2015.
+
+[Bjerva et al., 2014] Johannes Bjerva, Johan Bos, Rob Van der
+Goot, and Malvina Nissim. The meaning factory: Formal semantics for recognizing textual entailment and determining semantic
+similarity. In SenEval@ COLING, pages 642-646, 2014.
+
+[Bowman et al., 2015] Samuel R Bowman, Gabor Angeli, Christopher Potts, and Christopher D Manning. A large annotated corpus
+for learning natural language inference. In EMNLP, 2015.
+
+[Bowman et al., 2016] Samuel R Bowman, Jon Gauthier, Abhinav
+Rastogi, Raghav Gupta, Christopher D Manning, and Christopher
+Potts. A fast unified model for parsing and sentence understanding. In ACL, 2016.
+
+[Chen et al., 2017] Qian Chen, Xiaodan Zhu, Zhen-Hua Ling,
+Si Wei, Hui Jiang, and Diana Inkpen. Recurrent neural networkbased sentence encoder with gated attention for natural language
+inference. In RepEval@ EMNLP, 2017.
+
+[Choi et al., 2017a] Eunsol Choi, Daniel Hewlett, Jakob Uszkoreit, Illia Polosukhin, Alexandre Lacoste, and Jonathan Berant.
+Coarse-to-fine question answering for long documents. In ACL,
+2017.
+[Choi et al., 2017b] Jihun Choi, Kang Min Yoo, and Sang-goo Lee.
+Learning to compose task-specific tree structures. arXiv preprint
+arXiv: 1707.02786, 2017.
+
+[Chung et al., 2014] Junyoung Chung, Caglar  Gulcehre,
+KyungHyun Cho, and Yoshua Bengio. Empirical evaluation of gated recurrent neural networks on sequence modeling.
+In NIPS, 2014.
+
+[Dauphin et al., 2016] Yann N Dauphin, Angela Fan, Michael Auli,
+and David Grangier. Language modeling with gated convolutional networks. arXiv preprint arXiv: 1612.08083, 2016.
+
+[Dong et al., 2017] Xuanyi Dong, Junshi Huang, Yi Yang, and
+Shuicheng Yan. More is less: A more complicated network with
+less inference complexity. In CVPR, 2017.
+
+[Gehring et al., 2017] Jonas Gehring, Michael Auli, David Grangier, Denis Yarats, and Yann N Dauphin. Convolutional sequence
+to sequence learning. arXiv preprint arXiv: 1705.03122, 2017.
+
+[Glorot and Bengio, 2010] Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In AJSTATS, 2010.
+
+[Graves et al., 2013] Alex Graves, Navdeep Jaitly, and Abdelrahman Mohamed. Hybrid speech recognition with deep bidirectional Istm. In ASRU Workshop, 2013.
+
+[He et al., 2016a] Di He, Yingce Xia, Tao Qin, Liwei Wang, Nenghai Yu, Tieyan Liu, and Wei-Ying Ma. Dual learning for machine
+translation. In NJPS, 2016.
+
+[He et al., 2016b] Kaiming He, Xiangyu Zhang, Shaoging Ren, and
+Jian Sun. Deep residual learning for image recognition. In CVPR,
+pages 770-778, 2016.
+
+[Hu et al., 2017] Minghao Hu, Yuxing Peng, and Xipeng Qiu. Reinforced mnemonic reader for machine comprehension. CoRR,
+abs/1705.02798, 2017.
+
+[Kim, 2014] Yoon Kim. Convolutional neural networks for sentence classification. In EMNLP, 2014.
+
+[Lei et al., 2016] Tao Lei, Regina Barzilay, and Tommi Jaakkola.
+Rationalizing neural predictions. In EMNLP, 2016.
+
+[Li et al., 2017a] Xuijun Li, Yun-Nung Chen, Lihong Li, and Jianfeng Gao. End-to-end task-completion neural dialogue systems.
+arXiv preprint arXiv: 1703.01008, 2017.
+
+[Li et al., 2017b] Zheng Li, Yu Zhang, Ying Wei, Yuxiang Wu, and
+Qiang Yang. End-to-end adversarial memory network for crossdomain sentiment classification. In JJCAI, 2017.
+
+[Liu et al., 2016] Yang Liu, Chengjie Sun, Lei Lin, and Xiaolong Wang. Learning natural language inference using bidirectional Istm model and inner-attention. arXiv preprint
+arXiv: 1605.09090, 2016.
+
+[Liu et al., 2018] Qian Liu, Heyan Huang, Guangquan Zhang,
+Yang Gao, Junyu Xuan, and Jie Lu. Semantic structure-based
+word embedding by incorporating concept convergence and word
+divergence. In AAAI, 2018.
+
+[Luong et al., 2015] Minh-Thang Luong, Hieu Pham, and Christopher D Manning. Effective approaches to attention-based neural
+machine translation. arXiv preprint arXiv: 1508.04025, 2015.
+
+[Marelli et al., 2014] Marco Marelli, Stefano Menini, Marco Baroni, Luisa Bentivogli, Raffaella Bernardi, and Roberto Zamparelli. A sick cure for the evaluation of compositional distributional
+semantic models. In LREC, 2014.
+
+[Munkhdalai and Yu, 2017] Tsendsuren Munkhdalai and Hong Yu.
+Neural semantic encoders. In EACL, 2017.
+
+[Nie and Bansal, 2017] Yixin Nie and Mohit Bansal. Shortcutstacked sentence encoders for multi-domain inference. arXiv
+preprint arXiv: 1708.02312, 2017.
+
+[Pennington et al., 2014] Jeffrey Pennington, Richard Socher, and
+Christopher D. Manning. Glove: Global vectors for word representation. In EMNLP, 2014.
+
+[Seo et al., 2017] Minjoon Seo, Aniruddha Kembhavi, Ali Farhadi,
+and Hannaneh Hajishirzi. Bidirectional attention flow for machine comprehension. In JCLR, 2017.
+
+[Shang et al., 2015] Lifeng Shang, Zhengdong Lu, and Hang Li.
+Neural responding machine for short-text conversation. In ACL,
+2015.
+
+[Shen et al., 2017] Yelong Shen, Po-Sen Huang, Jianfeng Gao, and
+Weizhu Chen. Reasonet: Learning to stop reading in machine
+comprehension. In SJGKDD, 2017.
+
+[Shen et al., 2018] Tao Shen, Tianyi Zhou, Guodong Long, Jing
+Jiang, Shirui Pan, and Chengqi Zhang. Disan: Directional selfattention network for rnn/cnn-free language understanding. In
+AAAT, 2018.
+
+[Socher et al., 2014] Richard Socher, Andrej Karpathy, Quoc V Le,
+Christopher D Manning, and Andrew Y Ng. Grounded compositional semantics for finding and describing images with sentences. Transactions of the Association for Computational Linguistics, 2:207—218, 2014.
+
+[Srivastava et al., 2014] Nitish Srivastava, Geoffrey E Hinton, Alex
+Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout:
+a simple way to prevent neural networks from overfitting. Journal
+of Machine Learning Research, 15(1):1929-1958, 2014.
+
+[Srivastava et al., 2015] Rupesh Kumar Srivastava, Klaus Greff,
+and Jiirgen Schmidhuber. Highway networks. arXiv preprint
+arXiv: 1505.00387, 2015.
+
+[Tai et al., 2015] Kai Sheng Tai, Richard Socher, and Christopher D Manning. Improved semantic representations from treestructured long short-term memory networks. In ACL, 2015.
+
+[Vaswani et al., 2017] Ashish Vaswani, Shazeer, Noam, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz
+Kaiser, and [Ilia Polosukhin. Attention is all you need. In NIPS,
+2017.
+
+[Williams, 1992] Ronald J Williams. Simple statistical gradientfollowing algorithms for connectionist reinforcement learning.
+Machine learning, 8(3-4):229-256, 1992.
+
+[Xu et al., 2015] Kelvin Xu, Jimmy Ba, Ryan Kiros, Kyunghyun
+Cho, Aaron Courville, Ruslan Salakhudinov, Rich Zemel, and
+Yoshua Bengio. Show, attend and tell: Neural image caption
+generation with visual attention. In JCML, 2015.
+
+[Yogatama et al., 2016] Dani Yogatama, Phil Blunsom, Chris Dyer,
+Edward Grefenstette, and Wang Ling. Learning to compose
+words into sentences with reinforcement learning. arXiv preprint
+arXiv: 1611.09100, 2016.
+
+[Yu et al., 2017] Adams Wei Yu, Hongrae Lee, and Quoc V Le.
+Learning to skim text. arXiv preprint arXiv: 1704.06877, 2017.
+
+[Zhang and Lapata, 2017] Xingxing Zhang and Mirella Lapata.
+Sentence simplification with deep reinforcement learning. arXiv
+preprint arXiv: 1703.10931, 2017.
+
+[Zhao et al., 2014] Jiang Zhao, Tiantian Zhu, and Man Lan. Ecnu:
+One stone two birds: Ensemble of heterogenous measures for
+semantic relatedness and textual entailment. In SemEval@ COLING, pages 271-277, 2014.
+A Comparison to a Iterative Sampling
+
+To verify the RSS that uses parallel discrete sampling is sufficient to trim the long sentence and model the dependencies,
+we implement the iteration-based sequence sampling method
+following|Lei et al.| and integrate it with the soft selfattention in the same way as ReSA.
+
+Given a input sequence, w = [71,...,2,], iterative sampling aims to learn the following product distribution.
+
+p(z|x;,) = | [eGile: 2141-13 Or). (21)
+wl
+
+A RNN is used to parameterize the conditional probability
+function above and the basic RNN rather than LSTM or GRU
+is employed to reduce the number of parameters. The latent
+state of the RNN can be referred to as the embedding of both
+contextual information and history selection results. The recurrence can be formally written as
+
+pi = sigmoid(w7 o(W [h;_1;2;] +b”) +b), — (22)
+
+a, = [ary ze, (24)
+hg = RNN(Aj-1, a Devan ly (25)
+
+where ~ denotes the discrete sampling operation and 6,-n,,
+is the learnable parameters of RNN. Consequently, after this
+recurrence over the input sequence, a sequence of sampling
+result, z = [z1,..., Zn], is obtained, which shares the same
+notion with RSS.
+
+We then apply two iterative sampling modules which make
+selections over the dependent and head tokens, respectively.
+The output of these two sampling modules is formated as a
+mask which is then applied to the compatibility function of
+soft self-attention mechanism. The details of the integration
+are described in the main paper.
+
+For the comparison of RSS and iterative sampling, we
+also implement the ReSAN with iterative sampling on SNLI
+dataset that is one of the largest NLP dataset designed to
+test the sentence-encoding model. A thorough comparison of
+them in terms of parameters number, training/inference time,
+training/test accuracy are show in Table |4]
+
+ReSAN w/ RSS’ ReSAN w/ Iteration
+
+Parameter Num (300D) 3.lm 4.0m
+Time/Epoch 622s 2996s
+Inference Time 5.58 17.1s
+Train Accuracy 92.6% 92.3%"
+Test Accuracy 86.3% 86.2%"
+
+Table 4: A thorough comparison of a ReSAN with RSS and Iterative Sampling on SNLI dataset. “The accuracies of these two models should be experimentally equal, but, due to the randomness of
+neural networks (e.g., initialization, batch SGD), there are some experimental error on the accuracies.
+
+As shown in the table, compared with ReSAN with iterative sampling, the one with RSS requires much fewer parameters, 5x less training time and 3x less inference time to
+achieve the competitive test accuracy. This is consistent with
+the motivation and target for which we develop the RSS.
+

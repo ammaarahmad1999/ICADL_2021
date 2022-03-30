@@ -1,0 +1,4 @@
+(Contribution||has||Baselines)
+(Baselines||non-dilated CNN architecture||4 - layer CNN)
+(Baselines||strong LSTM and CNN baselines||Bi - LSTM with local decoding , and one with CRF decoding)
+(Baselines||has||5 - layer CNN)

@@ -1,0 +1,154 @@
+139	0	26	n	Natural Language Inference
+150	33	43	p	initialize
+150	48	69	n	word embedding matrix
+150	70	74	p	with
+150	75	104	n	GloVe 300D pretrained vectors
+153	4	23	n	dropout probability
+153	27	33	p	set to
+153	34	37	n	0.2
+154	4	8	n	size
+154	9	11	p	of
+154	12	24	n	mini-batches
+154	28	34	p	set to
+154	35	38	n	128
+155	4	25	n	temperature parameter
+155	28	30	p	of
+155	31	47	n	Gumbel - Softmax
+155	51	57	p	set to
+155	58	61	n	1.0
+156	0	12	p	For training
+156	13	19	n	models
+156	40	44	p	used
+156	22	36	n	Adam optimizer
+163	47	49	p	on
+163	52	59	n	machine
+163	60	64	p	with
+163	65	84	n	NVIDIA Titan Xp GPU
+158	15	23	p	see that
+158	24	56	n	LSTM - based leaf transformation
+158	63	78	n	clear advantage
+158	79	83	p	over
+158	88	123	n	affine - transformation - based one
+160	49	58	p	find that
+160	59	82	n	our 100D and 300D model
+160	83	93	p	outperform
+160	94	110	n	all other models
+160	111	113	p	of
+160	114	143	n	similar numbers of parameters
+161	0	14	n	Our 600D model
+161	15	23	p	achieves
+161	28	36	n	accuracy
+161	37	39	p	of
+161	40	46	n	86.0 %
+161	58	71	p	comparable to
+161	84	112	n	state - of - the - art model
+166	0	18	n	Sentiment Analysis
+175	0	2	p	is
+175	5	30	n	single - hidden layer MLP
+175	31	35	p	with
+175	40	64	n	ReLU activation function
+177	3	10	p	trained
+177	15	28	n	SST - 2 model
+177	29	49	p	with hyperparameters
+177	50	83	n	D x = 300 , D h = 300 , D c = 300
+178	4	16	n	word vectors
+178	21	32	n	initialized
+178	33	37	p	with
+178	38	67	n	GloVe 300D pretrained vectors
+178	72	84	n	fine - tuned
+178	85	91	p	during
+178	92	100	n	training
+180	4	8	n	size
+180	9	11	p	of
+180	12	24	n	mini-batches
+180	28	34	p	set to
+180	35	37	n	32
+180	42	60	n	Adadelta optimizer
+180	64	72	p	used for
+180	73	85	n	optimization
+179	3	8	p	apply
+179	9	28	n	dropout ( p = 0.5 )
+179	29	31	p	on
+179	36	42	n	output
+179	43	45	p	of
+179	50	70	n	word embedding layer
+179	79	99	n	input and the output
+179	100	102	p	of
+179	107	116	n	MLP layer
+181	0	3	p	For
+181	8	21	n	SST - 5 model
+181	24	39	n	hyperparameters
+181	44	50	p	set to
+181	51	85	n	D x = 300 , D h = 300 , D c = 1024
+181	122	130	p	optimize
+181	111	116	n	model
+181	141	146	p	using
+181	147	165	n	Adadelta optimizer
+181	166	170	p	with
+181	171	184	n	batch size 64
+181	189	194	p	apply
+181	195	202	n	dropout
+181	203	207	p	with
+181	208	215	n	p = 0.5
+183	4	17	n	SST - 2 model
+183	18	29	p	outperforms
+183	30	46	n	all other models
+183	47	60	n	substantially
+183	61	67	p	except
+183	68	81	n	byte - m LSTM
+184	8	16	p	see that
+184	21	32	n	performance
+184	33	35	p	of
+184	36	53	n	our SST - 5 model
+184	57	68	p	on par with
+184	81	117	n	current state - of - the - art model
+185	27	36	p	utilizing
+185	37	80	n	pretraining and character n-gram embeddings
+185	81	89	p	improves
+185	90	109	n	validation accuracy
+185	110	112	p	by
+185	113	130	n	2.8 % ( SST - 2 )
+185	134	151	n	1.7 % ( SST - 5 )
+23	19	26	p	propose
+23	27	45	n	Gumbel Tree - LSTM
+23	54	56	p	is
+23	59	82	n	novel RvNN architecture
+23	93	104	p	not require
+23	105	120	n	structured data
+23	125	142	p	learns to compose
+23	143	174	n	task - specific tree structures
+23	175	182	p	without
+23	183	200	n	explicit guidance
+24	0	28	n	Our Gumbel Tree - LSTM model
+24	32	40	p	based on
+24	41	112	n	tree - structured long short - term memory ( Tree - LSTM ) architecture
+25	96	105	n	our model
+25	106	116	p	introduces
+25	117	141	n	composition query vector
+25	147	155	p	measures
+25	156	164	n	validity
+25	165	167	p	of
+25	170	181	n	composition
+26	0	5	p	Using
+26	6	21	n	validity scores
+26	22	33	p	computed by
+26	38	62	n	composition query vector
+26	65	74	n	our model
+26	75	94	p	recursively selects
+26	95	107	n	compositions
+26	108	113	p	until
+26	114	150	n	only a single representation remains
+27	3	6	p	use
+27	7	59	n	Straight - Through ( ST ) Gumbel - Softmax estimator
+27	60	69	p	to sample
+27	70	82	n	compositions
+27	83	85	p	in
+27	90	104	n	training phase
+28	30	37	p	relaxes
+28	42	69	n	discrete sampling operation
+28	70	75	p	to be
+28	76	86	n	continuous
+28	87	89	p	in
+28	94	107	n	backward pass
+2	20	51	n	Task - Specific Tree Structures
+6	139	196	n	task - specific tree structures only from plain text data

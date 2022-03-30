@@ -1,0 +1,20 @@
+17	35	51	p	jointly estimate
+17	56	77	n	upper-bound frequency
+17	15	17	p	of
+17	81	103	n	each target vocabulary
+17	104	121	p	that can occur in
+17	124	131	n	summary
+17	132	138	p	during
+17	143	159	n	encoding process
+17	190	197	p	control
+17	202	214	n	output words
+17	215	217	p	in
+17	218	236	n	each decoding step
+18	16	36	p	additional component
+18	42	84	n	wordfrequency estimation ( WFE ) sub-model
+19	4	17	n	WFE sub-model
+19	18	36	p	explicitly manages
+19	37	87	n	how many times each word has been generated so far
+19	92	124	n	might be generated in the future
+2	50	82	n	Neural Abstractive Summarization
+8	196	229	n	abstractive summarization ( ABS )

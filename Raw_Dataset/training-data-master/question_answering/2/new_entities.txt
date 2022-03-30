@@ -1,0 +1,299 @@
+183	0	8	n	Memex QA
+183	20	26	n	answer
+191	50	69	n	Logistic Regression
+191	70	78	p	predicts
+191	90	94	p	with
+191	95	146	n	concatenated image , question and metadata features
+192	0	16	n	Embedding + LSTM
+192	17	25	p	utilizes
+192	26	66	n	word embeddings and character embeddings
+192	69	79	p	along with
+192	84	106	n	same visual embeddings
+192	107	114	p	used in
+192	115	119	n	FVTA
+194	0	25	n	Embedding + LSTM + Concat
+194	26	38	p	concatenates
+194	43	59	n	last LSTM output
+194	60	64	p	from
+194	65	85	n	different modalities
+194	86	96	p	to produce
+194	101	113	n	final output
+196	0	22	n	Classic Soft Attention
+196	23	27	p	uses
+196	28	85	n	classic one dimensional question - to - context attention
+196	86	98	p	to summarize
+196	99	106	n	context
+196	107	110	p	for
+196	111	129	n	question answering
+198	0	5	n	DMN +
+198	6	8	p	is
+198	13	45	n	improved dynamic memory networks
+198	48	63	p	which is one of
+198	68	96	n	representative architectures
+198	97	109	p	that achieve
+198	110	126	n	good performance
+198	127	129	p	on
+198	134	142	n	VQA Task
+201	0	23	n	TGIF Temporal Attention
+201	24	26	p	is
+201	47	83	n	spatial - temporal reasoning network
+201	84	86	p	on
+201	87	115	n	sequential animated image QA
+211	3	9	p	encode
+211	10	23	n	GPS locations
+211	24	29	p	using
+211	30	35	n	words
+213	4	43	n	questions , textual context and answers
+213	44	47	p	are
+213	48	57	n	tokenized
+213	58	63	p	using
+213	68	91	n	Stanford word tokenizer
+217	7	26	n	bi-directional LSTM
+217	30	38	p	used for
+217	39	52	n	each modality
+217	53	62	p	to obtain
+217	63	89	n	contextual representations
+214	3	6	p	use
+214	7	41	n	pre-trained Glo Ve word embeddings
+214	53	65	p	fixed during
+214	66	74	n	training
+216	14	35	n	linear transformation
+216	36	47	p	to compress
+216	52	65	n	image feature
+216	66	70	p	into
+216	71	86	n	100 dimensional
+223	11	29	n	AdaDelta optimizer
+223	37	58	n	initial learning rate
+223	59	61	p	of
+223	62	65	n	0.5
+223	66	78	p	to train for
+223	79	89	n	200 epochs
+223	90	94	p	with
+223	97	109	n	dropout rate
+223	110	112	p	of
+223	113	116	n	0.3
+215	0	3	p	For
+215	4	27	n	image / video embedding
+215	33	40	p	extract
+215	41	62	n	fixed - size features
+215	63	68	p	using
+215	73	94	n	pre-trained CNN model
+215	97	115	n	Inception - ResNet
+215	118	134	p	by concatenating
+215	139	185	n	pool5 layer and classification layer 's output
+215	186	192	p	before
+215	193	200	n	softmax
+218	57	68	p	concatenate
+218	73	79	n	output
+218	26	28	p	of
+218	83	98	n	both directions
+218	80	82	p	of
+218	106	110	n	LSTM
+218	115	118	p	get
+218	121	138	n	question matrix Q
+218	0	5	p	Given
+218	8	25	n	hidden state size
+218	99	101	p	of
+218	29	30	n	d
+218	42	48	p	set to
+218	49	51	n	50
+219	0	7	n	R 2 d M
+219	12	28	n	context tensor H
+220	11	14	p	for
+220	15	34	n	all media documents
+220	0	10	n	R 2dV KN 6
+221	3	10	p	reshape
+221	15	29	n	context tensor
+221	30	34	p	into
+221	35	48	n	H ? R 2 d T 6
+222	0	9	p	To select
+222	14	33	n	best hyperparmeters
+222	39	54	p	randomly select
+222	55	59	n	20 %
+222	60	62	p	of
+222	67	88	n	official training set
+222	89	91	p	as
+222	96	110	n	validation set
+234	0	4	n	FVTA
+234	5	16	p	outperforms
+234	17	39	n	other attention models
+234	40	50	p	on finding
+234	55	70	n	relevant photos
+234	71	74	p	for
+234	79	87	n	question
+242	3	11	p	evaluate
+242	16	40	n	FVTA attention mechanism
+242	46	59	p	first replace
+242	60	77	n	our kernel tensor
+242	78	82	p	with
+242	83	116	n	simple cosine similarity function
+243	8	17	p	show that
+243	18	44	n	standard cosine similarity
+243	48	59	p	inferior to
+243	60	83	n	our similarity function
+244	0	12	p	For ablating
+244	13	38	n	intra-sequence dependency
+244	44	47	p	use
+244	52	67	n	representations
+244	68	72	p	from
+244	77	90	n	last timestep
+244	91	93	p	of
+244	94	115	n	each context document
+245	13	39	n	cross sequence interaction
+245	45	52	p	average
+245	53	88	n	all attended context representation
+245	89	93	p	from
+245	94	114	n	different modalities
+245	115	121	p	to get
+245	126	146	n	final context vector
+246	0	27	n	Both aspects of correlation
+246	28	30	p	of
+246	35	56	n	FVTA attention tensor
+246	57	75	p	contribute towards
+246	80	100	n	model 's performance
+246	103	108	p	while
+246	109	134	n	intra-sequence dependency
+246	135	140	p	shows
+246	141	156	n	more importance
+247	3	10	p	compare
+247	15	28	n	effectiveness
+247	29	31	p	of
+247	32	66	n	context - aware question attention
+247	67	78	p	by removing
+247	83	101	n	question attention
+247	106	109	p	use
+247	114	127	n	last timestep
+247	128	130	p	of
+247	135	146	n	LSTM output
+247	147	151	p	from
+247	156	164	n	question
+247	165	167	p	as
+247	172	195	n	question representation
+248	3	8	p	shows
+248	13	31	n	question attention
+248	32	40	p	provides
+248	41	59	n	slight improvement
+249	13	18	p	train
+249	19	38	n	FVTA without photos
+249	39	45	p	to see
+249	50	62	n	contribution
+249	63	65	p	of
+249	66	84	n	visual information
+250	4	10	n	result
+250	11	13	p	is
+250	14	24	n	quite good
+257	7	22	n	MovieQA dataset
+257	105	109	p	with
+257	48	50	p	of
+258	3	12	p	implement
+258	13	25	n	FVTA network
+258	26	29	p	for
+258	30	43	n	Movie QA task
+258	49	64	n	modality number
+258	68	86	n	2 ( video & text )
+259	3	6	p	set
+259	11	53	n	maximum number of movie clips per question
+259	54	56	p	to
+259	57	63	n	N = 20
+259	70	106	n	maximum number of frames to consider
+259	107	109	p	to
+259	110	116	n	F = 10
+259	123	169	n	maximum number of subtitle sentences in a clip
+259	170	172	p	to
+259	173	180	n	K = 100
+259	189	202	n	maximum words
+259	203	205	p	to
+259	206	212	n	V = 10
+261	3	6	p	use
+261	11	29	n	AdaDelta optimizer
+261	30	34	p	with
+261	37	46	n	minibatch
+261	47	49	p	of
+261	50	52	n	16
+261	60	81	n	initial learning rate
+261	82	84	p	of
+261	85	88	n	0.5
+261	92	103	p	trained for
+261	104	114	n	300 epochs
+264	0	10	n	FVTA model
+264	11	22	p	outperforms
+264	23	43	n	all baseline methods
+264	48	56	p	achieves
+264	57	79	n	comparable performance
+264	80	82	p	to
+264	87	116	n	state - of - the - art result
+264	119	121	p	on
+264	126	145	n	MovieQA test server
+266	4	12	n	accuracy
+266	13	15	p	is
+266	16	21	n	0.410
+266	24	26	p	vs
+266	27	32	n	0.387
+266	33	35	p	by
+266	36	40	n	RWMN
+266	43	45	p	on
+266	50	64	n	validation set
+266	69	74	n	0.373
+266	77	79	p	vs
+266	80	85	n	0.363
+266	88	90	p	on
+266	95	103	n	test set
+267	40	44	n	FVTA
+267	45	69	p	consistently outperforms
+267	74	100	n	classical attention models
+267	101	110	p	including
+267	111	125	n	soft attention
+267	128	131	n	MCB
+267	136	140	n	TGIF
+32	37	44	p	propose
+32	47	91	n	focal visual - text attention ( FVTA ) model
+32	92	95	p	for
+32	96	111	n	sequential data
+44	13	35	n	novel attention kernel
+44	36	39	p	for
+44	40	43	n	VQA
+44	44	46	p	on
+44	47	65	n	visual - text data
+37	27	31	n	FVTA
+37	38	47	p	learns to
+37	48	56	n	localize
+37	57	77	n	relevant information
+37	78	84	p	within
+37	87	131	n	few , small , temporally consecutive regions
+37	132	136	p	over
+37	141	156	n	input sequences
+37	173	178	n	infer
+37	182	188	n	answer
+37	189	197	p	based on
+37	202	224	n	cross-modal statistics
+37	225	236	p	pooled from
+37	237	250	n	these regions
+38	5	13	p	proposes
+38	16	28	n	novel kernel
+38	29	39	p	to compute
+38	44	60	n	attention tensor
+38	66	80	p	jointly models
+38	85	103	n	latent information
+38	104	106	p	in
+38	107	120	n	three sources
+39	4	28	n	answer - signaling words
+39	29	31	p	in
+39	36	44	n	question
+39	51	71	n	temporal correlation
+39	72	78	p	within
+39	81	89	n	sequence
+39	100	123	n	cross-modal interaction
+39	124	131	p	between
+39	136	150	n	text and image
+40	0	14	n	FVTA attention
+40	15	25	p	allows for
+40	26	46	n	collective reasoning
+40	47	49	p	by
+40	54	70	n	attention kernel
+40	71	83	p	learned over
+40	86	125	n	few , small , consecutive sub-sequences
+40	126	128	p	of
+40	129	143	n	text and image
+2	34	59	n	Visual Question Answering
+13	0	33	n	Visual question answering ( VQA )
+15	15	18	n	VQA

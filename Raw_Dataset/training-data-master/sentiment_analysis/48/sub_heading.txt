@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Related Work
+Method Description
+Variational Inference
+Classifier
+Transformer Encoder
+Transformer Decoders
+Experiments
+Datasets and Preparation
+Model Configuration & Classifiers
+Main Results
+Ablation Studies
+Analysis of the Latent Space
+Conclusion

@@ -1,0 +1,103 @@
+118	0	8	p	To train
+118	9	18	n	our model
+118	24	28	p	used
+118	29	56	n	stochastic gradient descent
+118	57	61	p	with
+118	66	80	n	ADAM optimizer
+118	116	137	n	initial learning rate
+118	138	140	p	of
+118	141	146	n	0.001
+119	3	6	p	set
+119	11	21	n	batch size
+119	22	24	p	to
+119	25	27	n	32
+119	35	40	p	decay
+119	45	58	n	learning rate
+119	59	61	p	by
+119	62	65	n	0.8
+120	3	13	p	initialize
+120	18	38	n	weights of our model
+120	39	55	p	by sampling from
+120	60	94	n	normal distribution N ( 0 , 0.05 )
+121	38	53	p	are initialized
+121	16	37	n	GRU recurrent weights
+121	54	59	p	to be
+121	60	70	n	orthogonal
+121	75	81	n	biases
+121	98	100	p	to
+121	101	105	n	zero
+122	9	21	p	to stabilize
+122	26	34	n	learning
+122	40	44	p	clip
+122	49	58	n	gradients
+122	59	61	p	if
+122	68	72	n	norm
+122	76	88	p	greater than
+122	89	90	n	5
+125	13	27	p	implemented in
+125	28	34	n	Theano
+125	37	42	p	using
+125	47	60	n	Keras library
+19	79	86	p	propose
+19	89	135	n	novel neural attention - based inference model
+19	136	155	p	designed to perform
+19	156	191	n	machine reading comprehension tasks
+20	16	21	p	reads
+20	26	48	n	document and the query
+20	49	54	p	using
+20	57	81	n	recurrent neural network
+21	10	17	p	deploys
+21	21	48	n	iterative inference process
+21	49	59	p	to uncover
+21	64	81	n	inferential links
+21	93	100	p	between
+21	101	154	n	the missing query word , the query , and the document
+22	11	19	p	involves
+22	22	59	n	novel alternating attention mechanism
+22	71	81	p	attends to
+22	82	105	n	some parts of the query
+22	113	118	p	finds
+22	125	146	n	corresponding matches
+22	147	162	p	by attending to
+22	167	175	n	document
+23	4	10	n	result
+23	11	13	p	of
+23	19	37	n	alternating search
+23	41	54	p	fed back into
+23	59	86	n	iterative inference process
+23	87	94	p	to seed
+23	99	115	n	next search step
+25	0	5	p	After
+25	8	34	n	fixed number of iterations
+25	47	51	p	uses
+25	54	86	n	summary of its inference process
+25	87	97	p	to predict
+25	102	108	n	answer
+2	43	58	n	Machine Reading
+4	59	80	n	machine comprehension
+4	97	155	n	answering Cloze - style queries with respect to a document
+133	0	3	n	CBT
+135	52	54	p	on
+135	21	25	p	sets
+135	26	51	n	a new stateof - the - art
+135	59	79	n	common noun category
+135	80	90	p	by gaining
+135	91	109	n	3.6 and 5.6 points
+135	110	112	p	in
+135	113	132	n	validation and test
+135	133	137	p	over
+135	142	165	n	best baseline AS Reader
+149	0	3	n	CNN
+151	43	51	p	improves
+151	52	83	n	state - of - the - art accuracy
+151	84	86	p	by
+151	87	135	n	4 percent absolute on validation and 3.4 on test
+151	136	151	p	with respect to
+151	156	198	n	most recent published result ( AS Reader )
+159	51	58	p	achieve
+159	59	98	n	state - of - the - art test performance
+159	41	50	n	ensembles
+159	99	101	p	of
+159	102	151	n	75.2 and 76.1 on validation and test respectively
+159	154	167	p	outperforming
+159	168	196	n	previously published results

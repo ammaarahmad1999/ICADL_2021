@@ -1,0 +1,264 @@
+166	0	8	p	presents
+166	13	40	n	results of an ablation test
+166	41	43	p	of
+166	44	80	n	our position - aware attention model
+166	81	83	p	on
+166	88	113	n	development set of TACRED
+167	31	42	p	contributes
+167	43	58	n	about 1.5 % F 1
+167	61	66	p	where
+167	71	92	n	position - aware term
+168	12	23	p	contributes
+168	24	43	n	about 1 % F 1 score
+170	0	9	p	shows how
+170	14	44	n	slot filling evaluation scores
+170	45	51	n	change
+170	52	54	p	as
+170	69	124	n	amount of negative ( i.e. , no relation ) training data
+170	125	136	p	provided to
+170	137	155	n	our proposed model
+171	21	23	p	At
+171	24	37	n	hop - 0 level
+171	66	78	p	provide more
+171	79	96	n	negative examples
+171	40	49	n	precision
+171	50	59	n	increases
+171	99	104	p	while
+171	105	111	n	recall
+171	112	117	p	stays
+171	118	134	n	almost unchanged
+172	0	9	n	F 1 score
+172	10	15	p	keeps
+172	16	26	n	increasing
+173	9	24	n	hop - all level
+173	27	36	n	F 1 score
+173	37	49	p	increases by
+173	50	61	n	Performance
+173	62	64	p	by
+173	65	80	n	sentence length
+175	3	12	p	find that
+175	21	32	n	Performance
+175	33	35	p	of
+175	36	46	n	all models
+175	47	55	p	degrades
+175	56	69	n	substantially
+175	70	72	p	as
+175	77	86	n	sentences
+175	87	90	p	get
+175	91	97	n	longer
+178	5	18	p	compared with
+178	23	37	n	CNN - PE model
+178	44	76	n	position - aware attention model
+178	77	85	p	achieves
+178	86	105	n	improved F 1 scores
+178	106	108	p	on
+178	109	136	n	30 out of the 41 slot types
+178	139	143	p	with
+178	148	164	n	top 5 slot types
+178	165	170	p	being
+178	171	184	n	org : members
+178	187	208	n	per: country of death
+178	211	229	n	org : shareholders
+178	232	244	n	per:children
+178	249	261	n	per:religion
+179	19	35	n	SDP - LSTM model
+179	38	47	n	our model
+179	48	56	p	achieves
+179	57	76	n	improved F 1 scores
+179	77	79	p	on
+179	80	107	n	26 out of the 41 slot types
+179	14	18	p	with
+179	119	129	n	top 5 slot
+179	136	141	p	being
+179	142	181	n	org : political / religious affiliation
+179	184	205	n	per: country of death
+179	208	229	n	org : alternate names
+179	232	244	n	per:religion
+179	249	269	n	per: alternate names
+180	3	15	p	observe that
+180	16	26	n	slot types
+180	27	31	p	with
+180	32	67	n	relatively sparse training examples
+180	79	90	p	improved by
+180	101	133	n	position - aware attention model
+183	3	7	p	find
+183	17	22	n	model
+183	30	36	p	to pay
+183	37	51	n	more attention
+183	52	54	p	to
+183	55	60	n	words
+183	70	85	p	informative for
+183	90	98	n	relation
+184	8	15	p	observe
+184	25	30	n	model
+184	31	43	p	tends to put
+184	46	59	n	lot of weight
+184	60	64	p	onto
+184	65	80	n	object entities
+33	14	30	p	markedly improve
+33	35	75	n	availability of supervised training data
+33	76	84	p	by using
+33	85	117	n	Mechanical Turk crowd annotation
+33	118	128	p	to produce
+33	131	164	n	large supervised training dataset
+33	167	179	p	suitable for
+33	184	200	n	common relations
+33	201	208	p	between
+33	209	245	n	people , organizations and locations
+33	256	263	p	used in
+33	268	287	n	TAC KBP evaluations
+34	25	67	n	TAC Relation Extraction Dataset ( TACRED )
+34	79	104	p	make it available through
+34	109	143	n	Linguistic Data Consortium ( LDC )
+34	153	163	p	to respect
+34	164	174	n	copyrights
+34	175	177	p	on
+34	182	197	n	underlying text
+120	3	6	p	map
+120	7	12	n	words
+120	18	33	p	occur less than
+120	34	41	n	2 times
+120	42	44	p	in
+120	49	61	n	training set
+120	62	64	p	to
+120	67	88	n	special < UNK > token
+121	3	6	p	use
+121	11	36	n	pre-trained GloVe vectors
+121	37	50	p	to initialize
+121	51	66	n	word embeddings
+122	0	3	p	For
+122	4	23	n	all the LSTM layers
+122	29	38	p	find that
+122	39	62	n	2 - layer stacked LSTMs
+122	73	89	p	work better than
+122	90	107	n	one - layer LSTMs
+123	3	11	p	minimize
+123	12	32	n	cross - entropy loss
+123	33	37	p	over
+123	38	54	n	all 42 relations
+123	55	60	p	using
+123	61	68	n	AdaGrad
+124	3	8	p	apply
+124	9	16	n	Dropout
+124	17	21	p	with
+124	22	29	n	p = 0.5
+124	30	32	p	to
+124	33	47	n	CNNs and LSTMs
+125	0	6	p	During
+125	7	15	n	training
+125	24	28	p	find
+125	31	52	n	word dropout strategy
+125	53	58	p	to be
+125	59	73	n	very effective
+125	79	91	p	randomly set
+125	94	99	n	token
+125	100	105	p	to be
+125	106	113	n	< UNK >
+125	114	118	p	with
+125	121	134	n	probability p
+126	3	6	p	set
+126	7	8	n	p
+126	9	14	p	to be
+126	15	19	n	0.06
+126	20	23	p	for
+126	28	44	n	SDP - LSTM model
+126	49	53	n	0.04
+126	54	57	p	for
+126	58	74	n	all other models
+30	3	10	p	propose
+30	13	58	n	new , effective neural network sequence model
+30	59	62	p	for
+30	63	86	n	relation classification
+31	4	16	n	architecture
+31	20	41	p	better customized for
+31	46	63	n	slot filling task
+31	70	90	n	word representations
+31	95	107	p	augmented by
+31	108	158	n	extra distributed representations of word position
+31	159	170	p	relative to
+31	175	193	n	subject and object
+31	194	196	p	of
+31	201	218	n	putative relation
+32	5	15	p	means that
+32	20	42	n	neural attention model
+32	47	66	p	effectively exploit
+32	71	151	n	combination of semantic similarity - based attention and positionbased attention
+5	25	60	n	populate knowledge bases with facts
+12	90	137	n	populate a knowledge base with relational facts
+21	17	36	n	relation extraction
+141	3	10	p	observe
+141	16	33	n	all neural models
+141	34	41	p	achieve
+141	42	59	n	higher F 1 scores
+141	60	64	p	than
+141	69	109	n	logistic regression and patterns systems
+141	118	130	p	demonstrates
+141	135	148	n	effectiveness
+141	149	151	p	of
+141	152	165	n	neural models
+141	166	169	p	for
+141	170	189	n	relation extraction
+142	9	30	n	positional embeddings
+142	31	44	p	help increase
+142	49	52	n	F 1
+142	53	62	p	by around
+142	63	66	n	2 %
+142	67	71	p	over
+142	76	91	n	plain CNN model
+143	13	48	n	proposed position - aware mechanism
+143	49	51	p	is
+143	52	66	n	very effective
+143	71	79	p	achieves
+143	83	92	n	F 1 score
+143	93	95	p	of
+143	96	102	n	65.4 %
+143	105	109	p	with
+143	113	130	n	absolute increase
+143	131	133	p	of
+143	134	139	n	3.9 %
+143	140	144	p	over
+143	149	184	n	best baseline neural model ( LSTM )
+143	189	194	n	7.9 %
+143	195	199	p	over
+143	204	239	n	baseline logistic regression system
+146	0	18	n	CNN - based models
+146	19	31	p	tend to have
+146	32	48	n	higher precision
+146	51	69	n	RNN - based models
+146	70	74	p	have
+146	75	88	n	better recall
+156	99	121	n	Endto - end cold start
+156	122	141	n	slot filling scores
+156	142	150	p	conflate
+156	155	166	n	performance
+156	167	169	p	of
+156	170	263	n	all modules in the system ( i.e. , entity recognizer , entity linker and relation extractor )
+157	6	12	n	Errors
+157	13	15	p	in
+157	16	35	n	hop - 0 predictions
+157	40	59	p	easily propagate to
+157	60	79	n	hop - 1 predictions
+144	8	11	p	run
+144	15	23	n	ensemble
+144	24	26	p	of
+144	31	63	n	position - aware attention model
+144	70	75	p	takes
+144	76	90	n	majority votes
+144	91	95	p	from
+144	96	102	n	5 runs
+144	103	107	p	with
+144	108	130	n	random initializations
+144	138	152	p	further pushes
+144	157	166	n	F 1 score
+144	170	172	p	by
+144	173	178	n	1.6 %
+163	3	7	p	find
+163	29	37	n	training
+163	38	67	n	our logistic regression model
+163	68	70	p	on
+163	71	77	n	TACRED
+163	102	133	n	2 million bootstrapped examples
+163	134	141	p	used in
+163	146	166	n	2015 Stanford system
+163	173	190	p	combining it with
+163	191	199	n	patterns

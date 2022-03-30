@@ -1,0 +1,52 @@
+{
+  "has" : {
+    "Results" : {
+      "has" : {
+        "CBT" : {
+          "sets" : {
+            "a new stateof - the - art" : {
+              "on" : "common noun category",
+              "by gaining" : {
+                "3.6 and 5.6 points" : {
+                  "in" : {
+                    "validation and test" : {
+                      "over" : "best baseline AS Reader"
+                    }
+                  }
+                }
+              }
+            },
+            "from sentence" : "CBT
+Our model ( line 7 ) sets a new stateof - the - art on the common noun category by gaining 3.6 and 5.6 points in validation and test over the best baseline AS Reader ( line 5 ) ."
+
+          }
+        },
+        "CNN" : {
+          "improves" : {
+            "state - of - the - art accuracy" : {
+              "by" : {
+                "4 percent absolute on validation and 3.4 on test" : {
+                  "with respect to" : "most recent published result ( AS Reader )"
+                }
+              }
+            },
+            "from sentence" : "CNN
+The results show that our model ( line 8 ) improves state - of - the - art accuracy by 4 percent absolute on validation and 3.4 on test with respect to the most recent published result ( AS Reader ) ( line 7 ) ."
+
+          },
+          "achieve" : {
+            "state - of - the - art test performance" : {
+              "has" : {
+                "ensembles" : {
+                  "of" : "75.2 and 76.1 on validation and test respectively",
+                  "outperforming" : "previously published results"      
+                }
+              }
+            },
+            "from sentence" : "Similarly to the single model case , our ensembles achieve state - of - the - art test performance of 75.2 and 76.1 on validation and test respectively , outperforming previously published results ."
+          } 
+        }
+      }
+    }
+  }
+}

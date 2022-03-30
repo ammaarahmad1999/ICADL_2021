@@ -1,0 +1,8 @@
+title
+abstract
+Introduction
+Global Encoding
+Experiment Setup
+Analysis
+Related Work
+Conclusion

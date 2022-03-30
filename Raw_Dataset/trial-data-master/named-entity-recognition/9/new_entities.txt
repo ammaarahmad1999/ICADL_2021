@@ -1,0 +1,101 @@
+34	21	30	p	introduce
+34	31	38	n	BioBERT
+34	47	49	p	is
+34	52	93	n	pre-trained language representation model
+34	94	97	p	for
+34	102	119	n	biomedical domain
+36	11	21	p	initialize
+36	22	29	n	BioBERT
+36	30	34	p	with
+36	35	42	n	weights
+36	43	47	p	from
+36	48	52	n	BERT
+36	65	78	p	pretrained on
+36	79	140	n	general domain corpora ( English Wikipedia and Books Corpus )
+37	7	14	n	BioBERT
+37	18	32	p	pre-trained on
+37	33	108	n	biomedical domain corpora ( PubMed abstracts and PMC full - text articles )
+38	81	110	p	fine - tuned and evaluated on
+38	111	153	n	three popular biomedical text mining tasks
+15	63	107	n	https://github. com/naver/biobert-pretrained
+119	3	7	p	used
+119	12	27	n	BERT BASE model
+119	28	42	p	pre-trained on
+119	43	77	n	English Wikipedia and Books Corpus
+119	78	81	p	for
+119	82	91	n	1 M steps
+126	8	39	n	eight NVIDIA V100 ( 32GB ) GPUs
+126	40	43	p	for
+126	48	60	n	pre-training
+130	10	45	n	single NVIDIA Titan Xp ( 12GB ) GPU
+130	46	60	p	to fine - tune
+130	61	68	n	BioBERT
+130	69	71	p	on
+130	72	81	n	each task
+120	0	27	n	BioBERT v1.0 ( PubMed PMC )
+120	35	45	p	version of
+120	46	68	n	BioBERT ( PubMed PMC )
+120	69	80	p	trained for
+120	81	92	n	470 K steps
+127	4	27	n	maximum sequence length
+127	32	40	p	fixed to
+127	41	44	n	512
+127	53	68	n	mini-batch size
+127	73	79	p	set to
+127	80	83	n	192
+2	33	79	n	pre-trained biomedical language representation
+6	59	117	n	extracting valuable information from biomedical literature
+8	61	130	n	pre-trained language model BERT can be adapted for biomedical corpora
+7	55	196	n	biomedical text mining often yields unsatisfactory results due to a word distribution shift from general domain corpora to biomedical corpora
+27	11	83	n	word distributions of general and biomedical corpora are quite different
+136	12	14	p	of
+136	15	18	n	NER
+138	20	27	n	BioBERT
+138	28	36	p	achieves
+138	37	50	n	higher scores
+138	51	55	p	than
+138	56	60	n	BERT
+139	8	20	p	outperformed
+139	25	54	n	state - of - the - art models
+139	55	57	p	on
+139	58	82	n	six out of nine datasets
+139	89	113	n	BioBERT v 1.1 ( PubMed )
+139	114	126	p	outperformed
+139	131	160	n	state - of - the - art models
+139	161	163	p	by
+139	164	168	n	0.62
+139	169	180	p	in terms of
+139	181	204	n	micro averaged F1 score
+141	4	6	n	RE
+143	23	46	n	BioBERT v1.0 ( PubMed )
+143	47	55	p	obtained
+143	58	89	n	higher F1 score ( 2.80 higher )
+143	90	94	p	than
+143	99	128	n	state - of - the - art models
+144	7	14	n	BioBERT
+144	15	23	p	achieved
+144	28	46	n	highest F 1 scores
+144	47	49	p	on
+144	50	80	n	2 out of 3 biomedical datasets
+145	4	6	n	QA
+148	16	23	n	BioBERT
+148	24	50	p	significantly outperformed
+148	51	55	n	BERT
+148	64	93	n	state - of - the - art models
+148	116	139	n	BioBERT v1.1 ( PubMed )
+148	140	148	p	obtained
+148	151	166	n	strict accuracy
+148	13	15	p	of
+148	170	175	n	38.77
+148	180	196	n	lenient accuracy
+148	167	169	p	of
+148	200	205	n	53.81
+148	212	238	n	mean reciprocal rank score
+148	197	199	p	of
+148	242	247	n	44.77
+149	11	33	n	biomedical QA datasets
+149	36	43	n	BioBERT
+149	44	52	p	achieved
+149	53	91	n	new state - of - the - art performance
+149	92	103	p	in terms of
+149	104	107	n	MRR

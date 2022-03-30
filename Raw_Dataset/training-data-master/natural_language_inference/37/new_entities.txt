@@ -1,0 +1,179 @@
+164	3	8	p	train
+164	13	18	n	model
+164	19	23	p	with
+164	28	64	n	Adadelta optimizer ( Zeiler , 2012 )
+164	65	69	p	with
+164	72	82	n	batch size
+164	83	85	n	60
+164	86	89	p	for
+164	90	102	n	Triv - ia QA
+164	107	109	n	45
+164	110	113	p	for
+164	114	119	n	SQuAD
+168	4	39	n	Glo Ve 300 dimensional word vectors
+168	56	64	p	used for
+168	65	80	n	word embeddings
+169	0	2	p	On
+169	3	8	n	SQuAD
+169	14	17	p	use
+169	20	34	n	dimensionality
+169	35	42	p	of size
+169	43	46	n	100
+169	47	50	p	for
+169	55	59	n	GRUs
+169	72	75	n	200
+169	76	79	p	for
+169	84	97	n	linear layers
+169	98	112	p	employed after
+169	113	137	n	each attention mechanism
+170	8	11	p	for
+170	12	20	n	TriviaQA
+170	59	64	p	using
+170	67	88	n	larger dimensionality
+170	89	91	p	of
+170	92	95	n	140
+170	96	99	p	for
+170	100	108	n	each GRU
+170	113	116	n	280
+170	117	120	p	for
+170	125	138	n	linear layers
+170	44	46	p	is
+170	142	152	n	beneficial
+171	0	6	p	During
+171	7	15	n	training
+171	21	29	p	maintain
+171	33	59	n	exponential moving average
+171	60	62	p	of
+171	67	74	n	weights
+171	75	79	p	with
+171	82	92	n	decay rate
+171	93	95	p	of
+171	96	101	n	0.999
+21	26	35	p	proposing
+21	39	64	n	improved pipelined method
+22	8	17	p	introduce
+22	20	26	n	method
+22	27	39	p	for training
+22	40	46	n	models
+22	47	57	p	to produce
+22	58	98	n	accurate per-paragraph confidence scores
+24	3	10	p	propose
+24	13	31	n	TF - IDF heuristic
+24	32	41	p	to select
+24	48	58	n	paragraphs
+24	59	61	p	to
+24	62	79	n	train and test on
+26	38	41	p	use
+26	44	69	n	summed objective function
+26	70	87	p	that marginalizes
+26	92	107	n	model 's output
+26	108	112	p	over
+26	113	126	n	all locations
+26	143	149	p	occurs
+26	131	142	n	answer text
+32	14	46	n	shared - normalization objective
+32	47	52	p	where
+32	53	63	n	paragraphs
+32	68	77	p	processed
+32	78	91	n	independently
+32	102	113	n	probability
+32	114	116	p	of
+32	120	136	n	answer candidate
+32	137	139	p	is
+32	140	152	n	marginalized
+32	153	157	p	over
+32	158	172	n	all paragraphs
+32	173	185	p	sampled from
+32	190	203	n	same document
+31	29	37	p	sampling
+31	38	48	n	paragraphs
+31	49	53	p	from
+31	58	75	n	context documents
+31	78	87	p	including
+31	88	98	n	paragraphs
+31	104	118	p	do not contain
+31	122	128	n	answer
+31	131	133	p	to
+31	134	142	n	train on
+2	21	60	n	Multi - Paragraph Reading Comprehension
+4	36	79	n	neural paragraph - level question answering
+14	39	84	n	answering questions given a related paragraph
+174	0	13	n	Trivia QA Web
+180	3	7	p	find
+180	58	67	n	effective
+180	52	57	p	to be
+180	13	29	n	TF - IDF ranking
+180	38	51	n	sum objective
+181	0	5	p	Using
+181	10	23	n	refined model
+181	24	33	n	increases
+181	38	42	n	gain
+181	43	45	p	by
+181	46	62	n	another 4 points
+186	4	58	n	shared - norm , merge , and no-answer training methods
+186	59	66	n	improve
+186	71	87	n	model 's ability
+186	88	98	p	to utilize
+186	99	108	n	more text
+186	111	115	p	with
+186	120	140	n	shared - norm method
+186	141	146	p	being
+186	147	166	n	significantly ahead
+186	167	169	p	of
+186	174	180	n	others
+186	181	183	p	on
+186	188	200	n	verified set
+186	205	209	n	tied
+186	210	214	p	with
+186	219	233	n	merge approach
+186	234	236	p	on
+186	241	252	n	general set
+187	0	20	n	Trivia QA Unfiltered
+192	9	19	n	base model
+192	20	29	p	starts to
+192	30	34	n	lose
+192	35	46	n	performance
+192	47	49	p	as
+192	50	65	n	more paragraphs
+192	66	69	p	are
+192	70	74	n	used
+196	0	5	n	SQuAD
+210	6	24	n	all our approaches
+210	29	41	n	some benefit
+210	48	67	n	shared - norm model
+210	68	70	p	is
+210	75	84	n	strongest
+210	110	118	n	not lose
+210	119	130	n	performance
+210	131	133	p	as
+210	134	161	n	large numbers of paragraphs
+210	162	165	p	are
+210	166	170	n	used
+216	0	27	n	Our paragraph - level model
+216	28	30	p	is
+216	31	42	n	competitive
+216	62	76	n	our variations
+216	77	86	p	to handle
+216	91	114	n	multi-paragraph setting
+216	120	125	p	cause
+216	128	138	n	minor loss
+216	139	141	p	of
+216	142	153	n	performance
+219	4	14	n	base model
+219	15	24	p	starts to
+219	25	29	n	drop
+219	30	32	p	in
+219	33	44	n	performance
+219	45	49	p	once
+219	50	74	n	more than two paragraphs
+219	75	78	p	are
+219	79	83	n	used
+220	14	36	n	shared - norm approach
+220	40	47	p	able to
+220	48	53	n	reach
+220	56	72	n	peak performance
+220	73	75	p	of
+220	76	84	n	72.37 F1
+220	89	97	n	64.08 EM
+220	98	103	p	given
+220	104	117	n	15 paragraphs

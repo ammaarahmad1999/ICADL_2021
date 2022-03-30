@@ -1,0 +1,104 @@
+14	3	10	p	examine
+14	13	32	n	simple model family
+14	39	67	n	decomposable attention model
+14	82	107	p	shown promise in modeling
+14	108	134	n	natural language inference
+16	8	19	p	to mitigate
+16	20	33	n	data sparsity
+16	39	45	p	modify
+16	50	70	n	input representation
+16	71	73	p	of
+16	78	106	n	decomposable attention model
+16	107	113	p	to use
+16	114	118	n	sums
+16	119	121	p	of
+16	122	149	n	character n-gram embeddings
+16	150	160	p	instead of
+16	161	176	n	word embeddings
+18	61	69	p	pretrain
+18	70	94	n	all our model parameters
+18	95	97	p	on
+18	102	162	n	noisy , automatically collected question - paraphrase corpus
+18	163	170	n	Paralex
+18	173	184	p	followed by
+18	185	198	n	fine - tuning
+18	203	213	n	parameters
+18	214	216	p	on
+18	221	234	n	Quora dataset
+99	39	41	p	by
+99	42	53	n	grid search
+99	54	56	p	on
+99	61	76	n	development set
+99	130	149	n	embedding dimension
+99	152	155	n	300
+99	160	193	n	shape of all feedforward networks
+99	196	206	n	two layers
+99	207	211	p	with
+99	212	229	n	400 and 200 width
+99	234	257	n	character n -gram sizes
+99	260	261	n	5
+99	266	278	n	context size
+99	281	282	n	1
+99	287	300	n	learning rate
+99	303	306	n	0.1
+99	88	91	p	for
+99	316	338	n	pretraining and tuning
+99	343	353	n	batch size
+99	356	359	n	256
+99	307	310	p	for
+99	364	375	n	pretraining
+99	380	382	n	64
+99	360	363	p	for
+99	387	393	n	tuning
+99	398	411	n	dropout ratio
+99	414	417	n	0.1
+99	383	386	p	for
+99	422	428	n	tuning
+99	435	455	n	prediction threshold
+99	458	477	n	positive paraphrase
+99	418	421	p	for
+99	484	495	n	score ? 0.3
+2	0	45	n	Neural Paraphrase Identification of Questions
+4	40	78	n	paraphrase identification of questions
+8	0	34	n	Question paraphrase identification
+115	3	10	p	observe
+115	20	41	n	simple FFNN baselines
+115	42	53	n	work better
+115	54	58	p	than
+115	59	122	n	more complex Siamese and Multi - Perspective CNN or LSTM models
+116	0	50	n	Our basic decomposable attention model DECATT word
+116	51	58	p	without
+116	59	81	n	pre-trained embeddings
+116	82	84	p	is
+116	85	91	n	better
+116	92	96	p	than
+116	97	115	n	most of the models
+116	131	135	p	used
+116	136	152	n	GloVe embeddings
+117	35	52	n	DECATT char model
+117	53	60	p	without
+117	61	86	n	any pretrained embeddings
+117	87	98	p	outperforms
+117	99	114	n	DE - CATT glove
+117	115	124	p	that uses
+117	125	157	n	task - agnostic GloVe embeddings
+118	14	18	p	when
+118	19	46	n	character n-gram embeddings
+118	47	50	p	are
+118	51	62	n	pre-trained
+118	63	65	p	in
+118	68	90	n	task - specific manner
+118	91	93	p	in
+118	94	121	n	DECATT paralex ? char model
+118	127	134	p	observe
+118	137	154	n	significant boost
+118	155	157	p	in
+118	158	169	n	performance
+122	13	17	p	note
+122	23	48	n	our best performing model
+122	49	51	p	is
+122	52	68	n	pt - DECATT char
+122	77	86	p	leverages
+122	91	101	n	full power
+122	102	104	p	of
+122	105	125	n	character embeddings

@@ -1,0 +1,168 @@
+230	58	99	n	https :// github.com/donglixp/coarse2fine
+237	0	10	n	Dimensions
+237	11	13	p	of
+237	14	48	n	hidden vectors and word embeddings
+237	54	67	p	selected from
+237	68	111	n	{ 250 , 300 } and { 150 , 200 , 250 , 300 }
+238	4	16	n	dropout rate
+238	21	34	p	selected from
+238	35	48	n	{ 0.3 , 0.5 }
+239	0	15	n	Label smoothing
+239	20	32	p	employed for
+239	33	36	n	GEO
+239	41	45	n	ATIS
+240	4	23	n	smoothing parameter
+240	28	34	p	set to
+240	35	38	n	0.1
+242	0	15	n	Word embeddings
+242	21	35	p	initialized by
+242	36	41	n	GloVe
+242	53	62	p	shared by
+242	63	76	n	table encoder
+242	81	94	n	input encoder
+244	4	27	n	part - of - speech tags
+244	33	44	p	obtained by
+244	49	62	n	spaCy toolkit
+246	4	17	n	learning rate
+246	22	35	p	selected from
+246	36	53	n	{ 0.002 , 0.005 }
+247	4	14	n	batch size
+247	15	18	p	was
+247	19	22	n	200
+247	23	26	p	for
+247	27	34	n	WIKISQL
+247	45	47	n	64
+247	48	51	p	for
+247	52	66	n	other datasets
+248	0	14	n	Early stopping
+248	24	36	p	to determine
+248	41	57	n	number of epochs
+243	3	11	p	appended
+243	12	59	n	10 - dimensional part - of - speech tag vectors
+243	60	62	p	to
+243	63	73	n	embeddings
+243	74	76	p	of
+243	81	95	n	question words
+243	96	98	p	in
+243	99	106	n	WIKISQL
+245	3	7	p	used
+245	12	29	n	RMSProp optimizer
+245	30	38	p	to train
+245	43	49	n	models
+14	18	38	p	propose to decompose
+14	43	59	n	decoding process
+14	60	64	p	into
+14	65	75	n	two stages
+15	4	17	n	first decoder
+15	18	28	p	focuses on
+15	29	39	p	predicting
+15	42	54	n	rough sketch
+15	55	57	p	of
+15	62	84	n	meaning representation
+17	9	23	n	second decoder
+17	24	32	p	fills in
+17	33	48	n	missing details
+17	49	67	p	by conditioning on
+17	72	94	n	natural language input
+17	103	109	n	sketch
+18	19	25	n	sketch
+18	26	36	p	constrains
+18	41	59	n	generation process
+18	67	79	p	encoded into
+18	80	87	n	vectors
+18	88	96	p	to guide
+18	97	105	n	decoding
+20	14	27	n	decomposition
+20	28	40	p	disentangles
+20	41	91	n	high - level from low - level semantic information
+20	100	107	p	enables
+20	112	120	n	decoders
+20	121	129	p	to model
+20	130	137	n	meaning
+20	138	140	p	at
+20	141	172	n	different levels of granularity
+22	25	41	n	explicitly share
+22	42	51	n	knowledge
+22	52	54	p	of
+22	55	72	n	coarse structures
+22	73	76	p	for
+22	81	140	n	examples that have the same sketch ( i.e. , basic meaning )
+23	16	26	n	generating
+23	31	37	n	sketch
+23	44	51	n	decoder
+23	52	57	p	knows
+23	67	97	n	basic meaning of the utterance
+23	129	135	p	use it
+23	119	124	n	model
+23	136	138	p	as
+23	139	153	n	global context
+23	154	164	p	to improve
+23	169	179	n	prediction
+23	180	182	p	of
+23	187	200	n	final details
+2	32	55	n	Neural Semantic Parsing
+4	0	16	n	Semantic parsing
+257	13	20	p	observe
+257	26	37	n	COARSE2FINE
+257	38	49	p	outperforms
+257	50	58	n	ONESTAGE
+257	67	75	p	suggests
+257	81	94	n	disentangling
+257	95	107	n	high - level
+257	108	112	p	from
+257	113	136	n	low - level information
+267	26	40	n	sketch encoder
+267	41	43	p	is
+267	44	54	n	beneficial
+267	64	72	p	there is
+267	76	96	n	8.9 point difference
+267	97	116	p	in accuracy between
+267	117	143	n	COARSE2FINE and the oracle
+260	128	138	n	our method
+260	139	147	p	performs
+260	148	161	n	competitively
+260	162	180	p	despite the use of
+260	181	207	n	relatively simple decoders
+269	0	9	n	Our model
+269	13	24	p	superior to
+269	25	33	n	ONESTAGE
+269	48	80	n	previous best performing systems
+270	0	25	n	COARSE2FINE 's accuracies
+270	26	28	p	on
+270	29	59	n	aggregation agg op and agg col
+270	60	63	p	are
+270	64	81	n	90.2 % and 92.0 %
+270	108	121	p	comparable to
+270	122	128	n	SQLNET
+271	7	16	n	most gain
+271	20	31	p	obtained by
+271	36	52	n	improved decoder
+271	53	55	p	of
+271	60	72	n	WHERE clause
+279	0	8	n	Sketches
+279	9	20	p	produced by
+279	21	32	n	COARSE2FINE
+279	33	36	p	are
+279	37	50	n	more accurate
+262	17	27	p	predicting
+262	32	38	n	sketch
+262	39	48	n	correctly
+262	49	55	p	boosts
+262	56	67	n	performance
+272	8	12	p	find
+272	20	44	n	tableaware input encoder
+272	45	47	p	is
+272	48	56	n	critical
+272	57	60	p	for
+272	61	71	n	doing well
+272	72	74	p	on
+272	75	84	n	this task
+282	0	2	p	On
+282	3	10	n	WIKISQL
+282	17	25	n	sketches
+282	26	38	p	predicted by
+282	39	50	n	COARSE2FINE
+282	51	54	p	are
+282	55	72	n	marginally better
+282	73	86	p	compared with
+282	87	95	n	ONESTAGE

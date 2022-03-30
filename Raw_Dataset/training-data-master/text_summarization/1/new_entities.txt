@@ -1,0 +1,117 @@
+161	0	11	n	Beam Search
+162	14	19	p	keeps
+162	20	32	n	K hypotheses
+162	33	37	p	with
+162	38	68	n	highest log-probability scores
+162	69	71	p	at
+162	72	90	n	each decoding step
+163	0	18	n	Truncated Sampling
+164	14	30	p	randomly samples
+164	31	36	n	words
+164	37	41	p	from
+164	42	61	n	top - 10 candidates
+164	62	64	p	of
+164	69	81	n	distribution
+164	82	84	p	at
+164	89	102	n	decoding step
+165	0	15	n	Mixture Decoder
+166	14	24	p	constructs
+166	27	51	n	hard - MoE of K decoders
+166	52	56	p	with
+166	57	83	n	uniform mixing coefficient
+166	112	120	p	conducts
+166	121	145	n	parallel greedy decoding
+168	0	25	n	Mixture Selector ( Ours )
+169	3	12	p	construct
+169	15	40	n	hard - MoE of K SELECTORs
+169	41	45	p	with
+169	46	72	n	uniform mixing coefficient
+169	78	84	p	infers
+169	85	123	n	K different focus from source sequence
+201	25	28	p	tie
+201	33	40	n	weights
+201	41	43	p	of
+201	48	65	n	encoder embedding
+201	72	89	n	decoder embedding
+201	100	121	n	decoder output layers
+203	3	8	p	train
+203	9	24	n	up to 20 epochs
+203	29	35	p	select
+203	40	50	n	checkpoint
+203	51	55	p	with
+203	60	78	n	best oracle metric
+204	3	6	p	use
+204	7	46	n	Adam ( Kingma and Ba , 2015 ) optimizer
+204	47	51	p	with
+204	52	71	n	learning rate 0.001
+204	76	120	n	momentum parmeters ? 1 = 0.9 and ? 2 = 0.999
+205	0	14	n	Minibatch size
+205	15	17	p	is
+205	18	27	n	64 and 32
+205	28	31	p	for
+205	32	81	n	question generation and abstractive summarization
+206	15	29	p	implemented in
+206	30	37	n	PyTorch
+206	42	52	p	trained on
+206	53	73	n	single Tesla P40 GPU
+206	76	84	p	based on
+206	85	131	n	NAVER Smart Machine Learning ( NSML ) platform
+34	64	73	p	separates
+34	74	111	n	diversification and generation stages
+35	4	25	n	diversification stage
+35	26	35	p	leverages
+35	36	53	n	content selection
+35	57	60	p	map
+35	65	93	n	source to multiple sequences
+36	4	20	n	generation stage
+36	21	25	p	uses
+36	28	60	n	standard encoder - decoder model
+36	64	72	p	generate
+36	75	134	n	target sequence given each selected content from the source
+37	3	10	p	present
+37	13	27	n	generic module
+37	28	34	p	called
+37	35	43	n	SELECTOR
+37	52	67	p	specialized for
+37	68	83	n	diversification
+38	19	26	p	used as
+38	29	46	n	plug - and - play
+38	47	49	p	to
+38	53	86	n	arbitrary encoder - decoder model
+38	87	90	p	for
+38	91	129	n	generation without architecture change
+2	30	57	n	Diverse Sequence Generation
+4	0	28	n	Generating diverse sequences
+12	0	51	n	Generating target sequences given a source sequence
+30	45	64	n	sequence generation
+208	0	34	n	Diversity vs. Accuracy Trade - off
+208	99	101	p	in
+209	11	15	p	show
+209	25	48	n	mixture SELECTOR method
+209	49	60	p	outperforms
+209	61	74	n	all baselines
+209	78	104	n	Top - 1 and oracle metrics
+209	109	117	p	achieves
+209	122	138	n	best trade - off
+209	139	146	p	between
+209	147	169	n	diversity and accuracy
+213	10	20	n	our method
+213	21	27	p	scores
+213	28	55	n	state - of - the - art BLEU
+213	60	62	p	in
+213	63	82	n	question generation
+213	83	85	p	on
+213	86	101	n	SQuAD and ROUGE
+213	147	149	p	in
+213	150	187	n	abstractive summarization in CNN - DM
+214	0	32	n	Diversity vs. Number of Mixtures
+215	8	15	p	compare
+215	20	48	n	effect of number of mixtures
+215	49	51	p	in
+215	56	84	n	SELECTOR and Mixture Decoder
+216	93	96	p	for
+216	97	112	n	Mixture Decoder
+216	0	4	p	show
+216	10	54	n	pairwise similarity increases ( diversity ?)
+216	55	59	p	when
+216	64	92	n	number of mixtures increases

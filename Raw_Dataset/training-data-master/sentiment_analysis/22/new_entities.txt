@@ -1,0 +1,235 @@
+137	0	8	n	Majority
+137	9	16	p	assigns
+137	21	39	n	sentiment polarity
+137	40	44	p	with
+137	45	70	n	most frequent occurrences
+137	71	73	p	in
+137	78	90	n	training set
+137	91	93	p	to
+137	94	105	n	each sample
+137	106	108	p	in
+137	109	117	n	test set
+139	0	22	n	Bi - LSTM and Bi - GRU
+139	23	28	p	adopt
+139	31	63	n	Bi - LSTM and a Bi - GRU network
+139	64	72	p	to model
+139	77	85	n	sentence
+139	90	93	p	use
+139	98	110	n	hidden state
+139	111	113	p	of
+139	118	128	n	final word
+139	129	132	p	for
+139	133	143	n	prediction
+141	0	9	n	TD - LSTM
+141	10	16	p	adopts
+141	17	26	n	two LSTMs
+141	27	35	p	to model
+141	40	52	n	left context
+141	53	57	p	with
+141	58	64	n	target
+141	73	86	n	right context
+141	87	91	p	with
+141	92	98	n	target
+141	117	122	p	takes
+141	127	140	n	hidden states
+141	141	143	p	of
+141	144	148	n	LSTM
+141	149	151	p	at
+141	152	168	n	last time - step
+141	169	181	p	to represent
+141	186	194	n	sentence
+141	195	198	p	for
+141	199	209	n	prediction
+143	0	6	n	MemNet
+143	7	14	p	applies
+143	15	24	n	attention
+143	25	39	n	multiple times
+143	40	42	p	on
+143	47	62	n	word embeddings
+143	73	79	n	output
+143	80	82	p	of
+143	83	97	n	last attention
+143	101	107	p	fed to
+143	108	115	n	softmax
+143	116	119	p	for
+143	120	130	n	prediction
+145	0	3	n	IAN
+145	18	24	p	learns
+145	25	35	n	attentions
+145	36	38	p	in
+145	43	63	n	contexts and targets
+145	70	79	p	generates
+145	84	99	n	representations
+145	100	103	p	for
+145	104	124	n	targets and contexts
+147	0	3	n	RAM
+147	6	8	p	is
+147	11	34	n	multilayer architecture
+147	35	40	p	where
+147	41	51	n	each layer
+147	52	63	p	consists of
+147	64	93	n	attention - based aggregation
+147	94	96	p	of
+147	97	110	n	word features
+147	117	125	n	GRU cell
+147	126	134	p	to learn
+147	139	162	n	sentence representation
+149	0	9	n	LCR - Rot
+149	10	17	p	employs
+149	18	33	n	three Bi- LSTMs
+149	34	42	p	to model
+149	47	59	n	left context
+149	66	72	n	target
+149	81	94	n	right context
+152	0	10	n	AOA - LSTM
+152	11	21	p	introduces
+152	25	74	n	attention - over- attention ( AOA ) based network
+152	75	83	p	to model
+152	84	105	n	aspects and sentences
+152	106	108	p	in
+152	111	120	n	joint way
+152	125	143	p	explicitly capture
+152	148	159	n	interaction
+152	160	167	p	between
+152	168	197	n	aspects and context sentences
+128	3	6	p	use
+128	7	35	n	300 - dimension word vectors
+128	36	50	p	pre-trained by
+128	51	56	n	GloVe
+129	0	31	n	All out - of - vocabulary words
+129	36	50	p	initialized as
+129	51	63	n	zero vectors
+129	70	80	n	all biases
+129	85	91	p	set to
+129	92	96	n	zero
+130	4	14	n	dimensions
+130	57	63	p	set to
+130	64	67	n	300
+130	15	17	p	of
+130	18	52	n	hidden states and fused embeddings
+131	4	13	n	dimension
+131	14	16	p	of
+131	17	36	n	position embeddings
+131	40	46	p	set to
+131	47	49	n	50
+132	0	5	n	Keras
+132	14	30	p	for implementing
+132	35	55	n	neural network model
+134	4	18	n	paired t- test
+134	22	30	p	used for
+134	35	55	n	significance testing
+133	0	2	p	In
+133	3	17	n	model training
+133	23	26	p	set
+133	31	44	n	learning rate
+133	45	47	p	to
+133	48	53	n	0.001
+133	60	70	n	batch size
+133	71	73	p	to
+133	74	76	n	64
+133	83	95	n	dropout rate
+133	96	98	p	to
+133	99	102	n	0.5
+37	49	56	p	propose
+37	59	118	n	hierarchical attention based positionaware network ( HAPN )
+37	119	122	p	for
+37	123	162	n	aspect - level sentiment classification
+38	2	33	n	position - aware encoding layer
+38	48	61	p	for modelling
+38	66	74	n	sentence
+38	75	85	p	to achieve
+38	90	130	n	position - aware abstract representation
+38	131	133	p	of
+38	134	143	n	each word
+39	18	43	n	succinct fusion mechanism
+39	55	66	p	proposed to
+39	67	71	n	fuse
+39	76	90	p	information of
+39	91	115	n	aspects and the contexts
+39	118	127	p	achieving
+39	132	161	n	final sentence representation
+40	13	17	p	feed
+40	22	54	n	achieved sentence representation
+40	55	59	p	into
+40	62	75	n	softmax layer
+40	76	86	p	to predict
+40	91	109	n	sentiment polarity
+43	34	90	n	https://github.com/DUT-LiuYang/Aspect-Sentiment-Analysis
+2	56	87	n	Aspect-level Sentiment Analysis
+12	15	33	n	sentiment analysis
+155	10	25	n	TD - LSTM model
+155	43	66	p	shown to be better than
+155	67	71	n	LSTM
+155	74	78	p	gets
+155	83	100	n	worst performance
+155	101	103	p	of
+155	104	124	n	all RNN based models
+155	133	141	n	accuracy
+155	142	153	p	achieved by
+155	154	163	n	TD - LSTM
+155	164	166	p	is
+155	167	183	n	2.94 % and 2.4 %
+155	184	194	p	lower than
+155	204	213	n	Bi - LSTM
+160	0	10	n	Our method
+160	11	19	p	achieves
+160	20	30	n	accuracies
+160	31	33	p	of
+160	34	41	n	82.23 %
+160	42	52	p	as well as
+160	53	62	n	77 . 27 %
+160	63	65	p	on
+160	70	99	n	Restaurant and Laptop dataset
+172	42	55	n	Bi - GRU - PW
+172	56	64	p	performs
+172	65	75	n	even worse
+172	76	80	p	than
+172	81	89	n	Bi - GRU
+173	4	12	n	accuracy
+173	13	24	p	achieved by
+173	25	38	n	Bi - GRU - PW
+173	39	41	p	is
+173	42	48	n	0.72 %
+173	49	59	p	as well as
+173	60	66	n	1.41 %
+173	67	77	p	lower than
+173	86	94	n	Bi - GRU
+173	95	97	p	on
+173	102	131	n	Restaurant and Laptop dataset
+180	0	4	n	HAPN
+180	5	13	p	achieves
+180	14	25	n	improvement
+180	26	28	p	of
+180	29	46	n	0.35 % and 0.78 %
+180	47	49	p	on
+180	50	58	n	accuracy
+192	10	38	n	information fusion operation
+192	47	54	p	used to
+192	55	64	n	calculate
+192	69	99	n	Source2context attention value
+193	4	10	n	output
+193	11	13	p	of
+193	14	37	n	Source2aspect attention
+193	46	54	p	used for
+193	55	73	n	information fusion
+195	28	41	n	Bi - GRU - PE
+195	62	71	p	achieving
+195	76	86	n	accuracies
+195	87	89	p	of
+195	90	109	n	80.89 % and 76.02 %
+195	110	112	p	on
+195	117	129	n	two datasets
+159	6	19	p	Compared with
+159	24	54	n	state - of - the - art methods
+159	57	66	n	our model
+159	67	75	p	achieves
+159	80	96	n	best performance
+170	6	17	p	introducing
+170	22	41	n	position embeddings
+170	48	56	n	accuracy
+170	57	63	p	has an
+170	64	72	n	increase
+170	73	75	p	of
+170	76	93	n	0.62 % and 2.67 %
+170	94	96	p	on
+170	97	109	n	two datasets

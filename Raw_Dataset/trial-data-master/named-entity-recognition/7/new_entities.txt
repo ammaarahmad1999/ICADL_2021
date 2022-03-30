@@ -1,0 +1,83 @@
+148	3	11	p	evaluate
+148	16	49	n	contribution of neural components
+148	50	59	p	including
+148	60	127	n	pre-trained embeddings , the characterlevel LSTM and dropout layers
+150	65	92	p	contribute significantly to
+150	97	123	n	effectiveness of our model
+150	124	126	p	in
+150	127	145	n	all three datasets
+123	0	22	p	Pre-trained embeddings
+124	0	6	n	Glo Ve
+124	7	9	p	of
+124	10	23	n	dimension 100
+124	28	46	p	used to initialize
+124	51	63	n	word vectors
+124	64	67	p	for
+124	68	86	n	all three datasets
+125	6	28	p	embeddings of POS tags
+125	33	53	n	initialized randomly
+125	54	58	p	with
+125	59	71	n	dimension 32
+126	13	26	p	trained using
+126	27	31	n	Adam
+126	38	62	n	gradient clipping of 3.0
+17	82	88	p	design
+17	91	116	n	transition - based system
+17	0	10	p	To achieve
+17	13	44	n	scalable and effective solution
+17	45	60	p	for recognizing
+17	61	76	n	nested mentions
+18	50	56	p	mapped
+18	12	46	n	each sentence with nested mentions
+18	57	59	p	to
+18	62	143	n	forest where each outermost mention forms a tree consisting of its inner mentions
+19	35	54	p	learns to construct
+19	55	66	n	this forest
+19	67	74	p	through
+19	77	111	n	sequence of shift - reduce actions
+23	15	21	p	employ
+23	22	34	n	Stack - LSTM
+23	35	47	p	to represent
+23	52	67	n	system 's state
+23	76	87	p	consists of
+23	92	134	n	states of input , stack and action history
+23	137	139	p	in
+23	142	172	n	continuous space incrementally
+24	4	43	n	( partially ) processed nested mentions
+24	61	73	p	encoded with
+24	74	99	n	recursive neural networks
+24	100	105	p	where
+24	106	127	n	composition functions
+24	128	147	p	are used to capture
+24	148	160	n	dependencies
+24	161	168	p	between
+24	169	184	n	nested mentions
+25	133	144	p	incorporate
+25	147	166	n	characterlevel LSTM
+25	167	177	p	to capture
+25	183	208	n	morphological information
+26	54	68	p	help deal with
+26	73	102	n	out - of - vocabulary problem
+26	103	105	p	of
+26	106	119	n	neural models
+2	38	64	n	Nested Mention Recognition
+5	62	100	n	model the nested structure of mentions
+12	125	201	n	nested hierarchical structure of entity mentions should betaken into account
+133	118	129	p	in terms of
+133	130	141	n	F 1 measure
+133	0	35	n	Our neural transition - based model
+133	36	44	p	achieves
+133	49	61	n	best results
+133	62	64	p	in
+133	65	77	n	ACE datasets
+133	82	100	n	comparable results
+133	101	103	p	in
+133	104	117	n	GENIA dataset
+139	49	65	p	more significant
+139	24	45	n	margin of improvement
+139	66	68	p	in
+139	73	99	n	portion of nested mentions
+139	102	111	p	revealing
+139	116	138	n	model 's effectiveness
+139	139	150	p	in handling
+139	151	166	n	nested mentions

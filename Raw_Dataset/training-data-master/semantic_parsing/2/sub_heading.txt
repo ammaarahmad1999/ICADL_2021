@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Related Work
+Problem Formulation
+Sketch Generation
+Meaning Representation Generation
+Training and Inference
+Semantic Parsing Tasks
+Natural Language to Logical Form
+Natural Language to Source Code
+Natural Language to SQL
+Experiments
+Experimental Setup
+Results and Analysis
+Conclusions

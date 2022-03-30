@@ -1,0 +1,53 @@
+{
+  "has" : {
+    "Approach" : {
+      "to learn" : ["FRequency - AGnostic word Embedding ( FRAGE )", {"from sentence" : "To address this problem , in this paper , we propose an adversarial training method to learn FRequency - AGnostic word Embedding ( FRAGE ) ."}],
+      "minimize" : {
+        "task - specific loss" : {
+          "by optimizing" : {
+            "task - specific parameters" : {
+              "together with" : "word embeddings"
+            }
+          }
+        }
+      },
+      "introduce" : {
+        "another discriminator" : {
+          "input" : {
+            "a word embedding" : {
+              "classifies" : "popular / rare word"
+            }
+          }
+        },
+        "from sentence" : "For a given NLP task , in addition to minimize the task - specific loss by optimizing the task - specific parameters together with word embeddings , we introduce another discriminator , which takes a word embedding as input and classifies whether it is a popular / rare word ."
+      },
+      "optimizes" : {
+        "discriminator" : {
+          "to maximize" : "classification accuracy"
+        }
+      },
+      "optimized" : {
+        "word embeddings" : {
+          "towards" :  "low task - dependent loss",
+          "fooling" : {
+            "discriminator" : {
+              "to mis-classify" : "popular and rare words"
+            }
+          }
+        },
+        "from sentence" : "The discriminator optimizes its parameters to maximize its classification accuracy , while word embeddings are optimized towards a low task - dependent loss as well as fooling the discriminator to mis-classify the popular and rare words ."        
+      },
+      "achieves" : {
+        "equilibrium" : {
+          "When" : "the whole training process converges",
+          "can not well differentiate" : {
+            "popular words" : {
+              "from" : "rare words" 
+            }
+          }
+        },
+        "from sentence" : "When the whole training process converges and the system achieves an equilibrium , the discriminator can not well differentiate popular words from rare words ."        
+      }
+    }
+  }
+}

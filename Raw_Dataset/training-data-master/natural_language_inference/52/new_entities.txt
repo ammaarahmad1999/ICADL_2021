@@ -1,0 +1,94 @@
+32	44	48	p	that
+32	49	55	n	learns
+32	56	58	p	to
+32	64	90	n	select and explain answers
+32	93	97	p	when
+32	102	128	n	only supervision available
+32	129	131	p	is
+32	136	159	n	which answer is correct
+32	166	169	p	not
+32	170	187	n	how to explain it
+33	27	34	p	chooses
+33	39	53	n	justifications
+33	54	66	p	that provide
+33	71	80	n	most help
+33	81	88	p	towards
+33	89	96	n	ranking
+33	101	116	n	correct answers
+33	117	123	n	higher
+33	124	128	p	than
+33	129	143	n	incorrect ones
+34	5	13	p	formally
+34	16	43	n	our neural network approach
+34	44	54	n	alternates
+34	63	68	p	using
+34	73	86	n	current model
+34	87	91	p	with
+34	92	105	n	max - pooling
+34	106	115	p	to choose
+34	120	150	n	highest scoring justifications
+34	151	154	p	for
+34	155	170	n	correct answers
+34	177	187	p	optimizing
+34	192	212	n	answer ranking model
+34	213	218	p	given
+34	225	239	n	justifications
+148	0	11	n	IR Baseline
+149	23	27	p	rank
+149	28	45	n	answer candidates
+149	46	48	p	by
+149	53	93	n	maximum tf .idf document retrieval score
+149	94	99	p	using
+149	103	118	n	unboosted query
+149	119	121	p	of
+149	122	147	n	question and answer terms
+150	0	5	n	IR ++
+151	14	18	p	uses
+151	23	40	n	same architecture
+151	41	43	p	as
+151	48	58	n	full model
+151	95	99	p	with
+151	100	128	n	only the IR ++ feature group
+2	66	86	n	Answer Justification
+11	0	55	n	Developing interpretable machine learning ( ML ) models
+171	0	14	n	QA Performance
+177	0	14	n	Our full model
+177	20	28	p	combines
+177	29	98	n	IR ++ , lexical overlap , discourse , and embeddings - based features
+177	107	110	n	P@1
+177	111	113	p	of
+177	114	120	n	53.3 %
+177	137	150	n	absolute gain
+177	151	153	p	of
+177	154	159	n	6.3 %
+177	160	164	p	over
+177	169	187	n	strong IR baseline
+183	5	11	p	tackle
+183	16	39	n	AI2 Kaggle question set
+185	0	9	p	By way of
+185	12	28	n	loose comparison
+185	88	97	n	our model
+185	102	138	n	approximately 5 % higher performance
+192	0	16	p	In comparison to
+192	17	30	n	other systems
+192	31	35	p	that
+192	36	44	n	competed
+192	45	47	p	in
+192	52	68	n	Kaggle challenge
+192	71	81	n	our system
+192	82	90	p	comes in
+192	94	103	n	7th place
+192	104	110	p	out of
+192	111	126	n	170 competitors
+197	0	25	n	Justification Performance
+228	10	14	n	61 %
+228	15	17	p	of
+228	22	49	n	top - ranked justifications
+228	50	54	p	from
+228	55	65	n	our system
+228	71	79	p	rated as
+228	80	84	n	Good
+228	88	99	p	compared to
+228	100	104	n	52 %
+228	105	109	p	from
+228	114	125	n	IR baseline

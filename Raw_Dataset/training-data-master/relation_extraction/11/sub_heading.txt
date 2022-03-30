@@ -1,0 +1,20 @@
+title
+abstract
+Introduction
+Related Work
+Background: Graph Convolution
+GCN on Labeled Directed Graph
+Integrating Edge Importance
+RESIDE Overview
+RESIDE Details
+Syntactic Sentence Encoding
+Side Information Acquisition
+Instance Set Aggregation
+Experimental Setup
+Datasets
+Baselines
+Evaluation Criteria
+Results
+Performance Comparison
+Ablation Results
+Effect of Relation Alias Side Information

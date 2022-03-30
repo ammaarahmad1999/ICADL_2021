@@ -1,0 +1,78 @@
+118	3	8	p	train
+118	9	28	n	two types of models
+119	4	13	p	first one
+119	20	41	n	RNN Encoder - Decoder
+119	66	71	p	other
+119	117	126	n	RNNsearch
+120	9	25	n	each model twice
+120	34	38	p	with
+120	43	52	n	sentences
+120	53	62	p	of length
+120	63	77	n	up to 30 words
+120	152	165	n	up to 50 word
+121	24	26	p	of
+121	31	40	n	RNNencdec
+121	4	23	p	encoder and decoder
+121	51	68	n	hidden units each
+121	41	45	p	have
+121	46	50	n	1000
+122	4	14	p	encoder of
+122	19	28	n	RNNsearch
+122	29	40	p	consists of
+122	41	95	n	forward and backward recurrent neural networks ( RNN )
+122	96	107	p	each having
+122	108	125	n	1000 hidden units
+123	5	12	n	decoder
+123	22	34	p	hidden units
+123	17	21	n	1000
+124	19	22	p	use
+124	25	43	n	multilayer network
+124	44	48	p	with
+124	51	77	n	single maxout hidden layer
+124	78	88	p	to compute
+124	93	116	n	conditional probability
+124	117	119	p	of
+124	120	136	n	each target word
+20	36	45	p	introduce
+20	49	89	n	extension to the encoder - decoder model
+20	96	105	p	learns to
+20	106	133	n	align and translate jointly
+21	68	87	p	( soft - ) searches
+21	94	110	n	set of positions
+21	46	48	p	in
+21	116	131	n	source sentence
+21	132	137	p	where
+21	142	183	n	most relevant information is concentrated
+21	0	9	n	Each time
+21	29	38	p	generates
+21	41	45	n	word
+21	111	113	p	in
+21	51	62	n	translation
+22	15	23	p	predicts
+22	26	37	n	target word
+22	38	46	p	based on
+22	51	66	n	context vectors
+22	67	82	p	associated with
+22	89	105	n	source positions
+22	118	149	n	previous generated target words
+2	45	71	n	NEURAL MACHINE TRANSLATION
+11	7	26	n	machine translation
+7	39	159	n	use of a fixed - length vector is a bottleneck in improving the performance of this basic encoder - decoder architecture
+141	33	35	p	of
+141	36	45	n	RNNencdec
+141	46	67	p	dramatically drops as
+141	72	105	n	length of the sentences increases
+142	63	74	p	more robust
+142	20	58	n	both RNNsearch - 30 and RNNsearch - 50
+142	75	77	p	to
+142	82	105	n	length of the sentences
+143	36	64	p	no performance deterioration
+143	0	14	n	RNNsearch - 50
+143	70	74	p	with
+143	75	84	n	sentences
+143	85	94	p	of length
+143	95	105	n	50 or more
+144	134	145	p	outperforms
+144	114	128	n	RNNsearch - 30
+144	129	133	p	even
+144	146	160	n	RNNencdec - 50

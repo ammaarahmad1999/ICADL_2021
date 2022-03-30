@@ -1,0 +1,10 @@
+title
+abstract
+Introduction
+Bidirectional Attention Connectors (BAC)
+Densely Connected Attention Propagation (DECAPROP)
+Experiments
+Results
+R° N/A N/A 49.0 55.3
+Conclusion
+Acknowledgements

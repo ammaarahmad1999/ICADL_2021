@@ -1,0 +1,75 @@
+{
+  "has" : {
+    "Model" : {
+      "has" : {
+        "baseline model" : {
+          "aims to detect" : ["type and the boundaries of the entities", "relations between them"],
+          "from sentence" : "The baseline model , described in detail in , is illustrated in .
+It aims to detect ( i ) the type and the boundaries of the entities and ( ii ) the relations between them ."
+          
+        },
+        "input" : {
+          "is a" : "sequence of tokens ( i.e. , sentence ) w = w 1 , ... , w n",
+          "from sentence" : "The input is a sequence of tokens ( i.e. , sentence ) w = w 1 , ... , w n ."
+        },
+        "character embeddings" : {
+          "fed to" : {
+            "bidirectional LSTM ( BiLSTM )" : {
+              "to obtain" : "character - based representation of the word"
+            }
+          },
+          "from sentence" : "The character embeddings are fed to a bidirectional LSTM ( BiLSTM ) to obtain the character - based representation of the word ."          
+        },
+        "Word and character embeddings" : {
+          "concatenated to form" : {
+            "final token representation" : {
+              "then fed to" : {
+                "BiLSTM layer" : {
+                  "to extract" : "sequential information"
+                }
+              }
+            }
+          },
+          "from sentence" : "Word and character embeddings are concatenated to form the final token representation , which is then fed to a BiLSTM layer to extract sequential information ."
+        },
+        "Adversarial training ( AT )" : {
+          "exploit" : {
+            "idea of AT" : {
+              "as a" : {
+                "regularization method" : {
+                  "to make" : "our model robust to input perturbations"
+                  } 
+                }
+              }
+            },
+            "from sentence" : "Adversarial training ( AT )
+We exploit the idea of AT as a regularization method to make our model robust to input perturbations ."
+
+        }
+      },
+      "use" : [
+        {"character level embeddings" : {
+          "to implicitly capture" : {
+            "morphological features ( e.g. , prefixes and suffixes )" : {
+              "representing each" : "character by a vector ( embedding )"
+            }
+          },
+          "from sentence" : "We use character level embeddings to implicitly capture morphological features ( e.g. , prefixes and suffixes ) , representing each character by a vector ( embedding ) ."
+        }},
+        ["pre-trained word embeddings", {"from sentence" : "We also use pre-trained word embeddings ."}]
+      ],
+      "For" : {
+        "NER task" : {
+          "adopt" : "BIO ( Beginning , Inside , Outside ) encoding scheme",
+          "from sentence" : "For the NER task , we adopt the BIO ( Beginning , Inside , Outside ) encoding scheme ."
+        }
+      },
+      "model" : {
+        "relation extraction task" : {
+          "as a" : "multi-label head selection problem"
+        },
+        "from sentence" : "We model the relation extraction task as a multi-label head selection problem ."
+      }
+    }
+  }
+}

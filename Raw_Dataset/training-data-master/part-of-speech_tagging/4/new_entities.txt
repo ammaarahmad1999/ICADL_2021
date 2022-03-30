@@ -1,0 +1,59 @@
+19	22	33	p	investigate
+19	36	56	n	neural network model
+19	57	60	p	for
+19	61	83	n	output label sequences
+22	35	44	p	represent
+22	47	78	n	full - exponential search space
+22	79	93	p	without making
+22	94	112	n	Markov assumptions
+20	29	48	n	each possible label
+20	49	54	p	using
+20	58	74	n	embedding vector
+20	81	94	p	aim to encode
+20	95	104	n	sequences
+20	105	107	p	of
+20	108	127	n	label distributions
+20	128	133	p	using
+20	136	160	n	recurrent neural network
+2	53	70	n	Sequence Labeling
+4	42	71	n	statistical sequence labeling
+179	0	3	n	WSJ
+181	0	12	n	BiLSTM - LAN
+181	13	18	p	gives
+181	19	52	n	significant accuracy improvements
+181	53	57	p	over
+181	63	75	n	BiLSTM - CRF
+181	80	95	n	BiLSTM- softmax
+186	0	35	n	Universal Dependencies ( UD ) v 2.2
+186	172	174	p	on
+188	0	9	n	Our model
+188	10	21	p	outperforms
+188	22	39	n	all the baselines
+188	43	60	n	all the languages
+189	4	16	n	improvements
+189	17	20	p	are
+189	21	46	n	statistically significant
+189	47	50	p	for
+189	51	81	n	all the languages ( p < 0.01 )
+189	84	99	p	suggesting that
+189	100	112	n	BiLSTM - LAN
+189	113	115	p	is
+189	116	135	n	generally effective
+189	136	142	p	across
+189	143	152	n	languages
+190	0	13	n	OntoNotes 5.0
+190	25	37	n	BiLSTM - CRF
+191	0	12	n	BiLSTM - LAN
+191	18	43	n	significantly outperforms
+191	57	59	p	by
+191	60	73	n	1.17 F1-score
+193	53	57	p	both
+193	58	101	n	BiLSTMsoftmax and BiLSTM - CRF ( p < 0.01 )
+193	104	111	p	showing
+193	116	125	n	advantage
+193	126	128	p	of
+193	23	26	n	LAN
+198	43	50	p	obtains
+198	51	82	n	new state - of - theart results
+198	83	85	p	on
+198	86	93	n	CCGBank

@@ -1,0 +1,21 @@
+title
+abstract
+Introduction
+Simple Question Answering
+Knowledge Bases
+The SimpleQuestions dataset
+Memory Networks for Simple QA
+Input module
+Generalization module
+Output module
+Response module
+Training
+Miultitask training
+Distant supervision
+Generating negative examples
+Related Work
+Experiments
+Evaluation and baselines
+Experimental setup
+Results
+Conclusion

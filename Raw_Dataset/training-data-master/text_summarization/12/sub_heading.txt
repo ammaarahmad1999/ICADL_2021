@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Related Work
+Problem Formulation
+Model
+Sentence Encoder
+Selective Mechanism
+Summary Decoder
+Objective Function
+Experiments
+Dataset
+Evaluation Metric
+Implementation Details
+Baseline
+Results
+Discussion
+Conclusion

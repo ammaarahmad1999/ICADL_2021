@@ -1,0 +1,67 @@
+204	3	6	use
+204	23	38	word embeddings
+204	7	22	256 dimensional
+204	39	42	for
+204	43	79	both the source and target languages
+229	7	25	4 ? 8 GPU machines
+229	55	66	running for
+229	67	74	10 days
+229	75	83	to train
+229	88	143	full model with parallelization at the data batch level
+205	94	98	have
+205	99	115	512 memory cells
+205	4	15	LSTM layers
+205	18	27	including
+205	32	91	2n e layers in the encoder and then d layers in the decoder
+208	0	3	For
+208	4	19	each LSTM layer
+208	26	77	activation functions for gates , inputs and outputs
+208	82	107	sigmoid , tanh , and tanh
+214	108	110	is
+214	124	127	for
+214	132	158	feed - forward computation
+214	111	115	used
+214	161	182	smaller learning rate
+214	183	186	l f
+214	189	197	4 10 ? 5
+214	39	41	in
+214	46	67	recurrent computation
+214	201	205	used
+214	72	92	larger learning rate
+214	93	96	l r
+214	99	107	5 10 ? 4
+224	4	17	dropout ratio
+224	24	27	0.1
+31	18	27	introduce
+31	28	60	a new type of linear connections
+31	61	64	for
+31	65	97	multi - layer recurrent networks
+32	30	36	called
+32	37	63	fast - forward connections
+32	66	88	play an essential role
+32	92	116	building a deep topology
+32	117	121	with
+32	122	133	depth of 16
+33	30	69	interleaved bi-directional architecture
+33	70	78	to stack
+33	79	105	LSTM layers in the encoder
+4	0	26	Neural machine translation
+4	29	32	NMT
+4	51	70	machine translation
+4	73	75	MT
+237	0	13	Single models
+238	0	21	English - to - French
+241	0	4	From
+241	5	14	Deep - ED
+241	20	26	obtain
+241	31	41	BLEU score
+241	42	44	of
+241	45	49	36.3
+241	58	69	outperforms
+241	70	85	Enc - Dec model
+241	86	88	by
+241	89	104	4.8 BLEU points
+244	0	3	For
+244	4	14	Deep - Att
+244	21	52	performance is further improved
+244	56	60	37.7

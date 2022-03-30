@@ -1,0 +1,114 @@
+36	84	92	to learn
+36	93	138	FRequency - AGnostic word Embedding ( FRAGE )
+37	38	46	minimize
+37	51	71	task - specific loss
+37	72	85	by optimizing
+37	90	116	task - specific parameters
+37	117	130	together with
+37	131	146	word embeddings
+37	152	161	introduce
+37	162	183	another discriminator
+37	218	223	input
+37	198	214	a word embedding
+37	228	238	classifies
+37	255	274	popular / rare word
+38	18	27	optimizes
+38	4	17	discriminator
+38	43	54	to maximize
+38	59	82	classification accuracy
+38	111	120	optimized
+38	91	106	word embeddings
+38	121	128	towards
+38	131	156	low task - dependent loss
+38	168	175	fooling
+38	180	193	discriminator
+38	194	209	to mis-classify
+38	214	236	popular and rare words
+39	57	65	achieves
+39	69	80	equilibrium
+39	0	4	When
+39	5	41	the whole training process converges
+39	101	127	can not well differentiate
+39	128	141	popular words
+39	142	146	from
+39	147	157	rare words
+177	0	15	Word Similarity
+178	3	6	use
+178	11	28	skip - gram model
+178	29	31	as
+178	36	50	baseline model
+179	3	7	test
+179	12	35	baseline and our method
+179	36	38	on
+179	39	72	three datasets : RG65 , WS and RW
+182	0	17	Language Modeling
+183	4	8	goal
+183	15	36	predict the next word
+183	37	51	conditioned on
+183	52	66	previous words
+183	83	95	evaluated by
+183	96	106	perplexity
+184	6	20	experiments on
+184	21	94	two widely used datasets , Penn Treebank ( PTB ) and WikiText - 2 ( WT2 )
+185	3	9	choose
+185	10	26	two recent works
+185	27	29	as
+185	30	97	our baselines : the AWD - LSTM model and the AWD - LSTM - MoS model
+186	0	19	Machine Translation
+187	3	9	choose
+187	10	85	two datasets : WMT14 English - German and IWSLT14 German - English datasets
+187	98	119	evaluated in terms of
+187	125	130	score
+188	3	6	use
+188	7	18	Transformer
+188	19	21	as
+188	26	40	baseline model
+190	0	19	Text Classification
+191	30	39	implement
+191	42	69	Recurrent CNN - based model
+191	74	84	test it on
+191	85	175	AG 's news corpus ( AGs ) , IMDB movie review dataset ( IMDB ) and 20 Newsgroups ( 20 NG )
+2	8	48	Frequency - Agnostic Word Representation
+5	133	207	word embeddings learned in several tasks are biased towards word frequency
+22	20	89	learned embeddings of rare words and popular words behave differently
+26	36	128	embeddings of rare words and popular words actually lie in different subregions of the space
+28	18	103	different behaviors of the embeddings of popular words and rare words are problematic
+214	0	17	Language Modeling
+217	35	46	outperforms
+217	51	64	two baselines
+218	3	14	PTB dataset
+218	28	36	improves
+218	41	81	AWD - LSTM and AWD - LSTM - MoS baseline
+218	82	84	by
+218	85	122	0.8/1.2/1.0 and 0.76/1.13/1.15 points
+219	3	14	WT2 dataset
+219	61	69	achieves
+219	70	89	larger improvements
+220	3	25	improve the results of
+220	26	57	AWD - LSTM and AWD - LSTM - MoS
+220	58	60	by
+220	61	91	2.3/2.4/2.7 and 1.15/1.72/1.54
+220	92	103	in terms of
+220	104	119	test perplexity
+221	0	19	Machine Translation
+223	151	153	on
+223	3	13	outperform
+223	18	27	baselines
+223	28	31	for
+223	32	41	1.06/0.71
+223	42	56	in the term of
+223	57	61	BLEU
+225	49	60	outperforms
+225	4	9	model
+225	10	22	learned from
+225	23	43	adversarial training
+225	61	106	original one in IWSLT14 German - English task
+225	107	109	by
+225	110	114	0.85
+227	0	19	Text Classification
+229	11	22	outperforms
+229	27	35	baseline
+229	43	46	for
+229	47	65	1.26%/0.66%/0.44 %
+229	66	68	on
+229	69	93	three different datasets

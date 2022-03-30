@@ -1,0 +1,7 @@
+{
+  "has research problem" : [
+    ["Text Classification", {"from sentence" : "Investigating Capsule Networks with Dynamic Routing for Text Classification"}],
+    ["Modeling articles or sentences computationally", {"from sentence" : "Modeling articles or sentences computationally is a fundamental topic in natural language processing ."}],
+    ["text categorization", {"from sentence" : "Earlier efforts in modeling texts have achieved limited success on text categorization using a simple bag - of - words classifier , implying understanding the meaning of the individual word or n-gram is a necessary step towards more sophisticated models ."}]
+  ] 
+}

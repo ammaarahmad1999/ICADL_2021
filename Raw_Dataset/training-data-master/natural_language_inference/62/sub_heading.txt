@@ -1,0 +1,19 @@
+title
+abstract
+Introduction
+Data Enrichment Method
+Semantic Relation Chain
+Inter-word Semantic Connection
+General Knowledge Extraction
+Knowledge Aided Reader
+Task Definition
+Overall Architecture
+Knowledge Aided Mutual Attention
+Knowledge Aided Self Attention
+Related Works
+Experiments
+Experimental Settings
+Model Comparison in both Performance
+Model Comparison in the Hunger for
+Analysis
+Conclusion

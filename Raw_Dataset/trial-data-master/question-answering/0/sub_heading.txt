@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Related Work
+Open-domain Question Answering
+Task Definition
+Training Data
+Embedding-based Model
+Question-KB Triple Scoring
+Fine-tuning the Similarity between Embeddings
+Experiments
+Evaluation Protocols
+Results
+Evaluation on WebQuestions
+Conclusion

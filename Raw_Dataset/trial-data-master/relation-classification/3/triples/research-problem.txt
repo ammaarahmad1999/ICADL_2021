@@ -1,0 +1,3 @@
+(Contribution||has research problem||multi-context joint entity and relation extraction)
+(Contribution||has research problem||entity recognition and relation extraction)
+(Contribution||has research problem||jointly extracting entities and relations)

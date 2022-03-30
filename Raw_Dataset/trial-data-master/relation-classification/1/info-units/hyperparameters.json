@@ -1,0 +1,43 @@
+{
+  "has" : {
+    "Hyperparameters" : {
+      "has" : {
+        "word embeddings" : {
+          "used in" : {
+            "encoding part" : {
+              "initialed by" : {
+                "running word2vec 3" : {
+                  "on" : "NYT training corpus"
+                }
+              }
+            },
+            "from sentence" : "The word embeddings used in the encoding part are initialed by running word2vec 3 on NYT training corpus ."            
+          },
+          "dimension" : ["d = 300", {"from sentence" : "The dimension of the word embeddings is d = 300 ."}]
+        }
+      },
+      "regularize" : {
+        "network" : {
+          "using" : {
+            "dropout" : {
+              "on" : "embedding layer",
+              "ratio is" : "0.5"
+            }
+          }
+        },
+        "from sentence" : "We regularize our network using dropout on embedding layer and the dropout ratio is 0.5 ."
+      },
+      "number of" : {
+        "lstm units" : {
+          "in encoding layer" : "300",
+          "in decoding layer" : "600"
+        },
+        "from sentence" : "The number of lstm units in encoding layer is 300 and the number in decoding layer is 600 ."
+      },
+      "bias parameter ?" : ["10", {"from sentence" : "The bias parameter ?
+corresponding to the results in is 10 ."
+
+      }]
+    }
+  }
+}

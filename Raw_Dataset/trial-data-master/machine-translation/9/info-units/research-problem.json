@@ -1,0 +1,8 @@
+{
+  "has research problem" : [
+    ["COMPRESSING WORD EMBEDDINGS", {"from sentence" : "Under review as a conference paper at ICLR 2018 COMPRESSING WORD EMBEDDINGS VIA DEEP COMPOSITIONAL CODE LEARNING"}],
+    ["compressing the word embeddings without any significant sacrifices in performance", {"from sentence" : "Deploying neural NLP models to mobile devices requires compressing the word embeddings without any significant sacrifices in performance ."}],
+    ["constructing word embeddings with drastically fewer parameters", {"from sentence" : "In this work , we utilize such codes for a different purpose , that is , constructing word embeddings with drastically fewer parameters ."}],
+    ["compress the size of NLP models", {"from sentence" : "Thus , it is becoming more important to compress the size of NLP models for deployment to devices with limited memory or storage capacity ."}]
+    ]
+}

@@ -1,0 +1,80 @@
+129	3	8	p	adopt
+129	13	36	n	Whole Word Masking BERT
+130	4	25	n	initial learning rate
+130	29	35	p	set in
+130	36	75	n	{ 8e -6 , 1 e - 5 , 2 e - 5 , 3 e - 5 }
+130	76	80	p	with
+130	81	95	n	warm - up rate
+130	96	98	p	of
+130	99	102	n	0.1
+130	107	122	n	L2 weight decay
+130	123	125	p	of
+130	126	130	n	0.01
+131	4	14	n	batch size
+131	18	29	p	selected in
+131	30	46	n	{ 16 , 20 , 32 }
+132	4	28	n	maximum number of epochs
+132	32	38	p	set to
+132	39	46	n	3 or 10
+133	4	10	n	weight
+134	0	2	p	in
+134	7	31	n	dual context aggregation
+134	32	34	p	is
+134	35	38	n	0.5
+135	8	13	n	texts
+135	14	17	p	are
+135	18	27	n	tokenized
+135	28	33	p	using
+135	34	44	n	wordpieces
+135	55	75	n	maximum input length
+135	79	85	p	set to
+135	86	89	n	384
+135	90	93	p	for
+135	102	116	n	SQuAD and RACE
+27	19	25	p	extend
+27	30	56	n	self - attention mechanism
+27	57	61	p	with
+27	62	88	n	syntax - guided constraint
+27	91	101	p	to capture
+27	102	122	n	syntax related parts
+27	123	127	p	with
+27	128	147	n	each concerned word
+28	18	23	p	adopt
+28	24	77	n	pre-trained dependency syntactic parse tree structure
+28	78	88	p	to produce
+28	93	106	n	related nodes
+28	107	110	p	for
+28	111	120	n	each word
+28	121	123	p	in
+28	126	134	n	sentence
+28	191	200	p	regarding
+28	201	210	n	each word
+28	211	213	p	as
+28	216	226	n	child node
+28	137	143	p	namely
+28	144	185	n	syntactic dependency of interest ( SDOI )
+30	15	26	p	accommodate
+30	32	48	n	SDOI information
+30	54	61	p	propose
+30	64	106	n	novel syntax - guided network ( SG - Net )
+30	115	120	p	fuses
+30	125	152	n	original SAN and SDOI - SAN
+30	155	165	p	to provide
+30	166	209	n	more linguistically inspired representation
+30	210	213	p	for
+30	226	253	n	reading comprehension tasks
+2	27	56	n	Machine Reading Comprehension
+13	130	167	n	machine reading comprehension ( MRC )
+17	32	35	n	MRC
+143	8	19	n	outperforms
+143	20	43	n	all the published works
+143	48	56	p	achieves
+143	61	70	n	2nd place
+143	71	73	p	on
+143	78	89	n	leaderboard
+143	90	105	p	when submitting
+143	106	114	n	SG - NET
+144	18	24	p	adding
+144	28	56	n	extra answer verifier module
+144	63	68	p	yield
+144	69	82	n	better result

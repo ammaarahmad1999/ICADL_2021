@@ -1,0 +1,46 @@
+{
+  "has" : {
+    "Baselines" : {
+      "has" : {
+        "previous works" : {
+          "that predict" : "single relation per pass",
+          "from sentence" : "We compare our solution with previous works that predict a single relation per pass , our model that predicts single relation per pass for MRE , and with the following naive modifications of BERT that could achieve MRE in one - pass ."
+        },
+        "BERT SP" : {
+          "has" : {
+            "BERT" : {
+              "with" : "structured prediction only"
+            }
+          },
+          "from sentence" : "BERT SP : BERT with structured prediction only , which includes proposed improvement in 3.1 ."
+        },
+        "Entity - Aware BERT SP" : {
+          "has" : "our full model",
+          "from sentence" : "Entity - Aware BERT SP : our full model , which includes both improvements in 3.1 and 3.2 ." 
+        },
+        "BERT SP with position embedding on the final attention layer" : {
+          "encode" : {
+            "paragraph" : {
+              "to" : "last attention - layer"
+            }
+          },
+          "for" : {
+            "each entity pair" : {
+              "takes" : "hidden states",
+              "adds" : {
+                "relative position embeddings" : {
+                  "corresponding to" : "target entities"
+                }
+              },
+              "makes" : "relation prediction"
+            }
+          },
+          "from sentence" : "BERT SP with position embedding on the final attention layer .
+In this method , the BERT model encode the paragraph to the last attention - layer .
+Then , for each entity pair , it takes the hidden states , adds the relative position embeddings corresponding to the target entities , and finally makes the relation prediction for this pair ."
+
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1736 @@
+1805.08092v1 [cs.CL] 21 May 2018
+
+ar X1V
+
+Efficient and Robust Question Answering
+from Minimal Context over Documents
+
+Sewon Min’; Victor Zhong’, Richard Socher?, Caiming Xiong?
+Seoul National University’, Salesforce Research?
+shmsw25@snu.ac.kr, {vzhong, rsocher, cxiong}@salesforce .com
+
+Abstract
+
+Neural models for question answering
+(QA) over documents have achieved significant performance improvements. AIthough effective, these models do not scale
+to large corpora due to their complex modeling of interactions between the document and the question. Moreover, recent work has shown that such models
+are sensitive to adversarial inputs. In this
+paper, we study the minimal context required to answer the question, and find
+that most questions in existing datasets
+can be answered with a small set of sentences. Inspired by this observation, we
+propose a simple sentence selector to select the minimal set of sentences to feed
+into the QA model. Our overall system
+achieves significant reductions in training
+(up to 15 times) and inference times (up to
+13 times), with accuracy comparable to or
+better than the state-of-the-art on SQUAD,
+NewsQA, TriviaQA and SQuAD-Open.
+Furthermore, our experimental results and
+analyses show that our approach is more
+robust to adversarial inputs.
+
+1 Introduction
+
+The task of textual question answering (QA), in
+which a machine reads a document and answers a
+question, is an important and challenging problem
+in natural language processing. Recent progress in
+performance of QA models has been largely due
+to the variety of available QA datasets (Richardson et al., 2013; Hermann et al., 2015; Rajpurkar
+et al., 2016; Trischler et al., 2016; Joshi et al.,
+2017; Koéisky et al., 2017).
+
+All work was done while the author was an intern at
+Salesforce Research.
+
+Many neural QA models have been proposed
+for these datasets, the most successful of which
+tend to leverage coattention or bidirectional attention mechanisms that build codependent representations of the document and the question (Xiong
+et al., 2018; Seo et al., 2017).
+
+Yet, learning the full context over the document
+is challenging and inefficient. In particular, when
+the model is given a long document, or multiple
+documents, learning the full context is intractably
+slow and hence difficult to scale to large corpora.
+In addition, Jia and Liang (2017) show that, given
+adversarial inputs, such models tend to focus on
+wrong parts of the context and produce incorrect
+answers.
+
+In this paper, we aim to develop a QA system
+that is scalable to large documents as well as robust to adversarial inputs. First, we study the context required to answer the question by sampling
+examples in the dataset and carefully analyzing
+them. We find that most questions can be answered using a few sentences, without the consideration of context over entire document. In particular, we observe that on the SQuAD dataset (Rajpurkar et al., 2016), 92% of answerable questions
+can be answered using a single sentence.
+
+Second, inspired by this observation, we propose a sentence selector to select the minimal set
+of sentences to give to the QA model in order to
+answer the question. Since the minimum number of sentences depends on the question, our sentence selector chooses a different number of sentences for each question, in contrast with previous models that select a fixed number of sentences.
+Our sentence selector leverages three simple techniques — weight transfer, data modification and
+score normalization, which we show to be highly
+effective on the task of sentence selection.
+
+We compare the standard QA model given the
+full document (FULL) and the QA model given the
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+N uci ai ca Document Question
+
+sent | SQUAD | TriviaQA
+
+1 90 56 In 1873, Tesla returned to his birthtown, Smiljan. Shortly after he arrived, (...) Where did Tesla return to in 1873?
+
+2 6 28 After leaving Edison’s company Tesla partnered with two businessmen in 1886, What did Tesla Electric Light & Manufacturing
+Robert Lane and Benjamin Vail, who agreed to finance an electric lighting do?
+company in Tesla’s name, Tesla Electric Light & Manufacturing. The company
+installed electrical arc light based illumination systems designed by Tesla and
+also had designs for dynamo electric machine commutators, (...)
+
+3t 2 4 Kenneth Swezey, a journalist whom Tesla had befriended, confirmed that Tesla | Who did Tesla call in the middle of the night?
+rarely slept . Swezey recalled one morning when Tesla called him at 3 a.m. : "I
+was sleeping in my room (...) Suddenly, the telephone ring awakened me ...
+
+N/A | 2 12 Writers whose papers are in the library are as diverse as Charles Dickens and_ | The papers of which famous English Victorian
+Beatrix Potter. [luminated manuscripts in the library dating from (...) author are collected in the library?
+
+ 
+
+ 
+
+ 
+
+Table 1: Human analysis of the context required to answer questions
+
+on SQuAD and TriviaQA. 50
+
+examples from each dataset are sampled randomly. “N sent’ indicates the number of sentences required
+to answer the question, and ‘N/A’ indicates the question is not answerable even given all sentences in
+the document. ‘Document’ and ‘Question’ are from the representative example from each category on
+SQuAD. Examples on TriviaQA are shown in Appendix B. The groundtruth answer span is in red text,
+and the oracle sentence (the sentence containing the grountruth answer span) is in bold text.
+
+ 
+
+No.
+
+Description
+
+% | Sentence
+
+Question
+
+ 
+
+0
+
+Correct (Not exactly same | 58
+
+as grountruth)
+
+houses and fortifications.
+
+Gothic architecture is represented in the majestic churches but also at the burgher
+
+What type of architecture is represented
+in the majestic churches?
+
+ 
+
+Fail to select precise span | 6
+
+Brownlee argues that disobedience in opposition to the decisions of non-governmental
+agencies such as trade unions, banks, and private universities can be justified if it
+reflects ‘a larger challenge to the legal system that permits those decisions to be taken;.
+
+ 
+
+Brownlee argues disobedience can be
+justified toward what institutions?
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2 Complex semantics in 34 | Newton was limited by Denver’s defense, which sacked him seven times and forced him | How many times did the Denver defense
+sentence/question into three turnovers, including a fumble which they recovered for a touchdown. force Newton into turnovers?
+
+3 Not answerable even with | 2 | He encourages a distinction between lawful protest demonstration, nonviolent civil What type of civil disobedience is
+full paragraph disobedience, and violent civil disobedience. accompanied by aggression?
+
+ 
+
+ 
+
+Table 2: Error cases (on exact match (EM)) of DCN+ given oracle sentence on SQUAD. 50 examples are
+sampled randomly. Grountruth span is in underlined text, and model’s prediction is in bold text.
+
+minimal set of sentences (MINIMAL) on five different QA tasks with varying sizes of documents.
+On SQuAD, NewsQA, TriviaQA(Wikipedia) and
+SQuAD-Open, MINIMAL achieves significant reductions in training and inference times (up to
+15x and 13x, respectively), with accuracy comparable to or better than FULL. On three of those
+datasets, this improvements leads to the new stateof-the-art. In addition, our experimental results
+and analyses show that our approach is more robust to adversarial inputs. On the development
+set of SQUAD-Adversarial (Jia and Liang, 2017),
+MINIMAL outperforms the previous state-of-theart model by up to 13%.
+
+2 ‘Task analyses
+
+Existing QA models focus on learning the context
+over different parts in the full document. Although
+effective, learning the context within the full document is challenging and inefficient. Consequently,
+we study the minimal context in the document required to answer the question.
+
+2.1 Human studies
+
+First, we randomly sample 50 examples from the
+SQuAD development set, and analyze the minimum number of sentences required to answer the
+question, as shown in Table 1. We observed that
+98% of questions are answerable given the document. The remaining 2% of questions are not answerable even given the entire document. For instance, in the last example in Table 1, the question
+requires the background knowledge that Charles
+Dickens is an English Victorian author. Among
+the answerable examples, 92% are answerable
+with a single sentence, 6% with two sentences, and
+2% with three or more sentences.
+
+We perform a similar analysis on the TriviaQA
+(Wikipedia) development (verified) set. Finding
+the sentences to answer the question on TriviaQA
+is more challenging than on SQuAD, since TriviaQA documents are much longer than SQUAD
+documents (488 vs 5 sentences per document).
+Nevertheless, we find that most examples are answerable with one or two sentences — among the
+88% of examples that are answerable given the full
+document, 95% can be answered with one or two
+sentences.
+2.2 Analyses on existing QA model
+
+Given that the majority of examples are answerable with a single oracle sentence on SQUAD, we
+analyze the performance of an existing, competitive QA model when it is given the oracle sentence. We train DCN+ (Xiong et al., 2018), one
+of the state-of-the-art models on SQuAD (details
+in Section 3.1), on the oracle sentence. The model
+achieves 83.1 Fl when trained and evaluated using the full document and 85.1 Fl when trained
+and evaluated using the oracle sentence. We analyze 50 randomly sampled examples in which the
+model fails on exact match (EM) despite using the
+oracle sentence. We classify these errors into 4
+categories, as shown in Table 2. In these examples, we observed that 40% of questions are answerable given the oracle sentence but the model
+unexpectedly fails to find the answer. 58% are
+those in which the model’s prediction is correct but
+does not lexically match the groundtruth answer,
+as shown in the first example in Table 2. 2% are
+those in which the question is not answerable even
+given the full document. In addition, we compare predictions by the model trained using the
+full document (FULL) with the model trained on
+the oracle sentence (ORACLE). Figure 1 shows the
+Venn diagram of the questions answered correctly
+by FULL and ORACLE on SQuAD and NewsQA.
+ORACLE is able to answer 93% and 86% of the
+questions correctly answered by FULL on SQUAD
+and NewsQA, respectively.
+
+These experiments and analyses indicate that if
+the model can accurately predict the oracle sentence, the model should be able to achieve comparable performance on overall QA task. Therefore,
+we aim to create an effective, efficient and robust
+QA system which only requires a single or a few
+sentences to answer the question.
+
+3 Method
+
+Our overall architecture (Figure 2) consists of a
+sentence selector and a QA model. The sentence
+selector computes a selection score for each sentence in parallel. We give to the QA model a reduced set of sentences with high selection scores
+to answer the question.
+
+3.1 Neural Question Answering Model
+
+We study two neural QA models that obtain
+close to state-of-the-art performance on SQuAD.
+DCN+ (Xiong et al., 2018) is one of the start
+Oracle
+
+Oracle
+
+ 
+
+SQuAD NewsQA
+
+Figure 1: Venn diagram of the questions answered
+correctly (on exact match (EM)) by the model
+given a full document (FULL) and the model given
+an oracle sentence (ORACLE) on SQuAD (left)
+and NewsQA (right).
+
+of-the-art QA models, achieving 83.1 Fl on the
+SQuAD development set. It features a deep residual coattention encoder, a dynamic pointing decoder, and a mixed objective that combines cross
+entropy loss with self-critical policy learning. SReader is another competitive QA model that is
+simpler and faster than DCN+, with 79.9 F1 on the
+SQuAD development set. It is a simplified version
+of the reader in DrQA (Chen et al., 2017), which
+obtains 78.8 Fl on the SQuAD development set.
+Model details and training procedures are shown
+in Appendix A.
+
+3.2 Sentence Selector
+
+Our sentence selector scores each sentence with
+respect to the question in parallel. The score indicates whether the question is answerable with this
+sentence.
+
+The model architecture is divided into the encoder module and the decoder module. The encoder is a shared module with S-Reader, which
+computes sentence encodings and question encodings from the sentence and the question as inputs.
+First, the encoder computes sentence embeddings
+D € Rx, question embeddings Q € R’4* “2,
+and question-aware sentence embeddings DY €
+R'ax4a, where hg is the dimension of word embeddings, and Lg and L, are the sequence length
+of the document and the question, respectively.
+Specifically, question-aware sentence embeddings
+are obtained as follows.
+
+a; = softmax(D?W,Q) eR (1)
+Lq
+
+Di = YS (ai3Q;) € R" (2)
+j=l
+
+Here, D; € R"@ is the hidden state of sentence
+embedding for the 74;, word and W, € Riaxha jg
+ 
+
+Decoder
+
+      
+  
+ 
+
+Sentence
+Selector
+
+ 
+
+ 
+
+ 
+
+ 
+
+Dere
+
+BiLSTM
+
+  
+   
+     
+  
+
+Embed Matrix
+
+ 
+
+   
+
+ 
+
+ 
+
+ 
+
+    
+
+ 
+
+Dene
+
+Dene
+
+Encoder Lp Q
+(b) Sentence Question
+aor 2» oe? i» (d) score
+Wh ot ne
+Se Se e (a)
+scorestat scorecn4 (c) O
+Ma
+
+    
+
+B88 °§ B BBB °§ B
+
+(auc
+
+Xx
+
+  
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+Dene
+
+Qene
+
+ 
+
+Figure 2: Our model architecture. (a) Overall pipeline, consisting of sentence selector and QA model.
+Selection score of each sentence is obtained in parallel, then sentences with selection score above the
+threshold are merged and fed into QA model. (b) Shared encoder of sentence selector and S-Reader (QA
+Model), which takes document and the question as inputs and outputs the document encodings D°”© and
+question encodings Q°"°. (c) Decoder of S-Reader (QA Model), which takes D&”"* and Q*°”"* as inputs
+and outputs the scores for start and end positions. (d) Decoder of sentence selector, which takes D°”* and
+Q°"" for each sentence and outputs the score indicating if the question is answerable given the sentence.
+
+a trainable weight matrix. After this, sentence encodings and question encodings are obtained using
+an LSTM (Hochreiter and Schmidhuber, 1997).
+
+pymne BiLSTM([D;; D?]) € R"**“2 (3)
+qere BiLSTM(Q;) € R’**9 (4)
+
+Here, ‘;’ denotes the concatenation of two vectors, and fh is a hyperparameter of the hidden dimension.
+
+Next, the decoder is a task-specific module
+which computes the score for the sentence by calculating bilinear similarities between sentence encodings and question encodings as follows.
+
+B =  softmax(w’Q”) ER” (5)
+Lg
+gene _— S (8; Qs") CR? (6)
+
+j=l
+
+v4 (De"Wogr’) ER" (7)
+h = max(h1,ho,---,hz,) (8)
+score = Wihe R? (9)
+
+Here, w € R”,We € R°*?*? Wa © R*?,
+are trainable weight matrices. Each dimension in
+score means the question is answerable or nonanswerable given the sentence.
+
+We introduce 3 techniques to train the model.
+(1) As the encoder module of our model is identical to that of S-Reader, we transfer the weights
+to the encoder module from the QA model trained
+on the single oracle sentence (ORACLE). (11) We
+modify the training data by treating a sentence as a
+wrong sentence if the QA model gets 0 F1, even if
+the sentence is the oracle sentence. (111) After we
+ 
+
+ 
+
+ 
+
+Dataset Domain N doc
+SQuAD Wikipedia 155 5 ~ Span
+NewsQA News Articles | 803 20 ~ Span
+TriviaQA (Wikipedia) Wikipedia 11202 | 488 Distant
+SQuAD-Open Wikipedia 120734 | 4488 10 Distant
+SQuAD-Adversarial-AddSent Wikipedia 169 6 - Span
+SQuAD-Adversarial-AddOneSent | Wikipedia 165 6 - Span
+
+ 
+
+ 
+
+ 
+
+Table 3: Dataset used for experiments. ‘N word’, ‘N sent’ and ‘N doc’ refer to the average number of
+words, sentences and documents, respectively. All statistics are calculated on the development set. For
+SQuAD-Open, since the task is in open-domain, we calculated the statistics based on top 10 documents
+from Document Retriever in DrQA (Chen et al., 2017).
+
+obtain the score for each sentence, we normalize
+scores across sentences from the same paragraph,
+similar to Clark and Gardner (2017). All of these
+three techniques give substantial improvements in
+sentence selection accuracy, as shown in Table 4.
+More details including hyperparameters and training procedures are shown in Appendix A.
+
+Because the minimal set of sentences required
+to answer the question depends on the question,
+we select the set of sentences by thresholding the
+sentence scores, where the threshold is a hyperparameter (details in Appendix A). This method
+allows the model to select a variable number of
+sentences for each question, as opposed to a fixed
+number of sentences for all questions. Also,
+by controlling the threshold, the number of sentences can be dynamically controlled during the
+inference. We define Dyn (for Dynamic) as this
+method, and define Top k as the method which
+simply selects the top-& sentences for each question.
+
+4 Experiments
+
+4.1 Dataset and Evaluation Metrics
+
+We train and evaluate our model on five different
+datasets as shown in Table 3.
+
+SQuAD — (Rajpurkar et al., 2016) is a wellstudied QA dataset on Wikipedia articles that requires each question to be answered from a paragraph.
+
+NewsQA _ (Trischler et al., 2016) is a dataset on
+news articles that also provides a paragraph for
+
+each question, but the paragraphs are longer than
+those in SQUAD.
+
+TriviaQA = (Joshi et al., 2017) is a dataset on a
+large set of documents from the Wikipedia domain
+and Web domain. Here, we only use the Wikipedia
+
+domain. Each question is given a much longer
+context in the form of multiple documents.
+
+SQuAD-Open = (Chen et al., 2017) is an opendomain question answering dataset based on
+SQuAD. In SQuAD-Open, only the question and
+the answer are given. The model is responsible for
+identifying the relevant context from all English
+Wikipedia articles.
+
+SQuAD-Adversarial (Jia and Liang, 2017) isa
+variant of SQuAD. It shares the same training set
+as SQuAD, but an adversarial sentence is added to
+each paragraph in a subset of the development set.
+
+We use accuracy (Acc) and mean average precision (MAP) to evaluate sentence selection. We
+also measure the average number of selected sentences (N sent) to compare the efficiency of our
+Dyn method and the Top k method.
+
+To evaluate the performance in the task of question answering, we measure Fl and EM (Exact
+Match), both being standard metrics for evaluating span-based QA. In addition, we measure training speed (Train Sp) and inference speed (Infer
+Sp) relative to the speed of standard QA model
+(FULL). The speed is measured using a single
+GPU (Tesla K80), and includes the training and
+inference time for the sentence selector.
+
+4.2 SQuAD and NewsQA
+
+For each QA model, we experiment with three
+types of inputs. First, we use the full document
+(FULL). Next, we give the model the oracle
+sentence containing the groundtruth answer span
+(ORACLE). Finally, we select sentences using
+our sentence selector (MINIMAL), using both Top
+k and Dyn. We also compare this last method with
+TF-IDF method for sentence selection, which selects sentences using n-gram TF-IDF distance between each sentence and the question.
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+SQuAD NewsQA
+Mowe! Top 1 | MAP || Top 1 | Top 3 | MAP
+TF-IDF 81.2 | 89.0 | 49.8 | 72.1 | 63.7
+Our selector 85.8 | 91.6 63.2 | 85.1 | 75.5
+Our selector (T) 90.0 | 94.3 67.1 87.9 | 78.5
+Our selector (T+M, T+M+N) | 91.2 | 95.0 70.9 | 89.7 | 81.1
+Tan et al. (2018) - 92.1 - - 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Selection method
+
+ 
+
+ 
+
+Top k (T+M)*
+Top. k (T+M)*
+Top. k (T+M)*
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Dyn (T+M) 1.5 94.7 2.9 84.9
+Dyn (T+M) 1.9 96.5 3.9 89.4
+Dyn (T+M+N) 1.5 98.3 2.9 91.8
+Dyn (T+M+N) 1.9 99.3 3.9 94.6
+
+ 
+
+Table 4: Results of sentence selection on the dev
+set of SQUAD and NewsQA. (Top) We compare
+different models and training methods. We report
+Top 1 accuracy (Top 1) and Mean Average Precision (MAP). Our selector outperforms the previous state-of-the-art (Tan et al., 2018). (Bottom)
+We compare different selection methods. We report the number of selected sentences (N sent) and
+the accuracy of sentence selection (Acc). “T’, ‘M’
+and ‘N’ are training techniques described in Section 3.2 (weight transfer, data modification and
+score normalization, respectively).
+
+““N’ does not change the result on Top k, since Top
+k depends on the relative scores across the sentences from
+same paragraph.
+
+8000 1000
+
+6000 750
+4000 500
+2000 250 | |
+0 A = 0 fa.
+2 3 4
+
+5 6 12 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+
+Num. of sentences Num. of sentences
+
+Figure 3: The distributions of number of sentences
+that our selector selects using Dyn method on the
+dev set of SQUAD (left) and NewsQA (right).
+
+Results Table 4 shows results in the task of sentence selection on SQuAD and NewsQaA. First,
+our selector outperforms TF-IDF method and the
+previous state-of-the-art by large margin (up to
+2.9% MAP).
+
+Second, our three training techniques — weight
+transfer, data modification and score normalization — improve performance by up to 5.6% MAP.
+Finally, our Dyn method achieves higher accuracy
+with less sentences than the Top k method. For
+example, on SQUAD, Top 2 achieves 97.2 accuracy, whereas Dyn achieves 99.3 accuracy with
+
+ 
+
+SQuAD (with S-Reader)
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Fl EM | Train Sp | Infer Sp
+FULL 79.9
+ORACLE 84.3
+MINIMAL(Top k) || 78.7
+MINIMAL(Dyn) 79.8
+SQuAD (with DCN+)
+FULL 83.1 | 74.5 x1.0 x1.0
+ORACLE 85.1 | 76.0 x3.0 x5.1
+MINIMAL(Top k) || 79.2 | 70.7 x3.0 x5.1
+MINIMAL(Dyn) 80.6
+GNR 75.0%
+FastQA 78.5
+FusionNet 83.6
+NewsQA (with S-Reader) |
+Fl EM | Train Sp | Infer Sp |
+FULL 63.8 | 50.7 x1.0 x1.0
+ORACLE 75.5 | 59.2 x18.8 x21.7
+MINIMAL(Top k) |} 62.3 | 49.3 x15.0 x6.9
+MINIMAL(Dyn) 63.2 | 50.1 x15.0 x5.3
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+FastQA 
+Table 5: Results on the dev set of SQUAD (First
+two) and NewsQA (Last). For Top k, we use
+k = 1 and k = 3 for SQuAD and NewsQA, respectively. We compare with GNR (Raiman and
+Miller, 2017), FusionNet (Huang et al., 2018) and
+FastQA (Weissenborn et al., 2017), which are the
+model leveraging sentence selection for question
+answering, and the published state-of-the-art models on SQUAD and NewsQA, respectively.
+
+“Numbers on the test set.
+
+1.9 sentences per example. On NewsQA, Top
+4 achieves 92.5 accuracy, whereas Dyn achieves
+94.6 accuracy with 3.9 sentences per example.
+
+Figure 3 shows that the number of sentences
+selected by Dyn method vary substantially on
+both SQuAD and NewsQA. This shows. that
+Dyn chooses a different number of sentences depending on the question, which reflects our intuition.
+
+Table 5 shows results in the task of QA on
+SQuAD and NewsQA. MINIMAL is more efficient
+in training and inference than FULL. On SQuAD,
+S-Reader achieves 6.7 training and 3.6 inference speedup on SQuAD, and 15.0 training and
+6.9x inference speedup on NewsQA. In addition
+to the speedup, MINIMAL achieves comparable result to FULL (using S-Reader, 79.9 vs 79.8 Fl on
+SQuAD and 63.8 vs 63.2 Fl on NewsQA).
+
+We compare the predictions from FULL and
+MINIMAL in Table 6. In the first two examples,
+our sentence selector chooses the oracle sentence,
+ 
+
+The initial LM model weighed approximately 33,3000 pounds, and allowed surface stays up to around 34 hours.
+An Extended Lunar Module weighed over 36,200 pounds, and allowed surface stays of over 3 days. W
+
+For about how long would the extended LM allow a surface stay on the moon?
+
+ 
+
+ 
+
+Approximately 1,000 British soldiers were killed or injured. W
+
+ 
+
+How many casualties did British get?
+
+The remaining 500 British troops, led by George Washington, retreated to Virginia.
+
+ 
+
+ 
+
+This book, which influenced the thought of Charles Darwin, successfully promoted the doctrine of uniformitarianism.
+This theory states that slow geological processes have occurred throughout the Earth’s history and are still occurring today. W
+In contrast, catastrophism is the theory that Earth’s features formed in single, catastrophic events and remained unchanged thereafter.
+
+Which theory states that slow geological processes are still occuring today, and have occurred throughout Earth’s history?
+
+ 
+
+ 
+
+Table 6: Examples on SQuAD. Grountruth span (underlined text), the prediction from FULL (blue text)
+and MINIMAL (red text). Sentences selected by our selector is denoted with “. In the above two
+examples, MINIMAL correctly answer the question by selecting the oracle sentence. In the last example,
+MINIMAL fails to answer the question, since the inference over first and second sentences is required to
+
+answer the question.
+
+ 
+
+selected | sentence
+
+ 
+
+vVvY
+vv
+
+However, in 1883-84 Germany began to build a colonial empire in Africa and the South Pacific, before losing interest in imperialism
+The establishment of the German colonial empire proceeded smoothly, starting with German New Guinea in 1884.
+
+ 
+
+When did Germany found their first settlement? 1883-84 1884 1884
+
+ 
+
+vVvY
+
+ 
+
+In the late 1920s, Tesla also befriended George Sylvester Viereck, a poet, writer, mystic, and later, a Nazi propagandist.
+~ In middle age, Tesla became a close friend of Mark Twain; they spent a lot of time together in his lab and elsewhere.
+
+ 
+
+ 
+
+When did Tesla become friends with Viereck? late 1920s middle age late 1920s
+
+ 
+
+Table 7: An example on SQuAD, where the sentences are ordered by the score from our selector. Grountruth span (underlined text), the predictions from Top 1 (blue text), Top 2 (green text) and Dyn (red
+text). Sentences selected by Top 1, Top 2 and Dyn are denoted with ~w, ~ and ~, respectively.
+
+and the QA model correctly answers the question.
+In the last example, our sentence selector fails to
+choose the oracle sentence, so the QA model cannot predict the correct answer. In this case, our selector chooses the second and the third sentences
+instead of the oracle sentence because the former
+contains more information relevant to question. In
+fact, the context over the first and the second sentences is required to correctly answer the question.
+
+Table 7 shows an example on SQuAD, which
+MINIMAL with Dyn correctly answers the question, and MINIMAL with Top k sometimes does
+not. Top 1 selects one sentence in the first example, thus fails to choose the oracle sentence. Top
+2 selects two sentences in the second example,
+which is inefficient as well as leads to the wrong
+answer. In both examples, Dyn selects the oracle
+sentence with minimum number of sentences, and
+subsequently predicts the answer. More analyses
+are shown in Appendix B.
+
+4.3 TriviaQA and SQuAD-Open
+
+TriviaQA and SQuAD-Open are QA tasks that
+reason over multiple documents. They do not
+
+provide the answer span and only provide the
+question-answer pairs.
+
+For each QA model, we experiment with two
+types of inputs. First, since TriviaQA and
+SQuAD-Open have many documents for each
+question, we first filter paragraphs based on the
+TF-IDF similarities between the question and the
+paragraph, and then feed the full paragraphs to the
+QA model (FULL). On TriviaQA, we choose the
+top 10 paragraphs for training and inference. On
+SQuAD-Open, we choose the top 20 paragraphs
+for training and the top 40 for inferences. Next, we
+use our sentence selector with Dyn (MINIMAL).
+We select 5-20 sentences using our sentence selector, from 200 sentences based on TF-IDF.
+
+For training the sentence selector, we use two
+techniques described in Section 3.2, weight transfer and score normalization, but we do not use data
+modification technique, since there are too many
+sentences to feed each of them to the QA model.
+For training the QA model, we transfer the weights
+from the QA model trained on SQuAD, then finetune.
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+TriviaQA (Wikipedia) SQuAD-Open
+nsent | Acc Sp Fl EM || nsent | Acc Sp Fl | EM
+FULL 69 95.9 | x1.0 | 59.6 | 53.5 124 | 76.9 | x1.0 | 41.0 | 33.1
+TF-IDF
+MINIMAL Our
+Selector 10.5 | 90.9 x5.8
+Rank 1 - - - 56.0% | 51.6% || 2376% | 77.8 - - 29.8
+Rank 2 - - - 55.1% | 48.67 - - - 37.5 | 29.1
+Rank 3 : Cs ; 52.9" | 46.9% || 2376¢ | 77.8 - | 28.4
+
+ 
+
+ 
+
+Table 8: Results on the dev-full set of TriviaQA (Wikipedia) and the dev set of SQUAD-Open. Full results (including the dev-verified set on TriviaQA) are in Appendix C. For training FULL and MINIMAL on
+TriviaQA, we use 10 paragraphs and 20 sentences, respectively. For training FULL and MINIMAL on
+SQuAD-Open, we use 20 paragraphs and 20 sentences, respectively. For evaluating FULL and MINIMAL,
+we use 40 paragraphs and 5-20 sentences, respectively. “n sent’ indicates the number of sentences used
+during inference. ‘Acc’ indicates accuracy of whether answer text is contained in selected context. ‘Sp’
+indicates inference speed. We compare with the results from the sentences selected by TF-IDF method
+and our selector (Dyn). We also compare with published Rank1-3 models. For TriviaQA(Wikipedia),
+they are Neural Casecades (Swayamdipta et al., 2018), Reading Twice for Natural Language Understanding (Weissenborn, 2017) and Mnemonic Reader (Hu et al., 2017). For SQuAD-Open, they are
+DrQA (Chen et al., 2017) (Multitask), R? (Wang et al., 2018) and DrQA (Plain).
+
+“Approximated based on there are 475.2 sentences per document, and they use 5 documents per question
+
+>’Numbers on the test set.
+
+Results Table 8 shows results on TriviaQA
+(Wikipedia) and SQuAD-Open. First, MINIMAL obtains higher Fl and EM over FULL, with
+the inference speedup of up to 13.8x.  Second, the model with our sentence selector with
+Dyn achieves higher Fl and EM over the model
+with TF-IDF selector. For example, on the
+development-full set, with 5 sentences per question on average, the model with Dyn achieves 59.5
+F1 while the model with TF-IDF method achieves
+51.9 Fl. Third, we outperforms the published
+state-of-the-art on both dataset.
+
+4.4 SQuAD-Adversarial
+
+We use the same settings as Section 4.2. We use
+the model trained on SQuAD, which is exactly
+same as the model used for Table 5. For MINIMAL, we Select top 1 sentence from our sentence
+selector to the QA model.
+
+Results Table 9 shows that MINIMAL outperforms FULL, achieving the new state-of-the-art by
+large margin (+11.1 and +11.5 Fl on AddSent
+and AddOneSent, respectively).
+
+Figure 10 compares the predictions by DCN+
+FULL (blue) and MINIMAL (red). While FULL selects the answer from the adversarial sentence,
+MINIMAL first chooses the oracle sentence, and
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+SQuAD-Adversarial Fl “ent Sp = SEM Sp
+FULL 52.6 | 46.2 | x0.7 || 63.5 | 56.8 | x0.7
+DCN+ ORACLE 84.2 | 75.3 | x4.3 || 84.5 | 75.8 | x4.3
+MINIMAL || 59.7 | 52.2 | x4.3 || 67.5 | 60.1 | x4.3
+FULL 57.7 | 51.1 | x1.0 || 66.5 | 59.7 | x1.0
+S-Reader | ORACLE 82.5 | 74.1 | x6.0 || 82.9 | 74.6 | x6.0
+MINIMAL || 58.5 | 51.5 | x6.0 || 66.5 | 59.5 | x6.0
+RaSOR 39.5 - - 49.5 - ReasoNet 39.4 - - 50.3 - Mnemonic Reader 46.6 - - 56.0 - 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Table 9: Results on the dev set of SQuADAdversarial. We compare with RaSOR (Lee
+et al., 2016), ReasoNet (Shen et al., 2017) and
+Mnemonic Reader (Hu et al., 2017), the previous
+state-of-the-art on SQUAD-AdvVersarial, where the
+numbers are from Jia and Liang (2017).
+
+subsequently predicts the correct answer. These
+experimental results and analyses show that our
+approach is effective in filtering adversarial sentences and preventing wrong predictions caused
+by adversarial sentences.
+
+5 Related Work
+
+Question Answering over Documents There
+has been rapid progress in the task of question
+answering (QA) over documents along with vari 
+
+San Francisco mayor Ed Lee said of the highly visible homeless presence in this area they are going to have to leave”.
+Jeff Dean was the mayor of Diego Diego during Champ Bow] 40.
+
+ 
+
+Who was the mayor of San Francisco during Super Bowl 50?
+
+ 
+
+ 
+
+Tadakatsu moved to the city of Chicago in 1881.
+
+ 
+
+ 
+
+ 
+
+What city did Tesla move to in 1880?
+
+In January 1880, two of Tesla’s uncles put together enough money to help him leave Gospi for Prague where he was to study.
+
+ 
+
+Table 10: Examples on SQuAD-AdvVersarial. Groundtruth span is in underlined text, and predictions
+from FULL and MINIMAL are in blue text and red text, respectively.
+
+ous datasets and competitive approaches. Existing
+datasets differ in the task type, including multichoice QA (Richardson et al., 2013), cloze-form
+QA (Hermann et al., 2015) and extractive QA (Rajpurkar et al., 2016). In addition, they cover different domains, including Wikipedia (Rajpurkar
+et al., 2016; Joshi et al., 2017), news (Hermann
+et al., 2015; Trischler et al., 2016), fictional stories (Richardson et al., 2013; Kocisky et al., 2017),
+and textbooks (Lai et al., 2017; Xie et al., 2017).
+
+Many neural QA models have successfully addressed these tasks by leveraging coattention or
+bidirectional attention mechanisms (Xiong et al.,
+2018; Seo et al., 2017) to model the codependent
+context over the document and the question. However, Jia and Liang (2017) find that many QA models are sensitive to adversarial inputs.
+
+Recently, researchers have developed largescale QA datasets, which requires answering the
+question over a large set of documents in a
+closed (Joshi et al., 2017) or open-domain (Dunn
+et al., 2017; Berant et al., 2013; Chen et al., 2017;
+Dhingra et al., 2017). Many models for these
+datasets either retrieve documents/paragraphs relevant to the question (Chen et al., 2017; Clark
+and Gardner, 2017; Wang et al., 2018), or leverage simple non-recurrent architectures to make
+training and inference tractable over large corpora (Swayamdipta et al., 2018; Yu et al., 2018).
+
+Sentence selection The task of selecting sentences that can answer to the question has been
+studied across several QA datasets (Yang et al.,
+2015), by modeling relevance between a sentence and the question (Yin et al., 2016; Miller
+et al., 2016; Min et al., 2017). Several recent
+works also study joint sentence selection and question answering. Choi et al. (2017) propose a
+framework that identifies the sentences relevant
+to the question (property) using simple bag-ofwords representation, then generates the answer
+from those sentences using recurrent neural networks. Raiman and Miller (2017) cast the task of
+
+extractive question answering as a search problem
+by iteratively selecting the sentences, start position
+and end position. They are different from our work
+in that (1) we study of the minimal context required
+to answer the question, (11) we choose the minimal
+context by selecting variable number of sentences
+for each question, while they use a fixed size of
+number as a hyperparameter, (111) our framework
+is flexible in that it does not require end-to-end
+training and can be combined with existing QA
+models, and (iv) they do not show robustness to
+adversarial inputs.
+
+6 Conclusion
+
+We proposed an efficient and robust QA system
+that is scalable to large documents and robust to
+adversarial inputs. First, we studied the minimal
+context required to answer the question in existing
+datasets and found that most questions can be answered using a small set of sentences. Second, inspired by this observation, we proposed a sentence
+selector which selects a minimal set of sentences
+to answer the question to give to the QA model.
+We demonstrated the efficiency and effectiveness
+of our method across five different datasets with
+varying sizes of source documents. We achieved
+the training and inference speedup of up to 15x
+and 13x, respectively, and accuracy comparable
+to or better than existing state-of-the-art. In addition, we showed that our approach is more robust
+to adversarial inputs.
+
+Acknowledgments
+
+We thank the anonymous reviewers and the Salesforce Research team members for their thoughtful
+comments and discussions.
+
+References
+
+Jonathan Berant, Andrew Chou, Roy Frostig, and Percy
+Liang. 2013. Semantic parsing on freebase from
+question-answer pairs. In EMNLP.
+Danqi Chen, Adam Fisch, Jason Weston, and Antoine
+Bordes. 2017. Reading wikipedia to answer opendomain questions. In ACL.
+
+Eunsol Choi, Daniel Hewlett, Jakob Uszkoreit, [lia
+Polosukhin, Alexandre Lacoste, and Jonathan Berant. 2017. Coarse-to-fine question answering for
+long documents. In ACL.
+
+Christopher Clark and Matt Gardner. 2017. Simple
+and effective multi-paragraph reading comprehension. arXiv preprint arXiv:1710.10723 .
+
+Bhuwan Dhingra, Kathryn Mazaitis, and William W
+Cohen. 2017. Quasar: Datasets for question answering by search and reading. arXiv preprint
+arXiv: 1707.03904 .
+
+Matthew Dunn, Levent Sagun, Mike Higgins, Ugur
+Guney, Volkan Cirik, and Kyunghyun Cho. 2017.
+Searchgqa: A new qé&a dataset augmented with
+context from a search engine. arXiv preprint
+arXiv:1704.05179 .
+
+Kazuma Hashimoto, Caiming Xiong, Yoshimasa Tsuruoka, and Richard Socher. 2017. A joint many-task
+model: Growing a neural network for multiple nlp
+tasks. In EMNLP.
+
+Karl Moritz Hermann, Tomas Kocisky, Edward
+Grefenstette, Lasse Espeholt, Will Kay, Mustafa Suleyman, and Phil Blunsom. 2015. Teaching machines to read and comprehend. In Advances in Neural Information Processing Systems.
+
+Sepp Hochreiter and Jiirgen Schmidhuber. 1997. Long
+short-term memory. Neural computation .
+
+Minghao Hu, Yuxing Peng, and Xipeng Qiu. 2017.
+Mnemonic reader for machine comprehension.
+arXiv preprint arXiv:1705.02798 .
+
+Hsin-Yuan Huang, Chenguang Zhu, Yelong Shen, and
+Weizhu Chen. 2018. Fusionnet: Fusing via fullyaware attention with application to machine comprehension. In JCLR.
+
+Robin Jia and Percy Liang. 2017. Adversarial examples for evaluating reading comprehension systems.
+In EMNLP.
+
+Mandar Joshi, Eunsol Choi, Daniel S Weld, and Luke
+Zettlemoyer. 2017. Triviaqa: A large scale distantly
+supervised challenge dataset for reading comprehension. In ACL.
+
+Diederik P Kingma and Jimmy Ba. 2014. Adam: A
+method for stochastic optimization. arXiv preprint
+arXiv: 1706.02596v2 .
+
+Tomas Koéisky, Jonathan Schwarz, Phil Blunsom,
+Chris Dyer, Karl Moritz Hermann, Gabor Melis,
+and Edward Grefenstette. 2017. The narrativega
+reading comprehension challenge. arXiv preprint
+arXiv: 1712.07040 .
+
+Guokun Lai, Qizhe Xie, Hanxiao Liu, Yiming Yang,
+and Eduard Hovy. 2017. Race: Large-scale reading comprehension dataset from examinations. In
+EMNLP.
+
+Kenton Lee, Shimi Salant, Tom Kwiatkowski, Ankur
+Parikh, Dipanjan Das, and Jonathan Berant. 2016.
+Learning recurrent span representations for extractive question answering. arXiv preprint
+arXiv: 1611.01436 .
+
+Christopher Manning, Mihai Surdeanu, John Bauer,
+Jenny Finkel, Steven Bethard, and David McClosky.
+2014. The stanford corenlp natural language processing toolkit. In ACL.
+
+Bryan McCann, James Bradbury, Caiming Xiong, and
+Richard Socher. 2017. Learned in translation: Contextualized word vectors. In NIPS.
+
+Alexander Miller, Adam Fisch, Jesse Dodge, AmirHossein Karimi, Antoine Bordes, and Jason Weston. 2016. Key-value memory networks for directly
+reading documents. In EMNLP.
+
+Sewon Min, Minjoon Seo, and Hannaneh Hajishirzi.
+2017. Question answering through transfer learning
+from large fine-grained supervision data. In ACL.
+
+Boyuan Pan, Hao Li, Zhou Zhao, Bin Cao, Deng Cai,
+and Xiaofei He. 2017. Memen: Multi-layer embedding with memory networks for machine comprehension. arXiv preprint arXiv: 1707.09098 .
+
+Jeffrey Pennington, Richard Socher, and Christopher
+Manning. 2014. Glove: Global vectors for word
+representation. In EMNLP.
+
+Jonathan Raiman and John Miller. 2017. Globally normalized reader. In EMNLP.
+
+Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and
+Percy Liang. 2016. Squad: 100,000+ questions for
+machine comprehension of text. In EMNLP.
+
+Matthew Richardson, Christopher JC Burges, and Erin
+Renshaw. 2013. Mctest: A challenge dataset for
+the open-domain machine comprehension of text. In
+EMNLP.
+
+Minjoon Seo, Aniruddha Kembhavi, Ali Farhadi, and
+Hannaneh Hajishirzi. 2017. Bidirectional attention
+flow for machine comprehension. In JCLR.
+
+Yelong Shen, Po-Sen Huang, Jianfeng Gao, and
+Weizhu Chen. 2017. Reasonet: Learning to
+stop reading in machine comprehension. In ACM
+SIGKDD International Conference on Knowledge
+Discovery and Data Mining.
+
+Nitish Srivastava, Geoffrey E Hinton, Alex Krizhevsky,
+Ilya Sutskever, and Ruslan Salakhutdinov. 2014.
+Dropout: a simple way to prevent neural networks
+from overfitting. Journal of machine learning research .
+Swabha Swayamdipta, Ankur P Parikh, and Tom
+Kwiatkowski. 2018. Multi-mention learning for
+reading comprehension with neural cascades. In
+ICLR.
+
+Chuanqi Tan, Furu Wei, Qingyu Zhou, Nan Yang,
+Bowen Du, Weifeng Lv, and Ming Zhou. 2018.
+Context-aware answer sentence selection with
+hierarchical gated recurrent neural networks.
+IEEE/ACM Transactions on Audio, Speech, and
+Language Processing .
+
+Adam Trischler, Tong Wang, Xingdi Yuan, Justin Harris, Alessandro Sordoni, Philip Bachman, and Kaheer Suleman. 2016. Newsqa: A machine comprehension dataset. arXiv preprint arXiv: 1611.09830 .
+
+Shuohang Wang, Mo Yu, Xiaoxiao Guo, Zhiguo Wang,
+Tim Klinger, Wei Zhang, Shiyu Chang, Gerald
+Tesauro, Bowen Zhou, and Jing Jiang. 2018. R3:
+Reinforced reader-ranker for open-domain question
+answering. In AAAT.
+
+Dirk Weissenborn. 2017. Reading twice for natural
+language understanding. CoRR abs/1706.02596.
+
+Dirk Weissenborn, Georg Wiese, and Laura Seiffe.
+2017. Making neural ga as simple as possible but
+not simpler. In CoNLL.
+
+Qizhe Xie, Guokun Lai, Zihang Dai, and Eduard Hovy.
+2017. Large-scale cloze test dataset designed by
+teachers. arXiv preprint arXiv:1711.03225 .
+
+Caiming Xiong, Victor Zhong, and Richard Socher.
+2018. Dcn+: Mixed objective and deep residual
+coattention for question answering. In JCLR.
+
+Yi Yang, Wen-tau Yih, and Christopher Meek. 2015.
+Wikiga: A challenge dataset for open-domain question answering. In EMNLP.
+
+Wenpeng Yin, Hinrich Schtze, Bing Xiang, and Bowen
+Zhou. 2016. Abcnn: Attention-based convolutional
+neural network for modeling sentence pairs. TACL .
+
+Adams Wei Yu, David Dohan, Quoc Le, Thang Luong,
+Rui Zhao, and Kai Chen. 2018. Fast and accurate
+reading comprehension by combining self-attention
+and convolution. In JCLR.
+A Models Details
+
+S-Reader The model architecture of S-Reader is
+divided into the encoder module and the decoder
+module. The encoder module is identical to that
+of our sentence selector. It first takes the document and the question as inputs, obtains document
+embeddings D € R¢*"a, question embeddings
+Q € R’«*"a and question-aware document embeddings DY € R’«*"4, where D% is defined as
+Equation 1, and finally obtains document encodings D°”"° and question encodings @Q*"° as Equation 3. The decoder module obtains the scores for
+start and end position of the answer span by calculating bilinear similarities between document encodings and question encodings as follows.
+
+8 = softmax(w7 Qe”) € R’{10)
+Lg
+a=
+start __ enc ~eENC La
+score = DO’ Wstartg ~ € R (12)
+score"? = D°W.orage € RLa (13)
+
+Here, wy € R”,Wetart; Wend € R’*” are
+trainable weight matrices.
+
+The overall architecture is similar to Document
+Reader in DrQA (Chen et al., 2017), except they
+are different in obtaining embeddings and use different hyperparameters. As shown in Table 5, our
+S-Reader obtains F1 score of 79.9 on SQUAD development data, while Document Reader in DrQA
+achieves 78.8.
+
+Training details We implement all of our models using PyTorch. First, the corpus is tokenized using Stanford CoreNLP toolkit (Manning et al., 2014). We obtain the embeddings
+of the document and the question by concatenating 300-dimensional Glove embeddings pretrained on the 840B Common Craw1 corpus (Pennington et al., 2014), 100-dimensional character ngram embeddings by Hashimoto et al. (2017), and
+300-dimensional contextualized embeddings pretrained on WMT (McCann et al., 2017). We do not
+use handcraft word features such as POS and NER
+tagging, which is different from Document Reader
+in DrQA. Hence, the dimension of the embedding
+(d;,) is 600. We use the hidden size (h) of 200.
+We apply dropout with 0.2 drop rate (Srivastava
+et al., 2014) to encodings and LSTMs for regularization. We train the models using ADAM optimizer (Kingma and Ba, 2014) with default hyper
+parameters. When we train and evaluate the model
+on the dataset, the document is truncated to the
+maximum length of min(2000, maz(1000, Lzz,))
+words, where Ly), is the length which covers 90%
+of documents in the whole examples.
+
+Selection details Here, we describe how to dynamically select sentences using Dyn method.
+Given the sentences Sj; = {51, 52, 83, -.-; Sn}, OFdered by scores from the sentence selector in descending order, the selected sentences Sycjected 1S
+as follows.
+
+Seundidate — { 8; € Sait|score(s;) >= 1 — (HA)
+S candidate ft Scandidate =
+Daelected —= “ant J aaat As)
+{s1} 0.W
+
+Here, score(s;) is the score of sentence s; from
+the sentence selector, and th is a hyperparameter
+between 0 and 1.
+
+The number of sentences to select can be dynamically controlled during inference by adjusting th, so that proper number of sentences can
+be selected depending on the needs of accuracy
+and speed. Figure 4 shows the trade-off between
+the number of sentences and accuracy, as well as
+the number of selected sentences depending on the
+threshold th.
+
+B- More Analyses
+
+Human studies on TriviaQA We randomly
+sample 50 examples from the _ TriviaQA
+(Wikipedia) development (verified) set, and
+analyze the minimum number of sentences to
+answer the question. Despite TriviaQA having
+longer documents (488 sentences per question),
+most examples are answerable with one or two
+sentences, as shown in Table 11. While 88% of
+examples are answerable given the full document,
+95% of them can be answered with one or two
+sentences.
+
+Error analyses We compare the error cases (in
+exact match (EM)) of FULL and MINIMAL. The
+left-most Venn diagramin Figure 5 shows that
+MINIMAL 1s able to answer correctly to more than
+97% of the questions answered correctly by FULL.
+The other two diagrams in Figure 5 shows the error
+cases of each model, broken down by the sentence
+where the model’s prediction is from.
+
+Table 12 shows error cases on SQUAD, which
+MINIMAL fails to answer correctly. In the first
+Number of sentences & Accuracy (SQuAD) Number of sentences and Accuracy (NewsQA)
+
+® . ° e
+_ @ eoo0e8
+e ° e
+8 ° es
+> ® @
+@ 8 @
+5 @ 5 ® @
+2 3 S
+®
+8
+@
+1 15 2 2.5 3 1 2 3 4 5
+Number of selected sentences Number of selected sentences
+@ Topk @ Dyn @ Topk @ Dyn
+Threshold and Num. of sentences (SQuAD) Threshold and Num. of sentences (NewsQA)
+
+n
+8
+Cc
+2
+&
+a
+6
+£
+all
+z
+
+0.8 0.85 0.9 0.95 0.8 0.85 0.9 0.95
+
+Threshold Threshold
+
+Figure 4: (Top) The trade-off between the number of selected sentence and accuracy on SQuAD and
+NewsQA. Dyn outperforms Top k in accuracy with similar number of sentences. (Bottom) Number of
+selected sentences depending on threshold.
+
+Model w/o Ours Model w/ Ours
+
+   
+
+w/o Our Ours
+
+  
+
+@ answer from oracle sent
+@ answer from oracle sentence @ oracle sent selected, but answer from wrong sent
+@ answer from wrong sentence @ oralce sent not selected
+
+Figure 5: (Left) Venn diagramof the questions answered correctly by FULL and with MINIMAL. (Middle
+and Right) Error cases from FULL (Middle) and MINIMAL (Right), broken down by which sentence the
+model’s prediction comes from.
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+and largest city, and other communities. (...)
+
+N sent | % | Paragraph Question
+1 56 | Chicago O’Hare International Airport, also known as O’ Hare Airport, Chicago International Airport, Chicago In which city would you find O’ Hare
+O’ Hare or simply O’ Hare, is an international airport located on the far northwest side of Chicago, Illinois. International Airport?
+In 1994, Wet Wet Wet had their biggest hit, a cover version of the troggs’ single Love is All Around”, which The song ’Love is All Around” by
+was used on the soundtrack to the film Four Weddings and A Funeral. Wet Wet Wet featured on the soundtrack for which 1994 film?
+2 28 | Cry Freedom is a 1987 British epic drama film directed by Richard Attenborough, set in late-1970s apartheid The 1987 film ‘Cry Freedom’ is a
+era South Africa. (...) The film centres on the real-life events involving black activist Steve Biko and (...) biographical drama about which South
+Aftrican civil rights leader?
+Helen Adams Keller was an American author, political activist, and lecturer. () The story of how Kellers teacher, | Which teacher taught Helen Keller
+Anne Sullivan, broke through the isolation imposed by a near complete lack of language, allowing the girl to to communicate?
+blossom as she learned to communicate, has become widely known through (...)
+3 ft 4 | (...) The equation shows that, as volume increases, the pressure of the gas decreases in proportion. Similarly, Who gave his name to the scientific
+as volume decreases, the pressure of the gas increases. The law was named after chemist and physicist law that states that the pressure of a gas
+Robert Boyle, who published the original law. (...) is inversely proportional to its
+volume at constant temperature?
+The Buffalo six (known primarily as Lackawanna Six ) is a group of six Yemeni-American friends who were Mukhtar Al-Bakri, Sahim Alsan, Faysal
+convicted of providing material support to Al Qaeda in December 2003, () In the late summer of 2002, one of Galan, Shafal Mosed, Yaseinn Taher and
+the members, Mukhtar Al-Bakri, sent () Yahya Goba and Mukhtar Al-Bakri received 10-year prison sentences. Yahya Goba were collectively known as the
+Yaseinn Taher and Shafal Mosed received 8-year prison sentences. Sahim Alwan received a 9.5-year sentence. Lackawanna Six and by what other name?
+Faisal Galab received a 7-year sentence.
+N/A 12 | (...) A commuter rail operation, the New Mexico Rail Runner Express, connects the state’s capital, its Which US state is nicknamed both ‘the
+
+Colourful State’ and ‘the Land of
+Enchantment?’
+
+ 
+
+ 
+
+Smith also arranged for the publication of a series of etchings of Capricci in his vedette ideal,
+but the returns were not high enough, and in 1746 Canaletto moved to London, to be closer to his market.
+
+ 
+
+Canaletto is famous for his landscapes
+of Venice and which other city?
+
+ 
+
+Table 11: Human analysis of the context required to answer questions on TriviaQA (Wikipedia). 50
+examples are sampled randomly. ‘N sent’ indicates the number of sentences required to answer the
+question, and ‘N/A’ indicates the question is not answerable even given all sentences in the document.
+The groundtruth answer text is in red text. Note that the span is not given as the groundtruth. In the first
+example classified into ‘N/A’, the question is not answerable even given whole documents, because there
+is no word ‘corlourful’ or ‘enchantment’ in the given documents. In the next example, the question is
+also not answerable even given whole documents, because all sentences containing ‘London’ does not
+contain any information about Canaletto’s landscapes.
+
+ 
+
+What did Luther call the mass instead of sacrifice?
+
+In On the Abrogation of the Private Mass, he condemned as idolatry the idea that the mass is a sacrifice, asserting instead that it is a gift, to be
+received with thanksgiving by the whole congregation. ~
+
+ 
+
+ 
+
+Who had the most receptions out of all players for the year?
+
+Veteran receiver Demaryius Thomas led the team with 105 receptions for 1,304 yards and six touchdowns, while Emmanuel Sanders caught (...) W
+Running back Ronnie Hillman also made a big impact with 720 yards, five touchdowns, 24 receptions, and a 4.7 yards per carry average. “
+
+ 
+
+ 
+
+In 1211, after the conquest of Western Xia, Genghis Kahn planned again to conquer the Jin dynasty. W
+Instead, the Jin commander sent a messenger, Ming-Tan, to the Mongol side, who defected and told the Mongols that the Jin army was waiting
+on the other side of the pass.
+
+The Jin dynasty collapsed in 1234, after the siege of Caizhou. W
+
+Who was the Jin dynasty defector who betrayed the location of the Jin army?
+
+ 
+
+Table 12: Examples on SQuAD, which MINIMAL predicts the wrong answer. Grountruth span is in
+underlined text, the prediction from MINIMAL Is in red text. Sentences selected by our selector is denoted
+with V. In the first example, the model predicts the wrong answer from the oracle sentence. In the second
+example, the model predicts the answer from the wrong sentence, although it selects the oracle sentence.
+In the last example, the model fails to select the oracle sentence.
+
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+TriviaQA Inference Dev-verified Dev-full
+nsent | Acc Sp Fl EM Fl EM
+FULL 69 95.9; xl.0 | 66.1 | 61.6 | 59.6 | 53.5
+5 73.0 | x13.8 | 60.4 | 54.1 | 51.9 | 45.8
+NATAGEREAT. TF-IDF 10 79.9 | x6.9 | 64.8 | 59.8 | 57.2 | 51.5
+20 85.5 | x3.5 | 67.3 | 62.9 | 60.4 | 54.8
+5.0 | 84.9 | x13.8 | 65.0 | 61.0 | 59.5 | 54.0
+Our Selector || 10.5 | 90.9 | x6.6 | 67.0 | 63.8 | 60.5 | 54.9
+20.4 | 95.3 | x3.4 | 67.7 | 63.8 | 61.3 | 55.6
+MEMEN - - - 55.8 | 49.3 | 46.9 | 43.2
+Mnemonic Reader - - - 59.5% | 54.5% | 52.9% | 46.97
+Reading Twice - - - 59.9% | 53.4% | 55.1% | 48.67
+Neural Cascades - - - 62.5% | 58.9% | 56.0% | 51.67
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Table 13: Results on the dev-verified set and the dev-full set of TriviaQA (Wikipedia). We compare
+the results from the sentences selected by TF-IDF and our selector (Dyn). We also compare with
+MEMEN (Pan et al., 2017), Mnemonic Reader (Hu et al., 2017), Reading Twice for Natural Language
+Understanding (Weissenborn, 2017) and Neural Casecades (Swayamdipta et al., 2018), the published
+
+State-of-the-art.
+
+“Numbers on the test set.
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Inference Dev
+SQuAD-Open nsent | Acc Sp Fl | EM
+FULL 124 | 76.9 | x1.0 | 41.0 | 33.1
+5 46.1 | x12.4 | 36.6 | 29.6
+10 54.3 | x6.2 | 39.8 | 32.5
+Mrerwcar TIDE |} 20 | 62.4) x34 | 41.7 | 341
+40 65.8 | xl.6 | 42.5 | 34.6
+Our 5.3 58.9 | x11.7 | 42.3 | 34.6
+Selector 10.7 | 64.0 | x5.8 | 42.5 | 34.7
+20.4 | 68.1 | x3.0 | 42.6 | 34.7
+40.0 | 71.4} xl.5 | 42.6 | 34.7
+R? - - - 37.5 | 29.1
+DrQA 2376" | 77.8 - - 28.4
+DrQA (Multitask) 2376° | 77.8 - - 29.8
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Table 14: Results on the dev set of SQUAD-Open.
+
+We compare with the results from the sentences
+
+selected by TF-IDF method and our selector (Dyn). We also compare with R°? (Wang et al., 2018) and
+
+DrQA (Chen et al., 2017).
+
+“Approximated based on there are 475.2 sentences per document, and they use 5 documents per question
+
+two examples, our sentence selector choose the oracle sentence, but the QA model fails to answer
+correctly, either predicting the wrong answer from
+the oracle sentence, or predicting the answer from
+the wrong sentence. In the last example, our sentence selector fails to choose the oracle sentence.
+We conjecture that the selector rather chooses the
+sentences containing the word ‘the Jin dynasty’,
+which leads to the failure in selection.
+
+C Full Results on TriviaQA and
+SQuAD-Open
+
+Table 13 and Table 14 show full results on TriviaQA (Wikipedia) and SQuAD-Open, respectively.
+
+MINIMAL obtains higher Fl and EM over
+FULL, with the inference speedup of up to
+13.8x. In addition, outperforms the published
+state-of-the-art on both TriviaQA (Wikipedia) and
+SQuAD-Open, by 5.2 Fl and 4.9 EM, respectively.
+
+D Samples on SQuAD, TriviaQA and
+SQuAD-Adversarial
+
+Table 15 shows the full index of samples used for
+human studies and analyses.
+ 
+
+Analysis
+
+Table
+
+Dataset
+
+Ids
+
+ 
+
+Context Analysis
+
+SQuAD
+
+56f7eba8a6d7eal400e172cf, 56e0bab723 1d4119001ac35c, 56dfa2c54a1a83 14009 lebf6, 56e1 1d8ecd28a01900c675f4,
+572ff7ab04bcaa1900d76f53, 57274118dd62a815002e9ald, 5728742cff5b5019007da247, 57274874595 1b619008f87b2,
+57306266246 1fd1900a9cdf7, 56e1lefa0e3433e14004232 1a, 57115£0a50c2381900b54aa9, 57286£373acd24 14000df9db,
+57300f8504bceaal900d770d3, 57286192ff5b5019007dale0, 57 1cd1 1ladd7acb1400e4c16f, 57094ca7efce8f15003a7dd7,
+57300761947a6a140053cf9c, 571144d1a58dae1900cd6d6f, 572813b52cal0214002d9d68, 572969f5 1d046914007793e0,
+56e0d6cf231d4119001ac423, 572754cd5951b6 190088867, 570d4a6bfed7b91900d45e13, 57284b904b864d19001648e5,
+5726cc11dd62a815002e9086, 572966ebaf94a2 19006aa392, 5726c3da708984 140094d0d9, 57277bfc708984 140094dedd,
+572747dd595 1b619008f87aa, 57107c24a58dae1900cd69ea, 57 lcdcb85efbb3 1900334e0d, 56e10e73cd28a01900c674ec,
+5726c0c5dd62a815002e8f79, 5725£39638643c1900S5acefb, 5726bcde708984 140094cfc2, 56e74bf937bdd419002c3e36,
+56d997cddc8944 1400fdb586, 5728349dff5b5019007d9f01, 57301 1de04bcaal 900d770fc, 57274f49f1498d1400e8f620,
+57376df£3c3c5551400e5 led7, 5726bd65595 1b619008f7ca3, 5733266d4776f4 1900660714, 5725bc0338643c19005acc 12,
+572£f760b2c2fd 1400568679, 572fbfa504bcaa1900d76c73, 572693 8afl498d1400e8e448, 5728ef8d2ca10214002daac3,
+5728f3724b864d1900165119, 56f85bb8aef237 1900626011
+
+ 
+
+Oracle Error Analysis
+
+SQuAD
+
+57376d£3c3c555 1400e5 leda, 5726a00cf1498d1400e8e551, 5725f00938643c19005aceda, 57336140477 6f4 190066093c,
+571bb2269499d21900609cac, 571 cebcOSefbb3 1900334e4c, 56d7096b0d65d214001982fd, 5732b6b5328d98 1900602025,
+56beb6533aeaaal 4008c928e, 5729e1 101d04691400779641, 56d601e41c85041400946ecf, 57115b8b50c2381900b54a8b,
+56e74d1£00c9c71400d76£70, 5728245b2cal0214002d9ed6, 5725c2a038643c 19005acc6f, 57376828c3c555 1400e5 leba,
+57340339477 6f419006616df, 5728d7c54b864d1900164f50, 57265aaf595 1b619008f706e, 5728 15 1b4b864d 1900164429,
+57060cc352bb89 140068980e, 5726e08e5951b619008f8 1 10, 57266cc9f1498d1400e8d£52, 57273455£1498d1400e8f48e,
+572972f46aef05 1400 154ef3, 5727482bf1498d1400e8f5a6, 57293f8a6aef05 1400154bde, 5726f8abf1498d1400e8f166,
+5737a9afc3c555 1400e5 1f63, 570614 ff52bb89140068988b, 56bebd7 1 3aeaaal 4008c9331, 57060a1 175f01819005e78d3,
+5737a9atc3c5551400e5 1f62, 572846 18ff5b5019007da0a9, 570960cf200fba 1400367f03, 572822233acd2414000df556,
+5727b0892ca10214002d93ea, 57268525dd62a815002e8809, 57274b35f1498d1400e8f5d6, 56d98c53dc8944 1 400fdb545,
+5727ec062cal0214002d99b8, 57274e97595 1b619008f87fa, 572686fc708984140094c8e8, 572929d5b6aef051400154b0c,
+570d30fdfed7b9 1900d45ce3, 5726b1d9595 1b619008f7ad0, 56de4 150439632 1400ee27 14, 5726472bdd62a815002e8046,
+5727d3843acd24 14000ded6b, 5726e9c65951b619008f8247
+
+ 
+
+Top kvs Dyn
+
+SQuAD
+
+56e7504437bdd419002c3e5b
+
+ 
+
+FULL vs MINIMAL
+
+10
+
+SQuAD-Adversarial
+
+56bf53e73aeaaal 4008c95cc-high-conf-turk0, 56dfac8e23 1d41 19001 abc5b-high-conf-turkO
+
+ 
+
+Context Analysis
+
+11
+
+TriviaQA
+
+qb 4446, wh 1933, qw 3445, qw 169, qz 2430, sfq 25261, qb 8010, qb 2880, qb 370, sfq 8018,
+
+sfq 4789, qz 1032, qz 603, sfq 7091, odql 10315, dpql 3949, odql 921, qb 6073, sfq 13685, bt 4547
+sfq 23524, qw 446, jp 3302, jp 2305, tb 1951, qw 10268, bt 189, qw 14470, jp 3059, qw 12135,
+
+qb 7921, sfq 2723, odql 2243, qw 7457, dpql 4590, sfq 3509, bt 2065, qf 2092, qb 10019, sfq 14351,
+bb 4422, jp 3321, sfq 12682, sfq 13224, sfq 4027, qw 12518, qz 2135, qw 1983, sfq 26249, sfq 19992
+
+ 
+
+ 
+
+Error Analysis
+
+ 
+
+12
+
+ 
+
+SQuAD
+
+ 
+
+56f84485aef2371900625£74, 56bf38383aeaaal 4008c956e, 5726bb6459 1b619008f7c3c
+
+ 
+
+Table 15: QuestionIDs of samples used for human studies and analyses.
+
+ 
+

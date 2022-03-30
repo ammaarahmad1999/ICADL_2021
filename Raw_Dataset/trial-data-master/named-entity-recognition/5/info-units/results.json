@@ -1,0 +1,61 @@
+{
+  "has" : {
+    "Results" : {
+      "for" : {
+        "Classification": {
+          "on" : {
+            "movie review dataset" : {
+              "has" : {
+                "S - LSTM" : {
+                  "outperforms" : {
+                    "BiL - STM" :{
+                      "with" : "faster speed"
+                    }
+                  }
+                }
+              }
+            },
+            "from sentence" : "Final Results for Classification
+As shown in , the final results on the movie review dataset are consistent with the development results , where S - LSTM outperforms BiL - STM significantly , with a faster speed ."
+
+          },
+          "among" : {
+            "16 datasets" : {
+              "gives" : {
+                "best results" : {
+                  "on" : "12"
+                }
+              }
+            },
+            "from sentence" : "As shown in , among the 16 datasets of , S - LSTM gives the best results on 12 , compared with BiLSTM and 2 layered BiL - STM models ."
+
+          },
+          "of" : {
+            "S - LSTM" : {
+              "average accuracy" : "85.6 %"
+            },
+            "from sentence" : "The average accuracy of S - LSTM is 85.6 % , significantly higher compared with 84.9 % by 2 - layer stacked BiLSTM ."
+          }
+        },
+        "Sequence Labelling" : {
+          "For" : {
+            "NER" : {
+              "on" : {
+                "CoNLL test set" : {
+                  "gives" : {
+                    "S - LSTM" : {
+                      "F1 - score" : "91.57 %"
+                    }
+                  }
+                }
+              }
+            },
+            "from sentence" : "Final Results for Sequence Labelling
+For NER , S - LSTM gives an F1 - score of 91.57 % on the CoNLL test set , which is significantly better compared with BiLSTMs ."
+
+          }
+        }
+      }
+    }
+  }
+}

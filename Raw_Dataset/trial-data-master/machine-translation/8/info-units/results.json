@@ -1,0 +1,34 @@
+{
+  "has" : {
+    "Results" : {
+      "of" : {
+        "RNNencdec" : {
+          "dramatically drops as" : "length of the sentences increases",
+          "from sentence" : "In , we see that the performance of RNNencdec dramatically drops as the length of the sentences increases ."
+        }
+      },
+      "more robust" : {
+        "both RNNsearch - 30 and RNNsearch - 50" : {
+          "to" : "length of the sentences"
+        },
+        "from sentence" : "On the other hand , both RNNsearch - 30 and RNNsearch - 50 are more robust to the length of the sentences ."
+      },
+      "no performance deterioration" : {
+        "RNNsearch - 50" : {
+          "with" : {
+            "sentences" : {
+              "of length" : "50 or more"
+            }
+          }
+        },
+        "from sentence" : "RNNsearch - 50 , especially , shows no performance deterioration even with sentences of length 50 or more ."
+      },
+      "outperforms" : {
+        "RNNsearch - 30" : {
+          "even" : "RNNencdec - 50"
+        },
+        "from sentence" : "This superiority of the proposed model over the basic encoder - decoder is further confirmed by the fact that the RNNsearch - 30 even outperforms RNNencdec - 50 ( see ) ."
+      }
+    }
+  }
+}

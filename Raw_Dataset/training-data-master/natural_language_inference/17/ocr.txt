@@ -1,0 +1,938 @@
+1705.02798v6 [cs.CL] 6 Jun 2018
+
+ar X1V
+
+Reinforced Mnemonic Reader for Machine Reading Comprehension
+
+Minghao Hu'*, Yuxing Peng', Zhen Huang’, Xipeng Qiu‘, Furu Wei’, Ming Zhou®
+' College of Computer, National University of Defense Technology, Changsha, China
+* School of Computer Science, Fudan University, Shanghai, China
+8 Microsoft Research, Beijing, China
+{huminghao09,pengyuhang,huangzhen} @nudt.edu.cn
+xpqiu @fudan.edu.cn, {fuwei,mingzhou} @ microsoft.com
+
+Abstract
+
+In this paper, we introduce the Reinforced
+Mnemonic Reader for machine reading comprehension tasks, which enhances previous attentive
+readers in two aspects. First, a reattention mechanism is proposed to refine current attentions by directly accessing to past attentions that are temporally memorized in a multi-round alignment architecture, so as to avoid the problems of attention redundancy and attention deficiency. Second, a new
+optimization approach, called dynamic-critical reinforcement learning, is introduced to extend the
+standard supervised method. It always encourages
+to predict a more acceptable answer so as to address
+the convergence suppression problem occurred in
+traditional reinforcement learning algorithms. Extensive experiments on the Stanford Question Answering Dataset (SQUAD) show that our model
+achieves state-of-the-art results. Meanwhile, our
+model outperforms previous systems by over 6% in
+terms of both Exact Match and F1 metrics on two
+adversarial SQUAD datasets.
+
+1 Introduction
+
+Teaching machines to comprehend a given context paragraph
+and answer corresponding questions is one of the long-term
+goals of natural language processing and artificial intelligence. Figure|1l| gives an example of the machine reading
+comprehension (MRC) task. Benefiting from the rapid devel
+opment of deep learning techniques |Goodfellow et al., 2016
+and large-scale benchmark datasets |Hermann et al., 2015}
+Rajpurkar er al. 2016), end-to-end neu:
+ral networks have achieved promising results on this task
+[Wang et al., 2017
+Huang er al., 2017)
+
+Despite of the advancements, we argue that there still exists
+two limitations:
+
+    
+   
+ 
+ 
+
+  
+ 
+
+1. To capture complex interactions between the context and
+the question, a variety of neural attention |Dzmitry Bahdanau, 2015], such as bi-attention |Seo et al., 2017),
+
+“Contribution during internship at Fudan University and Microsoft Research.
+
+coattention |Xiong et al., 2017b], are proposed in a
+
+single-round alignment architecture. In order to fully
+compose complete information of the inputs, multiround alignment architectures that compute attentions
+repeatedly have been proposed
+Xiong ef al., 2017al. However, in these approaches, the
+current attention is unaware of which parts of the context and question have been focused in earlier attentions,
+which results in two distinct but related issues, where
+multiple attentions |) focuses on same texts, leading to
+
+attention redundancy and 2) fail to focus on some salient
+parts of the input, causing attention deficiency.
+
+2. To train the model, standard maximum-likelihood
+method is used for predicting exactly-matched (EM) anSwer spans [Wang and Jiang, 2017) Recently, reinforcement learning algorithm, which measures the reward as word overlap between the predicted answer and
+the groung truth, is introduced to optimize towards the
+FI metric instead of EM metric (Xiong ef al., 2017al.
+Specifically, an estimated baseline is utilized to normalize the reward and reduce variances. However, the convergence can be suppressed when the baseline is better than the reward. This is harmful if the inferior reward is partially overlapped with the ground truth, as
+the normalized objective will discourage the prediction
+
+of ground truth positions. We refer to this case as the
+convergence suppression problem.
+
+To address the first problem, we present a reattention mechanism that temporally memorizes past attentions and uses
+them to refine current attentions in a multi-round alignment
+architecture. The computation is based on the fact that two
+words should share similar semantics if their attentions about
+same texts are highly overlapped, and be less similar vice
+versa. Therefore, the reattention can be more concentrated
+if past attentions focus on same parts of the input, or be relatively more distracted so as to focus on new regions if past
+attentions are not overlapped at all.
+
+As for the second problem, we extend the traditional training method with a novel approach called dynamic-critical reinforcement learning. Unlike the traditional reinforcement
+learning algorithm where the reward and baseline are statically sampled, our approach dynamically decides the reward and the baseline according to two sampling strategies,
+Context: The American Football Conference (AFC)
+champion Denver Broncos defeated the National
+Football Conference (NFC) champion Carolina
+Panthers 24-10 to earn their third Super Bowl title.
+
+Question: Which NFL team represented the AFC at
+Super Bowl 50?
+Answer: Denver Broncos
+
+Figure 1: An example from the SQuAD dataset. Evidences needed
+for the answer are marked as green.
+
+namely random inference and greedy inference. The result
+with higher score is always set to be the reward while the
+other is the baseline. In this way, the normalized reward is
+ensured to be always positive so that no convergence suppression will be made.
+
+All of the above innovations are integrated into a new
+end-to-end neural architecture called Reinforced Mnemonic
+Reader in Figure|3} We conducted extensive experiments on
+both the SQuAD [Rajpurkar et al., 2016] dataset and two
+
+adversarial SQUAD datasets Jia and Liang, 2017] to evaluate the proposed model. On SQuAD, our single model ob
+tains an exact match (EM) score of 79.5% and F1 score of
+86.6%, while our ensemble model further boosts the result
+to 82.3% and 88.5% respectively. On adversarial SQuAD,
+our model surpasses existing approahces by more than 6% on
+both AddSent and AddOneSent datasets.
+
+ 
+      
+     
+
+2 MRC with Reattention
+
+2.1 Task Description
+
+For the MRC tasks, a question Q and a context C’ are given,
+our goal is to predict an answer A, which has different forms
+
+according to the specific task. In the SQuAD dataset
+jpurkar et al., 2016], the answer A is constrained as a seg
+ment of text in the context C’, nerual networks are designed
+to model the probability distribution p(A|C, Q).
+
+2.2 Alignment Architecture for MRC
+
+Among all state-of-the-art works for MRC, one of the key
+factors is the alignment architecture. That is, given the hidden representations of question and context, we align each
+context word with the entire question using attention mechanisms, and enhance the context representation with the attentive question information. A detailed comparison of different
+alignment architectures is shown in Table[1]
+
+Early work for MRC, such as Match-LSTM |Wang and
+Jiang, 2017], utilizes the attention mechanism stemmed from
+neural machine translation serially, where the attention is computed inside the cell of recurrent neural networks. A more popular approach is to compute attentions in parallel, resulting in a similarity matrix.
+Concretely, given two sets of hidden vectors, V = {vu;}"_,
+
+ 
+
+Aligning Rounds Attention
+Model Interactive Self Type
+Match-LSTM! 1 - Serial
+Rnet? 1 1 Serial
+BiDAF 1 - Parallel
+FastQAExt# 1 1 Parallel
+DCN+° 2 2 Parallel
+FusionNet® 3 1 Parallel
+Our Model 3 3 Parallel
+
+Table 1: Comparison of alignment architectures of competing models: Wang & Jiangl2017]', Wang et al.[2017]?, Seo et al.[2017]°,
+Weissenborn et al.|2017|*, Xiong et al.|2017a]° and Huang et
+
+al.(2017)°.
+
+and U = {u,; prea representing question and context respectively, a similarity matrix E € R”*™ is computed as
+
+Biz = f(vi, uy) ()
+
+where £;; indicates the similarity between 7-th question word
+and 7-th context word, and f is a scalar function. Different
+methods are proposed to normalize the matrix, resulting in
+variants of attention such as bi-attention[Seo er al., 2017] and
+coattention [Xiong er al., 2017b]. The attention is then used
+to attend the question and form a question-aware context representation H = {hj }7).
+
+Later, Wang et al. propose a serial self aligning
+method to align the context aginst itself for capturing longterm dependencies among context words. Weissenborn et
+al. apply the self alignment in
+
+   
+ 
+
+|Weissenborn ef al., 2017)
+
+a similar way of Eq. yielding another similarity matrix
+
+Bis = Vag f (his hj) 2)
+
+where fl;.; is an indicator function ensuring that the context
+word is not aligned with itself. Finally, the attentive information can be integrated to form a self-aware context representation Z = {2;}7",, which is used to predict the answer.
+
+We refer to the above process as a single-round alignment
+architecture. Such architecture, however, is limited in its capability to capture complex interactions among question and
+context. Therefore, recent works build multi-round align
+ment architectures by stacking several identical aligning layers |Huang et al., 2017}|Xiong et al., 2017al. More specifically, let V" = ju; sj, and U" = ju; yi", denote the hid
+den representations of question and context in ¢-th layer, and
+H* = {hi }™, is the corresponding question-aware context
+representation. Then the two similarity matrices can be computed as
+
+However, one problem is that each alignment is not directly
+aware of previous alignments in such architecture. The attentive information can only flow to the subsequent layer through
+the hidden representation. This can cause two problems: 1)
+the attention redundancy, where multiple attention distributions are highly similar. Let softmax(a) denote the softmax
+function over a vector x. Then this problem can be formulized
+as D(softmax(E’,)||softmax(E*)) < o(t # k), where o
+is a small bound and D is a function measuring the distribution distance. 2) the attention deficiency, which means
+that the attention fails to focus on salient parts of the input:
+D(softmax(E',")||softmax(E!,)) > 6, where 6 is another
+
+bound and softmax( Ef, ”) is the “ground truth” attention distribution.
+
+2.3 Reattention Mechanism
+
+To address these problems, we propose to temporally memorize past attentions and explicitly use them to refine current attentions. The intuition is that two words should be correlated
+if their attentions about same texts are highly overlapped, and
+be less related vice versa. For example, in Figure {2} suppose that we have access to previous attentions, and then we
+can compute their dot product to obtain a “similarity of attention’. In this case, the similarity of word pair (team, Broncos)
+is higher than (team, Panthers).
+
+Therefore, we define the computation of reattention as follows. Let E*—! and B‘—! denote the past similarity matrices
+that are temporally memorized. The refined similarity matrix
+E* (t > 1) is computed as
+
+Ei, =softmax(E{—*) - softmax( Bi")
+
+Ei; =f (vj, U5) + VE (4)
+where ¥ is a trainable parameter. Here, softmax(E;_ *) is the
+past context attention distribution for the 2-th question word,
+and softmax(B*-*) is the self attention distribution for the jth context word. In the extreme case, when there is no overlap
+between two distributions, the dot product will be 0. On the
+other hand, if the two distributions are identical and focus on
+one single word, it will have a maximum value of 1. Therefore, the similarity of two words can be explicitly measured
+using their past attentions. Since the dot product is relatively
+small than the original similarity, we initialize the 7 with a
+tunable hyper-parameter and keep it trainable. The refined
+similarity matrix can then be normalized for attending the
+question. Similarly, we can compute the refined matrix B*
+to get the unnormalized self reattention as
+
+Bi =softmax(Bi—') - softmax(BY*)
+
+Bi; =U igs) (F(H4, Rj) + BS) (5)
+
+3 Dynamic-critical Reinforcement Learning
+In the extractive MRC task, the model distribution
+p(A|C, Q; 0) can be divided into two steps: first predicting
+the start position 7 and then the end position 7 as
+P(A|C, Q; 8) = pril(2|C, Q; O)pa(ylt, C, Q; @) (6)
+
+where @ represents all trainable parameters.
+The standard maximum-likelihood (ML) training method
+
+is to maximize the log probabilities of the ground truth answer positions |Wang and Jiang, 2017
+
+Lut(9) = — S— log pi(yz) + log po(viglyn) (7)
+k
+
+. Broncos ... NFC ... Panthers ...
+
+softmax(E;."!)
+
+.. Broncos ... NFC ... Panthers ...
+Broncos
+NFC
+
+Panthers
+
+ 
+
+softmax(B,/ softmax(B,"')
+
+softmax (E;."') softmax(B,/"') =0.2
+
+softmax(E;."!) ; softmax(B,;"!) =0.13
+
+ 
+
+Figure 2: Illustrations of reattention for the example in Figure[I]
+
+where y; and y? are the answer span for the k-th example,
+and we denote p;(2|C, Q; @) and po(j|i, C, Q; @) as p1 (2) and
+p2(j|z) respectively for abbreviation.
+
+Recently, reinforcement learning (RL), with the task reward measured as word overlap between predicted answer
+and groung truth, is introduced to MRC [Xiong er al., 2017al
+A baseline 6, which is obtained by running greedy inference
+with the current model, is used to normalize the reward and
+reduce variances. Such approach is known as the self-critical
+sequence training (SCST) [Rennie er al., 2016], which is first
+used in image caption. More specifically, let R(A*, A*) denote the Fl score between a sampled answer A®* and the
+ground truth A*. The training objective is to minimize the
+negative expected reward by
+
+Lsosr (0) = —Easnp,(a)[R(A*) — R(A)] (8)
+
+where we abbreviate the model distribution p(A|C, Q; 0) as
+po(A), and the reward function R(A*, A*) as R(A®*). A is
+obtained by greedily maximizing the model distribution:
+
+A
+
+A = arg max p(A|C, Q; #)
+The expected gradient Vo£scsr(6) can be computed according to the REINFORCE algorithm [Sutton and Barto,
+1998] as
+
+VoLscast (8) = —Egsnp,(a)|(R(A*) — 5) Vo log po(A*)|
+(R(4") - R(A)) Volozpe(A®) (9)
+where the gradient can be approxiamated using a single
+Monte-Carlo sample A* derived from pg.
+
+However, a sampled answer is discouraged by the objective when it is worse than the baseline. This is harmful if
+the answer is partially overlapped with ground truth, since
+the normalized objective would discourage the prediction of
+ground truth positions. For example, in Figure[]] suppose that
+
+A® is champion Denver Broncos and A is Denver Broncos.
+Although the former is an acceptable answer, the normalized
+reward would be negative and the prediction for end position
+would be suppressed, thus hindering the convergence. We
+refer to this case as the convergence suppression problem.
+
+Here, we consider both random inference and greedy inference as two different sampling strategies: the first one encourages exploration while the latter one is for exploitatior||
+Therefore, we approximate the expected gradient by dynamically set the reward and baseline based on the F1 scores of
+both A’ and A. The one with higher score is set as reward,
+while the other is baseline. We call this approach as dynamiccritical reinforcement learning (DCRL)
+
+VoeLpcri(O) = —Eysnp,(A)[(R(A*) — 6) Vo log pe(A*)]
+~ —Dercasysncayy (R(A*) — R(A)) Vo log po( 4")
+_ ly p(A)>R(As)} (RA) i R(A‘)) Vo log po(A) (10)
+
+Notice that the normalized reward is constantly positive so
+that superior answers are always encouraged. Besides, when
+the score of random inference is higher than the greedy one,
+DCRL is equivalent to SCST. Thus, Eq. (9]is a special case of
+Eq.
+
+Following and (Kendall eral, 2077).
+we combine ML and DCRL objectives using homoscedastic
+uncertainty as task-dependent weightings so as to stabilize the
+RL training as
+
+1
+Jee
+
+1
+
+L=
+207
+
+Lui t+ Lpcrt+logoi+logo, = (11)
+
+where o, and oy are trainable parameters.
+
+4 End-to-end Architecture
+
+Based on previous innovations, we introduce an end-to-end
+architecture called Reinforced Mnemonic Reader, which is
+shown in Figure [3] It consists of three main components: 1)
+an encoder builds contextual representations for question and
+context jointly; 2) an iterative aligner performs multi-round
+alignments between question and context with the reattention
+mechanism; 3) an answer pointer predicts the answer span sequentially. Beblow we give more details of each component.
+Encoder. Let W@ = {w/}"_, and W© = {wS}™, denote
+the word sequences of the question and context respectively.
+The encoder firstly converts each word to an input vector.
+We utilize the 100-dim GloVe embedding [Pennington er al.,
+
+2014] and 1024-dim ELMo embedding [Peters et al., 2018].
+
+‘In practice we found that a better approximation can be made
+by considering a top- answer list, where A is the best result and
+A® is sampled from the rest of the list.
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+i er ee et ce
+
+emoccccccrcererer er
+
+Evidence /
+Collection
+
+|
+| (2) Self Reattention |
+
+ 
+
+Word Embedding
+
+Char Embedding x2
+am
+
+Contextual Embedding L]
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Encoder
+
+fm tj fh es eh es Se
+
+Figure 3: The architecture overview of Reinforced Mnemonic
+Reader. The subfigures to the right show detailed demonstrations
+of the reattention mechanism: 1) refined E* to attend the query; 2)
+refined B’ to attend the context.
+
+Besides, a character-level embedding is obtained by encoding
+the character sequence with a bi-directional long short-term
+memory network (BiLSTM)
+(1997], where two last hidden states are concatenated to form
+the embedding. In addition, we use binary feature of exact
+match, POS embedding and NER embedding for both question and context, as suggested in Chena, 207) Together
+the inputs X° = {a7 }"_, and X° = {at} | are obtained.
+
+To model each word with its contextual information, a
+weight-shared BiLSTM is utilized to perform the encoding
+
+vu; = BiLSTM(x?), uj =BiLSTM(a3) (12)
+
+Thus, the contextual representations for both question and
+context words can be obtained, denoted as two matrices:
+V = [v1,..., Un] € R72*" and U = [u,..., um] € R24*™.
+
+Iterative Aligner. The iterative aligner contains a stack of
+three aligning blocks. Each block consists of three modules:
+1) an interactive alignment to attend the question into the context; 2) a self alignment to attend the context against itself;
+3) an evidence collection to model the context representation
+with a BiLSTM. The reattention mechanism is utilized between two blocks, where past attentions are temporally memorizes to help modulating current attentions. Below we first
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+= BILSTM) :
+
+ 
+
+ 
+
+ee ee ee ee
+
+ 
+
+ 
+
+Figure 4: The detailed overview of a single aligning block. Different
+colors in & and B represent different degrees of similarity.
+
+describe a single block in details, which is shown in Figure|4|
+and then introduce the entire architecture.
+Single Aligning Block. First, the similarity matrix FE €
+IR"*™ is computed using Eq. where the multiplicative
+product with nonlinearity is applied as attention function:
+f(u,v) = relu(W,,u)'relu(W,v). The question attention
+for the j-th context word is then: softmax(E.,;), which is
+used to compute an attended question vector v; = V softmax(E.,;).
+
+To efficiently fuse the attentive information into the
+context, an heuristic fusion function, denoted as 0 =
+fusion(x, y), is proposed as
+
+& = relu (W,([x; y; x 0 y; x — yJ)
+g= 0 (Wy lx; y;20y;x — y))
+o=gok+(1—g)on (13)
+
+where o denotes the sigmoid activation function, o denotes
+element-wise multiplication, and the bias term is omitted.
+The computation is similar to the highway networks [Srivasfava er al, 2015}, where the output vector o is a linear interpolation of the input x and the intermediate vector x. A gate
+g 1s used to control the composition degree to which the intermediate vector is exposed. With this function, the questionaware context vectors H = [hj,..., hm] can be obtained as:
+h; = fusion(u;,v;).
+
+Similar to the above computation, a self alignment is applied to capture the long-term dependencies among context
+words. Again, we compute a similarity matrix B € R™*™
+using Eq. The attended context vector is then computed
+as: h; = H - softmax(B.,;), where softmax(B.,) is the self
+attention for the 7-th context word. Using the same fusion
+function as z; = fusion(h,;,h,;), we can obtain self-aware
+context vectors Z = [21,..., Zm|.
+
+Finally, a BiLSTM is used to perform the evidence col
+lection, which outputs the fully-aware context vectors R =
+[71,---;m] with Z as its inputs.
+Multi-round Alignments with Reattention. To enhance the
+ability of capturing complex interactions among inputs, we
+stack two more aligning blocks with the reattention mechanism as follows
+
+R', Z', E', B' =align'(U,V)
+R?, Z?, E*, B? = align?(R', V, E', B')
+R?, 7°, E°, B® = align®(R?,V, E?, B?,Z',Z*) (14)
+
+where align’ denote the t-th block. In the t-th block (¢ > 1),
+we fix the hidden representation of question as V, and set
+the hidden representation of context as previous fully-aware
+context vectors R’~!. Then we compute the unnormalized
+reattention HE’ and B* with Eq. (4]and Eq. |5|respectively. In
+addition, we utilize a residual connection |He et al., 2016] in
+the last BiLSTM to form the final fully-aware context vectors
+R? = [r3,...,r2,]: r? = BiLSTM ([z}; 27; z2]).
+
+m
+Answer Pointer. We apply a variant of pointer net
+works as the answer pointer to make the
+predictions. First, the question representation V is summarized into a fixed-size summary vector s as: s = >, a;v;,
+where a; x exp(w/v;). Then we compute the start probability p,(z) by heuristically attending the context representation
+R? with the question summary s as
+
+pi(t) x exp (w; tanh(W; [r?; S; re 08; re — s])) (15)
+
+Next, a new question summary Ss is updated by fusing context information of the start position, which is computed as
+| = R° - py, into the old question summary: 5 = fusion(s, /).
+Finally the end probability p2(j|i) is computed as
+
+po(j|t) «x exp (wz tanh(W2 [rs 5; re 0 8; re —5])) (16)
+
+5 Experiments
+
+5.1 Implementation Details
+
+We mainly focus on the SQuAD dataset |Rajpurkar et al.,
+2016] to train and evaluate our model. SQuAD is a machine
+comprehension dataset, totally containing more than 100, 000
+questions manually annotated by crowdsourcing workers on
+a set of 536 Wikipedia articles. In addition, we also test our
+model on two adversarial SQUAD datasets
+2017), namely AddSent and AddOneSent. In both adversarial datasets, a confusing sentence with a wrong answer is appended at the end of the context in order to fool the model.
+
+We evaluate the Reinforced Mnemonic Reader (R.MReader) by running the following setting. We first train the
+model until convergence by optimizing Eq. |7| We then finetune this model with Eq. until the Fl score on the development set no longer improves.
+
+We use the Adam optimizer |Kingma and Ba, 2014] for
+both ML and DCRL training. The initial learning rates are
+0.0008 and 0.0001 respectively, and are halved whenever
+meeting a bad iteration. The batch size is 48 and a dropout
+rate of 0.3 is used to prevent overfitting. Word embeddings remain fixed during training. For out
+of vocabulary words, we set the embeddings from Gaussian
+distributions and keep them trainable. The size of character
+embedding and corresponding LSTMs is 50, the main hidden
+size is 100, and the hyperparameter y¥ is 3.
+Dev Test
+
+ 
+
+Single Model EM FI EM FI
+LR Baseline! 40.0 51.0 40.4 51.0
+DCN+? 74.5 83.1 75.1 83.1
+FusionNet? 75.3 83.6 76.0 83.9
+SAN* 76.2 84.1 76.8 84.4
+AttentionReader+' - - 77.3 84.9
+BSE° 77.9 85.6 78.6 85.8
+R-net+! - - 79.9 86.5
+SLQA+ : . 80.4 87.0
+Hybrid AoA Reader+'  - - 80.0 87.3
+R.M-Reader 78.9 86.3 79.5 86.6
+Ensemble Model
+DCN+? - - 78.8 86.0
+FusionNet? 78.5 85.8 79.0 86.0
+SAN* 78.6 85.8 79.6 86.5
+BSE° 79.6 86.6 81.0 87.4
+AttentionReader+' - - 81.8 88.2
+R-net+! - - 82.6 88.5
+SLQA+T - - 82.4 88.6
+Hybrid AoA Reader+'  - 7 82.5 89.3
+R.M-Reader $81.2 87.9 82.3 88.5
+Human! 80.3 90.5 82.3 91.2
+
+Table 2: The performance of Reinforced Mnemonic Reader and
+other competing approaches on the SQuAD dataset. The_results
+of test set are_extracted on Feb 2, 2018: Rajpurkar et_al./2016]",
+Xiong et al.[2017a]”, Huang et al.[2017}3, Liu et al.[2017b]* and
+Peters[2018} . | indicates unpublished works. BSE refers to BiDAF
++ Self Attention + ELMo.
+
+5.2 Overall Results
+
+We submitted our model on the hidden test set of SQUAD for
+evaluation. Two evaluation metrics are used: Exact Match
+(EM), which measures whether the predicted answer are exactly matched with the ground truth, and F1 score, which
+measures the degree of word overlap at token level.
+
+As shown in Table [2] R.M-Reader achieves an EM score
+of 79.5% and F1 score of 86.6%. Since SQuAD is a competitve MRC benchmark, we also build an ensemble model
+that consists of 12 single models with the same architecture
+but initialized with different parameters. Our ensemble model
+improves the metrics to 82.3% and 88.5% respectively?|
+
+Table[3] shows the performance comparison on two adversarial datasets, AddSent and AddOneSent. All models are
+trained on the original train set of SQUAD, and are tested on
+the two datasets. As we can see, R.M-Reader comfortably
+outperforms all previous models by more than 6% in both
+EM and F1 scores, indicating that our model is more robust
+against adversarial attacks.
+
+5.3. Ablation Study
+
+The contributions of each component of our model are shown
+in Table Firstly, ablation (1-4) explores the utility of
+
+°*The results are on https://worksheets.codalab.org/worksheets/
+Oxe6c23cbae5e440b8942f8664 1 f49fd80.
+
+Model AddSent AddOneSent
+EM FI1 EM FI1
+LR Baseline 17.0 23.2 22.3 41.8
+Match-LSTM!* 24.3 342 348 41.8
+BiDAF?* 29.6 34.2 40.7 469
+SEDT?* 30.0 35.0 40.0 46.5
+ReasoNet** 34.6 394 436 49.8
+
+FusionNet°* 46.2 51.4 54.7 60.7
+R.M-Reader 53.0 58.5 60.9 67.0
+
+ 
+
+Table 3: Performance comparison on two adversarial SQUAD
+datasets. Wang & Jiangl2017|', Seo et al.[2017]?, Liu et
+al.|2017al®, Shen et al.|2016]* and Huang et al.[2017]°. « indicates
+
+ensemble models.
+
+ 
+
+Configuration EM FI AEM AFI
+R.M-Reader 78.9 86.3 — —
+(1) - Reattention 78.1 85.8 -0.8 -0.5
+(2) - DCRL 78.2 85.4  -0.7 -0.9
+
+(3) - Reattention, DCRL 77.1 84.8 -1.8 -1.5
+(4) - DCRL, + SCST 78.5 85.8 -0.4 -0.5
+
+(5) Attention: Dot 78.2 85.9 -0.7 -0).4
+(6) - Heuristic Sub 78.1 85.7 -0.8 -0.6
+(7) - Heuristic Mul 78.3 86.0 -0.6 -0.3
+(8) Fusion: Gate 77.9 85.6 -1.0 -0.7
+(9) Fusion: MLP 77.2. 85.2 -1.7 -1.1
+
+(10) Num of Blocks: 2 78.7 86.1 -0.2 -0.2
+(11) Num of Blocks: 4 78.8 86.3 -0.1 0
+(12) Num of Blocks: 5 77.5 85.2 -14 -1.1
+
+Table 4: Ablation study on SQuAD dev set.
+
+reattention mechanism and DCRL training method. We notice that reattention has more influences on EM score while
+DCRL contributes more to Fl metric, and removing both
+of them results in huge drops on both metrics. Replacing
+DCRL with SCST also causes a marginal decline of performance on both metrics. Next, we relace the default attention function with the dot product: f(u,v) = u- v (5), and
+both metrics suffer from degradations. (6-7) shows the effectiveness of heuristics used in the fusion function. Removing
+any of the two heuristics leads to some performance declines,
+and heuristic subtraction is more effective than multiplication. Ablation (8-9) further explores different forms of fusion, where gate refers to o = g o & and MLP denotes 0 = &
+in Eq. |4} respectively. In both cases the highway-like function
+has outperformed its simpler variants. Finally, we study the
+effect of different numbers of aligning blocks in (10-12). We
+notice that using 2 blocks causes a slight performance drop,
+while increasing to 4 blocks barely affects the SoTA result.
+Interestingly, a very deep alignment with 5 blocks results in
+a significant performance decline. We argue that this is because the model encounters the degradation problem existed
+
+in deep networks ||He ef al., 2016].
+
+5.4 Effectiveness of Reattention
+
+We further present experiments to demonstrate the effectiveness of reattention mechanism. For the attention redunKL divergence -Reattention + Reattention
+Redundancy
+
+E' to E? 0.695 + 0.086 0.866 + 0.074
+E? to E® 0.404 + 0.067 0.450 + 0.052
+B! to B? 0.976 + 0.092 1.207 + 0.121
+B? to B? 1.179+0.118 1.193 + 0.097
+Deficiency
+
+E? to E?” 0.650 + 0.044 0.568 + 0.059
+E to E>” 0.536 + 0.047 0.482 + 0.035
+
+ 
+
+Table 5: Comparison of KL diverfence on different attention distributions on SQUAD dev set.
+
+dancy problem, we measure the distance of attention distributions in two adjacent aligning blocks, e.g., softmax(E.)
+
+and softmax(£%,). Higher distance means less attention redundancy. For the attention deficiency problem, we take the
+arithmetic mean of multiple attention distributions from the
+ensemble model as the “ground truth” attention distribution
+softmax(H!,"), and compute the distance of individual at
+J
+tention softmax(£’,) with it. Lower distance refers to less
+attention deficiency. We use Kullback—Leibler divergence as
+the distance function D, and we report the averaged value
+
+over all examples.
+
+Table[5]shows the results. We first see that the reattention
+indeed help in alleviating the attention redundancy: the divergence between any two adjacent blocks has been successfully
+enlarged with reattention. However, we find that the improvement between the first two blocks is larger than the one of last
+two blocks. We conjecture that the first reattention is more accurate at measuring the similarity of word pairs by using the
+original encoded word representation, while the latter reattention is distracted by highly nonlinear word representations. In
+addition, we notice that the attention deficiency has also been
+moderated: the divergence betwen normalized FE’ and E*” is
+reduced.
+
+5.5 Prediction Analysis
+
+Figure |5| compares predictions made either with dynamiccritical reinforcement learning or with self-critical sequence
+training. We first find that both approaches are able to obtain answers that match the query-sensitive category. For example, the first example shows that both four and two are
+retrieved when the questions asks for how many. Nevertheless, we observe that DCRL constantly makes more accurate prediction on answer spans, especially when SCST already points a rough boundary. In the second example, SCST
+takes the whole phrase after Dyrrachium as its location. The
+third example shows a similar phenomenon, where the SCST
+retrieves the phrase constantly servicing and replacing mechanical brushes as its answer. We demonstrates that this is
+because SCST encounters the convergence suppression problem, which impedes the prediction of ground truth answer
+boundaries. DCRL, however, successfully avoids such problem and thus finds the exactly correct entity.
+
+Context: Carolina's secondary featured Pro Bowl safety Kurt Coleman, who
+led the team with a career high seven interceptions, while also racking up 88
+tackles and Pro Bowl cornerback Josh Norman, who developed into a
+shutdown corner during the season and had four interceptions, two of which
+were returned for touchdowns.
+
+Question: How many interceptions did Josh Norman score touchdowns with
+in 2015?
+Answer: two
+
+Context: The further decline of Byzantine state-of-affairs paved the road to a
+third attack in 1185, when a large Norman army invaded Dyrrachium, owing to
+the betrayal of high Byzantine officials. Some time later, Dyrrachium—one of
+the most important naval bases of the Adriatic—fell again to Byzantine hands.
+
+Question: Where was Dyrrachium located?
+Answer: the Adriatic
+
+Context: The motor used polyphase current which generated a rotating magnetic
+field to turn the motor (a principle Tesla claimed to have conceived in 1882). This
+innovative electric motor, patented in May 1888, was a simple self-starting design
+that did not need a commutator, thus avoiding sparking and the high
+maintenance of constantly servicing and replacing mechanical brushes.
+
+Question: What high maintenance part did Tesla's AC motor not require?
+Answer: mechanical brushes
+
+Figure 5: Predictions with DCRL (red) and with SCST (blue) on
+SQuAD dev set.
+
+6 Conclusion
+
+We propose the Reinforced Mnemonic Reader, an enhanced
+attention reader with two main contributions. First, a reattention mechanism is introduced to alleviate the problems
+of attention redundancy and deficiency in multi-round alignment architectures. Second, a dynamic-critical reinforcement learning approach is presented to address the convergence suppression problem existed in traditional reinforcement learning methods. Our model achieves the state-ofthe-art results on the SQuAD dataset, outperforming several strong competing systems. Besides, our model outperforms existing approaches by more than 6% on two adversarial SQUAD datasets. We believe that both reattention and
+DCRL are general approaches, and can be applied to other
+NLP task such as natural language inference. Our future work
+is to study the compatibility of our proposed methods.
+
+Acknowledgments
+
+This research work is supported by National Basic Research
+Program of China under Grant No. 2014CB340303. In addition, we thank Pranav Rajpurkar for help in SQUAD submissions.
+
+References
+
+[Chen et al., 2017] Dangi Chen, Adam Fisch, Jason Weston, and Antoine Bordes. Reading wikipedia to answer
+open-domain questions. arXiv preprint arXiv: 1704.0005 1,
+2017.
+
+[Dzmitry Bahdanau, 2015] Yoshua Bengio Dzmitry Bahdanau, Kyunghyun Cho. Neural machine translation by
+jointly learning to align and translate. In Proceedings of
+ICLR, 2015.
+[Goodfellow et al., 2016] Ian Goodfellow, Yoshua Bengio,
+and Aaron Courville. Deep learning. MIT Press, 2016.
+
+[He et al., 2016] Kaiming He, Xiangyu Zhang, Shaoqing
+Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of CVPR, pages 770-778, 2016.
+
+[Hermann et al., 2015] Karl Moritz Hermann, Tomas Kocisky, Edward Grefenstette, Lasse Espeholt, Will Kay,
+Mustafa Suleyman, , and Phil Blunsom. Teaching machines to read and comprehend. In Proceedings of NIPS,
+2015.
+
+[Hill et al., 2016] Felix Hill, Antoine Bordes, Sumit Chopra,
+and Jason Weston. The goldilocks principle: Reading children’s books with explicit memory representations. In Proceedings of ICLR, 2016.
+
+[Hochreiter and Schmidhuber, 1997] Sepp Hochreiter and
+Jiirgen Schmidhuber. Long short-term memory. Neural
+computation, 9(8):1735—-1780, 1997.
+
+[Huang et al., 2017] Hsin- Yuan Huang, Chenguang Zhu, Yelong Shen, and Weizhu Chen. Fusionnet: Fusing via fullyaware attention with application to machine comprehension. arXiv preprint arXiv: 1711.07341, 2017.
+
+[Jia and Liang, 2017] Robin Jia and Percy Liang. Adversarial examples for evaluating reading comprehension systems. In Proceedings of EMNLP, 2017.
+
+[Kendall et al., 2017] Alex Kendall, Yarin Gal, and Roberto
+Cipolla. Multi-task learning using uncertainty to weigh
+losses for scene geometry and semantics. arXiv preprint
+arXiv: 1705.07115, 2017.
+
+[Kingma and Ba, 2014] Diederik P. Kingma and Lei Jimmy
+Ba. Adam: A method for stochastic optimization. In
+CoRR, abs/1412.6980, 2014.
+
+[Liu et al., 2017a] Rui Liu, Junjie Hu, Wei Wei, Zi Yang,
+and Eric Nyberg. Structural embedding of syntactic trees for machine comprehension. arXiv preprint
+arXiv: 1703.00572, 2017.
+
+[Liu et al.,2017b] Xiaodong Liu, Yelong Shen, Kevin
+Duh, and Jianfeng Gao. Stochastic answer networks
+for machine reading comprehension. arXiv preprint
+arXiv: 1712.03556, 2017.
+
+[Pennington et al., 2014] Jeffrey
+Socher, and Christopher D. Manning.
+vectors for word representation.
+EMNLP, 2014.
+
+[Peters et al., 2018] Matthew E. Peters, Mark Neumann,
+Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton
+Lee, and Luke Zettlemoyer. Deep contextualized word
+prepresentations. In Proceedings of NAACL, 2018.
+
+[Rajpurkar et al., 2016] Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang. Squad: 100,000+ questions for machine comprehension of text. In Proceedings
+of EMNLP, 2016.
+
+[Rennie et al., 2016] Steven J Rennie, Etienne Marcheret,
+Youssef Mroueh, Jarret Ross, and Vaibhava Goel. Self
+critical sequence training for image captioning. arXiv
+preprint arXiv: 1612.00563, 2016.
+
+Pennington, Richard
+Glove: Global
+In Proceedings of
+
+[Seo et al., 2017] Minjoon Seo, Aniruddha Kembhavi, Ali
+Farhadi, and Hananneh Hajishirzi. Bidirectional attention
+flow for machine comprehension. In Proceedings of ICLR,
+2017.
+
+[Shen et al., 2016] Yelong Shen, Po-Sen Huang, Jianfeng
+Gao, and Weizhu Chen. Reasonet: Learning to stop
+
+reading in machine comprehension. arXiv preprint
+arXiv: 1609.05284, 2016.
+
+[Srivastava et al., 2014] Nitish Srivastava, Geoffrey Hinton,
+Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks
+from overfitting. The Journal of Machine Learning Research, pages 1929-1958, 2014.
+
+[Srivastava et al., 2015] RupeshKumar Srivastava, Klaus Greff, and Jurgen Schmidhuber. Highway networks. arXiv
+preprint arXiv: 1505.00387, 2015.
+
+[Sutton and Barto, 1998] Richard S. Sutton and Andrew G.
+Barto. Reinforcement learning: An introduction. MIT
+Press, 1998.
+
+[Vinyals et al., 2015] Oriol Vinyals, Meire Fortunato, and
+Navdeep Jaitly. Pointer networks. In Proceedings of NIPS,
+2015.
+
+[Wang and Jiang, 2017] Shuohang Wang and Jing Jiang.
+Machine comprehension using match-lstm and answer
+pointer. In Proceedings of ICLR, 2017.
+
+[Wang et al., 2017] Wenhui Wang, Nan Yang, Furu Wei,
+Baobao Chang, and Ming Zhou. Gated self-matching networks for reading comprehension and question answering.
+In Proceedings of ACL, 2017.
+
+[Weissenborn et al., 2017] Dirk Weissenborn, Georg Wiese,
+and Laura Seiffe. Making neural ga as simple as possible
+but not simpler. In Proceedings of CoNLL, pages 271-280,
+2017.
+
+[Xiong et al.,2017a] Caiming Xiong, Victor Zhong, and
+Richard Socher. Dcn+: Mixed objective and deep residual coattention for question answering. arXiv preprint
+arXiv: 1711.00106, 2017.
+
+[Xiong et al.,2017b] Caiming Xiong, Victor Zhong, and
+Richard Socher. Dynamic coattention networks for question answering. In Proceedings of ICLR, 2017.
+

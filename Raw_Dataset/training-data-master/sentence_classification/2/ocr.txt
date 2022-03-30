@@ -1,0 +1,1018 @@
+1806.05516v1 [cs.CL] 14 Jun 2018
+
+ar X1V
+
+Translations as Additional Contexts for Sentence Classification
+
+Reinald Kim Amplayo', Kyungjae Lee’, Jinyeong Yeo‘ and Seung-won Hwang!
+'Yonsei University, Seoul, South Korea
+‘Pohang University of Science and Technology, Pohang, South Korea
+{rktamplayo, 1kj0509, seungwonh} @yonsei.ac.kr jinyeo@postech.edu
+
+Abstract
+
+In sentence classification tasks, additional contexts,
+such as the neighboring sentences, may improve
+the accuracy of the classifier. However, such contexts are domain-dependent and thus cannot be
+used for another classification task with an inappropriate domain. In contrast, we propose the use of
+translated sentences as domain-free context that is
+always available regardless of the domain. We find
+that naive feature expansion of translations gains
+only marginal improvements and may decrease the
+performance of the classifier, due to possible inaccurate translations thus producing noisy sentence
+vectors. To this end, we present multiple context
+fixing attachment (MCFA), a series of modules attached to multiple sentence vectors to fix the noise
+in the vectors using the other sentence vectors as
+context. We show that our method performs competitively compared to previous models, achieving best classification performance on multiple data
+sets. We are the first to use translations as domainfree contexts for sentence classification.
+
+1 Introduction
+
+One of the primary tasks in natural language processing
+(NLP) is sentence classification, where given a sentence (e.g.
+a sentence of a review) as input, we are tasked to classify it
+into one of multiple classes (e.g. into positive or negative).
+This task is important as it is widely used in almost all subareas of NLP such as sentiment classification for sentiment
+analysis [Pang and Lee, 2007] and question type classification
+for question answering [Li and Roth, 2002], to name a few.
+While past methods require feature engineering, recent methods enjoy neural-based methods to automatically encode the
+sentences into low-dimensional dense vectors
+
+Joulin et al., 2017}. Despite the success of these methods, the
+
+major challenge in this task is that extracting features from a
+single sentence limits the performance.
+
+To overcome this limitation, recent works attempted to
+augment different kinds of features to the sentence, such as
+the neighboring sentences [Lin et al., 2015] and the topics
+of the sentences [Zhao et al., 2017]. However, these meth
+ods used domain-dependent contexts that are only effective
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Arabic Vectors 4
+
+ 
+
+English Vectors | 4
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 1: PCA visualizations of unaltered sentence vectors on TREC
+data set, where each language is effective for a specific class, highlighted using a yellow circle.
+
+when the domain of the task is appropriate. For one thing,
+neighboring sentences may not be available in some tasks
+such as question type classification. Moreover, topics inferred
+using topic models may produce less useful topics when the
+data set is domain-specific such as movie review sentiment
+classification [Mimo ef al., 2011}.
+
+In this paper, we propose the usage of translations as compelling and effective domain-free contexts, or contexts that
+are always available no matter what the task domain is. We
+observe two opportunities when using translations.
+
+First, each language has its own linguistic and cultural
+characteristics that may contain different signals to effectively classify a specific class. Figure[1|contrasts the sentence
+vectors of the original English sentences and their Arabictranslated sentences in the question type classification task. A
+yellow circle signifies a clear separation of a class. For example, the green class, or the numeric question type, is circled in
+the Arabic space as it is clearly separated from other classes,
+while such separation cannot be observed in English. Meanwhile, location type questions (in orange) are better classified
+in English.
+
+Second, the original sentences may include languagespecific ambiguity, which may be resolved when presented
+with its translations. Consider the example English sentence
+“The movie is terribly amazing” for the sentiment classification task. In this case, terribly can be used in both positive
+and negative sense, thus introduces ambiguity in the sentence.
+When translated to Korean, it becomes “of 3} ta) &
++ 2] CP’ which means “The movie is greatly magnificent’,
+removing the ambiguity.
+
+The above two observations hold only when translations
+are supported for (nearly) arbitrary language pairs with sufficiently high quality. Thankfully, translation services (e.g.
+ 
+
+ 
+
+*— *  Unfixed Arabic Vectors |+
+. d=6.97
+
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 2: PCA visualizations of unaltered sentence vectors (left) and
+the corresponding MCFA-altered vectors (right) on the MR data set.
+dis the Mahalanobis distance between the two class clusters.
+
+Google Translate) Moreover, recent research on neural ma
+chine translation (NMT) |Bahdanau et al., 2014] improved
+
+the efficiency and even enabled zero-shot translation [Johnson et al., 2016] of models for languages with no parallel
+
+data. This provides an opportunity to leverage on as many
+languages as possible to any domain, providing a much wider
+context compared to the limited contexts provided by past
+studies.
+
+However, despite the maturity of translation, naively concatenating their vectors to the original sentence vector may
+introduce more noise than signals. The unaltered translation
+space on the left of Figure [2] shows an example where translation noises make the two classes indistinguishable.
+
+In this paper, we propose a method to mitigate the possible
+problems when using translated sentences as context based on
+the following observations. Suppose there are two translated
+sentences a and b with slight errors. We posit that a can be
+used to fix b when a is used as a context of b, and vice versd||
+Revisiting the example above, to fix the vector of the English
+sentence “The movie is terribly amazing’, we use the Korean
+translation to move the vector towards the location where the
+vector “The movie is greatly magnificent’ 1s.
+
+Based on these observations, we present a neural attentionbased multiple context fixing attachment (MCFA). MCFA is a
+series of modules that uses all the sentence vectors (e.g. Arabic, English, Korean, etc.) as context to fix a sentence vector
+(e.g. Korean). Fixing the vectors is done by selectively moving the vectors to a location in the same vector space that
+better separates the class, as shown in Figure |2| Noises from
+translation may cause adverse effects to the vector itself (e.g.
+when a noisy vector is directly used for the task) and relatively to other vectors (e.g. when a noisy vector is used to
+fix another noisy vector). MCFA computes two sentence usability metrics to control the noise when fixing vectors: (a)
+self usability p;(a) weighs the confidence of using sentence
+a in solving the task. (b) relative usability p,(a,b) weighs
+the confidence of using sentence a in fixing sentence b.
+
+Listed below are the three main strengths of the MCFA
+attachment. (1) MCFA is attached after encoding the sentence, which makes it widely adaptable to other models. (2)
+MCFA is extensible and improves the accuracy as the number of translated sentences increases. (3) MCFA moves the
+vectors inside the same space, thus preserves the meaning of
+vector dimensions. Results show that a convolutional neural
+network (CNN) attached with MCFA significantly improves
+the classification performance of CNN, achieving state of the
+
+'Hereon, we mean to “fix” as to “correct, repair, or alter.”
+
+art performance over multiple data sets.
+
+2 Preliminaries
+
+2.1 Problem: Translated Sentences as Context
+
+In this paper, the ultimate task that we solve is the sentence
+classification task where given a sentence and a list of classes,
+one is task to classify which class (e.g. positive or negative
+sentiment) among the list of classes does the sentence belong.
+However, the main challenge that we tackle is the task on how
+to utilize translated sentences as additional context in order
+to improve the performance of the classifier. Specifically, the
+problem states: given the original sentence s, the goal is to
+use t1,t2,...,t,, or sentences in other languages which are
+translated from s, as additional context.
+
+Base Model: Convolutional Neural Network. The base
+model used is the convolutional neural network (CNN) for
+sentences |Kim, 2014]. It is a simple variation of the original CNN for texts |Collobert et al., 2011] to be used on sentences. Let x; € IR® be the d-dimensional word vector of
+the 2-th word in a sentence of length n. A convolution operation involves applying a filter matrix W € R”’*¢ to a window of h words and producing a new feature vector c; using
+the equation c; = f([X;;...;X;4n—1] |W + b), where b is a
+bias vector and f(.) is a non-linear function. By doing this
+on all possible windows of words we produce a feature map
+c = [c1,Co,...]. We then apply a max-over-time pooling operation Bisa FO over the feature map and take
+the maximum value as the feature vector of the filter. We
+do this on all feature vectors and concatenate all the feature
+vectors to obtain the final feature vector v. We can then use
+this vector as input features to train a classifier such as logistic regression. We use CNN to create sentence vectors for
+all sentences s,t,,to,...,t,. From here on, we refer to these
+vectOIrs aS Vs, Vt, Viz, ---) Vt,» respectively. We refer to them
+collectively as V.
+
+Baseline 1: Naive Concatenation. A simple method in order to use the translated sentences as additional context is
+to naively concatenate their vectors with the vector of the
+original sentence. That is, we create a wide vector V =
+[v3 Ve,3---} Vz,,], and use this as the input feature vector of the
+sentence to the classifier. This method works fine if the translated sentences are translated properly. However, sentences
+translated using machine translation models usually contain
+incorrect translation. In effect, this method will have adverse
+effects on the overall performance of the classifier. This will
+especially be very evident if the number of additional sentences increases.
+
+Baseline 2: L2 Regularization. In order to alleviate the
+problems above, we can use L2 regularization to automatically select useful features by weakening the appropriate
+weights. The main problem of this method occurs when almost all of the weights coming from the vectors of the translated sentence are weakened. This leads to making the additional context vectors useless and to having a similar performance when there are no additional context. Ultimately, this
+method does not make use of the full potential of the additional context.
+ 
+
+-— s vector fixing
+
+ 
+
+;— s usability
+
+ty usability
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+tn vector fixing
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(a) Self and relative usability modules
+
+(b) Vector fixing module
+
+Figure 3: Full architecture of the MCFA attachment. An arrow marked with a variable is a matrix multiplication of the vector and the variable.
+An arrow without a variable simply carries the previous element to the next element.
+
+3 Model
+
+To solve the problems of the baselines discussed above, we
+introduce an attention-based neural multiple context fixing attachment (MCFA’| a series of modules attached to the sentence vectors V. MCFA attachment is used to fix the sentence
+vectors, by slightly modifying the per-dimension values of
+the vector, before concatenating them into the final feature
+vector. The sentence vectors are altered using other sentence
+vectors as context (e.g. v;, is altered using Vs, Vi,,.--, Vi,,).
+This results to moving the vectors in the same vector space.
+The full architecture 1s shown in Figure[3]
+
+3.1 Self Usability Module
+
+To fix a source sentence vectot’| we use the other sentence
+vectors as guide to know which dimensions to fix and to
+what extent do we need to fix them. However, other vectors
+might also contain errors which may reflect to the fixing of the
+source sentence vector. In order to cope with this, we introduce self usability modules. A self usability module contains
+the self usability of the vector p;(a), which measures how
+confident sentence a is for the task at hand. For example, an
+ambiguous sentence (e.g. “The movie is terribly amazing’’)
+may receive a low self usability, while a clear and definite
+sentence (e.g. “The movie is very good’) may receive a high
+self usability.
+
+Mathematically, we calculate the self usability of the vector v; of sentence i, denoted as p;(v;), using the equation
+pi(vi) = o(v,; T;), where T; € R¢*! is a matrix to be
+learned. The produced value is a single real number from
+0 to 1. We pre-calculate the self usability of all sentence vectors v; € V. These are used in the next module, the relative
+usability module.
+
+3.2 Relative Usability Module
+
+Relative usability p,(a,b) measures how useful a can be
+when fixing 6, relative to other sentences. There are two main
+differences between p;(a) and p,(a,b). First, p;(a) is calculated before a knows about b while p,-(a,b) is calculated
+
+*The code we use in this paper is publicly shared:
+//github.com/rktamplayo/MCFA
+Hereon, we say that vz; 1s a source sentence vector if vz
+is the current vector to be altered.
+
+when a knows about b. Second, p,-(a,b) can be low even
+though p;(a) is not. This means that a is not able to help in
+fixing the wrong information in b. Here, we extend the additive attention module and use it as a
+method to calculate the relative usability of two sentences of
+different languages. To better visualize the original attention
+mechanism, we present the equations below.
+
+e; = u' tanh(s'W +t; U) (1)
+exp(e;)
+y= = —_ 77 (2)
+ier exp(e;)
+
+One major challenge in using the attention mechanism in our
+problem is that the sentence vectors do not belong to the same
+vector space. Moreover, one characteristic of our problem is
+that the sentence vectors can be both a source and a context
+vector (e.g. v, can be both s and ¢; in Equation{I). Because
+of these, we cannot directly use the additive attention module.
+We extend the module such that (1) each sentence vector v;
+has its own projection matrix X;, € R?*4, and (2) each projection matrix X; can be used as projection matrix of both
+the source (e.g. when sentence k is the current source) and
+the context vectors. Finally, we incorporate the self usability
+function p;(v;) to reflect the self usability of a sentence. Ultimately, the relative usability denoted as p,(v;, v;) is calculated using the equations below, where x is the multiplication
+of a vector and a scalar through broadcasting.
+
+e(vi,v;) =a! tanh(v; X;+ vj X; x pi(v;)) (©)
+
+vy. v;) = exp(e(vi, V;))
+Pr( v) i) Yi v,ev €xp(e(Vi, Ve) (4)
+
+3.3. Vector Fixing Module
+
+The vector fixing module applies the attention weights to the
+sentence vectors and creates an integrated context vector. We
+then use this vector alongside with the source sentence vector
+to create a weighted gate vector. The weighted gate vector is
+used to determine to what extent should a dimension of the
+source sentence vector be altered.
+
+The common way to apply the attention weights to the
+context vectors and create an integrated context vector c;
+is to directly do weighted sum of all the context vectors.
+However, this is not possible because the context vectors
+are not on the same space. Thus, we use a projection matrix U, € R?*?@ to linearly project the sentence vector
+MR 20 10662 CV
+
+ 
+
+Table 1: Statistics of the four data sets used in this paper. c: number
+of target classes. |w|: average number of words. M: number of
+data instances. Test: size of the test data, if available. If not, we use
+10-fold cross validation (marked as CV) with random split.
+
+v; to transform the sentence vectors into a common vector
+space. The integrated context vector c; is then calculated as
+C= Dv,ev Pr (Vi; viv Ug.
+
+Finally, we construct a weighted gate vector w; and use
+it to fix the source sentence vectors using the equations below, where V;, € R?@*¢ is a trainable parameter and © is the
+element-wise multiplication procedure. The weighted gate
+vector 1s a vector of real numbers between 0 and 1 to modify
+the intensity of per-dimension values of the sentence vector.
+This causes the vector to move in the same vector space towards the correct direction.
+
+wr = o([VK3 cr] | Ve) (5)
+Vik = VE @ We (6)
+An alternative approach to do vector correction is using a
+residual-style correction, where instead of multiplying a gate
+vector, a residual vector is added to the original vector. However, this approach makes the correction not
+interpretable; it is hard to explain what does adding a value to
+a specific dimension mean. One major advantage of MCFA
+is that the corrections in the vectors are interpretable; the
+weights in the gate vector correspond to the importance of
+the per-dimension features of the vector. The altered vectors
+Vs, ---) Vt, are then concatenated and fed directly as an input
+vector to the logistic regression classifier for training.
+
+4 Experiments
+
+4.1 Experimental Setting
+
+We test our model on four different data sets as listed below
+
+and summarized in Table[1] (a) MR‘ \Pang and Lee, 2005]:
+
+Movie reviews data where the task is to classify whether the
+review sentence has positive or negative sentiment. (b) SUBJ
+(Pang and Lee, 2004]: Subjectivity data where the task is to
+classify whether the sentence is subjective or objective. (c)
+CR|[Hu and Liu, 2004}. Customer reviews where The task is
+to classify whether the review sentence is positive or negative.
+(d) TREC) [Li and Roth, 2002}: TREC question data set the
+task is to classify the type of question.
+
+All our data sets are in English. For the additional contexts,
+we use ten other languages, selected based on their diversity
+and their performance on prior experiments: Arabic, Finnish,
+
+French, Italian, Korean, Mongolian, Norwegian, Polish, Russian, and Ukranian. We translate the data sets using Google
+
+https://www.cs.cornell.edu/people/pabo/
+ttp://www.cs.uic.edu/~liub/FBS/sentiment-analysis.
+
+“http://cogcomp.cs.illinois.edu/Data/QA/QC/
+
+       
+   
+
+  
+
+Translate. Tokenization is done using the polyglot library]
+We experiment on using only one additional context (V = 1)
+and using all ten languages at once (V = 10). For N = 1, we
+only show the accuracy of the best classifier for conciseness.
+
+For our CNN, we use rectified linear units and three filters with different window sizes h = 3,4, 5 with 100 feature
+
+maps each, following [Kim, 2014]. For the final sentence vector, we concatenate the feature maps to get a 300-dimension
+vector. We use dropout on all nonlinear connections with a dropout rate of 0.5. We also use an
+lo constraint of 3, following for accurate comparisons. We use FastText pre-trained vectors}|
+for all our data sets and their corresponding additional context. During training, we use mini-batch size of
+50. Training is done via stochastic gradient descent over shuffled mini-batches with the Adadelta update rule. We perform
+early stopping using a random 10% of the training set as the
+development set.
+
+We present several competing models, listed below to compare the performance of our model. (A) Aside from the base
+model (CNN) | Kim, 2014], we use Dependency-based CNN
+(Dep-CNN) [Ma et al., 2015], which parses the sentences
+first and does convolution on ancestor paths and Dependencysensitivity CNN (DSCNN) [Zhang er al., 2016], which uses
+LSTM to capture dependency information within each sentence; (B) AdaSent [Zhao et al., 2015) adopts a hierarchical structure, where consecutive levels are connected through
+gated recursive composition of adjacent segments, and feeds
+the hierarchy as a multi-scale representation through a gating network; (C) Topic-aware Convolutional Neural Network
+(TopCNN) uses topics as additional contexts and changes the CNN architecture. TopCNN uses two
+types of topics: word-specific topic and sentence-specific
+topic; and (D) CNN+B1 and CNN+B2 are the two baselines
+presented in this paper.
+
+We do not show results from RNN models because they
+were shown to be less effective in sentence classification
+in Our prior experiments. For models with additional context, we further use an ensemble classification model using
+a commonly used method by averaging the class probability
+
+scores generated by the multiple variants (in our model’s case,
+N =1and N = 10 models), following [Zhao et al., 2017].
+
+4.2 Results and Discussion
+
+We report the classification accuracy of the competing models in Table[2] We show that CNN+MCFA achieves state of
+the art performance on three of the four data sets and performs
+competitively on one data set. When V = 1, MCFA increases
+the performance of a normal CNN from 85.0 to 87.6, beating
+the current state of the art on the CR data set. When NV = 10,
+MCFA additionally beats the state of the art on the TREC data
+set. Finally, our ensemble classifier additionally outperforms
+all competing models on the MR data set. We emphasize
+that we only use the basic CNN as our sentence encoder for
+our experiments, yet still achieve state of the art performance
+
+  
+
+ 
+
+https://pypi.python.oreg/p
+
+“https://github.com/facebookresearch/fastText/blob/
+master/pretrained- vectors.md
+
+     
+SUBJ
+
+MR
+
+CNN 81.5 93.4
+Dep-CNN 81.9
+
+DSCNN 82.2 93.2
+
+CR TREC
+
+85.0 93.6
+- 95.4
+95.6
+
+ 
+
+83.1 95.5 86.3 92.4
+
+ 
+
+word sent ens word sent
+81.7 81.3 83.0 93.4 93.4
+(+0.2) (-0.2) (+1.5) (+0.0) (+0.0)
+
+Nel Nel0 ens | Nel N=10
+819. 814 82.6 | 94.6. 93.8
+
+CNN+BI (40.4) (0.1) (41.1) | 412) (404)
+821 821 822 | 946 940
+
+(40.6) (40.6) (40.7) | (41.2) (40.6)
+823 827 832 | 947 948
+
+(+0.8) (+1.2) (+1.7) (+1.3) (+1.4)
+
+C = Topic
+
+CNN+B2
+
+CNN+MCFA
+
+ 
+
+(+1.6)
+
+(+1.5)
+
+(+1.4)
+
+ 
+
+(+1.8)
+
+ens word sent ens word sent ens
+95.0 84.9 84.8 86.4 92.5 92.0 94.0
+(-0.1) (-0.2) (+1.4) (-1.1) (-1.6) (+0.4)
+
+94.9 86.2 85.9 86.7 95.4 95.0 96.4
+(+1.2) (+0.9) (+1.7) (+1.8) (+1.4) (+3.0)
+94.8 86.1 86.3 86.6 95.4 95.2 96.4
+(+1.1) (+1.3) (+1.6) (+1.8) (+1.6) (+3.0)
+95.2 87.6 88.6 89.4 95.4 96.0 96.8
+(+2.6) (+3.6) (+4.4) (+1.8) (+2.4) (+3.4)
+
+ 
+
+Table 2: Classification accuracies of competing models. C refers to the additional context, NV refers to the number of translations. In TopCNN,
+word refers to using word-specific topic while sentence refers to using sentence-specific topic. Accuracies colored red are accuracies that
+perform worse than CNN. Previous state of the art results and the results of our best model are bold-faced. The winning result is underlined.
+The number inside the parenthesis indicates the increase from the base model, CNN.
+
+CNN
+CNN+B1
+
+ 
+
+CNN+B2
+CNN+MCFA
+
+ 
+
+Table 3: Accuracies of the worst CNN+translation classifiers when
+N = 1. Accuracies less than CNN accuracies are highlighted in red.
+
+on most data sets. Hence, MCFA is successful in effectively
+using translations as additional context to improve the performance of the classifier.
+
+We compare our model (CNN+MCFA) and the baselines
+discussed above (CNN+B1, CNN+B2). On all settings, our
+model outperforms the baselines. When NV = 10, the performance of our model increases over the performance when
+N = 1, however the performance of CNN+B1 decreases
+when compared to the performance when NV = 1. We also
+show the accuracies of the worst classifiers when NV = 1
+in Table On all data sets except SUBJ, the accuracy of
+CNN+B1 decreases from the base CNN accuracy, while the
+accuracy of our model always improves from the base CNN
+accuracy. This is resolved by CNN+B2 by applying L2 regularization, however the increase in performance is marginal.
+
+We also compare two different kinds of additional context: topics (TopCNN) and translations (CNN+B1, CNN+B2,
+CNN+MCEFA). Overall, we conclude that translations are better additional contexts than topics. When using a single context (i.e. TopCNNwyora, TopCNNsgent, and our models when
+N = 1), translations always outperform topics even when using the baseline methods. Using topics as additional context
+also decreases the performance of the CNN classifier on most
+data sets, giving an adverse effect to the CNN classifier.
+
+5 Model Interpretation
+
+We first provide examples shown in Table[4] on how the self
+usability module determines the score of sentences. In the
+first example, it is hard to classify whether the translated sentence is positive or negative, thus it is given a low self usability score. In the second example, although the sentence
+contains mistranslations, these are minimal and may actually
+help the classifier by telling it that thirst for violence is not a
+
+ 
+
+tka attention (negative sentence)
+
+mn no pl ru uk
+
+the mothman prophecies , which is mostly a bore ,
+seems to exist only for its climactic setpiece .
+
+en ar fi fr it ko
+
+  
+
+ 
+
+ 
+
+ 
+
+(a) Example where English attention weight is larger
+
+ 
+
+tka attention (positive sentence)
+
+mn no i) ru uk
+
+rarely has skin looked as beautiful , desirable , even
+delectable , as it does in trouble every day .
+
+ 
+
+TF; OFS OSD, HSA OHOH YAlO] SAR ANA HOS
+Z Cc Cc
+
+ 
+
+ 
+
+ 
+
+(b) Example where Korean attention weight is larger
+
+Figure 4: Attention weights of example Korean sentences from the
+MR data set. The red color fill represents the attention weights given
+to each sentence. The darker the fill, the larger the attention weight.
+
+ 
+
+ 
+
+ 
+
+ 
+
+Fixed French Vectors
+d= 170.14
+
+Unfixed French Vectors || | ex
+d=7.88
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Fixed English Vectors
+* d = 159.43
+
+ 
+
+ 
+
+ 
+
+ 
+
+d = 22.49
+
+ 
+
+ 
+
+eK
+x
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+L L
+“6 4 -2 0 2 4 6 8 -6 4 2 0 2 4 6 8
+
+Figure 5: PCA visualization of unaltered (left) and altered (right)
+vectors of the MR data set. dis the Mahalanobis distance between
+two class clusters.
+
+negative phrase. Thus, it is given a high self usability score.
+Figure|4]shows two data instance examples where we show
+the attention weights given to the other contexts when fixing
+a Korean sentence. The larger the attention weight is, the
+more the context is used to fix the Korean sentence. In the
+Original sentence:
+
+skip this turd and pick your nose instead because you’re sure to get more out of
+the latter experience .
+
+Korean translation:
+
+FAY] BPA] C] HL AS Powe o) ygo]s Ay Haz
+oper TH.
+
+Human re-translation:
+
+In order to get more from the latter experience , you need to skip this puddle and
+choose your nose .
+
+Self Usability: 0.3958
+
+nur
+my
+
+z}
+
+ 
+
+(a) Low self usability example
+Original sentence:
+michael moore’s latest documentary about america’s thirst for violence is his best
+film yet...
+Korean translation:
+u}o] 2 #] ( Michael Moore ) 2] AZ "= OFF We el“ Se Fa” 2
+2] Ae] GHA...
+Human re-translation:
+Michael Moore’s latest American documentary “ Violent Scene ” is his best film
+yet...
+Self Usability: 1.0000
+
+(b) High self usability example
+
+Table 4: Two examples of self usability of Korean sentences from
+the MR data set. Texts colored in red are mistranslated texts.
+
+ 
+
+may take its sweet time to get wherever it’s going, but if you have
+the patience for it, you won’t feel like it’s wasted yours.
+
+        
+   
+
+Sentence
+
+what might
+an aging filmmaker still thumbing his nose at convention takes a
+
+faltered) surprising, subtle turn at the midway point.
+
+ 
+
+every nanosecond of the new guy reminds that you could be do
+Sentence ing something else more pleasurable. like scrubbing the toilet.
+emptying rat traps. or doing last year’s taxes with your ex-wife.
+
+NN in the new release of cinema paradiso, the tale has turned from
+
+(Unaltered) sweet to bittersweet, and when the tears come during that final,
+beautiful scene, they finally feel absolutely earned.
+
+NN after scenes of nonsense, you'll be wistful for the testosterone
+(altered) charged wizardry of jerry bruckheimer productions, especially
+
+ 
+
+ 
+
+because half past dead is like the rock on walmart budget.
+
+Table 5: Two example sentences, from English (first) and Korean
+(second) vector spaces, and their nearest neighbors (NN) on both
+the unaltered and altered vector spaces. We only show the original
+English sentences for the Korean example for conciseness.
+
+first example, the Korean sentence contains translation errors;
+especially, the words bore and climactic setpiece were not
+translated and were only spelled using the Korean alphabet.
+In this example, the English attention weight is larger than the
+Korean attention weight. In the second example, the Korean
+sentence correctly translates all parts of the English sentence,
+except for the phrase as it does in trouble. However, this
+phrase is not necessary to classify the sentence correctly, and
+may induce possible vagueness because of the word trouble.
+Thus, the Korean attention weight is larger.
+
+Figure|5|shows the PCA visualization of the unaltered and
+the altered vectors of four different languages. In the first example, the unaltered sentence vectors are mostly in the middle of the vector space, making it hard to draw a boundary
+between the two examples. After the fixing, the boundary is
+much clearer. We also show the English sentence vectors in
+the second example. Even without fixing the unaltered English sentence vectors, it is easy to distinguish both classes.
+After the fix, the sentence vectors in the middle of the space
+are moved, making the distinction more obvious and clearer.
+
+We also provide quantitative evidence by showing that the
+Mahalanobis distance between the two classes in the altered
+vectors are significantly farther than that of the unaltered vectors.
+
+We also show two examples sentences from English and
+Korean vector spaces and their corresponding nearest neighbors on both the unaltered and altered vector spaces in Table In the first example, the unaltered vector focuses on
+the meaning of “wasted yours” in the sentence, which puts
+it near sentences regarding wasted time or money. After fixing, the sentence vector focuses its meaning on the slow yet
+worth-the-wait pace of the movie, thus moving it closer to the
+correct vectors. In the second example, all three sentences
+have highly descriptive tones, however, the nearest neighbor
+on the altered space is hyperbolically negative, comparing the
+movie to a description unrelated to the movie itself.
+
+6 Related Work
+
+One way to improve the performance of a sentence classifier
+is to introduce new context. Common and obvious kinds of
+context are the neighboring sentences of the sentence [Lin
+, and the document where the sentence belongs
+
+|Huang et al., 2012]. Topics of the words in the sentence
+induced by a topic model were also used as contexts
+feral, 2017). In this paper, we introduce yet another type of
+additional context, sentence translations, which to the best of
+our knowledge have not been used previously.
+
+Sentence encoders trained from neural machine translation
+(NMT) systems were also used for transfer learning
+demonstrated that altered-length
+sentence vectors from NMT encoders outperform sentence
+vectors from monolingual encoders on semantic similarity
+tasks. Recent work used representation of each word in the
+sentence to create a sentence representation suitable for multiple NLP tasks [McCann er al. 2017] Our work shares the
+commonality of using NMT for another task, but instead of
+using NMT to encode our sentences, we use it to translate the
+sentences into new contexts.
+
+Increasing the number of data instances of the training set
+has also been explored to improve the performance of a classifier. Recent methods include the usage of thesaurus
+et al., 2015], paraphrases (Fu er al, 2014) among others.
+These simple variation techniques are preferred because they
+are found to be very effective despite their simplicity. Our
+work similarly augments training data, not by adding data instances (vertical augmentation), but rather by adding more
+context (horizontal augmentation). Though the paraphrase
+of p can be alternatively used as an augmented context, this
+
+could not leverage the added semantics coming from another
+language, as discussed in Section{I]
+
+7 Conclusion
+
+This paper investigates the use of translations as better additional contexts for sentence classification. To answer the
+problem on mistranslations, we propose multiple context fixing attachment (MCFA) to fix the context vectors using other
+context vectors. We show that our method improves the classification performance and achieves state-of-the-art performance on multiple data sets. In our future work, we plan
+to use and extend our model to other complex NLP tasks.
+
+Acknowledgements
+
+This work was supported by Microsoft Research Asia and the
+ICT R&D program of MSIT/UTP. [2017-0-01778, Development of Explainable Human-level Deep Machine Learning
+Inference Framework]
+
+References
+
+[Bahdanau et al., 2014] Dzmitry Bahdanau, Kyunghyun
+Cho, and Yoshua Bengio. Neural machine translation
+by jointly learning to align and translate. arXiv preprint
+arXiv: 1409.0473, 2014.
+
+[Bojanowski et al., 2016] Piotr Bojanowski, Edouard Grave,
+Armand Joulin, and Tomas Mikolov. Enriching word
+vectors with subword information. arXiv preprint
+arXiv: 1607.04606, 2016.
+
+[Collobert et al., 2011] Ronan Collobert, Jason Weston,
+Léon Bottou, Michael Karlen, Koray Kavukcuoglu, and
+Pavel Kuksa. Natural language processing (almost)
+from scratch. Journal of Machine Learning Research,
+12(Aug):2493—2537, 2011.
+
+[Fu et al., 2014] Guohong Fu, Yu He, Jiaying Song, and
+Chaoyue Wang. Improving chinese sentence polarity classification via opinion paraphrasing. CLP 2014, page 35,
+2014.
+
+[He et al., 2016] Kaiming He, Xiangyu Zhang, Shaoqing
+Ren, and Jian Sun. Deep residual learning for image recognition. In CVPR, pages 770-778, 2016.
+
+[Hill et al., 2016] Felix Hill, Kyunghyun Cho, and Anna Korhonen. Learning distributed representations of sentences
+from unlabelled data. arXiv preprint arXiv: 1602.03483,
+2016.
+
+[Hill et al., 2017] Felix Hill, Kyunghyun Cho, Sébastien
+Jean, and Yoshua Bengio. The representational geometry
+of word meanings acquired by neural machine translation
+models. Machine Translation, pages 1-16, 2017.
+
+[Hu and Liu, 2004] Minging Hu and Bing Liu. Mining and
+summarizing customer reviews. In SIGKDD, pages 168—
+177. ACM, 2004.
+
+[Huang et al., 2012] Eric H Huang, Richard Socher, Christopher D Manning, and Andrew Y Ng. Improving word representations via global context and multiple word prototypes. In ACL, pages 873-882. Association for Computational Linguistics, 2012.
+
+[Johnson et al., 2016] Melvin Johnson, Mike Schuster,
+Quoc V Le, Maxim Krikun, Yonghui Wu, Zhifeng Chen,
+Nikhil Thorat, Fernanda Viégas, Martin Wattenberg, Greg
+Corrado, et al. Google’s multilingual neural machine
+translation system: enabling zero-shot translation. arXiv
+preprint arXiv: 1611.04558, 2016.
+
+[Joulin et al., 2017] Armand Joulin, Edouard Grave, Piotr
+Bojanowski, and Tomas Mikolov. Bag of tricks for efficient text classification. In EACL, 2017.
+
+[Kim, 2014] Yoon Kim. Convolutional neural networks for
+sentence classification. In EMNLP, 2014.
+
+[Li and Roth, 2002] Xin Li and Dan Roth. Learning question classifiers. In COLING, pages 1-7. Association for
+Computational Linguistics, 2002.
+
+[Lin et al., 2015] Rui Lin, Shujie Liu, Muyun Yang, Mu Li,
+Ming Zhou, and Sheng Li. Hierarchical recurrent neural
+network for document modeling. In EMNLP, pages 899—
+907, 2015.
+
+[Ma et al., 2015] Mingbo Ma, Liang Huang, Bing Xiang,
+and Bowen Zhou. Dependency-based convolutional neu
+ral networks for sentence embedding. arXiv preprint
+arXiv: 1507.01839, 2015.
+
+[McCann et al., 2017] Bryan McCann, James Bradbury,
+Caiming Xiong, and Richard Socher. Learned in translation: Contextualized word vectors. arXiv preprint
+arXiv: 1708.00107, 2017.
+
+[Mimno et al., 2011] David Mimno, Hanna M Wallach, Edmund Talley, Miriam Leenders, and Andrew McCallum.
+Optimizing semantic coherence in topic models. In
+EMNLP, pages 262-272. Association for Computational
+Linguistics, 2011.
+
+[Pang and Lee, 2004] Bo Pang and Lillian Lee. A sentimental education: Sentiment analysis using subjectivity summarization based on minimum cuts. In ACL, page 271.
+Association for Computational Linguistics, 2004.
+
+[Pang and Lee, 2005] Bo Pang and Lillian Lee. Seeing stars:
+Exploiting class relationships for sentiment categorization
+with respect to rating scales. In ACL, pages 115-124. Association for Computational Linguistics, 2005.
+
+[Pang and Lee, 2007] Bo Pang and Lillian Lee. Opinion
+mining and sentiment analysis. Foundations and Trends
+in Information Retrieval, 2:1—135, 2007.
+
+[Srivastava et al., 2014] Nitish Srivastava, Geoffrey E Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan
+Salakhutdinov. Dropout: a simple way to prevent neural
+networks from overfitting. Journal of machine learning
+research, 15(1):1929-1958, 2014.
+
+[Zhang et al., 2015] Xiang Zhang, Junbo Zhao, and Yann
+LeCun. Character-level convolutional networks for text
+classification. In NJPS, pages 649-657, 2015.
+
+[Zhang et al., 2016] Rui Zhang, Honglak Lee, and Dragomir
+Radev. Dependency sensitive convolutional neural net
+works for modeling sentences and documents. arXiv
+preprint arXiv: 1611.02361, 2016.
+
+[Zhao et al., 2015] Han Zhao, Zhengdong Lu, and Pascal
+Poupart. Self-adaptive hierarchical sentence model. In
+IJCAT, pages 4069-4076, 2015.
+
+[Zhao et al., 2017] Rui Zhao, Kezhi Mao, Rui Zhao, and
+Kezhi Mao. Topic-aware deep compositional models for
+
+sentence classification. IEEE/ACM Transactions on Audio,
+Speech and Language Processing, 25(2):248—260, 2017.
+

@@ -1,0 +1,7 @@
+(Contribution||has||Baselines)
+(Baselines||including|| LSTM / Bi - LSTM)
+(Baselines||including||tree - structured LSTM ( Tree - LSTM ))
+(Baselines||including||LSTM regularized by linguistic knowledge ( LR - LSTM ))
+(Baselines||including||CNNrand / CNN - static / CNN - non-static ( Kim , 2014 ))
+(Baselines||including||very deep convolutional network ( VD - CNN ))
+(Baselines||including||character - level convolutional network ( CL - CNN ))

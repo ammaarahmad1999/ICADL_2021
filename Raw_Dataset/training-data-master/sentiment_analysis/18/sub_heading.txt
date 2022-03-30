@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Related Work
+Model Description
+Task Definition and Notation
+Attention-based LSTM
+Target Representation
+Syntax-based Attention Mechanism
+Overall Architecture and Training Objective
+Experiments
+Datasets
+Model Comparisons
+Model Analysis
+Remaining Error Analysis
+Conclusion

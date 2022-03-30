@@ -1,0 +1,86 @@
+45	13	15	p	to
+45	16	39	n	conditional computation
+45	43	55	p	to introduce
+45	58	110	n	new type of general purpose neural network component
+45	111	112	p	:
+45	115	168	n	Sparsely - Gated Mixture - of - Experts Layer ( MoE )
+46	8	19	p	consists of
+46	22	39	n	number of experts
+46	42	46	p	each
+46	49	85	n	simple feed - forward neural network
+46	94	118	n	trainable gating network
+46	125	132	p	selects
+46	135	190	n	sparse combination of the experts to process each input
+47	29	36	p	trained
+47	37	44	n	jointly
+47	45	47	p	by
+47	48	66	n	back - propagation
+47	0	12	p	All parts of
+47	17	24	n	network
+5	0	23	n	Conditional computation
+5	141	213	n	increasing model capacity without a proportional increase in computation
+16	0	53	n	Exploiting scale in both training data and model size
+183	0	35	n	100 BILLION WORD GOOGLE NEWS CORPUS
+186	72	82	p	MoE layers
+186	94	106	n	32 , experts
+190	0	4	p	When
+190	5	45	n	training over the full 100 billion words
+190	48	63	p	test perplexity
+190	64	86	n	improves significantly
+190	87	92	p	up to
+190	93	132	n	65536 experts ( 68 billion parameters )
+193	0	44	n	MACHINE TRANSLATION ( SINGLE LANGUAGE PAIR )
+195	4	9	p	model
+195	40	50	n	GNMT model
+195	10	15	p	was a
+195	16	32	n	modified version
+196	27	36	p	decreased
+196	51	62	n	LSTM layers
+196	63	65	p	in
+196	70	89	n	encoder and decoder
+196	90	94	p	from
+196	95	126	n	9 and 8 to 3 and 2 respectively
+196	0	9	p	To reduce
+196	10	21	n	computation
+197	3	11	p	inserted
+197	12	22	p	MoE layers
+197	23	30	p	in both
+197	35	42	n	encoder
+197	45	52	p	between
+197	53	67	n	layers 2 and 3
+197	78	85	n	decoder
+197	88	95	p	between
+197	96	110	n	layers 1 and 2
+198	0	4	p	Each
+198	5	14	n	MoE layer
+198	15	30	p	contained up to
+198	31	48	n	2048 experts each
+198	49	53	p	with
+198	54	82	n	about two million parameters
+206	22	33	p	BLEU scores
+206	37	52	n	40.56 and 26.03
+206	53	55	p	on
+206	60	97	n	WMT ' 14 En?Fr and En ? De benchmarks
+210	66	81	p	test BLEU score
+210	54	65	n	1.01 higher
+210	0	2	p	On
+210	7	32	n	Google Production dataset
+211	0	32	n	MULTILINGUAL MACHINE TRANSLATION
+214	45	47	p	on
+214	52	59	n	dev set
+214	14	22	p	achieves
+214	23	44	n	19 % lower perplexity
+214	60	64	p	than
+214	69	92	n	multilingual GNMT model
+215	0	2	p	On
+215	3	13	n	BLEU score
+215	30	49	p	significantly beats
+215	54	77	n	multilingual GNMT model
+215	78	80	p	on
+215	81	108	n	11 of the 12 language pairs
+215	111	124	p	by as much as
+215	125	136	n	5.84 points
+215	145	155	p	even beats
+215	160	183	n	monolingual GNMT models
+215	184	186	p	on
+215	187	209	n	8 of 12 language pairs

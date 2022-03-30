@@ -1,0 +1,8 @@
+title
+abstract
+Introduction
+Related work
+Approach
+Evaluation of sentence representations
+Empirical results
+Conclusion

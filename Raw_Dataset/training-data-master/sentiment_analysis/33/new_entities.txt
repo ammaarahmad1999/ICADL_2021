@@ -1,0 +1,94 @@
+75	3	11	p	consider
+75	12	24	n	CNN variants
+75	25	29	p	with
+75	30	53	n	linear filters and RNFs
+76	0	3	p	For
+76	4	8	n	RNFs
+76	14	19	p	adopt
+76	20	39	n	two implementations
+76	40	48	p	based on
+76	49	63	n	GRUs and LSTMs
+77	8	23	p	compare against
+77	38	50	n	RNN variants
+77	53	56	n	GRU
+77	59	63	n	LSTM
+77	66	69	n	GRU
+77	70	74	p	with
+77	75	86	n	max pooling
+77	93	97	n	LSTM
+77	98	102	p	with
+77	103	114	n	max pooling
+18	22	39	p	propose to employ
+18	40	74	n	recurrent neural networks ( RNNs )
+18	75	77	p	as
+18	78	97	n	convolution filters
+18	98	100	p	of
+18	101	112	n	CNN systems
+19	4	37	n	recurrent neural filters ( RNFs )
+19	52	61	p	deal with
+19	62	87	n	language compositionality
+19	88	92	p	with
+19	95	113	n	recurrent function
+19	114	125	p	that models
+19	126	140	n	word relations
+19	166	185	p	to implicitly model
+19	186	210	n	long - term dependencies
+20	0	4	n	RNFs
+20	19	29	p	applied to
+20	30	44	n	word sequences
+20	45	47	p	of
+20	48	64	n	moderate lengths
+20	73	83	p	alleviates
+20	84	111	n	some well - known drawbacks
+20	112	114	p	of
+20	115	119	n	RNNs
+20	122	131	p	including
+20	138	151	n	vulnerability
+20	152	154	p	to
+20	159	200	n	gradient vanishing and exploding problems
+22	14	36	n	RNF - based CNN models
+22	37	43	p	can be
+22	44	58	n	3 - 8 x faster
+22	59	63	p	than
+22	70	86	n	RNN counterparts
+21	30	44	p	computation of
+21	49	70	n	convolution operation
+21	71	75	p	with
+21	76	80	n	RNFs
+21	81	87	p	can be
+21	95	107	n	parallelized
+21	0	5	p	As in
+21	6	23	n	conventional CNNs
+23	3	10	p	present
+23	11	44	n	two RNF - based CNN architectures
+23	45	48	p	for
+23	49	111	n	sentence classification and answer sentence selection problems
+2	0	59	n	Convolutional Neural Networks with Recurrent Neural Filters
+7	18	53	n	model convolution filters with RNNs
+81	16	32	n	CNN - RNF - LSTM
+81	33	41	p	achieves
+81	42	70	n	53.4 % and 90.0 % accuracies
+81	71	73	p	on
+81	78	134	n	fine - grained and binary sentiment classification tasks
+81	156	161	p	match
+81	166	194	n	state - of the - art results
+81	195	197	p	on
+81	202	229	n	Stanford Sentiment Treebank
+82	22	29	p	obtains
+82	30	49	n	competitive results
+82	50	52	p	on
+82	53	87	n	answer sentence selection datasets
+82	90	97	p	despite
+82	102	127	n	simple model architecture
+82	128	139	p	compared to
+82	140	170	n	state - of - the - art systems
+83	0	23	n	Conventional RNN models
+83	32	44	p	benefit from
+83	45	56	n	max pooling
+83	59	72	p	especially on
+83	85	110	n	answer sentence selection
+87	14	36	n	RNF - based CNN models
+87	37	44	p	perform
+87	45	64	n	consistently better
+87	65	69	p	than
+87	70	93	n	max - pooled RNN models

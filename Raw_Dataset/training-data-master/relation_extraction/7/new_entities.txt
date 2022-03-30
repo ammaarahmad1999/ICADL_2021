@@ -1,0 +1,155 @@
+36	19	26	p	propose
+36	29	56	n	novel word - level approach
+36	57	60	p	for
+36	61	99	n	distant supervised relation extraction
+36	100	111	p	by reducing
+36	112	132	n	inner-sentence noise
+36	137	146	p	improving
+36	147	157	n	robustness
+36	158	165	p	against
+36	166	177	n	noisy words
+37	0	9	p	To reduce
+37	10	29	n	innersentence noise
+37	35	42	p	utilize
+37	45	82	n	novel Sub - Tree Parse ( STP ) method
+37	83	92	p	to remove
+37	93	109	n	irrelevant words
+37	110	125	p	by intercepting
+37	128	135	n	subtree
+37	136	141	p	under
+37	146	189	n	parent of entities ' lowest common ancestor
+39	18	41	n	entity - wise attention
+39	53	65	p	to alleviate
+39	70	94	n	influence of noisy words
+39	95	97	p	in
+39	102	109	n	subtree
+39	114	123	p	emphasize
+39	128	152	n	task - relevant features
+40	36	46	p	initialize
+40	51	67	n	model parameters
+40	68	72	p	with
+40	73	91	n	a priori knowledge
+40	92	104	p	learned from
+40	109	140	n	entity type classification task
+40	141	143	p	by
+40	144	161	n	transfer learning
+233	0	5	n	Mintz
+233	6	14	p	proposes
+233	19	46	n	humandesigned feature model
+234	0	6	n	MultiR
+234	7	19	p	puts forward
+234	22	37	n	graphical model
+235	0	4	n	MIML
+235	5	13	p	proposes
+235	16	49	n	multi -instance multi-label model
+236	0	4	n	PCNN
+236	5	17	p	puts forward
+236	20	57	n	piecewise CNN for relation extraction
+237	0	10	n	PCNN + ATT
+237	11	19	p	proposes
+237	24	53	n	selective attention mechanism
+237	54	58	p	with
+237	59	63	n	PCNN
+238	5	13	p	proposes
+238	0	4	n	BGRU
+238	21	25	p	with
+238	30	62	n	word - level attention mechanism
+191	23	30	p	utilize
+191	31	39	n	word2vec
+191	42	50	p	to train
+191	51	66	n	word embeddings
+191	67	69	p	on
+191	70	80	n	NYT corpus
+193	4	24	n	grid search approach
+193	33	42	p	to select
+193	43	67	n	optimal learning rate lr
+193	68	71	p	for
+193	72	86	n	Adam optimizer
+193	87	92	p	among
+193	95	124	n	0.1 , 0.001 , 0.0005 , 0.0001
+193	129	141	n	GRU size m ?
+193	144	165	n	100 , 160 , 230 , 400
+193	170	197	n	position embedding size l ?
+193	200	216	n	5 , 10 , 15 , 20
+195	0	10	p	GRU size m
+195	11	14	n	230
+196	0	26	p	Word embedding dimension k
+196	27	29	n	50
+196	30	55	p	POS embedding dimension l
+196	56	57	n	5
+196	58	70	p	Batch size n
+196	71	73	n	50
+196	74	95	p	Entity - Task weights
+197	16	19	n	0.5
+197	24	53	p	Entity - Relation Task weight
+198	0	3	n	0.3
+198	4	20	p	Learning rate lr
+198	21	26	n	0.001
+198	27	48	p	Dropout probability p
+198	49	52	n	0.5
+198	53	64	p	l 2 penalty
+199	0	6	n	0.0001
+2	0	26	n	Neural Relation Extraction
+13	0	19	n	Relation extraction
+36	61	99	n	distant supervised relation extraction
+205	14	21	p	observe
+205	31	36	n	model
+205	37	41	p	with
+205	46	49	n	STP
+205	50	58	p	performs
+205	59	63	n	best
+205	74	83	n	SDP model
+205	84	91	p	obtains
+205	95	112	n	even worse result
+205	113	117	p	than
+205	122	130	n	pure one
+206	4	18	n	PR curve areas
+206	19	21	p	of
+206	22	41	n	BGRU + SDP and BGRU
+206	42	51	p	are about
+206	52	67	n	0.332 and 0.337
+206	89	99	n	BGRU + STP
+206	100	115	p	increases it to
+206	116	121	n	0.366
+207	29	36	n	Our STP
+207	41	51	p	get rid of
+207	52	68	n	irrelevant words
+207	69	71	p	in
+207	72	85	n	each instance
+207	90	96	p	obtain
+207	97	133	n	more precise sentence representation
+209	10	20	n	SDP method
+209	24	49	p	not appropriate to handle
+209	50	73	n	low - quality sentences
+209	74	79	p	where
+209	80	98	n	key relation words
+209	103	109	p	not in
+209	114	117	n	SDP
+214	76	102	n	BGRU - WLA ( + STP ) + EWA
+214	103	114	p	outperforms
+214	115	128	n	BGRU (+ STP )
+215	26	39	n	PR curve area
+215	46	66	n	relative improvement
+215	67	69	p	of
+215	70	80	n	over 2.3 %
+217	0	3	n	EWA
+217	4	12	p	achieves
+217	13	33	n	further improvements
+217	38	49	p	outperforms
+217	54	62	n	baseline
+217	63	70	p	by over
+217	71	76	n	4.6 %
+227	46	60	n	models with TL
+227	61	68	p	achieve
+227	69	87	n	better performance
+227	96	103	p	improve
+227	108	121	n	PR curve area
+227	122	124	p	by
+227	125	135	n	over 4.7 %
+229	6	21	n	BGRU + STP + TL
+229	22	30	p	achieves
+229	35	51	n	best performance
+229	56	65	p	increases
+229	70	74	n	area
+229	75	77	p	to
+229	78	83	n	0.383

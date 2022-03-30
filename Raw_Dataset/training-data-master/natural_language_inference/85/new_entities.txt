@@ -1,0 +1,144 @@
+204	0	14	n	Each tree node
+204	18	34	p	implemented with
+204	37	54	n	tree - LSTM block
+205	39	50	p	performance
+205	51	56	n	drops
+205	57	59	p	to
+205	60	66	n	88.2 %
+207	6	12	p	remove
+207	17	30	n	pooling layer
+207	31	33	p	in
+207	34	55	n	inference composition
+207	60	75	p	replace it with
+207	76	85	n	summation
+207	98	106	n	accuracy
+207	107	112	n	drops
+207	113	115	p	to
+207	116	122	n	87.1 %
+208	17	51	n	difference and elementwise product
+208	52	56	p	from
+208	61	94	n	local inference enhancement layer
+208	101	109	n	accuracy
+208	110	115	n	drops
+208	116	118	p	to
+208	119	125	n	87.0 %
+213	17	42	n	premise - based attention
+213	43	47	p	from
+213	48	52	n	ESIM
+213	72	80	n	accuracy
+213	81	86	n	drops
+213	87	89	p	to
+213	90	96	n	87.2 %
+213	97	99	p	on
+213	104	112	n	test set
+209	43	52	p	replacing
+209	53	72	n	bidirectional LSTMs
+209	73	75	p	in
+209	76	97	n	inference composition
+209	107	121	n	input encoding
+209	36	40	p	with
+209	127	153	n	feedforward neural network
+209	154	161	n	reduces
+209	166	174	n	accuracy
+209	175	177	p	to
+209	178	195	n	87.3 % and 86.3 %
+215	0	8	p	Removing
+215	13	54	n	hypothesis - based attention ( model 24 )
+215	55	63	n	decrease
+215	68	76	n	accuracy
+215	77	79	p	to
+215	80	86	n	86.5 %
+167	3	6	p	use
+167	11	22	n	Adam method
+167	48	51	p	for
+167	52	64	n	optimization
+171	7	14	n	dropout
+171	15	19	p	with
+171	22	26	n	rate
+171	27	29	p	of
+171	30	33	n	0.5
+171	45	55	p	applied to
+171	56	83	n	all feedforward connections
+172	7	45	n	pre-trained 300 - D Glove 840B vectors
+172	46	59	p	to initialize
+172	60	79	n	our word embeddings
+168	4	18	n	first momentum
+168	22	31	p	set to be
+168	32	35	n	0.9
+168	44	50	n	second
+168	51	56	n	0.999
+169	4	25	n	initial learning rate
+169	26	28	p	is
+169	29	35	n	0.0004
+169	44	54	n	batch size
+169	55	57	p	is
+169	58	60	n	32
+170	4	17	n	hidden states
+170	18	20	p	of
+170	21	26	n	LSTMs
+170	29	41	n	tree - LSTMs
+170	48	63	n	word embeddings
+170	64	68	p	have
+170	69	83	n	300 dimensions
+173	0	35	n	Out - of - vocabulary ( OOV ) words
+173	40	51	p	initialized
+173	52	60	n	randomly
+173	61	65	p	with
+173	66	82	n	Gaussian samples
+24	171	180	p	enhancing
+24	181	208	n	sequential inference models
+24	209	217	p	based on
+24	218	230	n	chain models
+30	16	35	p	explicitly encoding
+30	36	55	n	parsing information
+30	56	60	p	with
+30	61	79	n	recursive networks
+30	80	82	p	in
+30	88	112	n	local inference modeling
+30	117	138	n	inference composition
+2	18	44	n	Natural Language Inference
+4	0	23	n	Reasoning and inference
+15	15	49	n	natural language inference ( NLI )
+26	21	24	n	NLI
+185	0	15	n	Our final model
+185	16	24	p	achieves
+185	29	37	n	accuracy
+185	38	40	p	of
+185	41	47	n	88.6 %
+185	54	65	n	best result
+185	66	77	p	observed on
+185	78	82	n	SNLI
+185	91	129	n	our enhanced sequential encoding model
+185	130	137	p	attains
+185	141	149	n	accuracy
+185	150	152	p	of
+185	153	159	n	88.0 %
+185	173	183	n	outperform
+185	188	203	n	previous models
+195	21	35	n	our ESIM model
+195	36	44	p	achieves
+195	48	56	n	accuracy
+195	57	59	p	of
+195	60	66	n	88.0 %
+195	87	99	n	outperformed
+195	108	123	n	previous models
+195	126	135	p	including
+195	153	191	n	more complicated network architectures
+191	13	19	p	adding
+191	20	44	n	intra-sentence attention
+191	45	51	p	yields
+191	52	71	n	further improvement
+196	3	11	p	ensemble
+196	12	26	n	our ESIM model
+196	27	31	p	with
+196	32	54	n	syntactic tree - LSTMs
+196	55	63	p	based on
+196	64	85	n	syntactic parse trees
+196	90	97	p	achieve
+196	98	121	n	significant improvement
+196	122	126	p	over
+196	127	166	n	our best sequential encoding model ESIM
+196	169	178	p	attaining
+196	182	190	n	accuracy
+196	191	193	p	of
+196	194	200	n	88.6 %

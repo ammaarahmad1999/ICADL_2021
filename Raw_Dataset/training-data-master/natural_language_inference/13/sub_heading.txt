@@ -1,0 +1,20 @@
+title
+abstract
+Introduction
+Our Proposed MRU Encoder
+Contract-and-Expand Operation
+Reasoning over Multi-ranged Blocks
+MRU Encoding Operation
+Overall Model Architectures
+Multiple Choice Models
+Span Prediction Model
+Empirical Evaluation
+Datasets
+Competitor Methods
+Our Methods
+Implementation Details
+Experimental Results on RACE
+Experimental Results on SearchQA
+Experimental Results on NarrativeQA
+Related Work
+Conclusion and Future Work

@@ -1,0 +1,109 @@
+154	12	57	all three proposed dynamic routing strategies
+154	58	71	contribute to
+154	76	104	effectiveness of Capsule - B
+154	105	119	by alleviating
+154	124	158	disturbance of some noise capsules
+144	92	101	including
+144	104	120	LSTM / Bi - LSTM
+144	123	161	tree - structured LSTM ( Tree - LSTM )
+144	164	218	LSTM regularized by linguistic knowledge ( LR - LSTM )
+144	221	277	CNNrand / CNN - static / CNN - non-static ( Kim , 2014 )
+144	280	324	very deep convolutional network ( VD - CNN )
+144	331	383	character - level convolutional network ( CL - CNN )
+10	36	94	https://github.com/andyweizhao/capsule_text_classification
+139	24	27	use
+139	28	62	300 - dimensional word2vec vectors
+139	63	76	to initialize
+139	77	94	embedding vectors
+141	7	34	Adam optimization algorithm
+141	35	39	with
+141	40	60	1e - 3 learning rate
+141	61	69	to train
+141	74	79	model
+142	7	29	3 iteration of routing
+142	30	33	for
+142	34	46	all datasets
+140	3	10	conduct
+140	11	21	mini-batch
+140	22	26	with
+140	27	34	size 50
+140	35	38	for
+140	39	49	AG 's news
+140	54	61	size 25
+140	62	65	for
+140	66	80	other datasets
+40	4	19	capsule network
+44	0	28	N - gram Convolutional Layer
+45	11	15	is a
+45	16	44	standard convolutional layer
+45	51	59	extracts
+45	60	75	n-gram features
+45	76	101	at different positions of
+45	104	112	sentence
+45	113	120	through
+45	121	150	various convolutional filters
+58	0	21	Primary Capsule Layer
+59	5	7	is
+59	12	31	first capsule layer
+59	32	40	in which
+59	45	53	capsules
+59	54	61	replace
+59	66	107	scalar - output feature detectors of CNNs
+59	108	112	with
+59	113	136	vector- output capsules
+59	137	148	to preserve
+59	153	176	instantiated parameters
+59	177	184	such as
+59	189	209	local order of words
+59	214	247	semantic representations of words
+84	0	15	Dynamic Routing
+85	37	49	to construct
+85	52	66	non-linear map
+85	67	69	in
+85	73	89	iterative manner
+85	90	98	ensuring
+85	108	130	output of each capsule
+85	131	140	gets sent
+85	147	189	appropriate parent in the subsequent layer
+107	0	27	Convolutional Capsule Layer
+108	16	28	each capsule
+108	29	49	is connected only to
+108	52	70	local region K 2 C
+108	71	83	spatially in
+108	88	99	layer below
+109	29	37	multiply
+109	38	61	transformation matrices
+109	62	70	to learn
+109	71	99	child - parent relationships
+109	100	111	followed by
+109	112	132	routing by agreement
+109	133	143	to produce
+109	144	178	parent capsules in the layer above
+117	0	29	Fully Connected Capsule Layer
+118	4	31	capsules in the layer below
+118	36	50	flattened into
+118	53	69	list of capsules
+118	74	82	fed into
+118	83	112	fully connected capsule layer
+124	4	36	Architectures of Capsule Network
+125	3	10	explore
+125	11	36	two capsule architectures
+125	50	61	Capsule - A
+125	66	77	Capsule - B
+41	3	14	consists of
+41	15	26	four layers
+41	29	54	ngram convolutional layer
+41	57	78	primary capsule layer
+41	81	108	convolutional capsule layer
+41	115	144	fully connected capsule layer
+42	17	24	explore
+42	25	47	two capsule frameworks
+42	48	60	to integrate
+42	67	100	four components in different ways
+2	56	75	Text Classification
+12	0	46	Modeling articles or sentences computationally
+16	67	86	text categorization
+149	22	34	observe that
+149	39	55	capsule networks
+149	56	79	achieve best results on
+149	80	101	4 out of 6 benchmarks

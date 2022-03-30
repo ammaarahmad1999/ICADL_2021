@@ -1,0 +1,155 @@
+90	0	4	n	RNTN
+90	7	38	n	Recursive Tensor Neural Network
+90	49	57	p	to model
+90	58	70	n	correlations
+90	71	78	p	between
+90	79	99	n	different dimensions
+90	100	102	p	of
+90	103	122	n	child nodes vectors
+91	0	14	n	LSTM / Bi-LSTM
+91	37	44	p	employs
+91	45	69	n	Long Short - Term Memory
+91	78	99	n	bidirectional variant
+91	100	110	p	to capture
+91	111	133	n	sequential information
+92	0	9	n	Tree-LSTM
+92	12	24	n	Memory cells
+92	29	42	p	introduced by
+92	43	85	n	Tree - Structured Long Short - Term Memory
+92	90	95	n	gates
+92	96	100	p	into
+92	101	133	n	tree - structured neural network
+93	0	3	n	CNN
+93	6	35	n	Convolutional Neural Networks
+93	49	60	p	to generate
+93	61	100	n	task - specific sentence representation
+94	0	4	n	NCSL
+94	17	60	n	Neural Context - Sensitive Lexicon ( NSCL )
+94	61	70	p	to obtain
+94	71	102	n	prior sentiment scores of words
+94	103	105	p	in
+94	110	118	n	sentence
+95	0	12	n	LR - Bi-LSTM
+95	15	22	p	imposes
+95	23	39	n	linguistic roles
+95	40	44	p	into
+95	45	60	n	neural networks
+95	61	72	p	by applying
+95	73	98	n	linguistic regularization
+95	99	101	p	on
+95	102	122	n	intermediate outputs
+95	123	127	p	with
+95	128	141	n	KL divergence
+96	0	16	n	Self - attention
+96	19	27	p	proposes
+96	30	53	n	selfattention mechanism
+96	54	62	p	to learn
+96	63	92	n	structured sentence embedding
+97	0	9	n	ID - LSTM
+97	12	16	p	uses
+97	17	39	n	reinforcement learning
+97	40	48	p	to learn
+97	49	83	n	structured sentence representation
+97	84	87	p	for
+97	88	112	n	sentiment classification
+99	25	35	n	dimensions
+99	36	38	p	of
+99	39	93	n	characterlevel embedding and word embedding ( Glo Ve )
+99	103	109	p	set to
+99	110	113	n	300
+100	0	12	n	Kernel sizes
+100	13	15	p	of
+100	16	38	n	multi-gram convolution
+100	39	42	p	for
+100	43	53	n	Char - CNN
+100	58	64	p	set to
+100	65	70	n	2 , 3
+103	4	8	n	size
+103	9	11	p	of
+103	12	22	n	mini-batch
+103	23	25	p	is
+103	26	28	n	60
+104	4	16	n	dropout rate
+104	17	19	p	is
+104	20	23	n	0.5
+104	34	45	n	coefficient
+105	0	2	p	of
+105	3	20	n	L 2 normalization
+105	24	30	p	set to
+105	31	36	n	10 ?5
+101	8	23	n	weight matrices
+101	28	42	p	initialized as
+101	43	69	n	random orthogonal matrices
+101	79	82	p	set
+101	83	103	n	all the bias vectors
+101	104	106	p	as
+101	107	119	n	zero vectors
+102	3	11	p	optimize
+102	16	30	n	proposed model
+102	31	35	p	with
+102	36	53	n	RMSprop algorithm
+102	56	61	p	using
+102	62	81	n	mini-batch training
+15	18	25	p	propose
+15	28	88	n	Multi- sentimentresource Enhanced Attention Network ( MEAN )
+15	89	92	p	for
+15	93	134	n	sentence - level sentiment classification
+15	135	147	p	to integrate
+15	148	192	n	many kinds of sentiment linguistic knowledge
+15	193	197	p	into
+15	198	218	n	deep neural networks
+15	219	222	p	via
+15	223	254	n	multi -path attention mechanism
+18	20	62	n	multisentiment - resource attention module
+18	63	71	p	to learn
+18	72	150	n	more comprehensive and meaningful sentiment - specific sentence representation
+18	151	159	p	by using
+18	164	203	n	three types of sentiment resource words
+18	204	206	p	as
+18	207	224	n	attention sources
+18	225	237	p	attending to
+18	242	255	n	context words
+19	21	30	p	attend to
+19	31	70	n	different sentimentrelevant information
+19	71	75	p	from
+19	76	110	n	different representation subspaces
+19	111	121	p	implied by
+19	122	158	n	different types of sentiment sources
+19	163	170	p	capture
+19	175	193	n	over all semantics
+19	194	196	p	of
+19	201	241	n	sentiment , negation and intensity words
+19	242	245	p	for
+19	246	266	n	sentiment prediction
+16	24	30	p	design
+16	33	62	n	coupled word embedding module
+16	63	71	p	to model
+16	76	95	n	word representation
+16	96	100	p	from
+16	101	145	n	character - level and word - level semantics
+2	60	84	n	Sentiment Classification
+112	8	17	n	our model
+112	18	24	p	brings
+112	27	50	n	substantial improvement
+112	51	55	p	over
+112	60	67	n	methods
+112	68	88	p	that do not leverage
+112	89	119	n	sentiment linguistic knowledge
+114	24	48	p	consistently outperforms
+114	49	63	n	LR - Bi - LSTM
+114	64	80	p	which integrates
+114	81	97	n	linguistic roles
+114	98	100	p	of
+114	101	141	n	sentiment , negation and intensity words
+114	142	146	p	into
+114	147	162	n	neural networks
+114	163	166	p	via
+114	171	196	n	linguistic regularization
+115	24	32	p	achieves
+115	33	51	n	2.4 % improvements
+115	52	56	p	over
+115	61	71	n	MR dataset
+115	76	94	n	0.8 % improvements
+115	95	99	p	over
+115	104	115	n	SST dataset
+115	116	142	n	compared to LR - Bi - LSTM

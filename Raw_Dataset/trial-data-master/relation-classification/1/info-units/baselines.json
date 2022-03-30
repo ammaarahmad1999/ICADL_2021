@@ -1,0 +1,95 @@
+{
+  "has" : {
+    "Baselines" : {
+      "divided into" : ["pipelined methods", "jointly extracting methods", "end - to - end methods", 
+	  {"from sentence" : "We compare our method with several classical triplet extraction methods , which can be divided into the following categories : the pipelined methods , the jointly extracting methods and the end - to - end methods based our tagging scheme ."}],
+      "has" : {
+        "pipelined methods" : {
+          "has" : {
+            "DS-logistic" : {
+              "is a" : "distant supervised and feature based method",
+              "combines" : "advantages of supervised IE and unsupervised IE features"
+            },
+            "LINE" : {
+              "is a" : "network embedding method",
+              "suitable for" : "arbitrary types of information networks"
+            },
+            "FCM" : {
+              "is a" : "compositional model",
+              "combines" : {
+                "lexicalized linguistic context and word embeddings" : {
+                  "for" : "relation extraction"
+                }
+              }
+            }
+          },
+          "from sentence" : "For the pipelined methods , we follow ) 's settings :
+( 1 ) DS-logistic ) is a distant supervised and feature based method , which combines the advantages of supervised IE and unsupervised IE features ; ( 2 ) LINE is a network embedding method , which is suitable for arbitrary types of information networks ;
+( 3 ) FCM ) is a compositional model that combines lexicalized linguistic context and word embeddings for relation extraction ."
+  
+      },
+        "jointly extracting methods" :  {
+        "has" : {
+          "DS - Joint" : {
+            "is a" : "supervised method",
+            "jointly extracts" : {
+              "entities and relations" : {
+                "using" : {
+                  "structured perceptron" : {
+                    "on" : "human - annotated dataset"
+                  }
+                }
+              }  
+            }
+          },
+          "MultiR" : {
+            "is a" : {
+              "typical distant supervised method" : {
+                "based on" : {
+                  "multi-instance learning algorithms" : {
+                    "to combat" : "noisy training data"
+                  }
+                }
+              }
+            }
+          },
+          "CoType" : {
+            "is a" : "domain independent framework",
+            "by jointly embedding" : "entity mentions , relation mentions , text features and type labels into meaningful representations"
+          }          
+        },
+        "from sentence" : "The jointly extracting methods used in this paper are listed as follows : ( 4 ) DS - Joint ) is a supervised method , which jointly extracts entities and relations using structured perceptron on human - annotated dataset ; ( 5 ) MultiR is a typical distant supervised method based on multi-instance learning algorithms to combat the noisy training data ; ( 6 ) CoType ) is a domain independent framework by jointly embedding entity mentions , relation mentions , text features and type labels into meaningful representations ."
+      },
+        "end - to - end tagging models" : {
+        "has" : {
+          "LSTM- CRF" : {
+            "proposed for" : {
+              "entity recognition" : {
+                "by using" : {
+                  "bidirectional LSTM" : {
+                    "to encode" : "input sentence"
+                  },
+                  "conditional random fields" : {
+                    "to predict" : "entity tag sequence"
+                  }
+                }
+              }
+            }
+          },
+          "LSTM - LSTM" : {
+            "uses" : {
+              "LSTM layer" : {
+                "to decode" : "tag sequence instead of CRF"
+              }
+            }
+          }
+        },
+        "from sentence" : "In addition , we also compare our method with two classical end - to - end tagging models : LSTM- CRF and LSTM - LSTM .
+LSTM - CRF is proposed for entity recognition by using a bidirectional LSTM to encode input sentence and a conditional random fields to predict the entity tag sequence .
+Different from LSTM - CRF , LSTM - LSTM uses a LSTM layer to decode the tag sequence instead of CRF ."
+      
+      }
+      }
+    }
+  }
+}

@@ -1,0 +1,146 @@
+177	0	5	n	ABS +
+177	6	10	p	is a
+177	11	26	n	tuned ABS model
+179	0	11	n	RAS - Elman
+179	14	18	p	is a
+179	19	38	n	convolution encoder
+179	46	63	n	Elman RNN decoder
+179	64	68	p	with
+179	69	78	n	attention
+180	0	13	n	Seq2seq + att
+180	14	16	p	is
+180	17	43	n	two - layer BiLSTM encoder
+180	48	72	n	one - layer LSTM decoder
+180	73	86	p	equipped with
+180	87	96	n	attention
+181	0	14	n	lvt5 k - lsent
+181	15	19	p	uses
+181	20	38	n	temporal attention
+181	39	55	p	to keep track of
+181	60	82	n	past attentive weights
+181	83	85	p	of
+181	90	97	n	decoder
+181	102	111	p	restrains
+181	116	126	n	repetition
+181	127	129	p	in
+181	130	145	n	later sequences
+182	0	5	n	SEASS
+182	6	14	p	includes
+182	18	43	n	additional selective gate
+182	44	54	p	to control
+182	55	71	n	information flow
+182	72	76	p	from
+182	81	88	n	encoder
+182	89	91	p	to
+182	96	103	n	decoder
+183	0	19	n	Pointer - generator
+183	20	22	p	is
+183	26	52	n	integrated pointer network
+183	57	70	n	seq2seq model
+186	0	3	n	CGU
+186	59	62	p	for
+186	63	78	n	global encoding
+186	6	10	p	sets
+186	13	37	n	convolutional gated unit
+186	42	58	n	self - attention
+165	25	62	n	https :// github.com/wprojectsn/codes
+159	14	29	n	word embeddings
+159	3	13	p	initialize
+159	35	50	n	128 - d vectors
+159	55	66	p	fine - tune
+159	72	87	n	during training
+161	4	19	n	vocabulary size
+161	24	30	p	set to
+161	31	36	n	150 k
+161	37	40	p	for
+161	41	72	n	both the source and target text
+162	4	21	n	hidden state size
+162	26	32	p	set to
+162	33	36	n	256
+166	15	21	n	models
+166	22	24	p	on
+166	27	58	n	single GTX TI - TAN GPU machine
+167	3	7	p	used
+167	12	29	n	Adagrad optimizer
+167	30	34	p	with
+167	37	53	n	batch size of 64
+167	54	65	p	to minimize
+167	70	74	n	loss
+169	8	25	n	gradient clipping
+169	26	30	p	with
+169	33	54	n	maximum gradient norm
+169	55	57	p	of
+169	58	59	n	2
+168	57	63	p	set to
+168	64	68	n	0.15
+168	4	25	n	initial learning rate
+168	73	76	n	0.1
+168	34	51	n	accumulator value
+173	3	10	p	trained
+173	15	40	n	concept pointer generator
+173	41	44	p	for
+173	45	61	n	450 k iterations
+173	62	69	p	yielded
+173	74	90	n	best performance
+173	107	125	p	optimization using
+173	126	136	n	RL rewards
+173	137	140	p	for
+173	141	147	n	RG - L
+173	148	150	p	at
+173	151	166	n	95 K iterations
+173	167	169	p	on
+173	170	180	n	DUC - 2004
+173	188	203	n	50 K iterations
+173	204	206	p	on
+173	207	215	n	Gigaword
+174	3	7	p	took
+174	12	39	n	distancesupervised training
+174	40	42	p	at
+174	43	57	n	5 K iterations
+174	58	60	p	on
+174	61	71	n	DUC - 2004
+174	79	95	n	6.5 K iterations
+174	96	98	p	on
+174	99	107	n	Gigaword
+26	27	34	p	propose
+26	37	48	n	novel model
+26	49	57	p	based on
+26	60	85	n	concept pointer generator
+26	91	119	p	encourages the generation of
+26	120	149	n	conceptual and abstract words
+27	37	47	p	alleviates
+27	52	64	n	OOV problems
+28	10	14	p	uses
+28	15	30	n	pointer network
+28	31	41	p	to capture
+28	46	65	n	salient information
+28	66	70	p	from
+28	73	84	n	source text
+28	96	103	p	employs
+28	104	119	n	another pointer
+28	120	133	p	to generalize
+28	138	152	n	detailed words
+28	153	165	p	according to
+28	172	198	n	upper level of expressions
+34	4	25	n	optimization function
+34	29	56	p	adaptive so as to cater for
+34	57	75	n	different datasets
+34	76	80	p	with
+34	81	112	n	distantly - supervised training
+35	20	44	p	optimized end - to - end
+35	4	11	n	network
+35	45	50	p	using
+35	51	73	n	reinforcement learning
+35	76	80	p	with
+35	85	115	n	distant - supervision strategy
+2	28	53	n	Abstractive Summarization
+14	0	33	n	Abstractive summarization ( ABS )
+191	3	10	p	observe
+191	20	25	n	model
+192	0	11	p	In terms of
+192	16	45	n	pointer generator performance
+192	77	92	n	concept pointer
+192	52	69	p	improvements made
+192	97	135	n	statistically significant ( p < 0.01 )
+192	136	142	p	across
+192	143	154	n	all metrics

@@ -1,0 +1,240 @@
+173	0	42	n	BiLSTM Attention ( with and without ELMo )
+174	14	18	p	uses
+174	21	41	n	similar architecture
+174	42	44	p	to
+174	49	93	n	proposed neural multitask learning framework
+174	116	125	p	optimizes
+174	130	137	n	network
+174	138	141	p	for
+174	146	155	n	main loss
+174	156	165	p	regarding
+174	170	208	n	citation intent classification ( L 1 )
+8	37	72	n	https://github.com/ allenai/scicite
+121	34	43	p	introduce
+121	44	54	n	Sci - Cite
+121	59	70	n	new dataset
+121	71	73	p	of
+121	74	90	n	citation intents
+121	91	98	p	that is
+121	99	161	n	significantly larger , more coarse - grained and generaldomain
+121	162	175	p	compared with
+121	176	193	n	existing datasets
+125	3	11	p	consider
+125	12	35	n	three intent categories
+125	50	63	n	BACK - GROUND
+125	66	72	n	METHOD
+125	77	93	n	RESULTCOMPARISON
+128	0	15	n	Citation intent
+128	16	18	p	of
+128	19	39	n	sentence extractions
+128	44	59	p	labeled through
+128	64	86	n	crowdsourcing platform
+142	0	17	n	Citation contexts
+142	23	35	p	annotated by
+142	36	59	n	850 crowdsource workers
+142	64	68	p	made
+142	71	98	n	total of 29,926 annotations
+142	103	120	p	individually made
+142	129	150	n	4 and 240 annotations
+143	5	13	n	sentence
+143	14	17	p	was
+143	18	27	n	annotated
+143	30	40	p	on average
+143	43	53	n	3.74 times
+144	5	16	p	resulted in
+144	19	30	n	total 9,159
+144	31	53	n	crowdsourced instances
+144	65	75	p	divided to
+144	76	104	n	training and validation sets
+144	105	109	p	with
+144	110	114	n	90 %
+144	115	117	p	of
+144	122	126	n	data
+144	127	135	p	used for
+144	140	152	n	training set
+155	3	12	p	implement
+155	17	44	n	proposed scaffold framework
+155	45	50	p	using
+155	55	71	n	AllenNLP library
+156	0	3	p	For
+156	4	24	n	word representations
+156	30	33	p	use
+156	34	65	n	100 - dimensional GloVe vectors
+156	66	76	p	trained on
+156	79	85	n	corpus
+156	86	88	p	of
+156	89	98	n	6B tokens
+156	99	103	p	from
+156	104	126	n	Wikipedia and Gigaword
+157	4	30	n	contextual representations
+157	36	39	p	use
+157	40	52	n	ELMo vectors
+157	65	69	p	with
+157	70	91	n	output dimension size
+157	92	94	p	of
+157	95	100	n	1,024
+157	117	127	p	trained on
+157	130	137	n	dataset
+157	138	140	p	of
+157	141	153	n	5.5 B tokens
+159	4	26	n	each of scaffold tasks
+159	32	35	p	use
+159	38	56	n	single - layer MLP
+159	122	129	p	between
+159	134	157	n	hidden and input layers
+159	57	61	p	with
+159	62	77	n	20 hidden nodes
+159	80	95	n	ReLU activation
+159	102	114	n	Dropout rate
+159	115	117	p	of
+159	118	121	n	0.2
+158	3	6	p	use
+158	9	30	n	single - layer BiLSTM
+158	31	35	p	with
+158	38	59	n	hidden dimension size
+158	60	62	p	of
+158	63	65	n	50
+165	7	13	n	Beaker
+165	17	20	p	for
+165	21	44	n	running the experiments
+164	0	10	n	Batch size
+164	11	13	p	is
+164	14	15	n	8
+164	16	19	p	for
+164	20	37	n	ACL - ARC dataset
+164	42	44	n	32
+164	45	48	p	for
+164	49	64	n	SciCite dataset
+23	17	24	p	propose
+23	27	62	n	neural multitask learning framework
+23	63	77	p	to incorporate
+23	78	87	n	knowledge
+23	88	92	p	into
+23	93	102	n	citations
+23	103	107	p	from
+23	112	142	n	structure of scientific papers
+24	27	46	n	two auxiliary tasks
+24	47	49	p	as
+24	50	70	n	structural scaffolds
+24	71	81	p	to improve
+24	82	108	n	citation intent prediction
+27	43	68	n	neural scaffold framework
+27	69	72	p	for
+27	73	103	n	citation intent classification
+27	104	123	p	to incorporate into
+27	124	133	n	citations
+27	134	143	n	knowledge
+27	144	148	p	from
+27	149	179	n	structure of scientific papers
+26	0	2	p	On
+26	3	15	n	two datasets
+26	21	30	p	show that
+26	35	65	n	proposed neural scaffold model
+26	66	77	p	outperforms
+26	78	94	n	existing methods
+26	95	97	p	by
+26	98	111	n	large margins
+2	25	82	n	Citation Intent Classification in Scientific Publications
+4	0	57	n	Identifying the intent of a citation in scientific papers
+19	42	72	n	citation intent classification
+181	3	10	p	observe
+181	20	46	n	scaffold - enhanced models
+181	47	54	p	achieve
+181	55	73	n	clear improvements
+181	74	78	p	over
+181	83	114	n	state - of - the - art approach
+197	26	33	n	results
+197	34	36	p	on
+197	37	47	n	categories
+197	48	52	p	with
+197	53	77	n	more number of instances
+197	78	81	p	are
+197	82	88	n	higher
+182	0	13	p	Starting with
+182	20	33	n	BiLSTM - Attn
+182	45	49	p	with
+182	52	66	n	macro F1 score
+182	67	69	p	of
+182	70	74	n	51.8
+182	77	83	p	adding
+182	88	153	n	first scaffold task in ' BiLSTM - Attn + section title scaffold '
+182	154	162	p	improves
+182	167	175	n	F1 score
+182	176	178	p	to
+182	179	193	n	56.9 (?= 5.1 )
+183	0	6	p	Adding
+183	11	26	n	second scaffold
+183	27	29	p	in
+183	32	76	n	BiLSTM - Attn + citation worthiness scaffold
+183	84	94	p	results in
+183	95	115	n	similar improvements
+183	118	132	n	56.3 (?= 4.5 )
+192	7	21	n	both scaffolds
+192	22	32	p	results in
+192	33	53	n	further improvements
+184	5	19	n	both scaffolds
+184	24	46	p	used simultaneously in
+184	49	79	n	BiLSTM - Attn + both scaffolds
+184	88	96	n	F1 score
+184	105	116	p	improves to
+184	117	133	n	63.1 ( ?= 11.3 )
+185	41	44	p	add
+185	45	57	n	ELMo vectors
+185	58	60	p	to
+185	65	86	n	input representations
+185	87	89	p	in
+185	92	131	n	BiLSTM - Attn w / ELMo + both scaffolds
+185	136	145	p	achieving
+185	149	151	n	F1
+185	152	154	p	of
+185	155	159	n	67.9
+185	164	181	n	major improvement
+185	182	186	p	from
+185	191	230	n	previous state - of - the - art results
+185	231	233	p	of
+185	234	250	n	54.6 ( ?= 13.3 )
+193	8	20	n	best results
+193	34	42	p	by using
+193	43	62	n	ELMo representation
+193	63	77	p	in addition to
+193	78	92	n	both scaffolds
+191	0	18	n	Each scaffold task
+191	19	27	p	improves
+191	28	45	n	model performance
+186	3	7	p	note
+186	17	31	n	scaffold tasks
+186	32	39	p	provide
+186	40	59	n	major contributions
+186	60	69	p	on top of
+186	74	109	n	ELMo - enabled baseline ( ?= 13.6 )
+188	8	25	p	experimented with
+188	26	41	n	adding features
+188	42	49	p	used in
+188	53	67	n	our best model
+188	122	130	p	observed
+188	131	153	n	at least 1.7 % decline
+188	154	156	p	in
+188	157	168	n	performance
+198	12	14	p	on
+198	15	24	n	ACL - ARC
+198	31	38	n	results
+198	39	41	p	on
+198	46	65	n	BACKGROUND category
+198	66	69	p	are
+198	74	81	n	highest
+198	82	84	p	as
+198	90	98	n	category
+198	99	101	p	is
+198	106	117	n	most common
+199	32	51	n	FUTUREWORK category
+199	52	55	p	are
+199	60	66	n	lowest
+200	22	40	n	fewest data points
+200	87	91	p	thus
+200	98	104	n	harder
+200	105	108	p	for
+200	113	118	n	model
+200	119	127	p	to learn
+200	132	150	n	optimal parameters
+200	151	154	p	for
+200	155	177	n	correct classification

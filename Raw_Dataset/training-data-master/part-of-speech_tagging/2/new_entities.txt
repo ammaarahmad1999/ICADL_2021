@@ -1,0 +1,115 @@
+25	3	10	p	present
+25	13	39	n	transfer learning approach
+25	40	48	p	based on
+25	51	93	n	deep hierarchical recurrent neural network
+25	177	184	p	between
+25	189	220	n	source task and the target task
+25	102	108	p	shares
+25	113	143	n	hidden feature repre-sentation
+25	148	176	n	part of the model parameters
+26	58	62	p	uses
+26	63	87	n	gradient - based methods
+26	88	91	p	for
+26	92	110	n	efficient training
+11	23	60	n	https://github.com/kimiyoung/transfer
+132	0	29	n	TRANSFER LEARNING PERFORMANCE
+134	77	80	p	set
+134	85	114	n	character embedding dimension
+134	115	117	p	at
+134	118	120	n	25
+134	127	151	n	word embedding dimension
+134	152	154	p	at
+134	155	157	n	50
+134	27	30	p	for
+134	162	169	n	English
+134	174	176	n	64
+134	158	161	p	for
+134	181	188	n	Spanish
+134	195	204	n	dimension
+134	205	207	p	of
+134	208	221	n	hidden states
+134	222	224	p	of
+134	229	251	n	character - level GRUs
+134	252	254	p	at
+134	255	257	n	80
+134	298	315	n	word - level GRUs
+134	316	318	p	at
+134	319	322	n	300
+134	333	354	n	initial learning rate
+134	355	357	p	at
+134	358	362	n	0.01
+146	26	56	n	our transfer learning approach
+146	61	84	n	improve the performance
+146	85	87	p	on
+146	88	115	n	Twitter POS tagging and NER
+146	116	119	p	for
+146	120	138	n	all labeling rates
+146	149	161	n	improvements
+146	162	166	p	with
+146	167	177	n	0.1 labels
+146	178	181	p	are
+146	182	195	n	more than 8 %
+146	196	199	p	for
+146	200	213	n	both datasets
+147	0	28	n	Cross - application transfer
+147	34	42	p	leads to
+147	43	66	n	substantial improvement
+147	67	72	p	under
+147	73	98	n	low - resource conditions
+142	7	15	p	see that
+142	20	46	n	transfer learning approach
+142	47	68	n	consistently improved
+142	69	73	p	over
+142	78	98	n	non-transfer results
+143	8	20	p	observe that
+143	25	36	n	improvement
+143	37	39	p	by
+143	40	57	n	transfer learning
+143	58	60	p	is
+143	61	77	n	more substantial
+143	78	82	p	when
+143	87	100	n	labeling rate
+143	101	103	p	is
+143	104	109	n	lower
+157	0	46	n	COMPARISON WITH STATE - OF - THE - ART RESULTS
+160	3	6	p	use
+160	7	52	n	publicly available pretrained word embeddings
+160	53	55	p	as
+160	56	70	n	initialization
+161	0	2	p	On
+161	7	23	n	English datasets
+161	90	105	p	experiment with
+161	115	148	n	50 - dimensional SENNA embeddings
+161	157	191	n	100 - dimensional GloVe embeddings
+161	196	199	p	use
+161	204	219	n	development set
+161	220	229	p	to choose
+161	234	244	n	embeddings
+161	245	248	p	for
+161	249	277	n	different tasks and settings
+162	0	3	p	For
+162	4	21	n	Spanish and Dutch
+162	27	30	p	use
+162	35	71	n	64 - dimensional Polyglot embeddings
+163	3	6	p	set
+163	11	34	n	hidden state dimensions
+163	35	40	p	to be
+163	41	44	n	300
+163	45	48	p	for
+163	53	69	n	word - level GRU
+164	4	25	n	initial learning rate
+164	26	29	p	for
+164	30	37	n	AdaGrad
+164	41	49	p	fixed at
+164	50	54	n	0.01
+171	12	38	n	transfer learning approach
+171	39	47	p	achieves
+171	48	82	n	new state - of - the - art results
+171	83	85	p	on
+171	86	123	n	all the considered benchmark datasets
+172	9	40	n	our base model ( w/o transfer )
+172	41	49	p	performs
+172	50	63	n	competitively
+172	64	75	p	compared to
+172	80	110	n	state - of - the - art systems
+2	22	38	n	SEQUENCE TAGGING

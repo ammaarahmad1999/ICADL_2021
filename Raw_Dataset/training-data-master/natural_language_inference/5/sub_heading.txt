@@ -1,0 +1,13 @@
+title
+abstract
+INTRODUCTION
+RELATED WORK
+METHODS
+Comp-Clip Model
+Proposed Approaches
+EMPIRICAL RESULTS
+Dataset
+Implementation Details
+Comparison with Other Methods
+Impact of Latent Clustering
+CONCLUSION

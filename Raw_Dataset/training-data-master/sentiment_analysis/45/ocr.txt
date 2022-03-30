@@ -1,0 +1,551 @@
+mmm mm mmm mm mmm
+
+arXiv: 1903.09588v1 [cs.CL] 22 Mar 2019
+
+Utilizing BERT for Aspect-Based Sentiment Analysis
+via Constructing Auxiliary Sentence
+
+Chi Sun, Luyao Huang, Xipeng Qiu*
+Shanghai Key Laboratory of Intelligent Information Processing, Fudan University
+School of Computer Science, Fudan University
+825 Zhangheng Road, Shanghai, China
+{suncl17, lyhuang18, xpqiu}@fudan.edu.cn
+
+Abstract
+
+Aspect-based sentiment analysis (ABSA),
+which aims to identify fine-grained opinion
+polarity towards a specific aspect, is a challenging subtask of sentiment analysis (SA).
+In this paper, we construct an auxiliary sentence from the aspect and convert ABSA to a
+sentence-pair classification task, such as question answering (QA) and natural language inference (NLI). We fine-tune the pre-trained
+model from BERT and achieve new state-ofthe-art results on SentiHood and SemEval2014 Task 4 datasets.!
+
+1 Introduction
+
+Sentiment analysis (SA) is an important task in
+natural language processing. It solves the computational processing of opinions, emotions, and
+subjectivity - sentiment is collected, analyzed and
+summarized. It has received much attention not
+only in academia but also in industry, providing real-time feedback through online reviews on
+websites such as Amazon, which can take advantage of customers’ opinions on specific products or
+services. The underlying assumption of this task is
+that the entire text has an overall polarity.
+
+However, the users’ comments may contain different aspects, such as: “This book is a hardcover
+version, but the price is a bit high.” The polarity in
+‘appearance’ is positive, and the polarity regarding
+‘price’ is negative. Aspect-based sentiment analysis (ABSA) (Jo and Oh, 2011; Pontiki et al., 2014,
+2015, 2016) aims to identify fine-grained polarity
+towards a specific aspect. This task allows users to
+evaluate aggregated sentiments for each aspect of
+a given product or service and gain a more granular understanding of their quality.
+
+“Corresponding author.
+'The source codes are available at
+https://github.com/HSLCY/ABSA-BERT-pair
+
+Both SA and ABSA are sentence-level or
+document-level tasks, but one comment may refer to more than one object, and sentence-level
+tasks cannot handle sentences with multiple targets. Therefore, Saeidi et al. (2016) introduce
+the task of targeted aspect-based sentiment analysis (TABSA), which aims to identify fine-grained
+opinion polarity towards a specific aspect associated with a given target. The task can be divided
+into two steps: (1) the first step is to determine the
+aspects associated with each target; (2) the second
+step is to resolve the polarity of aspects to a given
+target.
+
+The earliest work on (T)ABSA relied heavily on feature engineering (Wagner et al., 2014;
+Kiritchenko et al., 2014), and subsequent neural network-based methods (Nguyen and Shirai,
+2015; Wang et al., 2016; Tang et al., 2015, 2016;
+Wang et al., 2017) achieved higher accuracy. Recently, Ma et al. (2018) incorporate useful commonsense knowledge into a deep neural network to further enhance the result of the model.
+Liu et al. (2018) optimize the memory network
+and apply it to their model to better capture linguistic structure.
+
+More recently, the pre-trained language models,
+such as ELMo (Peters et al., 2018), OpenAI GPT
+(Radford et al., 2018), and BERT (Devlin et al.,
+2018), have shown their effectiveness to alleviate the effort of feature engineering. Especially,
+BERT has achieved excellent results in QA and
+NLI. However, there is not much improvement
+in (T)ABSA task with the direct use of the pretrained BERT model (see Table 3). We think this
+is due to the inappropriate use of the pre-trained
+BERT model.
+
+Since the input representation of BERT can represent both a single text sentence and a pair of
+text sentences, we can convert (T)ABSA into a
+sentence-pair classification task and fine-tune the
+pre-trained BERT.
+
+In this paper, we investigate several methods
+of constructing an auxiliary sentence and transform (T)ABSA into a sentence-pair classification
+task. We fine-tune the pre-trained model from
+BERT and achieve new state-of-the-art results on
+(T)ABSA task. We also conduct a comparative experiment to verify that the classification based on
+a sentence-pair is better than the single-sentence
+classification with fine-tuned BERT, which means
+that the improvement is not only from BERT but
+also from our method. In particular, our contribution is two-fold:
+
+1. We propose a new solution of (T)ABSA by
+converting it to a sentence-pair classification task.
+
+2. We fine-tune the pre-trained BERT model
+and achieve new state-of-the-art results on SentiHood and SemEval-2014 Task 4 datasets.
+
+2 Methodology
+In this section, we describe our method in detail.
+
+2.1 Task description
+TABSA_ In TABSA, a sentence s usually con
+sists of a series of words: {wyj,--- ,wWm)},
+and some of the words {wj,,--:,w;,} are
+pre-identified targets {t,,---,t,}, following
+
+Saeidi et al. (2016), we set the task as a 3class classification problem: given the sentence s, a set of target entities 7’ and a
+fixed aspect set A = {general, price, transitlocation, safety}, predict the sentiment polarity
+y © {positive, negative, none} over the full set
+of the target-aspect pairs {(t,a) :t € T,a € A}.
+As we can see in Table 1, the gold standard polarity of (LOCATION2, price) is negative, while the
+polarity of (LOCATION I], price) is none.
+
+ABSA In ABSA, the target-aspect pairs {t, a}
+become only aspects a. This setting is equivalent to learning subtasks 3 (Aspect Category Detection) and subtask 4 (Aspect Category Polarity)
+of SemEval-2014 Task 4? at the same time.
+
+2.2 Construction of the auxiliary sentence
+
+For simplicity, we mainly describe our method
+with TABSA as an example.
+
+We consider the following four methods to convert the TABSA task into a sentence pair classification task:
+
+*http://alt.qcri.org/semeval2014/task4/
+
+Example:
+LOCATION2 is central London so extremely expensive, LOCATIONI is often considered the
+
+coolest area of London.
+
+Target Aspect Sentiment
+LOC1 general Positive
+LOCI price None
+LOC1 safety None
+LOCI transit-location None
+LOC2 general None
+LOC2 price Negative
+LOC2 safety None
+LOC2 transit-location Positive
+
+Table 1: An example of SentiHood dataset.
+
+Methods Output Auxiliary Sentence
+QA-M S.P. Question w/o S.P.
+NLI-M S.P. Pseudo-sentence w/o S.P.
+QA-B ____{yes,no} Question w/ S.P.
+NLI-B — {yes,no} _Pseudo-sentence w/ S.P.
+
+Table 2: The construction methods. Due to limited
+space, we use the following abbreviations: S.P. for sentiment polarity, w/o for without, and w/ for with.
+
+Sentences for QA-M_ The sentence we want to
+generate from the target-aspect pair is a question,
+and the format needs to be the same. For example,
+for the set of a target-aspect pair (LOCATION 1,
+safety), the sentence we generate is “what do you
+think of the safety of location - 1 ?”
+
+Sentences for NLI-M_ For the NLI task, the conditions we set when generating sentences are less
+strict, and the form is much simpler. The sentence created at this time is not a standard sentence, but a simple pseudo-sentence, with (LOCATION], safety) pair as an example: the auxiliary
+sentence is: “location - | - safety”.
+
+Sentences for QA-B For QA-B, we add the label information and temporarily convert TABSA
+into a binary classification problem (label €
+{yes,no}) to obtain the probability distribution.
+At this time, each target-aspect pair will generate three sequences such as “the polarity of the
+aspect safety of location - | is positive’, “the
+polarity of the aspect safety of location - | is
+negative”, “the polarity of the aspect safety of
+location - 1 is none”. We use the probability value of yes as the matching score. For a
+target-aspect pair which generates three sequences
+(positive, negative, none), we take the class of
+the sequence with the highest matching score for
+the predicted category.
+
+Sentences for NLI-B The difference between
+NLI-B and QA-B is that the auxiliary sentence
+changes from a question to a pseudo-sentence.
+The auxiliary sentences are: “location - | - safety
+- positive’, “location - | - safety - negative’, and
+“location - | - safety - none”.
+
+After we construct the auxiliary sentence, we
+can transform the TABSA task from a single sentence classification task to a sentence pair classification task. As shown in Table 3, this is a necessary operation that can significantly improve the
+experimental results of the TABSA task.
+
+2.3 Fine-tuning pre-trained BERT
+
+BERT (Devlin et al., 2018) is a new language representation model, which uses bidirectional transformers to pre-train a large corpus, and fine-tunes
+the pre-trained model on other tasks. We finetune the pre-trained BERT model on TABSA task.
+Let’s take a brief look at the input representation
+and the fine-tuning procedure.
+
+2.3.1 Input representation
+
+The input representation of the BERT can explicitly represent a pair of text sentences in a sequence
+of tokens. For a given token, its input representation is constructed by summing the corresponding token, segment, and position embeddings. For
+classification tasks, the first word of each sequence
+is a unique classification embedding ([CLS]).
+
+2.3.2 Fine-tuning procedure
+
+BERT fine-tuning is straightforward. To obtain a
+fixed-dimensional pooled representation of the input sequence, we use the final hidden state (i.e.,
+the output of the transformer) of the first token
+as the input. We denote the vector as C € R”.
+Then we add a classification layer whose parameter matrix is W ¢ R**#, where K is the number of categories. Finally, the probability of each
+category P is calculated by the softmax function
+P = softmax(CW’7°).
+
+2.3.3. BERT-single and BERT-pair
+
+BERT-single for (T)ABSA BERT for single
+sentence classification tasks. Suppose the number
+of target categories are mn; and aspect categories
+
+are N_. We consider TABSA as a combination
+of nz - Ng target-aspect-related sentiment classification problems, first classifying each sentiment
+classification problem, and then summarizing the
+results obtained. For ABSA, We fine-tune pretrained BERT model to train n, classifiers for all
+aspects and then summarize the results.
+
+BERT-pair for (T)ABSA BERT for sentence
+pair classification tasks. Based on the auxillary sentence constructed in Section 2.2, we use
+the sentence-pair classification approach to solve
+(T)ABSA. Corresponding to the four ways of constructing sentences, we name the models: BERTpair-QA-M, BERT-pair-NLI-M, BERT-pair-QAB, and BERT-pair-NLI-B.
+
+3 Experiments
+
+3.1 Datasets
+
+We evaluate our method on the SentiHood
+(Saeidi et al., 2016) dataset*, which consists of
+5,215 sentences, 3,862 of which contain a single
+target, and the remainder multiple targets. Each
+sentence contains a list of target-aspect pairs {t, a}
+with the sentiment polarity y. Ultimately, given a
+sentence s and the target ¢ in the sentence, we need
+to:
+
+(1) detect the mention of an aspect a for the target f;
+
+(2) determine the positive or negative sentiment
+polarity y for detected target-aspect pairs.
+
+We also evaluate our method on SemEval-2014
+Task 4 (Pontiki et al., 2014) dataset* for aspectbased sentiment analysis. The only difference
+from the SentiHood is that the target-aspect pairs
+{t,a} become only aspects a. This setting allows
+us to jointly evaluate subtask 3 (Aspect Category
+Detection) and subtask 4 (Aspect Category Polar
+ity).
+3.2 Hyperparameters
+
+We use the pre-trained uncased BERT-base
+model? for fine-tuning. The number of Transformer blocks is 12, the hidden layer size is
+768, the number of self-attention heads is 12,
+and the total number of parameters for the pretrained model is 110M. When fine-tuning, we keep
+
+>Dataset mirror: https://github.com/uclmr/jack/tree/master
+/data/sentihood
+
+*http://alt.qcri.org/semeval2014/task4/
+
+*https://storage.googleapis.com/bert_models/2018_10_18/
+uncased_L-12_H-768_A-12.zip
+Model
+
+LR (Saeidi et al., 2016)
+LSTM-Final (Saeidi et al., 2016)
+LSTM-Loc (Saeidi et al., 2016)
+LSTM+TA+SA (Ma et al., 2018)
+SenticLSTM (Ma et al., 2018)
+Dmu-Entnet (Liu et al., 2018)
+
+BERT-single
+BERT-pair-QA-M
+BERT-pair-NLI-M
+BERT-pair-QA-B
+BERT-pair-NLI-B
+
+Aspect Sentiment
+
+Acc. F;, AUC Acc. AUC
+
+- 39.3 92.4 87.5 90.5
+
+- 68.9 89.8 82.0 85.4
+
+- 69.3 89.7 81.9 83.9
+66.4 76.7 - 86.8 67.4 78.2 - 89.3 73.5. 78.5 94.4 91.0 94.8
+73.7 81.0 96.4 85.5 84.2
+79.4 86.4 97.0 93.6 96.4
+78.3 87.0 97.5 92.1 96.5
+79.2 87.9 97.1 93.3 97.0
+79.8 87.5 96.6 92.8 96.9
+
+Table 3: Performance on SentiHood dataset. We boldface the score with the best performance across all models.
+We use the results reported in Saeidi et al. (2016), Ma et al. (2018) and Liu et al. (2018). “-” means not reported.
+
+the dropout probability at 0.1, set the number of
+epochs to 4. The initial learning rate is 2e-5, and
+the batch size is 24.
+
+3.3. Exp-I: TABSA
+
+We compare our model with the following models:
+
+e LR (Saeidi et al., 2016): a logistic regression
+classifier with n-gram and pos-tag features.
+
+e LSTM-Final (Saeidi et al., 2016): a biLSTM
+model with the final state as a representation.
+
+e LSTM-Loc (Saeidi et al., 2016): a biLSTM
+model with the state associated with the target position as a representation.
+
+e LSTM+TA+SA (Ma et al., 2018): a biLSTM
+model which introduces complex target-level
+and sentence-level attention mechanisms.
+
+e SenticLSTM (Ma et al., 2018): an upgraded
+version of the LSTM+TA+SA model which
+introduces external information from SenticNet (Cambria et al., 2016).
+
+e Dmu-Entnet (Liuvetal., 2018): a bidirectional EntNet (Henaff et al., 2016) with
+external “memory chains” with a delayed
+memory update mechanism to track entities.
+
+During the evaluation of SentiHood, following
+Saeidi et al. (2016), we only consider the four
+most frequently seen aspects (general, price,
+transit-location, safety). When evaluating the aspect detection, following Ma et al. (2018), we use
+
+strict accuracy and Macro-F1, and we also report
+AUC. In sentiment classification, we use accuracy
+and macro-average AUC as the evaluation indices.
+
+3.3.1 Results
+
+Results on SentiHood are presented in Table 3.
+The results of the BERT-single model on aspect
+detection are better than Dmu-Entnet, but the accuracy of sentiment classification is much lower
+than that of both SenticLstm and Dmu-Entnet,
+with a difference of 3.8 and 5.5 respectively.
+
+However, BERT-pair outperforms other models
+on aspect detection and sentiment analysis by a
+substantial margin, obtaining 9.4 macro-average
+Fl and 2.6 accuracies improvement over DmuEntnet. Overall, the performance of the four
+BERT-pair models is close. It is worth noting that
+BERT-pair-NLI models perform relatively better
+on aspect detection, while BERT-pair-QA models
+perform better on sentiment classification. Also,
+the BERT-pair-QA-B and BERT-pair-NLI-B models can achieve better AUC values on sentiment
+classification than the other models.
+
+3.4 Exp-II: ABSA
+
+The benchmarks for SemEval-2014 Task 4 are
+the two best performing systems in Pontiki et al.
+(2014) and ATAE-LSTM (Wang etal., 2016).
+When evaluating SemEval-2014 Task 4 subtask 3
+and subtask 4, following Pontiki et al. (2014), we
+use Micro-F1 and accuracy respectively.
+Models P R Fl
+
+XRCE 83.23 81.37 82.29
+NRC-Canada 91.04 86.24 88.58
+BERT-single 92.78 89.07 90.89
+BERT-pair-QA-M 92.87 90.24 991.54
+BERT-pair-NLI-M 93.15 90.24 91.67
+BERT-pair-QA-B =: 93.04 89.95 91.47
+BERT-pair-NLI-B 93.57 90.83 92.18
+
+Table 4: Test set results for Semeval-2014 task 4 Subtask 3: Aspect Category Detection. We use the results
+reported in XRCE (Brun et al., 2014) and NRC-Canada
+(Kiritchenko et al., 2014).
+
+Models 4-way 3-way Binary
+XRCE 78.1 - NRC-Canada 82.9 - LSTM - 82.0 88.3
+ATAE-LSTM - 84.0 89.9
+BERT-single 83.7 86.9 93.3
+BERT-pair-QA-M 85.2 89.3 95.4
+BERT-pair-NLI-M 85.1 88.7 94.4
+BERT-pair-QA-B 85.9 89.9 95.6
+BERT-pair-NLI-B  — 84.6 88.7 95.1
+
+Table 5: Test set accuracy (%) for Semeval-2014 task
+4 Subtask 4: Aspect Category Polarity. We use the
+results reported in XRCE (Brun et al., 2014), NRCCanada (Kiritchenko et al., 2014) and ATAE-LSTM
+(Wang et al., 2016). “-” means not reported.
+
+3.4.1 Results
+
+Results on SemEval-2014 are presented in Table 4 and Table 5. We find that BERT-single
+has achieved better results on these two subtasks,
+and BERT-pair has achieved further improvements
+over BERT-single. The BERT-pair-NLI-B model
+achieves the best performance for aspect category
+detection. For aspect category polarity, BERTpair-QA-B performs best on all 4-way, 3-way, and
+binary settings.
+
+4 Discussion
+
+Why is the experimental result of the BERT-pair
+model so much better? On the one hand, we
+convert the target and aspect information into an
+auxiliary sentence, which is equivalent to exponentially expanding the corpus. A sentence s;
+in the original data set will be expanded into
+
+(s;,t1,€@1),°°° , (Si, t1, Ang), °° , (Si, trp; Ang) in
+
+the sentence pair classification task. On the other
+hand, it can be seen from the amazing improvement of the BERT model on the QA and NLI tasks
+(Devlin et al., 2018) that the BERT model has an
+advantage in dealing with sentence pair classification tasks. This advantage comes from both unsupervised masked language model and next sentence prediction tasks.
+
+TABSA is more complicated than SA due to additional target and aspect information. Directly
+fine-tuning the pre-trained BERT on TABSA does
+not achieve performance growth. However, when
+we separate the target and the aspect to form an
+auxiliary sentence and transform the TABSA into
+a sentence pair classification task, the scenario is
+similar to QA and NLI, and then the advantage of
+the pre-trained BERT model can be fully utilized.
+Our approach is not limited to TABSA, and this
+construction method can be used for other similar
+tasks. For ABSA, we can use the same approach to
+construct the auxiliary sentence with only aspects.
+
+In BERT-pair models, BERT-pair-QA-B and
+BERT-pair-NLI-B achieve better AUC values on
+sentiment classification, probably because of the
+modeling of label information.
+
+5 Conclusion
+
+In this paper, we constructed an auxiliary sentence to transform (T)ABSA from a single sentence classification task to a sentence pair classification task. We fine-tuned the pre-trained
+BERT model on the sentence pair classification
+task and obtained the new state-of-the-art results.
+We compared the experimental results of single
+sentence classification and sentence pair classification based on BERT fine-tuning, analyzed the
+advantages of sentence pair classification, and verified the validity of our conversion method. In the
+future, we will apply this conversion method to
+other similar tasks.
+
+Acknowledgments
+
+We would like to thank the anonymous reviewers for their valuable comments. The research work is supported by Shanghai Municipal Science and Technology Commission (No.
+16JC1420401 and 17JC1404100), National Key
+Research and Development Program of China
+(No. 2017YFB1002104), and National Natural
+Science Foundation of China (No. 61672162 and
+61751201).
+References
+
+Caroline Brun, Diana Nicoleta Popa, and Claude Roux.
+2014. Xrce: Hybrid classification for aspect-based
+sentiment analysis. In Proceedings of the 8th International Workshop on Semantic Evaluation (SemEval 2014), pages 838-842.
+
+Erik Cambria, Soujanya Poria, Rajiv Bajpai, and Bjorn
+Schuller. 2016. Senticnet 4: A semantic resource for
+sentiment analysis based on conceptual primitives.
+In Proceedings of COLING 2016, the 26th International Conference on Computational Linguistics:
+Technical Papers, pages 2666-2677.
+
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and
+Kristina Toutanova. 2018. Bert: Pre-training of deep
+bidirectional transformers for language understanding. arXiv preprint arXiv: 1810.04805.
+
+Mikael Henaff, Jason Weston, Arthur Szlam, Antoine
+Bordes, and Yann LeCun. 2016. Tracking the world
+state with recurrent entity networks. arXiv preprint
+arXiv: 1612.03969.
+
+Yohan Jo and Alice H Oh. 2011. Aspect and sentiment unification model for online review analysis.
+In Proceedings of the fourth ACM international con
+ference on Web search and data mining, pages 815—
+824. ACM.
+
+Svetlana Kiritchenko, Xiaodan Zhu, Colin Cherry, and
+Saif Mohammad. 2014. Nrce-canada-2014: Detecting aspects and sentiment in customer reviews. In
+Proceedings of the 8th International Workshop on
+Semantic Evaluation (SemEval 2014), pages 437—
+442.
+
+Fei Liu, Trevor Cohn, and Timothy Baldwin. 2018. Recurrent entity networks with delayed memory update
+for targeted aspect-based sentiment analysis. arXiv
+preprint arXiv: 1804.11019.
+
+Yukun Ma, Haiyun Peng, and Erik Cambria. 2018.
+Targeted aspect-based sentiment analysis via embedding commonsense knowledge into an attentive
+Istm. In Proceedings of AAAI.
+
+Thien Hai Nguyen and Kiyoaki Shirai. 2015.
+Phrasernn: Phrase recursive neural network for
+aspect-based sentiment analysis. In Proceedings of
+the 2015 Conference on Empirical Methods in Natural Language Processing, pages 2509-2514.
+
+Matthew E Peters, Mark Neumann, Mohit lyyer, Matt
+Gardner, Christopher Clark, Kenton Lee, and Luke
+Zettlemoyer. 2018. Deep contextualized word representations. arXiv preprint arXiv: 1802.05365.
+
+Maria Pontiki, Dimitris Galanis, Haris Papageorgiou, lon Androutsopoulos, Suresh Manandhar, ALSmadi Mohammad, Mahmoud Al-Ayyoub, Yanyan
+Zhao, Bing Qin, Orphée De Clercq, et al. 2016.
+Semeval-2016 task 5: Aspect based sentiment analysis. In Proceedings of the 10th international workshop on semantic evaluation (SemEval-2016), pages
+19-30.
+
+Maria Pontiki, Dimitris Galanis, Haris Papageorgiou,
+Suresh Manandhar, and Ion Androutsopoulos. 2015.
+Semeval-2015 task 12: Aspect based sentiment analysis. In Proceedings of the 9th International Workshop on Semantic Evaluation (SemEval 2015), pages
+486-495.
+
+Maria Pontiki, Dimitris Galanis, John Pavlopoulos, Harris Papageorgiou, Jon Androutsopoulos, and Suresh Manandhar. 2014.
+
+Semeval-2014 task 4: Aspect based sentiment analysis.
+
+In Proceedings of the 8th International Workshop
+on Semantic Evaluation (SemEval 2014), pages
+27-35. Association for Computational Linguistics.
+
+Alec Radford, Karthik Narasimhan, Tim Salimans, and Ilya Sutskever. 2018. Improving language understanding by generative pretraining. URL https://s3-us-west-2. amazonaws. com/openati-assets/research-covers/languageunsupervised/language_ understanding paper. pdf.
+
+Marzieh Saeidi, Guillaume Bouchard, Maria Liakata,
+and Sebastian Riedel. 2016. Sentihood: targeted
+aspect based sentiment analysis dataset for urban
+neighbourhoods. arXiv preprint arXiv: 1610.03771.
+
+Duyu Tang, Bing Qin, Xiaocheng Feng, and
+Ting Liu. 2015. Effective Istms for targetdependent sentiment classification. arXiv preprint
+arXiv: 1512.01100.
+
+Duyu Tang, Bing Qin, and Ting Liu. 2016. Aspect
+level sentiment classification with deep memory network. arXiv preprint arXiv: 1605.08900.
+
+Joachim Wagner, Piyush Arora, Santiago Cortes, Utsab
+Barman, Dasha Bogdanova, Jennifer Foster, and
+Lamia Tounsi. 2014. Dcu: Aspect-based polarity
+classification for semeval task 4. In Proceedings of
+the Sth international workshop on semantic evaluation (SemEval 2014), pages 223-229.
+
+Bo Wang, Maria Liakata, Arkaitz Zubiaga, and Rob
+Procter. 2017. Tdparse: Multi-target-specific sentiment recognition on twitter. In Proceedings of the
+15th Conference of the European Chapter of the Association for Computational Linguistics: Volume 1,
+Long Papers, volume 1, pages 483-493.
+
+Yequan Wang, Minlie Huang, Li Zhao, et al. 2016.
+Attention-based Istm for aspect-level sentiment classification. In Proceedings of the 2016 conference on
+empirical methods in natural language processing,
+
+pages 606-615.
+

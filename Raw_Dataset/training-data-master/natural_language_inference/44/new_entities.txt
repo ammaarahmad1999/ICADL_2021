@@ -1,0 +1,116 @@
+110	59	77	n	SQuAD and New s QA
+110	92	100	n	selector
+110	101	112	n	outperforms
+110	113	168	n	TF - IDF method and the previous state - of - the - art
+110	169	171	p	by
+110	172	184	n	large margin
+110	187	192	p	up to
+110	193	202	n	2.9 % MAP
+111	13	38	n	three training techniques
+111	41	56	n	weight transfer
+111	59	76	n	data modification
+111	81	100	n	score normalization
+111	103	110	p	improve
+111	111	122	n	performance
+111	123	125	p	by
+111	126	141	n	up to 5.6 % MAP
+112	14	24	n	Dyn method
+112	25	33	p	achieves
+112	34	49	n	higher accuracy
+112	50	54	p	with
+112	55	69	n	less sentences
+112	70	74	p	than
+112	79	91	n	Top k method
+116	0	2	p	On
+116	3	10	n	News QA
+116	13	18	n	Top 4
+116	19	27	p	achieves
+116	28	41	n	92.5 accuracy
+116	52	55	n	Dyn
+116	56	64	p	achieves
+116	65	78	n	94.6 accuracy
+116	79	83	p	with
+116	84	109	n	3.9 sentences per example
+121	3	8	n	SQuAD
+121	11	21	n	S - Reader
+121	70	72	p	on
+121	73	78	n	SQuAD
+121	22	30	p	achieves
+121	62	69	n	speedup
+121	31	43	n	6.7 training
+121	48	61	n	3.6 inference
+121	128	135	n	News QA
+121	117	124	n	speedup
+121	85	98	n	15.0 training
+121	103	116	n	6.9 inference
+153	0	26	n	Trivia QA and SQuAD - Open
+171	3	15	p	compare with
+171	59	74	n	TF - IDF method
+171	79	99	n	our selector ( Dyn )
+172	21	47	n	published Rank1 - 3 models
+173	75	85	n	MINI - MAL
+173	86	93	p	obtains
+173	94	110	n	higher F1 and EM
+173	111	115	p	over
+173	116	120	n	FULL
+174	13	18	n	model
+174	19	23	p	with
+174	24	45	n	our sentence selector
+174	46	50	p	with
+174	51	54	n	Dyn
+174	55	63	p	achieves
+174	64	80	n	higher F1 and EM
+174	81	85	p	over
+174	90	95	n	model
+174	96	100	p	with
+174	101	118	n	TF - IDF selector
+176	11	22	n	outperforms
+176	37	59	n	state - of - the - art
+176	60	62	p	on
+176	63	75	n	both dataset
+177	0	19	n	SQuAD - Adversarial
+181	8	13	p	shows
+181	19	26	n	MINIMAL
+181	27	38	n	outperforms
+181	39	43	n	FULL
+181	46	55	p	achieving
+181	60	86	n	new state - of - the - art
+181	87	89	p	by
+181	90	102	n	large margin
+181	105	125	n	+ 11.1 and + 11.5 F1
+181	126	128	p	on
+181	129	152	n	AddSent and Add OneSent
+20	26	33	p	develop
+20	36	45	n	QA system
+20	54	65	p	scalable to
+20	66	81	n	large documents
+20	93	102	p	robust to
+20	103	121	n	adversarial inputs
+21	11	16	p	study
+21	21	28	n	context
+21	29	40	p	required to
+21	41	60	n	answer the question
+21	61	72	p	by sampling
+21	73	81	n	examples
+21	82	84	p	in
+21	89	96	n	dataset
+24	43	50	p	propose
+24	53	70	n	sentence selector
+24	71	80	p	to select
+24	85	109	n	minimal set of sentences
+24	110	117	p	to give
+24	125	133	n	QA model
+24	143	152	p	to answer
+24	157	165	n	question
+25	86	93	p	chooses
+25	96	125	n	different number of sentences
+25	126	129	p	for
+25	130	143	n	each question
+26	22	31	p	leverages
+26	32	55	n	three simple techniques
+26	58	73	n	weight transfer
+26	76	93	n	data modification
+26	98	117	n	score normalization
+2	21	39	n	Question Answering
+4	18	43	n	question answering ( QA )
+8	125	127	n	QA

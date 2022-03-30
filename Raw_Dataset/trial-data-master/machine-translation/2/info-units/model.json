@@ -1,0 +1,171 @@
+{
+  "has" : {
+    "Model" : {
+      "has" : [
+        {"Encoder and Decoder Stacks" : {
+          "has" : {
+            "Encoder" : {
+              "composed of" : {
+                "stack of N = 6 identical layers" : {
+                  "has" : {
+                    "two sub-layers" : {
+                      "first" : "multi-head self - attention mechanism",
+                      "second" : "simple , positionwise fully connected feed - forward network"
+                      }
+                    }
+                  },
+                  "from sentence" : "Encoder and Decoder Stacks
+Encoder :
+The encoder is composed of a stack of N = 6 identical layers .
+Each layer has two sub-layers .
+The first is a multi-head self - attention mechanism , and the second is a simple , positionwise fully connected feed - forward network ."
+                
+                },
+                "employ" : {
+                  "residual connection" : {
+                    "around" : {
+                      "two sub-layers" : {
+                        "followed by" : "layer normalization"
+                      }
+                    }
+                  },
+                  "from sentence" : "We employ a residual connection around each of the two sub-layers , followed by layer normalization ."
+                }
+            },
+            "Decoder" : {
+              "composed of" : ["stack of N = 6 identical layers", {"from sentence" : "Decoder :
+			  The decoder is also composed of a stack of N = 6 identical layers ."
+			  
+			        }],
+              "inserts" : {
+                "third sub - layer" : {
+                  "performs" : {
+                    "multi-head attention" : {
+                      "over" : "output of the encoder stack"
+                    }
+                  }
+                },
+                "from sentence" : "In addition to the two sub-layers in each encoder layer , the decoder inserts a third sub - layer , which performs multi-head attention over the output of the encoder stack ."
+              },
+              "employ" : {
+                "residual connections" : {
+                  "around" : {
+                    "each of the sub-layers" : {
+                      "followed by" : "layer normalization"      
+                    }
+                  }
+                },
+                "from sentence" : "Similar to the encoder , we employ residual connections around each of the sub-layers , followed by layer normalization ."
+              },
+              "modify" : {
+                "self - attention sub - layer" : {
+                  "in" : {
+                    "decoder stack" : {
+                      "prevent" : "positions from attending to subsequent positions"
+                    }
+                  }
+                },
+                "from sentence" : "We also modify the self - attention sub - layer in the decoder stack to prevent positions from attending to subsequent positions ."
+              }              
+            }
+          }
+        }},
+        {"Attention" : {
+            "described as" : {
+              "mapping a query and a set of key - value pairs" : {
+                "to" : {
+                  "output" : {
+                    "computed as" : {
+                      "weighted sum of the values" : {
+                        "where" : {
+                          "weight assigned to each value" : {
+                            "computed by" : {
+                              "compatibility function of the query" : {
+                                "with" :  "corresponding key"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "from sentence" : "Attention
+An attention function can be described as mapping a query and a set of key - value pairs to an output , where the query , keys , values , and output are all vectors .
+The output is computed as a weighted sum of the values , where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key ."
+
+      }},
+      ["Scaled Dot - Product Attention", {"from sentence" : "Scaled Dot - Product Attention"}], 
+      ["Multi - Head Attention", {"from sentence" : "Multi - Head Attention"}],
+      {"Position - wise Feed - Forward Networks" : {
+        "contains" : {
+          "fully connected feed - forward network" : {
+            "applied to" : {
+              "each position separately and identically" : {
+                "consists" : {
+                  "two linear transformations" : {
+                    "with" : "ReLU activation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "Position - wise Feed - Forward Networks
+In addition to attention sub - layers , each of the layers in our encoder and decoder contains a fully connected feed - forward network , which is applied to each position separately and identically .
+This consists of two linear transformations with a ReLU activation in between ."
+          
+      }},
+      {"Embeddings and Softmax" : {
+        "use" : {
+          "learned embeddings" : {
+            "to convert" : {
+              "input tokens and output tokens" : {
+                  "to" : "vectors of dimension d model"
+                }
+            },
+            "from sentence" : "Embeddings and Softmax
+Similarly to other sequence transduction models , we use learned embeddings to convert the input tokens and output tokens to vectors of dimension d model ."
+
+            },
+            "usual learned linear transformation and softmax function" : {
+              "to convert" : {
+                "decoder output" : {
+                  "to" : "predicted next - token probabilities"
+                }
+              },
+              "from sentence" : "We also use the usual learned linear transformation and softmax function to convert the decoder output to predicted next - token probabilities ."
+            }
+          }
+      }},
+      {"Positional Encoding" : {
+        "inject" : {
+          "some information" : {
+            "about" : {
+              "relative or absolute position" : {
+                "of" : "tokens in the sequence"
+              }
+            }
+          },
+          "from sentence" : "Positional Encoding
+Since our model contains no recurrence and no convolution , in order for the model to make use of the order of the sequence , we must inject some information about the relative or absolute position of the : Maximum path lengths , per-layer complexity and minimum number of sequential operations for different layer types .
+tokens in the sequence ."
+  
+        },
+        "add" : {
+          "positional encodings" : {
+            "to" : {
+              "input embeddings" : {
+                "at the bottoms of" : "encoder and decoder stacks"
+              }
+            }
+          },
+          "from sentence" : "To this end , we add \" positional encodings \" to the input embeddings at the bottoms of the encoder and decoder stacks ."
+        }
+      }}
+      ]
+    }
+  }
+}

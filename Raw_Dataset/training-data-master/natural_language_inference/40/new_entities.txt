@@ -1,0 +1,139 @@
+40	13	20	p	utilize
+40	25	39	n	order inherent
+40	40	42	p	in
+40	51	71	n	unaugmented sequence
+40	72	84	p	to decompose
+40	89	94	n	graph
+40	95	99	p	into
+40	100	136	n	two Directed Acyclic Graphs ( DAGs )
+40	137	141	p	with
+40	144	164	n	topological ordering
+41	3	12	p	introduce
+41	17	78	n	Memory as Acyclic Graph Encoding RNN ( MAGE - RNN ) framework
+41	79	89	p	to compute
+41	94	108	n	representation
+41	109	111	p	of
+41	117	123	n	graphs
+41	124	129	p	while
+41	130	138	n	touching
+41	139	144	p	every
+41	145	149	n	node
+41	150	159	n	only once
+41	166	175	p	implement
+41	178	189	n	GRU version
+41	196	202	p	called
+41	203	213	n	MAGE - GRU
+42	0	10	n	MAGE - RNN
+42	11	17	p	learns
+42	18	42	n	separate representations
+42	43	46	p	for
+42	47	58	n	propagation
+42	59	64	p	along
+42	65	79	n	each edge type
+42	88	96	p	leads to
+42	97	129	n	superior performance empirically
+44	3	6	p	use
+44	7	17	n	MAGE - RNN
+44	18	26	p	to model
+44	27	48	n	coreference relations
+44	49	52	p	for
+44	53	77	n	text comprehension tasks
+44	80	85	p	where
+44	86	104	n	answers to a query
+44	105	130	p	have to be extracted from
+44	133	149	n	context document
+45	0	6	n	Tokens
+45	7	9	p	in
+45	12	20	n	document
+45	25	37	p	connected by
+45	40	60	n	coreference relation
+45	61	63	p	if
+45	69	74	n	refer
+45	75	77	p	to
+45	82	104	n	same underlying entity
+2	35	60	n	Recurrent Neural Networks
+4	0	66	n	Training recurrent neural networks to model long term dependencies
+171	0	11	n	Story Based
+182	0	9	n	Our model
+182	10	18	p	achieves
+182	19	53	n	new state - of - the - art results
+182	56	69	n	outperforming
+182	70	86	n	strong baselines
+182	87	94	p	such as
+182	95	99	n	QRNs
+203	0	21	n	Both variants of MAGE
+203	22	46	n	substantially outperform
+203	47	51	n	QRNs
+203	60	63	p	are
+203	68	105	n	current state - of - the - art models
+203	106	108	p	on
+203	113	125	n	bAbi dataset
+183	14	21	p	observe
+183	31	57	n	proposed MAGE architecture
+183	62	83	n	substantially improve
+183	88	99	n	performance
+183	100	103	p	for
+183	104	126	n	both bi - GRUs and GAs
+184	0	6	p	Adding
+184	11	27	n	same information
+184	28	30	p	as
+184	31	49	n	one - hot features
+184	50	58	p	fails to
+184	59	66	n	improve
+184	71	82	n	performance
+185	120	127	p	showing
+185	133	158	n	our proposed architecture
+185	159	161	p	is
+185	162	170	n	superior
+185	104	111	p	perform
+185	112	117	n	worse
+185	4	22	n	DAG - RNN baseline
+185	36	58	n	shared version of MAGE
+220	0	31	n	Broad Context Language Modeling
+221	28	32	p	pick
+221	37	52	n	LAMBADA dataset
+232	0	24	n	Our implementation of GA
+232	25	29	p	gave
+232	30	48	n	higher performance
+234	0	2	p	On
+234	7	35	n	simple bi - GRU architecture
+234	39	42	p	see
+234	46	57	n	improvement
+234	58	60	p	of
+234	61	66	n	1.7 %
+234	67	83	p	by incorporating
+234	84	101	n	coreference edges
+234	102	104	p	in
+234	109	114	n	graph
+236	7	36	n	multi - layer GA architecture
+236	43	60	n	coreference edges
+236	67	74	p	lead to
+236	78	89	n	improvement
+236	90	92	p	of
+236	93	96	n	2 %
+236	99	106	p	setting
+236	109	132	n	new state - of - theart
+245	0	16	n	Cloze - style QA
+245	47	49	p	on
+245	54	65	n	CNN dataset
+245	88	90	p	of
+257	0	10	p	Augmenting
+257	15	29	n	bi - GRU model
+257	30	34	p	with
+257	35	39	n	MAGE
+257	40	48	p	leads to
+257	52	63	n	improvement
+257	67	72	n	2.5 %
+257	73	75	p	on
+257	80	88	n	test set
+258	4	25	n	previous best results
+258	48	59	p	achieved by
+258	64	73	n	GA Reader
+258	92	98	p	adding
+258	99	103	n	MAGE
+258	110	118	p	leads to
+258	121	140	n	further improvement
+258	141	143	p	of
+258	144	149	n	0.7 %
+258	152	159	p	setting
+258	162	182	n	new state of the art

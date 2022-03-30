@@ -1,0 +1,10 @@
+title
+abstract
+Introduction
+A Bag-of-Words Neural QA System
+FastQA
+Comparison to Prior Architectures
+FastQA Extended
+Experimental Setup
+Results
+Conclusion

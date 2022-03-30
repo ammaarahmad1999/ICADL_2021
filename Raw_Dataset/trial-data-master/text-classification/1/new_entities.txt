@@ -1,0 +1,70 @@
+21	18	26	p	consider
+21	29	51	n	more general framework
+21	54	63	p	subsuming
+21	64	77	n	one - hot CNN
+21	86	100	p	jointly trains
+21	103	139	n	feature generator and a linear model
+21	142	147	p	where
+21	152	169	n	feature generator
+21	170	181	p	consists of
+21	184	210	n	region embedding + pooling
+31	18	26	p	build on
+31	31	82	n	general framework of ' region embedding + pooling '
+31	87	94	p	explore
+31	97	132	n	more sophisticated region embedding
+31	133	136	p	via
+31	137	170	n	Long Short - Term Memory ( LSTM )
+37	3	9	p	pursue
+37	14	30	n	best use of LSTM
+37	58	65	p	compare
+37	66	85	n	the resulting model
+37	86	90	p	with
+37	95	116	n	previous best methods
+37	117	126	p	including
+37	127	158	n	one - hot CNN and previous LSTM
+38	4	12	p	strategy
+38	19	57	n	simplify the model as much as possible
+38	60	84	p	including elimination of
+38	87	107	n	word embedding layer
+38	108	133	p	routinely used to produce
+38	134	147	n	input to LSTM
+2	0	51	n	Supervised and Semi- Supervised Text Categorization
+4	82	101	n	text categorization
+124	0	26	n	Experiments ( supervised )
+139	0	9	p	Comparing
+139	14	31	n	two types of LSTM
+139	40	48	p	see that
+139	53	94	n	one - hot bidirectional LSTM with pooling
+139	97	109	n	oh - 2 LSTMp
+139	112	123	p	outperforms
+139	124	142	n	word - vector LSTM
+139	145	154	n	wv - LSTM
+139	157	159	p	on
+139	160	176	n	all the datasets
+143	5	7	p	on
+143	8	38	n	three out of the four datasets
+143	41	53	n	oh - 2 LSTMp
+143	54	65	p	outperforms
+143	66	81	n	SVM and the CNN
+195	0	27	n	Semi-supervised experiments
+212	15	21	p	tested
+212	22	34	n	wv - 2 LSTMp
+212	37	82	n	word - vector bidirectional LSTM with pooling
+212	98	113	p	difference from
+212	114	126	n	oh - 2 LSTMp
+212	127	129	p	is
+212	139	163	n	input to the LSTM layers
+212	164	166	p	is
+212	171	195	n	pre-trained word vectors
+220	7	13	p	review
+220	18	29	n	performance
+220	30	32	p	of
+220	33	46	n	one - hot CNN
+220	47	51	p	with
+220	52	82	n	one 200 - dim CNN tv-embedding
+220	104	119	p	comparable with
+220	120	128	n	our LSTM
+220	129	133	p	with
+220	134	166	n	two 100 - dim LSTM tv-embeddings
+220	179	190	p	in terms of
+220	195	226	n	dimensionality of tv-embeddings

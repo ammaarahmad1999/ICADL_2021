@@ -1,0 +1,11 @@
+title
+abstract
+Introduction
+Related Work
+Hybrid Neural Inference Models
+Input Encoding
+Local Inference Modeling
+Inference Composition
+Experimental Setup
+Results
+Conclusions and Future Work

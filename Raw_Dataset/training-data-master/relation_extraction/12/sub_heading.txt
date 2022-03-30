@@ -1,0 +1,16 @@
+title
+abstract
+Introduction
+Attention Guided GCNs
+GCNs
+Attention Guided Layer
+Densely Connected Layer
+Linear Combination Layer
+Experiments
+Data
+Setup
+Results on Cross-Sentence n-ary Relation
+Results on Sentence-level Relation
+Analysis and Discussion
+Related Work
+Conclusion

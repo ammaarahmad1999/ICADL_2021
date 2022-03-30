@@ -1,0 +1,20 @@
+title
+abstract
+Introduction
+Our Approach
+Question and Passage Modeling
+Answer Boundary Prediction
+Answer Content Modeling
+Cross-Passage Answer Verification
+Joint Training and Prediction
+Experiments
+Datasets
+Implementation Details
+Results on MS-MARCO
+Results on DuReader
+Analysis and Discussion
+Ablation Study
+Case Study
+Necessity of the Content Model
+Related Work
+Conclusion

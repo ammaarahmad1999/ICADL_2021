@@ -1,0 +1,167 @@
+20	19	26	p	propose
+20	31	52	n	usage of translations
+20	53	55	p	as
+20	56	103	n	compelling and effective domain - free contexts
+37	29	35	n	method
+37	36	47	p	to mitigate
+37	52	69	n	possible problems
+37	70	80	p	when using
+37	81	101	n	translated sentences
+37	102	104	p	as
+37	105	112	n	context
+42	33	40	p	present
+42	43	108	n	neural attentionbased multiple context fixing attachment ( MCFA )
+43	0	4	n	MCFA
+43	5	7	p	is
+43	10	27	n	series of modules
+43	33	37	p	uses
+43	38	62	n	all the sentence vectors
+43	105	107	p	as
+43	108	115	n	context
+43	116	122	p	to fix
+43	123	140	n	a sentence vector
+46	5	13	p	computes
+46	14	44	n	two sentence usability metrics
+46	45	55	p	to control
+46	60	85	n	noise when fixing vectors
+46	94	108	n	self usability
+46	119	125	p	weighs
+46	130	140	n	confidence
+46	141	149	p	of using
+46	150	160	n	sentence a
+46	161	171	p	in solving
+46	176	180	n	task
+47	6	24	n	relative usability
+47	39	45	p	weighs
+47	50	63	n	confidence of
+47	64	69	p	using
+47	70	80	n	sentence a
+47	84	90	p	fixing
+47	91	101	n	sentence b
+49	14	28	p	attached after
+49	29	50	n	encoding the sentence
+49	59	84	p	makes it widely adaptable
+49	85	100	n	to other models
+51	11	16	p	moves
+51	21	28	n	vectors
+51	29	35	p	inside
+51	40	50	n	same space
+51	58	67	p	preserves
+51	72	79	n	meaning
+51	80	82	p	of
+51	83	100	n	vector dimensions
+150	0	12	n	Tokenization
+150	16	26	p	done using
+150	31	47	n	polyglot library
+159	0	8	n	Training
+159	12	20	p	done via
+159	21	48	n	stochastic gradient descent
+159	49	53	p	over
+159	54	75	n	shuffled mini-batches
+159	76	80	p	with
+159	85	105	n	Adadelta update rule
+151	3	22	p	experiment on using
+151	23	60	n	only one additional context ( N = 1 )
+151	71	107	n	all ten languages at once ( N = 10 )
+153	0	3	p	For
+153	4	11	n	our CNN
+154	8	29	n	final sentence vector
+154	35	46	p	concatenate
+154	51	63	n	feature maps
+154	64	70	p	to get
+154	73	95	n	300 - dimension vector
+155	3	6	p	use
+155	7	14	n	dropout
+155	15	17	p	on
+155	18	43	n	all nonlinear connections
+155	44	48	p	with
+155	51	63	n	dropout rate
+155	64	66	p	of
+155	67	70	n	0.5
+156	15	29	n	l 2 constraint
+156	30	32	p	of
+156	33	34	n	3
+157	7	35	n	FastText pre-trained vectors
+157	38	41	p	for
+157	42	59	n	all our data sets
+158	0	6	p	During
+158	7	15	n	training
+158	21	24	p	use
+158	25	40	n	mini-batch size
+158	41	43	p	of
+158	44	46	n	50
+160	3	10	p	perform
+160	11	25	n	early stopping
+160	26	31	p	using
+160	34	45	n	random 10 %
+160	46	48	p	of
+160	53	65	n	training set
+160	66	68	p	as
+160	73	88	n	development set
+2	40	63	n	Sentence Classification
+169	3	7	p	show
+169	13	23	n	CNN + MCFA
+169	24	32	p	achieves
+169	33	61	n	state of the art performance
+169	62	64	p	on
+169	65	92	n	three of the four data sets
+169	97	105	p	performs
+169	106	119	n	competitively
+169	120	122	p	on
+169	123	135	n	one data set
+170	0	4	p	When
+170	5	10	n	N = 1
+170	13	17	n	MCFA
+170	18	27	p	increases
+170	32	43	n	performance
+170	44	46	p	of
+170	49	59	n	normal CNN
+170	60	64	p	from
+170	65	69	n	85.0
+170	70	72	p	to
+170	73	77	n	87.6
+170	80	87	p	beating
+170	92	116	n	current state of the art
+170	117	119	p	on
+170	124	135	n	CR data set
+171	5	11	n	N = 10
+171	14	18	n	MCFA
+171	19	37	p	additionally beats
+171	42	58	n	state of the art
+171	59	61	p	on
+171	66	79	n	TREC data set
+172	10	33	n	our ensemble classifier
+172	34	58	p	additionally outperforms
+172	59	79	n	all competing models
+172	80	82	p	on
+172	87	98	n	MR data set
+186	0	2	p	On
+186	3	16	n	all data sets
+186	17	23	p	except
+186	24	28	n	SUBJ
+186	35	43	n	accuracy
+186	44	46	p	of
+186	47	55	n	CNN + B1
+186	56	70	p	decreases from
+186	75	92	n	base CNN accuracy
+188	82	94	n	translations
+188	60	66	n	topics
+189	13	26	p	conclude that
+189	40	43	p	are
+189	44	70	n	better additional contexts
+189	71	75	p	than
+190	5	10	p	using
+190	13	27	n	single context
+190	93	105	n	translations
+190	106	123	p	always outperform
+190	124	130	n	topics
+191	0	5	p	Using
+191	6	12	n	topics
+191	13	15	p	as
+191	16	34	n	additional context
+191	40	49	p	decreases
+191	54	65	n	performance
+191	66	68	p	of
+191	73	87	n	CNN classifier
+191	88	90	p	on
+191	91	105	n	most data sets

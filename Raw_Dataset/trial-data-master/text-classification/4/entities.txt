@@ -1,0 +1,152 @@
+26	19	26	propose
+26	29	45	generic approach
+26	46	54	to learn
+26	55	96	context - sensitive convolutional filters
+26	97	100	for
+26	101	131	natural language understanding
+31	30	77	novel bidirectional filter generation mechanism
+31	78	86	to allow
+31	87	122	interactions between sentence pairs
+31	123	141	while constructing
+31	142	177	context - sensitive representations
+27	38	59	convolution operation
+27	60	62	in
+27	63	76	our framework
+27	77	90	does not have
+27	93	113	fixed set of filters
+27	125	133	provides
+27	138	145	network
+27	146	150	with
+27	151	193	stronger modeling flexibility and capacity
+29	21	36	learned filters
+29	37	46	vary from
+29	47	67	sentence to sentence
+29	72	81	allow for
+29	82	121	more fine - grained feature abstraction
+28	18	27	introduce
+28	30	42	meta network
+28	43	54	to generate
+28	57	88	set of contextsensitive filters
+28	91	105	conditioned on
+28	106	130	specific input sentences
+166	0	3	For
+166	4	27	document classification
+166	33	41	consider
+166	42	65	several baseline models
+166	74	80	ngrams
+166	85	108	bag - of - means method
+166	109	117	based on
+166	118	139	TFIDF representations
+166	140	148	built by
+166	149	211	choosing the 500,000 most frequent n-grams ( up to 5 - grams )
+166	212	216	from
+166	221	233	training set
+166	238	241	use
+166	248	268	corresponding counts
+166	269	271	as
+166	272	280	features
+166	290	312	small / large word CNN
+166	315	358	6 layer word - based convolutional networks
+166	361	365	with
+166	366	383	256/1024 features
+166	384	386	at
+166	387	397	each layer
+166	450	458	deep CNN
+166	461	495	deep convolutional neural networks
+166	496	500	with
+166	501	516	9/17 /29 layers
+155	33	41	utilized
+155	2	29	one - layer architec - ture
+155	42	45	for
+155	46	86	both the CNN baseline and the ACNN model
+156	4	18	minibatch size
+156	19	28	is set as
+156	29	32	128
+156	41	53	dropout rate
+156	54	56	of
+156	57	60	0.2
+156	61	75	is utilized on
+156	80	95	embedding layer
+162	0	7	Dropout
+162	10	24	with a rate of
+162	25	28	0.5
+162	34	45	employed on
+162	50	70	word embedding layer
+164	0	10	All models
+164	15	31	implemented with
+164	32	42	TensorFlow
+164	51	64	trained using
+164	65	99	one NVIDIA GeForce GTX TITAN X GPU
+164	100	104	with
+164	105	117	12 GB memory
+152	0	3	For
+152	8	43	document classification experiments
+152	49	68	randomly initialize
+152	73	88	word embeddings
+152	89	105	uniformly within
+152	106	125	[ ? 0.001 , 0.001 ]
+152	130	141	update them
+152	142	157	during training
+153	8	25	generated filters
+153	31	34	set
+153	39	50	window size
+153	51	53	as
+153	54	59	h = 5
+153	62	66	with
+153	67	87	K = 100 feature maps
+158	8	31	sentence matching tasks
+158	37	48	initialized
+158	53	68	word embeddings
+158	69	73	with
+158	74	109	50 - dimensional Glove word vectors
+158	110	125	pretrained from
+158	126	155	Wikipedia 2014 and Gigaword 5
+159	3	6	for
+159	11	18	filters
+159	24	27	set
+159	32	43	window size
+159	44	46	as
+159	47	52	h = 5
+159	55	59	with
+159	60	80	K = 300 feature maps
+161	3	6	use
+161	7	11	Adam
+161	12	20	to train
+161	25	31	models
+161	34	38	with
+161	41	54	learning rate
+161	55	57	of
+161	58	65	3 10 ?4
+2	55	70	Text Processing
+6	73	137	learn contextsensitive convolutional filters for text processing
+173	0	23	Document Classification
+175	20	28	S - ACNN
+175	29	54	significantly outperforms
+175	55	62	S - CNN
+175	63	65	on
+175	66	79	both datasets
+175	82	112	demonstrating the advantage of
+175	117	140	filtergeneration module
+175	15	17	in
+175	144	162	our ACNN framework
+182	15	23	M - ACNN
+182	29	70	achieves slightly better performance than
+182	71	107	self - attentive sentence embeddings
+182	128	136	requires
+182	137	164	significant more parameters
+182	165	169	than
+182	170	180	our method
+179	17	20	use
+179	21	42	one convolution layer
+179	43	46	for
+179	51	61	ACNN model
+179	67	86	already outperforms
+179	87	113	other CNN baseline methods
+179	114	118	with
+179	119	144	much deeper architectures
+188	0	25	Answer Sentence Selection
+200	10	19	our model
+200	20	26	yields
+200	27	55	significantly better results
+200	56	60	than
+200	64	135	attentive pooling network and ABCNN ( attention - based CNN ) baselines

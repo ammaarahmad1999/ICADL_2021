@@ -1,0 +1,96 @@
+25	21	30	p	proposing
+25	34	58	n	attentive neural network
+25	67	77	p	capable of
+25	78	87	n	reasoning
+25	88	92	p	over
+25	93	104	n	entailments
+25	105	107	p	of
+25	108	113	n	pairs
+25	114	116	p	of
+25	117	134	n	words and phrases
+25	135	148	p	by processing
+25	153	163	n	hypothesis
+25	164	178	p	conditioned on
+25	183	190	n	premise
+26	43	50	p	present
+26	53	65	n	neural model
+26	66	74	p	based on
+26	75	80	n	LSTMs
+26	86	91	p	reads
+26	92	105	n	two sentences
+26	106	108	p	in
+26	109	115	n	one go
+26	234	240	p	extend
+26	259	302	n	neural word - by - word attention mechanism
+26	303	315	p	to encourage
+26	316	325	n	reasoning
+26	326	330	p	over
+26	331	342	n	entailments
+26	343	345	p	of
+26	346	351	n	pairs
+26	352	354	p	of
+26	355	372	n	words and phrases
+16	0	38	n	Recognizing textual entailment ( RTE )
+17	253	256	n	RTE
+99	14	24	p	processing
+99	29	39	n	hypothesis
+99	40	54	p	conditioned on
+99	59	66	n	premise
+99	115	120	p	gives
+99	124	135	n	improvement
+99	75	77	p	of
+99	139	160	n	3.3 percentage points
+99	161	163	p	in
+99	164	172	n	accuracy
+99	173	177	p	over
+99	178	199	n	Bowman et al. 's LSTM
+105	0	8	n	Our LSTM
+105	9	20	n	outperforms
+105	23	52	n	simple lexicalized classifier
+105	53	55	p	by
+105	56	77	n	2.7 percentage points
+108	3	16	p	incorporating
+108	20	39	n	attention mechanism
+108	43	48	p	found
+108	51	71	n	0.9 percentage point
+108	72	83	n	improvement
+108	84	88	p	over
+108	91	102	n	single LSTM
+108	137	157	n	1.4 percentage point
+108	158	166	n	increase
+108	167	171	p	over
+108	174	189	n	benchmark model
+108	195	199	p	uses
+108	200	209	n	two LSTMs
+108	210	213	p	for
+108	214	234	n	conditional encoding
+114	0	8	p	Enabling
+114	13	18	n	model
+114	22	28	p	attend
+114	34	48	n	output vectors
+114	49	51	p	of
+114	56	63	n	premise
+114	64	67	p	for
+114	68	78	n	every word
+114	79	81	p	in
+114	86	96	n	hypothesis
+114	97	103	p	yields
+114	104	132	n	another 1.2 percentage point
+114	133	144	n	improvement
+114	145	156	p	compared to
+114	157	166	n	attending
+114	167	180	p	based only on
+114	185	203	n	last output vector
+114	204	206	p	of
+114	211	218	n	premise
+117	0	8	p	Allowing
+117	13	18	n	model
+117	27	33	p	attend
+117	43	53	n	hypothesis
+117	54	62	p	based on
+117	67	74	n	premise
+117	80	83	p	not
+117	92	99	n	improve
+117	100	111	n	performance
+117	112	115	p	for
+117	116	119	n	RTE

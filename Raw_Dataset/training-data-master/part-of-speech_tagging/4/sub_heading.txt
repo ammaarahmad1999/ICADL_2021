@@ -1,0 +1,21 @@
+title
+abstract
+Introduction
+Related Work
+Baseline
+Word Representation Layer
+Sequence Representation Layer
+Inference Layer
+Label Attention Network
+Label Representation.
+BiLSTM-LAN Layer
+Training
+Complexity
+BiLSTM-LAN and BiLSTM-softmax
+Experiments
+Dataset
+Settings
+Development Experiments
+Final Results
+Discussion
+Conclusion

@@ -1,0 +1,210 @@
+180	57	59	p	as
+180	60	82	n	optimization objective
+180	3	6	p	use
+180	7	25	n	cross-entropy loss
+180	26	30	p	plus
+180	31	56	n	L2 regularization penalty
+181	3	11	n	minimize
+181	15	17	p	by
+181	18	26	n	Adadelta
+181	66	70	p	with
+181	71	81	n	batch size
+181	44	46	p	of
+181	85	87	n	64
+183	0	21	n	Initial learning rate
+183	25	31	p	set to
+183	32	35	n	0.5
+184	4	19	n	weight matrices
+184	24	38	p	initialized by
+184	39	60	n	Glorot Initialization
+184	71	77	n	biases
+184	82	98	p	initialized with
+184	99	100	n	0
+186	4	31	n	Out - of - Vocabulary words
+186	32	34	p	in
+186	35	47	n	training set
+186	52	72	n	randomly initialized
+186	73	75	p	by
+186	76	96	n	uniform distribution
+186	97	104	p	between
+186	105	122	n	( ? 0.05 , 0.05 )
+189	4	35	n	L2 regularization decay factors
+189	38	41	p	are
+189	42	60	n	5 10 ?5 and 10 ? 4
+189	61	64	p	for
+189	65	106	n	language inference and sentiment analysis
+192	0	19	n	Hidden units number
+192	20	23	n	d h
+192	27	33	p	set to
+192	34	37	n	300
+193	0	20	n	Activation functions
+193	27	30	p	are
+193	31	62	n	ELU ( exponential linear unit )
+185	3	13	p	initialize
+185	18	32	n	word embedding
+185	33	35	p	in
+185	36	37	n	x
+185	38	40	p	by
+185	41	75	n	300D Glo Ve 6B pre-trained vectors
+188	3	6	p	use
+188	7	14	n	Dropout
+188	17	21	p	with
+188	22	38	n	keep probability
+188	39	43	n	0.75
+188	44	47	p	for
+188	48	66	n	language inference
+188	71	74	n	0.8
+188	75	78	p	for
+188	79	97	n	sentiment analysis
+194	15	31	p	implemented with
+194	32	44	n	TensorFlow 2
+194	49	55	p	run on
+194	366	397	n	Nvidia GTX 1080 Ti graphic card
+31	3	10	p	propose
+31	13	38	n	novel attention mechanism
+31	44	56	p	differs from
+31	57	70	n	previous ones
+31	71	73	p	in
+31	89	106	n	multi-dimensional
+31	257	268	n	directional
+32	3	10	p	compute
+32	11	35	n	feature - wise attention
+32	36	41	p	since
+32	42	54	n	each element
+32	55	57	p	in
+32	60	68	n	sequence
+32	80	94	p	represented by
+32	97	103	n	vector
+33	3	8	p	apply
+33	9	25	n	positional masks
+33	26	28	p	to
+33	29	51	n	attention distribution
+33	67	80	p	easily encode
+33	81	106	n	prior structure knowledge
+33	107	114	p	such as
+33	115	129	n	temporal order
+33	134	152	n	dependency parsing
+35	8	13	p	build
+35	16	66	n	light - weight and RNN / CNN - free neural network
+35	71	117	n	Directional Self - Attention Network ( DiSAN )
+35	122	125	p	for
+35	126	143	n	sentence encoding
+37	0	2	p	In
+37	3	8	n	DiSAN
+37	15	29	n	input sequence
+37	33	45	p	processed by
+37	46	100	n	directional ( forward and backward ) self - attentions
+37	101	109	p	to model
+37	110	128	n	context dependency
+37	133	140	p	produce
+37	141	172	n	context - aware representations
+37	173	176	p	for
+37	177	187	n	all tokens
+38	9	36	n	multi-dimensional attention
+38	37	45	p	computes
+38	48	69	n	vector representation
+38	70	72	p	of
+38	77	92	n	entire sequence
+38	108	119	p	passed into
+38	122	156	n	classification / regression module
+38	157	167	p	to compute
+38	172	210	n	final prediction for a particular task
+2	49	88	n	RNN / CNN - Free Language Understanding
+195	0	26	n	Natural Language Inference
+215	0	11	p	Compared to
+215	16	23	n	results
+215	24	28	p	from
+215	33	61	n	official leaderboard of SNLI
+215	67	72	n	DiSAN
+215	73	84	p	outperforms
+215	85	99	n	previous works
+215	104	112	p	improves
+215	117	142	n	best latest test accuracy
+215	145	156	p	achieved by
+215	159	193	n	memory - based NSE encoder network
+215	196	198	p	by
+215	201	218	n	remarkable margin
+215	219	221	p	of
+215	222	228	n	1.02 %
+216	0	5	n	DiSAN
+216	6	15	p	surpasses
+216	20	42	n	RNN / CNN based models
+216	43	47	p	with
+216	48	77	n	more complicated architecture
+216	82	97	n	more parameters
+216	98	100	p	by
+216	101	114	n	large margins
+217	8	19	p	outperforms
+217	20	26	n	models
+217	27	31	p	with
+217	36	46	n	assistance
+217	47	49	p	of
+217	52	73	n	semantic parsing tree
+220	9	19	n	comparison
+220	20	27	p	between
+220	32	56	n	third baseline and DiSAN
+220	57	62	p	shows
+220	68	73	n	DiSAN
+220	78	102	n	substantially outperform
+220	103	123	n	multi-head attention
+220	124	126	p	by
+220	127	133	n	1.45 %
+221	36	60	n	forth baseline and DiSAN
+221	61	66	p	shows
+221	76	86	n	DiSA block
+221	96	106	n	outperform
+221	107	122	n	Bi - LSTM layer
+221	123	125	p	in
+221	126	142	n	context encoding
+221	145	154	p	improving
+221	155	168	n	test accuracy
+221	169	171	p	by
+221	172	178	n	0.64 %
+222	25	49	n	fifth baseline and DiSAN
+222	50	55	p	shows
+222	61	89	n	directional self - attention
+222	90	94	p	with
+222	95	153	n	forward and backward masks ( with temporal order encoded )
+222	158	163	p	bring
+222	164	182	n	0.96 % improvement
+219	50	55	p	shows
+219	61	69	n	changing
+219	70	92	n	token - wise attention
+219	93	95	p	to
+219	96	140	n	multi-dimensional / feature - wise attention
+219	141	149	p	leads to
+219	150	168	n	3.31 % improvement
+219	169	171	p	on
+219	174	200	n	word embedding based model
+226	0	18	n	Sentiment Analysis
+235	31	36	n	DiSAN
+235	37	45	p	improves
+235	50	68	n	last best accuracy
+235	71	79	p	given by
+235	80	92	n	CNN - Tensor
+235	95	97	p	by
+235	98	104	n	0.52 %
+237	21	29	p	achieves
+237	30	48	n	better performance
+237	49	53	p	than
+237	54	72	n	CNN - based models
+240	26	37	p	outperforms
+240	59	66	p	such as
+240	67	71	n	NCSL
+240	74	82	n	+ 0.62 %
+240	89	101	n	LR- Bi- LSTM
+240	104	112	n	+ 1.12 %
+236	0	11	p	Compared to
+236	12	31	n	tree - based models
+236	32	36	p	with
+236	37	46	n	heavy use
+236	47	49	p	of
+236	54	69	n	prior structure
+236	72	76	p	e.g.
+236	79	87	n	MV - RNN
+236	90	94	n	RNTN
+236	99	110	n	Tree - LSTM
+236	113	118	n	DiSAN
+236	119	130	p	outperforms
+236	136	138	p	by
+236	139	165	n	7.32 % , 6.02 % and 0.72 %

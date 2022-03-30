@@ -1,0 +1,175 @@
+101	115	158	n	https://github.com/Helsinki - NLP / prosody
+16	59	73	p	for predicting
+16	74	93	n	prosodic prominence
+16	94	98	p	from
+16	99	103	n	text
+16	113	121	p	based on
+16	126	161	n	recently published Libri TTS corpus
+16	164	174	p	containing
+16	175	225	n	automatically generated prosodic prominence labels
+16	226	229	p	for
+16	230	244	n	over 260 hours
+16	248	265	n	2.8 million words
+16	266	268	p	of
+16	269	288	n	English audio books
+16	291	298	p	read by
+16	299	322	n	1230 different speakers
+17	22	29	p	will be
+17	34	68	n	largest publicly available dataset
+17	69	73	p	with
+17	74	94	n	prosodic annotations
+84	44	50	n	models
+85	0	19	n	BERT - base uncased
+85	20	84	n	3 - layer 600D Bidirectional Long Short - Term Memory ( BiLSTM )
+85	123	151	n	Minitagger ( SVM ) ) + GloVe
+85	152	166	n	MarMoT ( CRF )
+85	167	190	n	Majority class per word
+88	3	6	p	use
+88	11	45	n	Huggingface PyTorch implementation
+88	46	48	p	of
+88	49	53	n	BERT
+88	54	66	p	available in
+88	71	99	n	pytorch transformers library
+88	113	120	p	further
+88	121	132	p	fine - tune
+88	133	139	p	during
+88	140	148	n	training
+90	31	56	n	smaller BERT - base model
+90	57	62	p	using
+90	67	86	n	uncased alternative
+95	9	16	n	dropout
+95	17	19	p	of
+95	20	23	n	0.2
+95	24	31	p	between
+95	36	56	n	layers of the BiLSTM
+91	9	19	n	batch size
+91	20	22	p	of
+91	23	25	n	32
+91	30	41	p	fine - tune
+91	46	51	n	model
+91	52	55	p	for
+91	56	64	n	2 epochs
+89	3	7	p	take
+89	12	29	n	last hidden layer
+89	30	32	p	of
+89	33	37	n	BERT
+89	42	47	p	train
+89	50	91	n	single fully - connected classifier layer
+89	92	94	p	on
+89	95	98	n	top
+89	107	114	p	mapping
+89	119	133	n	representation
+89	99	101	p	of
+89	137	146	n	each word
+89	147	149	p	to
+89	154	160	n	labels
+92	0	3	p	For
+92	4	10	n	BiLSTM
+92	14	17	p	use
+92	18	62	n	pre-trained 300D Glo Ve 840B word embeddings
+97	8	11	n	SVM
+97	15	18	p	use
+97	19	46	n	Minitagger 4 implementation
+97	50	55	p	using
+97	56	70	n	each dimension
+97	71	73	p	of
+97	78	122	n	pre-trained 300D Glo Ve 840B word embeddings
+97	123	125	p	as
+97	126	134	n	features
+97	137	141	p	with
+97	142	158	n	context - size 1
+98	8	46	n	conditional random field ( CRF ) model
+98	50	53	p	use
+98	54	60	n	MarMot
+98	66	70	p	with
+98	75	96	n	default configuration
+94	18	21	p	add
+94	22	57	n	one fullyconnected classifier layer
+94	58	67	p	on top of
+94	72	78	n	BiLSTM
+94	81	88	p	mapping
+94	93	107	n	representation
+94	108	110	p	of
+94	111	120	n	each word
+94	121	123	p	to
+94	128	134	n	labels
+2	0	40	n	Predicting Prosodic Prominence from Text
+4	87	135	n	predicting prosodic prominence from written text
+20	0	18	n	Prosody prediction
+106	0	10	n	All models
+106	11	21	p	reach over
+106	22	26	n	80 %
+106	27	29	p	in
+106	34	61	n	2 - way classification task
+106	68	99	n	3 - way classification accuracy
+106	100	111	p	stays below
+106	112	116	n	70 %
+122	16	32	p	reached close to
+122	39	63	n	full predictive capacity
+122	64	68	p	with
+122	69	103	n	only 10 % of the training examples
+107	4	19	n	BERTbased model
+107	20	24	p	gets
+107	29	45	n	highest accuracy
+107	46	48	p	of
+107	49	66	n	83.2 % and 68.6 %
+107	67	69	p	in
+107	74	114	n	2 - way and 3 - way classification tasks
+111	4	17	n	3layer BiLSTM
+111	18	26	p	achieves
+111	27	33	n	82.1 %
+111	34	36	p	in
+111	41	63	n	2 - way classification
+111	68	74	n	66.4 %
+111	75	77	p	in
+111	82	109	n	3 - way classification task
+112	4	43	n	traditional feature - based classifiers
+112	44	51	p	perform
+112	52	66	n	slightly below
+112	71	92	n	neural network models
+112	95	99	p	with
+112	104	107	n	CRF
+112	108	117	p	obtaining
+112	118	135	n	81.8 % and 66.4 %
+112	136	139	p	for
+112	144	168	n	two classification tasks
+113	4	43	n	Minitagger SVM model 's test accuracies
+113	44	47	p	are
+113	48	62	n	slightly lower
+113	63	67	p	than
+113	72	78	n	CRF 's
+113	79	83	p	with
+113	84	117	n	80.8 % and 65.4 % test accuracies
+114	8	14	p	taking
+114	17	47	n	simple majority class per word
+114	48	53	p	gives
+114	54	60	n	80.2 %
+114	61	64	p	for
+114	69	96	n	2 - way classification task
+114	101	107	n	62.4 %
+114	108	111	p	for
+114	116	143	n	3 - way classification task
+121	0	3	p	For
+121	4	22	n	most of the models
+121	27	46	n	biggest improvement
+121	47	49	p	in
+121	50	61	n	performance
+121	65	78	p	achieved when
+121	79	85	n	moving
+121	86	90	p	from
+121	91	94	n	1 %
+121	95	97	p	of
+121	102	119	n	training examples
+121	120	122	p	to
+121	123	126	n	5 %
+127	140	144	p	with
+127	147	219	n	manually annotated test set from The Boston University radio news corpus
+131	4	16	n	good results
+131	40	47	p	provide
+131	48	63	n	further support
+131	64	67	p	for
+131	72	98	n	quality of the new dataset
+132	21	31	n	difference
+132	32	39	p	between
+132	40	55	n	BERT and BiLSTM
+132	59	70	n	much bigger

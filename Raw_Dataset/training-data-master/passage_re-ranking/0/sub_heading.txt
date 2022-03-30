@@ -1,0 +1,8 @@
+title
+abstract
+Introduction
+Related Work
+Method: Doc2query
+Experimental Setup
+Results
+Conclusion

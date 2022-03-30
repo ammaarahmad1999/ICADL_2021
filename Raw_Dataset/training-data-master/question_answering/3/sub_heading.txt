@@ -1,0 +1,19 @@
+title
+abstract
+Introduction
+Dilated Compositional Units (DCU)
+Dilated Composition Mechanism
+Encoding Operation
+Overall Model Architectures
+Multiple Choice Models
+Span Prediction Model
+Empirical Evaluation
+Datasets
+Competitor Methods
+Our Methods
+Implementation Details
+Experimental Results on RACE
+Experimental Results on SearchQA
+Experimental Results on NarrativeQA
+Related Work
+Conclusion and Future Work

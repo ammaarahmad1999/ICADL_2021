@@ -1,0 +1,27 @@
+title
+abstract
+INTRODUCTION
+RELATED WORK
+EEG-Based Emotion Recognition
+Graph Neural Networks
+Unsupervised Domain Adaptation
+Learning with Noisy Labels
+PRELIMINARIES
+Simple Graph Convolution Network (SGC)
+Spectral Graph Convolution
+REGULARIZED GRAPH NEURAL NETWORK
+Adjacency Matrix in RGNN
+Dynamics of RGNN
+EXPERIMENTAL SETTINGS
+Datasets
+Classification Settings
+Model Settings in RGNN
+PERFORMANCE EVALUATIONS
+Subject-Independent Classification
+Performance Comparison of Frequency Bands
+Confusion Matrix
+MODEL ANALYSIS ON RGNN
+Ablation Study
+Sensitivity Analysis
+NEURONAL ACTIVITY ANALYSIS FOR EMOTION
+CONCLUSION

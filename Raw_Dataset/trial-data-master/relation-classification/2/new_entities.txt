@@ -1,0 +1,112 @@
+261	26	28	p	on
+261	33	46	n	ACE04 dataset
+261	59	69	p	to analyze
+261	74	127	n	effectiveness of the various parts of our joint model
+262	4	18	p	performance of
+262	23	30	n	RE task
+262	31	40	n	decreases
+262	73	77	p	when
+262	81	114	n	remove the label embeddings layer
+262	119	150	n	only use the LSTM hidden states
+262	151	153	p	as
+262	154	160	n	inputs
+264	0	8	p	Removing
+264	9	29	n	character embeddings
+264	30	62	p	also degrades the performance of
+264	63	104	n	both NER ( ? 1 % ) and RE ( ? 2 % ) tasks
+264	105	107	p	by
+264	110	133	n	relatively large margin
+266	33	36	p	for
+266	41	49	n	NER task
+266	50	61	p	by removing
+266	66	80	n	CRF loss layer
+266	85	105	p	substituting it with
+266	108	115	n	softmax
+267	63	71	p	leads to
+267	72	89	n	a slight decrease
+267	90	92	p	in
+267	97	112	n	F 1 performance
+267	113	115	p	of
+267	120	130	n	NER module
+267	137	151	n	? 2 % decrease
+267	152	154	p	in
+267	159	170	n	performance
+267	171	173	p	of
+267	178	185	n	RE task
+208	8	17	p	developed
+208	18	33	n	our joint model
+208	34	42	p	by using
+208	43	49	n	Python
+208	50	54	p	with
+208	59	94	n	TensorFlow machine learning library
+209	0	8	n	Training
+209	12	27	p	performed using
+209	32	69	n	Adam optimizer ( Kingma & Ba , 2015 )
+209	70	74	p	with
+209	77	90	n	learning rate
+209	91	93	p	of
+209	94	99	n	10 ?3
+214	4	20	n	hidden dimension
+214	21	24	p	for
+214	29	49	n	characterbased LSTMs
+214	50	52	p	is
+214	53	55	n	25
+214	58	61	p	for
+214	62	76	n	each direction
+210	3	6	p	fix
+210	11	27	n	size of the LSTM
+210	28	30	p	to
+210	31	37	n	d = 64
+210	46	57	n	layer width
+210	58	60	p	of
+210	65	79	n	neural network
+210	80	82	p	to
+210	83	89	n	l = 64
+211	3	6	p	use
+211	7	14	n	dropout
+211	15	28	p	to regularize
+211	29	40	n	our network
+217	3	9	p	employ
+217	27	41	n	early stopping
+217	42	50	p	based on
+217	55	69	n	validation set
+218	48	54	p	obtain
+218	59	79	n	best hyperparameters
+218	80	85	p	after
+218	86	102	n	60 to 200 epochs
+218	103	115	p	depending on
+218	120	139	n	size of the dataset
+107	21	28	p	present
+107	33	55	n	multi-head joint model
+111	4	9	p	input
+111	28	79	n	sequence of tokens ( i.e. , words of the sentence )
+111	95	109	p	represented as
+111	110	149	n	word vectors ( i.e. , word embeddings )
+114	4	15	p	outputs for
+114	16	26	n	each token
+114	44	55	p	are twofold
+114	67	91	n	entity recognition label
+114	182	195	n	set of tuples
+114	196	206	p	comprising
+114	211	276	n	head tokens of the entity and the types of relations between them
+2	0	48	n	Joint entity recognition and relation extraction
+7	63	120	n	entity recognition and relation extraction simultaneously
+16	55	106	n	joint models to detect entities and their relations
+28	49	149	n	joint model that performs the two tasks of entity recognition and relation extraction simultaneously
+239	3	10	p	observe
+239	16	25	n	our model
+239	26	37	p	outperforms
+239	38	57	n	all previous models
+239	58	77	p	that do not rely on
+239	78	109	n	complex hand - crafted features
+239	110	127	p	by a large margin
+239	130	150	n	> 4 % for both tasks
+249	23	26	p	for
+249	31	43	n	DREC dataset
+250	18	21	p	use
+250	26	60	n	boundaries and the strict settings
+253	7	28	n	boundaries evaluation
+253	34	41	p	achieve
+253	42	59	n	? 3 % improvement
+253	60	63	p	for
+253	64	74	n	both tasks

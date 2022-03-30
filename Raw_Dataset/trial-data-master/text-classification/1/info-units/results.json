@@ -1,0 +1,79 @@
+{
+  "has" : {
+    "Results" : {
+      "has" : {
+        "Experiments ( supervised )" : {
+          "Comparing" : {
+            "two types of LSTM" : {
+              "see that" : {
+                "one - hot bidirectional LSTM with pooling" : {
+                  "name" : "oh - 2 LSTMp",
+                  "outperforms" : {
+                    "word - vector LSTM" : {
+                      "name" : "wv - LSTM",
+                      "on" : "all the datasets"
+                    }
+                  }
+                }
+              }
+            },
+            "from sentence" : "Experiments ( supervised )
+Comparing the two types of LSTM in , we see that our one - hot bidirectional LSTM with pooling ( oh - 2 LSTMp ) outperforms word - vector LSTM ( wv - LSTM ) on all the datasets , confirming the effectiveness of our approach ."
+
+          },
+          "on" : {
+            "three out of the four datasets" : {
+              "has" : {
+                "oh - 2 LSTMp" : {
+                  "outperforms" : "SVM and the CNN"
+                }
+              },
+              "from sentence" : "In , on three out of the four datasets , oh - 2 LSTMp outperforms SVM and the CNN ."
+            }
+          }
+        },
+        "Semi-supervised experiments" : {
+          "tested" : {
+            "wv - 2 LSTMp" : {
+              "name" : "word - vector bidirectional LSTM with pooling",
+              "difference from" : {
+                "oh - 2 LSTMp" : {
+                  "is" : {
+                    "input to the LSTM layers" : {
+                      "is" : "pre-trained word vectors"
+                    }
+                  }
+                }
+              }
+            },
+            "from sentence" : "Semi-supervised experiments
+Therefore , we tested wv - 2 LSTMp ( word - vector bidirectional LSTM with pooling ) , whose only difference from oh - 2 LSTMp is that the input to the LSTM layers is the pre-trained word vectors ."
+
+          },
+          "review" : {
+            "performance" : {
+              "of" : {
+                "one - hot CNN" : {
+                  "with" : {
+                    "one 200 - dim CNN tv-embedding" : {
+                      "comparable with" : {
+                        "our LSTM" : {
+                          "with" : {
+                            "two 100 - dim LSTM tv-embeddings" : {
+                              "in terms of" : "dimensionality of tv-embeddings"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "from sentence" : "Now we review the performance of one - hot CNN with one 200 - dim CNN tv-embedding row # 5 ) , which is comparable with our LSTM with two 100 - dim LSTM tv-embeddings ( row # 4 ) in terms of the dimensionality of tv-embeddings ."
+          }
+        }
+      }
+    }
+  }
+}

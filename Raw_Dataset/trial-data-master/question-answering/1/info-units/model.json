@@ -1,0 +1,34 @@
+{
+  "has" : {
+    "Model" : {
+      "propose" : {
+        "deep neural network models" : {
+          "adapt" : {
+            "convolutional strategy" : {
+              "to" : "natural language"
+            }
+          }
+        },
+        "from sentence" : "Towards this end , we propose deep neural network models , which adapt the convolutional strategy ( proven successful on image and speech ) to natural language ."
+      },
+      "To further explore" : {
+        "relation" : {
+          "between" : {
+            "representing sentences and matching them" : {
+              "devise" : {
+                "novel model" : {
+                  "with" : {
+                    "same convolutional architecture" : {
+                      "can naturally host" : ["hierarchical composition for sentences", "simple - to - comprehensive fusion of matching patterns"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "To further explore the relation between representing sentences and matching them , we devise a novel model that can naturally host both the hierarchical composition for sentences and the simple - to - comprehensive fusion of matching patterns with the same convolutional architecture ."            
+      }
+    }
+  }
+}

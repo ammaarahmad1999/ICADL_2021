@@ -1,0 +1,16 @@
+title
+abstract
+ByteDance AI Lab, China
+Related work
+Dynamically Fused Graph Network
+Paragraph Selection
+Constructing Entity Graph
+Encoding Query and Context
+Reasoning with the Fusion Block
+Prediction
+Experiments
+Implementation Details
+Main Results
+Evaluation on Graph Construction and
+Case Study
+Conclusion

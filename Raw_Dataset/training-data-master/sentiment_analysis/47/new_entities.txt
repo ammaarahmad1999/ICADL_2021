@@ -1,0 +1,229 @@
+141	0	8	n	Majority
+141	9	16	p	assigns
+141	21	39	n	sentiment polarity
+141	53	72	n	largest probability
+141	73	75	p	in
+141	80	92	n	training set
+141	99	109	n	Simple SVM
+141	110	112	p	is
+141	115	129	n	SVM classifier
+141	130	134	p	with
+141	135	150	n	simple features
+141	151	158	p	such as
+141	159	179	n	unigrams and bigrams
+141	186	208	n	Feature - enhanced SVM
+141	209	211	p	is
+141	214	228	n	SVM classifier
+141	229	233	p	with
+141	236	275	n	state - of - the - art feature template
+141	276	290	p	which contains
+141	291	306	n	n-gram features
+141	309	323	n	parse features
+141	328	344	n	lexicon features
+141	438	447	n	TD - LSTM
+141	448	454	p	adopts
+141	455	464	n	two LSTMs
+141	465	473	p	to model
+141	478	490	n	left context
+141	491	495	p	with
+141	496	502	n	target
+141	511	524	n	right context
+141	525	529	p	with
+141	530	536	n	target
+143	4	13	n	AE - LSTM
+143	14	16	p	is
+143	20	36	n	upgraded version
+143	37	39	p	of
+143	40	44	n	LSTM
+146	4	15	n	ATAE - LSTM
+146	19	37	p	developed based on
+146	38	47	n	AE - LSTM
+148	4	13	n	GRNN - G3
+148	14	20	p	adopts
+148	23	34	n	Gated - RNN
+148	35	47	p	to represent
+148	48	56	n	sentence
+148	61	64	p	use
+148	67	88	n	three - way structure
+148	89	100	p	to leverage
+148	101	109	n	contexts
+150	0	6	n	MemNet
+150	7	9	p	is
+150	12	31	n	deep memory network
+150	38	47	p	considers
+150	52	72	n	content and position
+150	73	75	p	of
+150	76	82	n	target
+152	0	3	n	IAN
+152	4	24	p	interactively learns
+152	25	35	n	attentions
+152	36	38	p	in
+152	43	63	n	contexts and targets
+152	70	78	p	generate
+152	83	98	n	representations
+152	99	102	p	for
+152	103	123	n	targets and contexts
+131	18	27	n	dimension
+131	28	30	p	of
+131	31	53	n	word embedding vectors
+131	58	78	n	hidden state vectors
+131	79	81	p	is
+131	82	85	n	300
+133	0	48	n	All out - ofvocabulary words and weight matrices
+133	53	76	p	randomly initialized by
+133	79	117	n	uniform distribution U ( - 0.1 , 0.1 )
+133	124	132	n	all bias
+133	137	143	p	set to
+133	144	148	n	zero
+134	0	11	n	Tensor Flow
+134	20	36	p	for implementing
+134	41	61	n	neural network model
+137	4	18	n	paired t- test
+137	22	30	p	used for
+137	35	55	n	significance testing
+132	3	6	p	use
+132	7	22	n	GloVe 2 vectors
+132	23	27	p	with
+132	28	42	n	300 dimensions
+132	43	56	p	to initialize
+132	61	76	n	word embeddings
+135	0	2	p	In
+135	3	17	n	model training
+135	24	37	n	learning rate
+135	41	47	p	set to
+135	48	51	n	0.1
+135	58	64	n	weight
+135	65	68	p	for
+135	69	94	n	L 2 - norm regularization
+135	98	104	p	set to
+135	105	112	n	1 e - 5
+135	119	131	n	dropout rate
+135	135	141	p	set to
+135	142	145	n	0.5
+136	3	8	p	train
+136	13	18	n	model
+136	19	22	p	use
+136	23	60	n	stochastic gradient descent optimizer
+136	61	65	p	with
+136	66	74	n	momentum
+136	75	77	p	of
+136	78	81	n	0.9
+38	71	78	p	propose
+38	81	127	n	left - center - right separated neural network
+38	128	132	p	with
+38	133	175	n	rotatory attention mechanism ( LCR - Rot )
+40	37	65	n	rotatory attention mechanism
+40	69	86	p	take into account
+40	91	102	n	interaction
+40	103	110	p	between
+40	111	131	n	targets and contexts
+40	132	151	p	to better represent
+40	152	172	n	targets and contexts
+39	18	24	p	design
+39	27	64	n	left - center - right separated LSTMs
+39	70	78	p	contains
+39	79	90	n	three LSTMs
+39	93	97	p	i.e.
+39	100	134	n	left - , center - and right - LSTM
+39	150	158	p	modeling
+39	163	174	n	three parts
+39	175	177	p	of
+39	180	186	n	review
+39	189	201	n	left context
+39	204	217	n	target phrase
+39	222	235	n	right context
+41	4	28	n	target2context attention
+41	37	47	p	to capture
+41	52	83	n	most indicative sentiment words
+41	84	86	p	in
+41	87	108	n	left / right contexts
+42	19	43	n	context2target attention
+42	52	62	p	to capture
+42	67	86	n	most important word
+42	87	89	p	in
+42	94	100	n	target
+43	5	13	p	leads to
+43	16	41	n	two - side representation
+43	42	44	p	of
+43	49	55	n	target
+43	58	77	n	left - aware target
+43	82	102	n	right - aware target
+44	13	24	p	concatenate
+44	29	54	n	component representations
+44	55	57	p	as
+44	62	82	n	final representation
+44	83	85	p	of
+44	90	98	n	sentence
+44	103	115	p	feed it into
+44	118	131	n	softmax layer
+44	132	142	p	to predict
+44	147	165	n	sentiment polarity
+2	51	84	n	Aspect - based Sentiment Analysis
+16	15	33	n	sentiment analysis
+17	54	78	n	sentiment classification
+155	7	11	p	find
+155	21	36	n	Majority method
+155	37	39	p	is
+155	44	49	n	worst
+155	68	95	n	majority sentiment polarity
+155	96	104	p	occupies
+155	105	131	n	53.50 % , 65.00 % and 50 %
+155	147	149	p	on
+155	154	202	n	Restaurant , Laptop and Twitter testing datasets
+156	4	20	n	Simple SVM model
+156	21	29	p	performs
+156	30	36	n	better
+156	37	41	p	than
+156	42	50	n	Majority
+159	0	9	n	Our model
+159	10	18	p	achieves
+159	19	47	n	significantly better results
+159	48	52	p	than
+159	53	75	n	feature - enhanced SVM
+161	63	82	n	basic LSTM approach
+161	83	91	p	performs
+161	96	101	n	worst
+162	0	9	n	TD - LSTM
+162	10	17	p	obtains
+162	21	32	n	improvement
+162	33	35	p	of
+162	36	43	n	1 - 2 %
+162	44	48	p	over
+162	49	53	n	LSTM
+162	54	58	p	when
+162	59	73	n	target signals
+162	78	88	p	taken into
+162	89	102	n	consideration
+165	0	6	n	MemNet
+165	7	15	p	achieves
+165	16	30	n	better results
+165	31	35	p	than
+165	36	48	n	other models
+165	49	51	p	on
+165	56	74	n	Restaurant dataset
+166	0	3	n	IAN
+166	4	13	p	considers
+166	14	38	n	separate representations
+166	39	41	p	of
+166	42	49	n	targets
+166	54	61	p	obtains
+166	62	75	n	better result
+166	76	78	p	on
+166	83	97	n	Laptop dataset
+167	0	9	n	GRNN - G3
+167	10	18	p	achieves
+167	19	38	n	competitive results
+167	39	41	p	on
+167	42	54	n	all datasets
+168	22	37	n	LCR - Rot model
+168	38	46	p	achieves
+168	51	63	n	best results
+168	64	66	p	on
+168	71	83	n	all datasets
+168	84	89	p	among
+168	90	100	n	all models
+157	0	16	p	With the help of
+157	17	36	n	feature engineering
+157	43	65	n	Feature - enhanced SVM
+157	66	74	p	achieves
+157	75	94	n	much better results

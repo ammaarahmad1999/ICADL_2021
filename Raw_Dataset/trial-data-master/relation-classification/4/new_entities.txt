@@ -1,0 +1,147 @@
+179	92	94	p	on
+179	99	113	n	TACRED dev set
+180	3	7	p	find
+180	19	64	n	entity representations and feedforward layers
+180	65	75	p	contribute
+180	76	83	n	1.0 F 1
+181	14	20	p	remove
+181	25	45	n	dependency structure
+181	76	90	p	score drops by
+181	91	98	n	3.2 F 1
+182	43	122	n	feedforward layers , the LSTM component and the dependency structure altogether
+182	6	18	p	F 1 drops by
+182	19	23	n	10.3
+183	6	14	p	Removing
+183	19	26	n	pruning
+183	36	41	p	using
+183	42	61	n	full trees as input
+183	72	91	p	hurts the result by
+183	92	107	n	another 9.7 F 1
+124	0	25	n	Dependency - based models
+126	8	45	n	logistic regression ( LR ) classifier
+126	52	60	p	combines
+126	61	85	n	dependencybased features
+126	86	90	p	with
+126	91	113	n	other lexical features
+127	6	50	n	Shortest Dependency Path LSTM ( SDP - LSTM )
+127	59	66	p	applies
+127	69	90	n	neural sequence model
+127	91	93	p	on
+127	98	111	n	shortest path
+127	112	119	p	between
+127	124	151	n	subject and object entities
+127	152	154	p	in
+127	159	174	n	dependency tree
+128	0	11	n	Tree - LSTM
+128	20	24	p	is a
+128	25	40	n	recursive model
+128	41	57	p	that generalizes
+128	62	95	n	LSTM to arbitrary tree structures
+132	0	21	n	Neural sequence model
+133	10	19	p	presented
+133	22	48	n	competitive sequence model
+133	49	61	p	that employs
+133	64	100	n	position - aware attention mechanism
+133	101	105	p	over
+133	106	132	n	LSTM outputs ( PA - LSTM )
+133	151	165	p	it outperforms
+133	166	207	n	several CNN and dependency - based models
+133	208	210	p	by
+133	213	231	n	substantial margin
+29	10	17	p	encodes
+29	22	42	n	dependency structure
+29	43	47	p	over
+29	52	66	n	input sentence
+29	67	71	p	with
+29	72	110	n	efficient graph convolution operations
+29	113	126	p	then extracts
+29	127	159	n	entity - centric representations
+29	160	167	p	to make
+29	168	195	n	robust relation predictions
+30	8	13	p	apply
+30	16	54	n	novel path - centric pruning technique
+30	55	64	p	to remove
+30	65	101	n	irrelevant information from the tree
+30	102	125	p	while maximally keeping
+30	126	142	n	relevant content
+2	56	75	n	Relation Extraction
+4	49	93	n	capture long - range relations between words
+18	71	111	n	capture long - range syntactic relations
+149	8	10	p	on
+149	15	29	n	TACRED Dataset
+151	3	10	p	observe
+151	16	29	n	our GCN model
+151	66	77	p	outperforms
+151	78	107	n	all dependency - based models
+151	108	110	p	by
+151	111	127	n	at least 1.6 F 1
+152	3	8	p	using
+152	9	44	n	contextualized word representations
+152	51	64	n	C - GCN model
+152	65	84	p	further outperforms
+152	89	111	n	strong PA - LSTM model
+152	112	114	p	by
+152	115	122	n	1.3 F 1
+153	32	40	p	improves
+153	41	74	n	upon other dependencybased models
+153	75	82	p	in both
+153	83	103	n	precision and recall
+154	0	9	p	Comparing
+154	14	27	n	C - GCN model
+154	28	32	p	with
+154	37	46	n	GCN model
+154	52	61	p	find that
+154	66	70	n	gain
+154	71	88	p	mainly comes from
+154	89	104	n	improved recall
+156	36	45	p	find that
+156	46	60	n	our GCN models
+156	61	65	p	have
+156	66	89	n	complementary strengths
+156	90	106	p	when compared to
+156	111	120	n	PA - LSTM
+163	15	30	n	SemEval Dataset
+165	13	18	p	under
+165	23	59	n	conventional with- entity evaluation
+165	66	79	n	C - GCN model
+165	80	91	p	outperforms
+165	92	137	n	all existing dependency - based neural models
+166	61	82	p	our model outperforms
+166	87	149	n	previous shortest dependency path - based model ( SDP - LSTM )
+166	10	35	p	by properly incorporating
+166	36	58	n	off - path information
+167	0	5	p	Under
+167	10	34	n	mask - entity evaluation
+167	41	54	n	C - GCN model
+167	55	71	p	also outperforms
+167	72	81	n	PA - LSTM
+167	82	84	p	by
+167	87	105	n	substantial margin
+168	0	32	n	Effect of Path - centric Pruning
+169	57	64	p	compare
+169	69	83	n	two GCN models
+169	92	103	n	Tree - LSTM
+169	104	108	p	when
+169	113	131	n	pruning distance K
+169	132	134	p	is
+169	135	141	n	varied
+171	18	32	p	performance of
+171	33	49	n	all three models
+171	50	60	p	peaks when
+171	61	66	n	K = 1
+171	69	82	p	outperforming
+171	89	145	n	respective dependency path - based counterpart ( K = 0 )
+175	3	7	p	find
+175	13	29	n	all three models
+175	30	33	p	are
+175	34	48	n	less effective
+175	49	53	p	when
+175	58	80	n	entire dependency tree
+175	81	83	p	is
+175	84	91	n	present
+176	23	38	p	contextualizing
+176	43	46	n	GCN
+176	47	55	p	makes it
+176	56	70	n	less sensitive
+176	71	84	p	to changes in
+176	89	113	n	tree structures provided

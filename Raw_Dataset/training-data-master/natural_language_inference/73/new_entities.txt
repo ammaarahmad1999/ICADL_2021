@@ -1,0 +1,132 @@
+204	0	11	p	In terms of
+204	12	30	n	prediction quality
+204	63	85	n	unselected head tokens
+204	89	102	p	contribute to
+204	107	117	n	prediction
+204	120	128	p	bringing
+204	129	146	n	0.2 % improvement
+204	153	158	p	using
+204	159	179	n	separate RSS modules
+204	180	189	p	to select
+204	194	219	n	head and dependent tokens
+204	220	228	p	improves
+204	229	237	n	accuracy
+204	238	240	p	by
+204	241	246	n	0.5 %
+204	257	305	n	hard attention and soft self - attention modules
+204	306	313	p	improve
+204	318	326	n	accuracy
+204	327	329	p	by
+204	330	345	n	0.3 % and 2.9 %
+44	42	96	n	https://github.com/ taoshen58/DiSAN /tree/master/ReSAN
+177	4	15	n	experiments
+177	20	32	p	conducted in
+177	33	39	n	Python
+177	40	44	p	with
+177	45	55	n	Tensorflow
+177	60	66	p	run on
+177	69	87	n	Nvidia GTX 1080 Ti
+178	3	6	p	use
+178	7	15	n	Adadelta
+178	16	18	p	as
+178	19	28	n	optimizer
+178	37	45	p	performs
+178	46	57	n	more stable
+178	58	62	p	than
+178	63	67	n	Adam
+178	68	70	p	on
+178	71	76	n	ReSAN
+180	7	41	n	300D Glo Ve 6B pre-trained vectors
+185	0	26	n	Natural Language Inference
+193	0	11	p	Compared to
+193	16	49	n	methods from official leaderboard
+193	52	57	n	ReSAN
+193	114	122	n	achieves
+193	127	145	n	best test accuracy
+193	58	69	n	outperforms
+193	70	109	n	all the sentence encoding based methods
+196	14	19	n	ReSAN
+196	25	36	n	outperforms
+196	41	65	n	300D SPINN - PI encoders
+196	66	68	p	by
+196	69	74	n	3.1 %
+194	15	26	p	compared to
+194	31	47	n	last best models
+194	50	54	p	i.e.
+194	57	86	n	600D Gumbel TreeLSTM encoders
+194	91	121	n	600D Residual stacked encoders
+194	124	129	n	ReSAN
+194	130	134	p	uses
+194	135	155	n	far fewer parameters
+194	156	160	p	with
+194	161	179	n	better performance
+198	0	11	p	Compared to
+198	16	32	n	recurrent models
+198	35	39	p	e.g.
+198	42	51	n	Bi - LSTM
+198	56	64	n	Bi - GRU
+198	138	144	p	due to
+198	145	172	n	parallelizable computations
+198	69	74	n	ReSAN
+198	75	80	p	shows
+198	81	106	n	better prediction quality
+198	111	137	n	more compelling efficiency
+199	16	36	n	convolutional models
+199	39	43	p	i.e.
+199	46	61	n	Multiwindow CNN
+199	66	82	n	Hierarchical CNN
+199	87	92	n	ReSAN
+199	93	118	n	significantly outperforms
+199	124	126	p	by
+199	127	142	n	3.1 % and 2.4 %
+200	16	40	n	attention - based models
+200	43	63	n	multi-head attention
+200	68	73	n	DiSAN
+200	76	81	n	ReSAN
+200	82	86	p	uses
+200	89	117	n	similar number of parameters
+200	118	122	p	with
+200	123	146	n	better test performance
+200	151	165	n	less time cost
+36	25	32	p	propose
+36	35	65	n	novel hard attention mechanism
+36	66	72	p	called
+36	75	111	n	reinforced sequence sampling ( RSS )
+36	122	129	p	selects
+36	130	136	n	tokens
+36	137	141	p	from
+36	145	159	n	input sequence
+36	160	162	p	in
+36	163	171	n	parallel
+36	216	218	p	is
+36	219	240	n	highly parallelizable
+36	241	248	p	without
+36	249	272	n	any recurrent structure
+37	8	15	p	develop
+37	28	64	n	reinforced self - attention ( ReSA )
+37	85	93	p	combines
+37	98	101	n	RSS
+37	102	106	p	with
+37	109	130	n	soft self - attention
+38	0	2	p	In
+38	3	7	n	ReSA
+38	10	36	n	two parameter - untied RSS
+38	54	64	p	applied to
+38	65	75	n	two copies
+38	76	78	p	of
+38	83	97	n	input sequence
+39	0	5	n	Re SA
+39	11	17	p	models
+39	22	41	n	sparse dependencies
+39	42	49	p	between
+39	54	79	n	head and dependent tokens
+39	80	91	p	selected by
+39	96	111	n	two RSS modules
+40	13	18	p	build
+40	22	47	n	sentence - encoding model
+40	52	97	n	reinforced self - attention network ( ReSAN )
+40	102	110	p	based on
+40	111	115	n	ReSA
+40	116	123	p	without
+40	124	147	n	any CNN / RNN structure
+14	44	64	n	attention mechanisms

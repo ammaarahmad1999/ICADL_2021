@@ -1,0 +1,25 @@
+{
+  "has" : {
+    "Results" : {
+      "achieved" : {
+        "better results" : {
+          "than" : "MLSTM - based models",
+          "from sentence" : "The results ( see ) show that the Transformer models achieved better results than the MLSTM - based models ."        
+        },
+        "best results" : {
+          "evident" : "unconstrained models",
+          "from sentence" : "It is also evident that the unconstrained models ( tilde - nc - nmt ) achieved the best results ."
+        }
+      },
+      "For" : {
+        "constrained scenarios" : {
+          "achieved" : ["both ensembles of averaged models",
+            {"higher scores" : {
+              "than" : "each individual averaged model"
+            }}],
+          "from sentence" : "For the constrained scenarios , both ensembles of averaged models achieved higher scores than each individual averaged model ."
+        }      
+      }
+    }
+  }
+}

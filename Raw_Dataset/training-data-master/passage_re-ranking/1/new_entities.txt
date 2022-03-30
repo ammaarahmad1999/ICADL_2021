@@ -1,0 +1,64 @@
+16	50	61	p	re-purposed
+16	62	66	n	BERT
+16	67	69	p	as
+16	72	89	n	passage re-ranker
+35	0	8	n	MS MARCO
+43	3	14	p	fine - tune
+43	19	24	n	model
+43	25	30	p	using
+43	31	35	n	TPUs
+43	38	42	p	with
+43	45	55	n	batch size
+43	56	58	p	of
+43	59	61	n	32
+43	116	119	p	for
+43	120	136	n	400 k iterations
+43	145	150	p	takes
+43	151	173	n	approximately 70 hours
+46	3	6	p	use
+46	7	34	n	ADAM ( Kingma & Ba , 2014 )
+46	35	39	p	with
+46	44	65	n	initial learning rate
+46	66	72	p	set to
+46	73	106	n	3 10 ?6 , ? 1 = 0.9 , ? 2 = 0.999
+46	109	124	n	L2 weight decay
+46	125	127	p	of
+46	128	132	n	0.01
+46	135	155	n	learning rate warmup
+46	156	160	p	over
+46	165	183	n	first 10,000 steps
+46	190	202	n	linear decay
+46	203	205	p	of
+46	210	223	n	learning rate
+47	36	38	p	on
+47	9	28	n	dropout probability
+47	29	31	p	of
+47	32	35	n	0.1
+47	39	49	n	all layers
+48	0	10	n	TREC - CAR
+63	0	3	p	For
+63	8	21	n	fine - tuning
+63	22	26	n	data
+63	32	40	p	generate
+63	41	66	n	our query - passage pairs
+63	67	80	p	by retrieving
+63	85	101	n	top ten passages
+63	102	106	p	from
+63	111	135	n	entire TREC - CAR corpus
+63	136	141	p	using
+63	142	146	n	BM25
+66	3	8	p	train
+66	16	32	n	400 k iterations
+66	38	53	n	12.8 M examples
+2	0	20	n	PASSAGE RE - RANKING
+5	67	99	n	query - based passage re-ranking
+70	0	7	p	Despite
+70	8	16	n	training
+70	17	19	p	on
+70	22	52	n	fraction of the data available
+70	59	87	n	proposed BERT - based models
+70	88	95	p	surpass
+70	100	138	n	previous state - of - the - art models
+70	139	141	p	by
+70	144	156	n	large margin
+17	0	20	n	PASSAGE RE - RANKING

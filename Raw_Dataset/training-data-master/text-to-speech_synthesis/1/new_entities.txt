@@ -1,0 +1,76 @@
+189	0	27	n	1D Convolution in FFT Block
+190	14	21	p	replace
+190	26	56	n	original fully connected layer
+192	66	76	p	results in
+192	77	89	n	- 0.113 CMOS
+193	0	39	n	Sequence - Level Knowledge Distillation
+196	13	21	p	removing
+196	22	61	n	sequence - level knowledge distillation
+196	62	72	p	results in
+196	73	85	n	- 0.325 CMOS
+130	9	14	p	train
+130	19	55	n	autoregressive Transformer TTS model
+130	56	58	p	on
+130	59	77	n	4 NVIDIA V100 GPUs
+130	80	84	p	with
+130	85	110	n	batchsize of 16 sentences
+131	3	6	p	use
+131	11	25	n	Adam optimizer
+131	26	30	p	with
+131	31	65	n	? 1 = 0.9 , ? 2 = 0.98 , ? = 10 ?9
+134	22	30	p	leverage
+134	31	70	n	sequence - level knowledge distillation
+139	0	24	p	In the inference process
+139	31	54	n	output mel-spectrograms
+139	83	99	p	transformed into
+139	100	143	n	audio samples using the pretrained WaveGlow
+28	122	129	p	propose
+28	146	156	n	FastSpeech
+28	165	170	p	takes
+28	173	207	n	text ( phoneme ) sequence as input
+28	212	221	p	generates
+28	222	259	n	mel-spectrograms non-autoregressively
+29	3	9	p	adopts
+29	12	34	n	feed - forward network
+29	35	43	p	based on
+29	48	98	n	self - attention in Transformer and 1D convolution
+30	187	203	n	length regulator
+30	209	221	p	up - samples
+30	226	276	n	phoneme sequence according to the phoneme duration
+30	353	361	p	to match
+30	366	404	n	length of the mel-spectrogram sequence
+31	17	25	p	built on
+31	28	54	n	phoneme duration predictor
+31	63	71	p	predicts
+31	76	100	n	duration of each phoneme
+2	44	58	n	Text to Speech
+4	0	58	n	Neural network based end - to - end text to speech ( TTS )
+15	0	22	n	Text to speech ( TTS )
+18	0	24	n	Neural network based TTS
+142	0	13	n	Audio Quality
+143	3	10	p	conduct
+143	15	52	n	MOS ( mean opinion score ) evaluation
+143	53	55	p	on
+143	60	68	n	test set
+143	69	79	p	to measure
+143	84	97	n	audio quality
+155	0	10	n	Robustness
+159	3	19	p	can be seen that
+159	20	35	n	Transformer TTS
+159	39	52	p	not robust to
+159	59	69	n	hard cases
+159	74	78	p	gets
+159	79	94	n	34 % error rate
+159	103	113	n	FastSpeech
+159	118	139	p	effectively eliminate
+159	140	167	n	word repeating and skipping
+159	168	178	p	to improve
+159	179	194	n	intelligibility
+166	0	11	n	Voice Speed
+169	3	18	p	demonstrated by
+169	23	30	n	samples
+169	33	43	n	FastSpeech
+169	44	70	p	can adjust the voice speed
+169	71	98	n	from 0.5x to 1.5 x smoothly
+169	101	105	p	with
+169	106	139	n	stable and almost unchanged pitch

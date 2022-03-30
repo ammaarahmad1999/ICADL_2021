@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Methodology
+CNN model
+Miulti-task learning
+Experimental Setup
+Dataset
+Pre-training Emo2Vec
+Multi-task training
+Evaluation
+Results
+Related work
+Conclusion and Future Work
+Acknowledgements

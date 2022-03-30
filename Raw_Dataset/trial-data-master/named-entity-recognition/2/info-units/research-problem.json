@@ -1,0 +1,7 @@
+{
+  "has research problem" : [
+    ["Fast and Accurate Entity Recognition", {"from sentence" : "Fast and Accurate Entity Recognition with Iterated Dilated Convolutions"}],
+    ["faster alternative to Bi - LSTMs for NER", {"from sentence" : "This paper proposes a faster alternative to Bi - LSTMs for NER : Iterated Dilated Convolutional Neural Networks ( ID - CNNs ) , which have better capacity than traditional CNNs for large context and structured prediction ."}],
+    ["democratize large - scale NLP and information extraction while minimizing our environmental footprint", {"from sentence" : "In order to democratize large - scale NLP and information extraction while minimizing our environmental footprint , we require fast , resource - efficient methods for sequence tagging tasks such as part - of - speech tagging and named entity recognition ( NER ) ."}]
+    ]
+}

@@ -1,0 +1,241 @@
+247	36	42	p	use of
+247	43	55	n	convolutions
+247	56	58	p	in
+247	63	71	n	encoders
+247	72	74	p	is
+247	75	82	n	crucial
+247	85	99	n	both F1 and EM
+247	100	116	n	drop drastically
+247	117	119	p	by
+247	120	136	n	almost 3 percent
+247	137	139	p	if
+247	146	153	n	removed
+248	0	15	n	Self- attention
+248	16	18	p	in
+248	23	31	n	encoders
+248	32	34	p	is
+248	42	61	n	necessary component
+248	62	78	p	that contributes
+248	79	102	n	1.4/1.3 gain of EM / F1
+248	103	105	p	to
+248	110	130	n	ultimate performance
+254	47	64	n	data augmentation
+254	65	77	p	proves to be
+254	78	85	n	helpful
+254	26	28	p	in
+254	89	117	n	further boosting performance
+264	18	33	n	ratio ( 3:1:1 )
+264	34	40	p	yields
+264	45	61	n	best performance
+264	64	68	p	with
+264	69	81	n	1.5/1.1 gain
+264	82	86	p	over
+264	91	101	n	base model
+264	102	104	p	on
+264	105	112	n	EM / F1
+255	0	6	p	Making
+255	11	24	n	training data
+255	25	39	n	twice as large
+255	40	49	p	by adding
+255	54	76	n	En - Fr - En data only
+255	197	203	p	yields
+255	207	215	p	increase
+255	216	218	p	in
+255	223	225	n	F1
+255	154	156	p	by
+255	229	240	n	0.5 percent
+259	70	82	p	observe that
+259	85	104	n	good sampling ratio
+259	105	112	p	between
+259	117	144	n	original and augmented data
+259	145	151	p	during
+259	152	160	n	training
+259	161	172	p	can further
+259	173	178	n	boost
+259	183	200	n	model performance
+260	24	32	p	increase
+260	37	52	n	sampling weight
+260	53	55	p	of
+260	56	70	n	augmented data
+260	71	75	p	from
+260	76	85	n	( 1:1:1 )
+260	86	88	p	to
+260	89	98	n	( 1:2:1 )
+260	105	124	n	EM / F1 performance
+260	125	130	n	drops
+260	131	133	p	by
+260	134	141	n	0.5/0.3
+182	12	14	p	ON
+182	15	20	n	SQUAD
+201	3	9	p	employ
+201	10	19	n	two types
+201	20	22	p	of
+201	23	47	n	standard regularizations
+202	11	14	p	use
+202	15	30	n	L2 weight decay
+202	31	33	p	on
+202	34	61	n	all the trainable variables
+202	64	78	p	with parameter
+202	79	90	n	? = 3 10 ?7
+203	20	27	n	dropout
+203	28	30	p	on
+203	31	35	n	word
+203	38	58	n	character embeddings
+203	63	77	n	between layers
+203	80	85	p	where
+203	90	122	n	word and character dropout rates
+203	123	126	p	are
+203	127	139	n	0.1 and 0.05
+203	163	175	n	dropout rate
+203	176	183	p	between
+203	184	200	n	every two layers
+203	201	203	p	is
+203	204	207	n	0.1
+207	11	25	n	ADAM optimizer
+207	49	53	p	with
+207	54	87	n	? 1 = 0.8 , ? 2 = 0.999 , = 10 ?7
+208	9	39	n	learning rate warm - up scheme
+208	40	44	p	with
+208	48	67	n	inverse exponential
+208	68	76	p	increase
+208	77	81	p	from
+208	82	85	n	0.0
+208	86	88	p	to
+208	89	94	n	0.001
+208	95	97	p	in
+208	102	118	n	first 1000 steps
+208	125	129	p	then
+208	130	138	n	maintain
+208	141	163	n	constant learning rate
+208	164	167	p	for
+208	172	193	n	remainder of training
+204	8	13	p	adopt
+204	18	59	n	stochastic depth method ( layer dropout )
+204	60	66	p	within
+204	67	104	n	each embedding or model encoder layer
+204	107	112	p	where
+204	113	123	n	sublayer l
+204	128	173	n	survival probability pl = 1 ? l L ( 1 ? p L )
+204	174	179	p	where
+204	180	181	n	L
+204	182	184	p	is
+204	189	199	n	last layer
+204	204	207	n	p L
+204	208	209	p	=
+204	210	213	n	0.9
+205	4	49	n	hidden size and the convolution filter number
+205	50	53	p	are
+205	58	61	n	128
+205	68	78	n	batch size
+205	79	81	p	is
+205	82	84	n	32
+205	87	101	n	training steps
+205	102	105	p	are
+205	106	111	n	150 K
+205	112	115	p	for
+205	116	129	n	original data
+205	132	137	n	250 K
+205	138	141	p	for
+205	144	163	n	data augmentation 2
+205	172	177	n	340 K
+205	178	181	p	for
+205	184	203	n	data augmentation 3
+206	4	33	n	numbers of convolution layers
+206	34	36	p	in
+206	41	71	n	embedding and modeling encoder
+206	72	75	p	are
+206	76	83	n	4 and 2
+206	86	98	n	kernel sizes
+206	99	102	p	are
+206	103	110	n	7 and 5
+206	121	134	n	block numbers
+206	135	138	p	for
+206	143	151	n	encoders
+206	152	155	p	are
+206	156	163	n	1 and 7
+209	0	26	n	Exponential moving average
+209	30	40	p	applied on
+209	41	64	n	all trainable variables
+209	65	69	p	with
+209	72	89	n	decay rate 0.9999
+210	13	22	p	implement
+210	23	32	n	our model
+210	33	35	p	in
+210	36	42	n	Python
+210	43	48	p	using
+210	49	59	n	Tensorflow
+210	64	73	p	carry out
+210	74	89	n	our experiments
+210	90	92	p	on
+210	96	112	n	NVIDIA p 100 GPU
+219	36	68	n	accuracy ( EM / F1 ) performance
+219	69	71	p	of
+219	72	81	n	our model
+219	82	84	p	is
+219	85	91	n	on par
+219	92	96	p	with
+219	101	130	n	state - of - the - art models
+220	16	25	n	our model
+220	26	36	p	trained on
+220	41	57	n	original dataset
+220	58	69	n	outperforms
+220	70	114	n	all the documented results in the literature
+220	117	128	p	in terms of
+220	134	150	n	EM and F1 scores
+221	5	17	p	trained with
+221	22	36	n	augmented data
+221	37	41	p	with
+221	42	64	n	proper sampling scheme
+221	67	76	n	our model
+221	77	84	p	can get
+221	85	109	n	significant gain 1.5/1.1
+221	110	112	p	on
+221	113	120	n	EM / F1
+222	21	23	p	on
+222	28	45	n	official test set
+222	46	48	p	is
+222	49	58	n	76.2/84.6
+222	61	66	p	which
+222	67	92	n	significantly outperforms
+222	97	129	n	best documented result 73.2/81.8
+21	23	30	p	to make
+21	35	56	n	machine comprehension
+21	57	61	n	fast
+21	78	84	p	remove
+21	89	121	n	recurrent nature of these models
+22	23	26	p	use
+22	27	61	n	convolutions and self - attentions
+22	62	64	p	as
+22	69	84	n	building blocks
+22	85	87	p	of
+22	88	96	n	encoders
+22	102	120	p	separately encodes
+22	125	142	n	query and context
+23	8	13	p	learn
+23	18	30	n	interactions
+23	31	38	p	between
+23	39	59	n	context and question
+23	60	62	p	by
+23	63	82	n	standard attentions
+24	4	28	n	resulting representation
+24	29	31	p	is
+24	32	45	n	encoded again
+24	46	50	p	with
+24	51	80	n	our recurrency - free encoder
+24	81	87	p	before
+24	96	104	n	decoding
+24	105	107	p	to
+24	112	123	n	probability
+24	124	126	p	of
+24	127	140	n	each position
+24	141	146	p	being
+24	151	163	n	start or end
+24	164	166	p	of
+24	171	182	n	answer span
+25	3	7	p	call
+25	13	31	n	architecture QANet
+3	61	85	n	READING COMPRE - HENSION
+5	23	69	n	machine reading and question answering ( Q&A )
+14	42	71	n	machine reading comprehension
+14	76	104	n	automated question answering
+21	35	56	n	machine comprehension

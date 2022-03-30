@@ -1,0 +1,71 @@
+174	9	17	p	tokenize
+174	18	58	n	all the passages , questions and answers
+176	3	6	p	use
+176	7	22	n	word embeddings
+176	23	27	p	from
+176	28	33	n	GloVe
+176	34	47	p	to initialize
+176	52	57	n	model
+180	7	13	n	ADAMAX
+180	14	18	p	with
+180	23	35	n	coefficients
+180	36	61	n	? 1 = 0.9 and ? 2 = 0.999
+180	62	73	p	to optimize
+180	78	83	n	model
+177	0	5	n	Words
+177	6	18	p	not found in
+177	19	25	n	Glo Ve
+177	30	44	p	initialized as
+177	45	57	n	zero vectors
+179	4	20	n	dimensionality l
+179	21	23	p	of
+179	28	41	n	hidden layers
+179	45	54	p	set to be
+179	55	65	n	150 or 300
+39	123	128	p	adopt
+39	131	149	n	match - LSTM model
+40	21	52	n	Pointer Net ( Ptr - Net ) model
+40	74	81	p	enables
+40	86	97	n	predictions
+40	98	100	p	of
+40	101	107	n	tokens
+40	108	112	p	from
+40	117	136	n	input sequence only
+41	3	10	p	propose
+41	11	19	n	two ways
+41	20	28	p	to apply
+41	33	48	n	Ptr - Net model
+41	49	52	p	for
+41	53	61	n	our task
+41	66	80	n	sequence model
+41	87	101	n	boundary model
+42	16	22	p	extend
+42	27	41	n	boundary model
+42	42	46	p	with
+42	49	65	n	search mechanism
+2	0	21	n	MACHINE COMPREHENSION
+4	0	29	n	Machine comprehension of text
+192	14	32	n	our boundary model
+192	37	49	n	outperformed
+192	54	68	n	sequence model
+192	71	80	p	achieving
+192	84	101	n	exact match score
+192	102	104	p	of
+192	105	111	n	61.1 %
+192	119	127	n	F1 score
+192	128	130	p	of
+192	131	137	n	71.2 %
+193	16	27	p	in terms of
+193	32	49	n	exact match score
+193	56	70	n	boundary model
+193	77	92	n	clear advantage
+193	93	97	p	over
+193	102	116	n	sequence model
+200	9	15	p	adding
+200	16	30	n	Bi - Ans - Ptr
+200	31	35	p	with
+200	36	70	n	bi-directional pre-processing LSTM
+200	80	83	p	get
+200	84	101	n	1.2 % improvement
+200	102	104	p	in
+200	105	107	n	F1

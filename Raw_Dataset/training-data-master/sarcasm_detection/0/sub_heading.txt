@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Related Work
+Corpus Details
+Reddit Structure and Annotation
+Constructing SARC
+Corpus Evaluation
+Manual Evaluation
+Comparison with other Sources
+Limitations of Our Approach
+Benchmarks for Sarcasm Detection
+Evaluation Task
+Methods
+Results
+Conclusion
+Acknowledgements
+Bibliographical References

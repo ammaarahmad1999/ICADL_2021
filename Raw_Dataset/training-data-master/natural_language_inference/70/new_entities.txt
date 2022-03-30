@@ -1,0 +1,63 @@
+133	0	9	n	Subtask A
+140	122	130	p	achieved
+140	135	149	n	first position
+140	150	155	p	among
+140	156	166	n	12 systems
+140	169	173	p	with
+140	178	186	n	best MAP
+143	0	9	n	Subtask B
+155	27	49	n	our primary submission
+155	50	58	p	achieved
+155	63	77	n	third position
+155	78	84	p	w.r.t.
+155	85	88	n	MAP
+155	89	94	p	among
+155	95	105	n	11 systems
+157	4	18	n	primary system
+157	19	27	p	achieves
+157	32	56	n	highest F 1 and accuracy
+157	57	59	p	on
+157	60	87	n	both tuning and test stages
+159	0	9	n	Subtask C
+171	4	22	n	primary submission
+171	23	31	p	achieved
+171	36	54	n	second highest MAP
+172	18	28	p	noted that
+172	33	47	n	F 1 our system
+172	48	50	p	is
+172	55	59	n	best
+172	60	65	p	among
+172	66	88	n	10 primary submissions
+20	33	43	p	modeled as
+20	44	74	n	binary classification problems
+20	77	103	n	kernel - based classifiers
+20	104	107	p	are
+20	108	115	n	trained
+20	124	144	n	classification score
+20	153	160	p	to sort
+20	165	174	n	instances
+20	179	186	p	produce
+20	191	204	n	final ranking
+21	4	27	n	classifiers and kernels
+21	38	56	p	implemented within
+21	61	104	n	Kernel - based Learning Platform 2 ( KeLP )
+22	107	114	p	applies
+22	115	127	n	tree kernels
+22	128	139	p	directly to
+22	140	165	n	question and answer texts
+22	166	176	p	modeled as
+22	177	182	n	pairs
+22	183	185	p	of
+22	186	208	n	linked syntactic trees
+25	11	18	p	propose
+25	21	36	n	stacking schema
+25	45	56	n	classifiers
+25	57	60	p	for
+25	61	76	n	Subtask B and C
+25	77	84	p	exploit
+25	89	99	n	inferences
+25	100	111	p	obtained in
+25	116	133	n	previous subtasks
+4	73	110	n	Community Question Answering ( c QA )
+14	81	85	n	c QA
+139	0	7	n	Results

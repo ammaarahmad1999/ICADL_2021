@@ -1,0 +1,233 @@
+272	0	20	n	Self vs Dual History
+274	0	11	p	Compared to
+274	16	66	n	dual - history variants ( variants 3 , 5 , and 7 )
+274	69	81	n	these models
+274	82	89	p	provide
+274	90	108	n	lesser performance
+277	0	4	n	DGIM
+277	5	13	p	prevents
+277	18	47	n	storage of dynamic influences
+277	48	55	p	between
+277	56	64	n	speakers
+277	65	72	p	at each
+277	73	93	n	historical time step
+277	98	106	p	leads to
+277	107	132	n	performance deterioration
+278	0	23	n	Multi - hop vs No - hop
+278	65	74	n	multi-hop
+278	135	139	p	than
+279	7	17	p	removal of
+279	28	36	p	leads to
+279	37	54	n	worse performance
+279	64	79	n	removal of DGIM
+281	10	26	n	best performance
+281	30	41	p	achieved by
+281	42	51	n	variant 6
+281	52	66	p	which contains
+281	67	91	n	all the proposed modules
+281	92	94	p	in
+281	95	107	n	its pipeline
+233	0	6	n	memnet
+233	7	9	p	is
+233	13	39	n	end - toend memory network
+235	0	5	n	cLSTM
+235	8	18	p	classifies
+235	19	29	n	utterances
+235	30	35	p	using
+235	36	78	n	neighboring utterances ( of same speaker )
+235	79	81	p	as
+235	82	89	n	context
+237	0	3	n	TFN
+237	6	12	p	models
+237	13	45	n	intra-and intermodality dynamics
+237	46	71	p	by explicitly aggregating
+237	72	109	n	uni - , bi- and trimodal interactions
+239	0	3	n	MFN
+239	4	12	p	performs
+239	13	32	n	multi-view learning
+239	33	41	p	by using
+239	42	74	n	Delta - memory Attention Network
+239	79	95	n	fusion mechanism
+239	96	104	p	to learn
+239	105	130	n	cross - view interactions
+241	0	10	n	CMN models
+241	11	19	p	separate
+241	20	28	n	contexts
+241	29	32	p	for
+241	38	58	n	speaker and listener
+241	59	64	p	to an
+241	65	74	n	utterance
+219	0	24	n	20 % of the training set
+219	28	35	p	used as
+219	36	50	n	validation set
+219	51	54	p	for
+219	55	79	n	hyper - parameter tuning
+221	0	11	n	Termination
+221	12	14	p	of
+221	19	35	n	training - phase
+221	39	49	p	decided by
+221	50	66	n	early - stopping
+221	67	71	p	with
+221	74	82	n	patience
+221	83	85	p	of
+221	86	135	n	10 d = 100 dv = 512 dem = 100 K = 40 R = 3 epochs
+222	4	11	n	network
+222	15	27	p	subjected to
+222	28	42	n	regularization
+222	43	57	p	in the form of
+222	58	89	n	Dropout and Gradient - clipping
+222	90	93	p	for
+222	96	100	n	norm
+222	101	103	p	of
+222	104	106	n	40
+223	14	37	n	best hyper - parameters
+223	42	55	p	decided using
+223	58	68	n	gridsearch
+220	3	6	p	use
+220	11	50	n	Adam optimizer ( Kingma and Ba , 2014 )
+220	51	54	p	for
+220	55	63	n	training
+220	68	78	n	parameters
+220	79	92	p	starting with
+220	96	117	n	initial learning rate
+220	118	120	p	of
+220	121	126	n	0.001
+225	0	3	p	For
+225	4	33	n	multimodal feature extraction
+225	39	46	p	explore
+225	47	64	n	different designs
+225	65	68	p	for
+225	73	86	n	employed CNNs
+226	4	8	n	text
+226	14	18	p	find
+226	23	39	n	single layer CNN
+226	40	62	p	to perform at par with
+226	63	78	n	deeper variants
+227	4	19	n	visual features
+227	34	44	n	deeper CNN
+227	45	53	p	provides
+227	54	76	n	better representations
+228	8	12	p	find
+228	18	51	n	contextually conditioned features
+228	52	71	p	perform better than
+228	72	95	n	context - less features
+20	3	10	p	propose
+20	11	61	n	Interactive COnversational memory Network ( ICON )
+20	66	84	n	multimodal network
+20	85	100	p	for identifying
+20	101	109	n	emotions
+20	110	112	p	in
+20	113	131	n	utterance - videos
+28	11	19	p	extracts
+28	20	39	n	multimodal features
+28	40	44	p	from
+28	45	64	n	all utterancevideos
+29	7	12	p	given
+29	15	29	n	test utterance
+29	30	35	p	to be
+29	36	46	n	classified
+29	49	53	n	ICON
+29	54	63	p	considers
+29	68	88	n	preceding utterances
+29	89	91	p	of
+29	92	105	n	both speakers
+29	106	120	p	falling within
+29	123	139	n	context - window
+29	144	150	p	models
+29	157	184	n	self - emotional influences
+29	185	190	p	using
+29	191	218	n	local gated recurrent units
+30	14	28	p	to incorporate
+30	29	54	n	inter -speaker influences
+30	59	80	n	global representation
+30	81	83	p	is
+30	84	93	n	generated
+30	94	99	p	using
+30	102	105	n	GRU
+30	111	118	p	intakes
+30	119	125	n	output
+30	126	128	p	of
+30	133	143	n	local GRUs
+31	0	3	p	For
+31	4	17	n	each instance
+31	18	20	p	in
+31	25	41	n	context - window
+31	48	54	n	output
+31	55	57	p	of
+31	63	73	n	global GRU
+31	77	86	p	stored as
+31	89	100	n	memory cell
+32	6	14	n	memories
+32	24	36	p	subjected to
+32	37	65	n	multiple read / write cycles
+32	66	78	p	that include
+32	79	98	n	attention mechanism
+32	99	113	p	for generating
+32	114	134	n	contextual summaries
+32	135	137	p	of
+32	142	164	n	conversational history
+33	0	2	p	At
+33	3	17	n	each iteration
+33	24	60	n	representation of the test utterance
+33	64	77	p	improved with
+33	83	105	n	summary representation
+33	118	126	p	used for
+33	127	137	n	prediction
+2	53	81	n	Multimodal Emotion Detection
+4	0	36	n	Emotion recognition in conversations
+16	0	45	n	Analyzing emotional dynamics in conversations
+246	0	4	n	ICON
+246	5	25	p	performs better than
+246	30	45	n	compared models
+246	46	50	p	with
+246	51	83	n	significant performance increase
+246	84	86	p	in
+246	87	112	n	emotions ( ? 2.1 % acc. )
+249	12	22	p	manages to
+249	33	41	n	identify
+249	23	32	p	correctly
+249	46	83	n	relatively similar excitement emotion
+249	84	86	p	by
+249	89	101	n	large margin
+264	14	30	n	trimodal network
+264	31	39	p	provides
+264	44	60	n	best performance
+264	70	81	p	preceded by
+264	86	102	n	bimodal variants
+266	20	45	n	audio and visual modality
+266	101	115	p	when used with
+266	116	120	n	text
+266	145	151	p	shared
+266	123	141	n	complementary data
+266	152	162	p	to improve
+266	163	183	n	over all performance
+247	0	3	p	For
+247	4	16	n	each emotion
+247	19	23	n	ICON
+247	24	35	p	outperforms
+247	36	59	n	all the compared models
+247	60	70	p	except for
+247	71	88	n	happiness emotion
+248	14	25	n	performance
+248	35	46	p	at par with
+248	47	53	n	c LSTM
+248	54	61	p	without
+248	64	79	n	significant gap
+251	0	2	p	In
+251	11	17	n	labels
+251	20	24	n	ICON
+251	25	32	p	attains
+251	33	53	n	improved performance
+251	54	58	p	over
+251	63	75	n	counterparts
+263	0	8	p	presents
+263	25	56	n	different combinations of modes
+263	57	64	p	used by
+263	65	69	n	ICON
+263	70	72	p	on
+263	73	80	n	IEMOCAP
+265	0	5	p	Among
+265	6	15	n	unimodals
+265	18	35	n	language modality
+265	36	44	p	performs
+265	49	53	n	best

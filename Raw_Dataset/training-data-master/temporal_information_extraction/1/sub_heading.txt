@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Background
+Temporal Relation Types
+Quality of A Temporal Graph
+A Structured Training Approach
+Inference
+Learning
+Semi-supervised Structured Learning
+T=%
+Experiments
+Datasets
+Baseline Methods
+Results and Discussion
+ClearTK* TB, VC pre
+SP+ILP TB, VC pre+post
+CoDL+ILP TB, VC (TE3-SV) pre+post

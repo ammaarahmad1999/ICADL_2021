@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Usefulness of linked entities in
+Observations
+Possible issues
+Our model
+Base model
+Entity encoding submodule
+Pooling submodule
+Extending from the base model
+Related work
+Experimental settings
+Results
+Conclusion

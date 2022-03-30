@@ -1,0 +1,126 @@
+234	0	22	n	Sharpness of Attention
+237	3	10	p	compute
+237	15	30	n	entropy numbers
+237	31	43	p	by averaging
+237	44	68	n	over all generated words
+237	69	71	p	in
+237	76	90	n	validation set
+239	3	7	p	note
+239	17	31	n	entropy of C2F
+239	32	34	p	is
+239	35	43	n	very low
+240	61	66	n	model
+240	75	93	p	learns to focus on
+240	101	123	n	few top - level chunks
+240	124	126	p	of
+240	131	139	n	document
+240	140	144	p	over
+240	149	169	n	course of generation
+245	0	18	n	Attention Heatmaps
+250	0	2	p	In
+250	3	7	n	HIER
+250	13	20	p	observe
+250	30	58	n	attention becomes washed out
+250	114	123	p	averaging
+250	124	156	n	all of the encoder hidden states
+255	3	7	n	C2 F
+255	25	28	p	get
+255	29	49	n	very sharp attention
+255	50	52	p	on
+255	53	62	n	some rows
+16	21	29	p	to scale
+16	30	46	n	attention models
+16	76	86	p	prune down
+16	91	120	n	length of the source sequence
+17	86	92	p	to use
+17	95	129	n	two - layer hierarchical attention
+17	0	10	p	Instead of
+17	11	45	n	naively attending to all the words
+17	46	48	p	of
+17	53	59	n	source
+18	0	3	p	For
+18	4	26	n	document summarization
+18	34	39	p	means
+18	40	61	n	dividing the document
+18	62	66	p	into
+18	67	81	n	chunks of text
+18	84	105	p	sparsely attending to
+18	106	135	n	one or a few chunks at a time
+18	136	141	p	using
+18	142	156	n	hard attention
+18	164	172	p	applying
+18	177	197	n	usual full attention
+18	198	202	p	over
+18	203	215	n	those chunks
+18	221	225	p	call
+18	238	266	n	coarse - to - fine attention
+185	3	13	p	train with
+185	14	59	n	minibatch stochastic gradient descent ( SGD )
+185	60	64	p	with
+185	65	78	n	batch size 20
+185	79	82	p	for
+185	83	92	n	20 epochs
+185	95	118	p	renormalizing gradients
+185	119	131	n	below norm 5
+186	3	13	p	initialize
+186	18	31	n	learning rate
+186	32	34	p	to
+186	35	38	n	0.1
+186	39	42	p	for
+186	47	66	n	top - level encoder
+186	71	72	n	1
+186	73	76	p	for
+186	81	98	n	rest of the model
+186	105	125	p	begin decaying it by
+186	126	141	n	a factor of 0.5
+186	153	158	p	after
+186	163	184	n	validation perplexity
+186	185	190	p	stops
+186	191	201	n	decreasing
+188	14	34	n	all other parameters
+188	35	48	p	as uniform in
+188	53	77	n	interval [ ? 0.1 , 0.1 ]
+187	63	78	n	word embeddings
+187	21	25	p	with
+187	84	119	n	300 dimensional word2vec embeddings
+187	3	6	p	use
+187	7	20	n	2 layer LSTMs
+187	79	83	p	with
+187	26	42	n	500 hidden units
+191	7	14	n	dropout
+191	15	22	p	between
+191	23	91	n	stacked LSTM hidden states and before the final word generator layer
+191	92	105	p	to regularize
+191	113	136	n	dropout probability 0.3
+189	0	3	p	For
+189	4	24	n	convolutional layers
+189	30	33	p	use
+189	36	48	n	kernel width
+189	49	51	p	of
+189	52	69	n	6 and 600 filters
+190	0	21	n	Positional embeddings
+190	22	26	p	have
+190	27	39	n	dimension 25
+192	0	2	p	At
+192	3	12	n	test time
+192	18	21	p	run
+192	22	33	n	beam search
+192	34	44	p	to produce
+192	49	56	n	summary
+192	57	61	p	with
+192	64	78	n	beam size of 5
+193	15	32	p	implemented using
+193	33	38	n	Torch
+193	39	47	p	based on
+193	50	85	n	past version of the Open NMT system
+194	7	10	p	ran
+194	11	26	n	our experiments
+194	27	29	p	on
+194	32	60	n	12GB Geforce GTX Titan X GPU
+2	36	58	n	Document Summarization
+204	4	13	n	ILP model
+204	14	26	p	ROUGE scores
+204	31	47	n	surprisingly low
+213	0	4	n	C2 F
+213	17	41	p	significantly worse than
+213	42	64	n	soft attention results

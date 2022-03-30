@@ -1,0 +1,7 @@
+{
+  "has research problem" : [
+    ["Open Question Answering", {"from sentence" : "Open Question Answering with Weakly Supervised Embedding Models"}],
+    ["Building computers able to answer questions on any subject", {"from sentence" : "Building computers able to answer questions on any subject is along standing goal of artificial intelligence ."}],
+    ["open - domain question answering", {"from sentence" : "This paper addresses the challenging problem of open - domain question answering , which consists of building systems able to answer questions from any domain ."}]
+  ]
+}

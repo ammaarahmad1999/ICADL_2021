@@ -1,0 +1,76 @@
+166	143	145	p	on
+166	150	171	n	ACE05 development set
+167	4	33	p	performance slightly degraded
+167	34	60	n	without scheduled sampling
+167	71	105	p	performance significantly degraded
+167	114	140	n	removed entity pretraining
+180	134	168	p	performance is significantly worse
+180	169	196	n	than SP - Tree ( p < 0.01 )
+180	8	36	n	removed all the enhancements
+180	46	64	n	scheduled sampling
+180	67	85	n	entity pretraining
+180	88	103	n	label embedding
+180	110	127	n	shared parameters
+154	3	14	p	implemented
+154	15	24	n	our model
+154	25	30	p	using
+154	35	46	n	cnn library
+155	3	9	p	parsed
+155	14	19	n	texts
+155	20	25	p	using
+155	30	93	n	Stanford neural dependency parser 7 ( Chen and Manning , 2014 )
+155	94	98	p	with
+155	103	133	n	original Stanford Dependencies
+156	33	38	p	fixed
+156	39	59	n	embedding dimensions
+156	60	63	p	n w
+156	67	70	n	200
+156	73	88	p	n p , n d , n e
+156	92	94	n	25
+156	101	134	n	dimensions of intermediate layers
+156	137	196	p	n ls , n lt of LSTM - RNNs and n he , n hr of hidden layers
+156	202	205	n	100
+157	3	14	p	initialized
+157	15	27	n	word vectors
+157	28	31	p	via
+157	32	41	n	word2 vec
+27	3	10	p	present
+27	13	39	n	novel end - to - end model
+27	40	50	p	to extract
+27	51	77	n	relations between entities
+27	78	80	p	on
+27	86	99	n	word sequence
+27	104	130	n	dependency tree structures
+28	10	16	p	allows
+28	17	57	n	joint modeling of entities and relations
+28	79	84	p	using
+28	90	158	n	bidirectional sequential ( left - to - right and right - to - left )
+28	163	237	n	bidirectional tree - structured ( bottom - up and top - down ) LSTM - RNNs
+29	16	23	p	detects
+29	24	32	n	entities
+29	37	50	p	then extracts
+29	51	60	n	relations
+29	61	68	p	between
+29	73	90	n	detected entities
+29	91	96	p	using
+29	99	142	n	single incrementally - decoded NN structure
+29	171	186	p	jointly updated
+29	153	166	n	NN parameters
+29	187	192	p	using
+29	193	224	n	both entity and relation labels
+30	93	105	p	incorporates
+30	106	122	n	two enhancements
+30	139	157	n	entity pretraining
+30	199	217	n	scheduled sampling
+31	19	28	p	alleviate
+31	44	106	n	low - performance entity detection in early stages of training
+31	120	125	p	allow
+31	126	195	n	entity information to further help downstream relation classification
+2	0	34	n	End - to - End Relation Extraction
+4	19	93	n	end - to - end neural model to extract entities and relations between them
+6	25	111	n	jointly represent both entities and relations with shared parameters in a single model
+12	0	54	n	Extracting semantic relations between entities in text
+13	172	228	n	end - to - end ( joint ) modeling of entity and relation
+165	17	26	n	our model
+165	127	147	p	performs better than
+165	152	180	n	state - of - the - art model

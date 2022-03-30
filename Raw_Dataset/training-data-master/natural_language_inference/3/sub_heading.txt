@@ -1,0 +1,22 @@
+title
+abstract
+Introduction
+Sentence Modelling with LSTM
+Coupled-LSTMs for Strong Sentence
+Loosely Coupled-LSTMs (LC-LSTMs)
+Tightly Coupled-LSTMs (TC-LSTMs)
+Analysis of Two Proposed Models
+End-to-End Architecture for Sentence
+Embedding Layer
+Stacked Coupled-LSTMs Layers
+Pooling Layer
+Fully-Connected Layer
+Output Layer
+Training
+Experiment
+Hyperparameters and Training
+Competitor Methods
+Experiment-I: Recognizing Textual Entailment
+Experiment-II: Matching Question and
+Related Work
+Conclusion and Future Work

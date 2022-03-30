@@ -1,0 +1,145 @@
+61	48	56	p	based on
+61	61	89	n	Multi - NLI development sets
+65	11	33	n	each added layer model
+65	34	42	p	improves
+65	47	55	n	accuracy
+65	63	70	p	achieve
+65	73	96	n	substantial improvement
+65	97	99	p	in
+65	100	123	n	accuracy ( around 2 % )
+65	124	126	p	on
+65	132	163	n	matched and mismatched settings
+65	166	177	p	compared to
+65	182	203	n	single - layer biLSTM
+71	4	17	n	last ablation
+71	21	31	p	shows that
+71	34	44	n	classifier
+71	45	49	p	with
+71	50	68	n	two layers of relu
+71	69	71	p	is
+71	72	82	n	preferable
+67	15	19	p	show
+67	29	49	n	shortcut connections
+67	50	55	p	among
+67	60	73	n	biLSTM layers
+67	74	76	p	is
+67	85	106	n	important contributor
+67	107	109	p	to
+67	110	130	n	accuracy improvement
+67	133	139	p	around
+67	140	145	n	1.5 %
+67	146	155	p	on top of
+67	160	196	n	full 3 - layered stacked - RNN model
+69	15	24	p	show that
+69	25	38	n	fine - tuning
+69	43	58	n	word embeddings
+69	64	72	p	improves
+69	73	80	n	results
+69	89	97	p	for both
+69	102	143	n	in - domain task and cross - domain tasks
+22	19	64	n	https://github.com/ easonnie/multiNLI_encoder
+52	3	6	p	use
+52	7	27	n	cross - entropy loss
+52	28	30	p	as
+52	35	53	n	training objective
+52	54	58	p	with
+52	59	63	n	Adam
+52	310	314	p	with
+52	315	328	n	32 batch size
+53	4	26	n	starting learning rate
+53	27	29	p	is
+53	30	36	n	0.0002
+53	37	41	p	with
+53	42	52	n	half decay
+53	53	58	p	every
+53	59	69	n	two epochs
+54	4	26	n	number of hidden units
+54	27	30	p	for
+54	31	34	n	MLP
+54	35	37	p	in
+54	38	48	n	classifier
+54	49	51	p	is
+54	52	56	n	1600
+55	0	13	n	Dropout layer
+55	22	32	p	applied on
+55	37	43	n	output
+55	44	46	p	of
+55	47	64	n	each layer of MLP
+55	67	71	p	with
+55	72	84	n	dropout rate
+55	85	91	p	set to
+55	92	95	n	0.1
+56	3	7	p	used
+56	8	43	n	pre-trained 300D Glove 840B vectors
+56	44	57	p	to initialize
+56	62	77	n	word embeddings
+15	19	25	p	follow
+15	30	45	n	former approach
+15	46	48	p	of
+15	49	72	n	encoding - based models
+15	79	86	p	propose
+15	89	133	n	novel yet simple sequential sentence encoder
+15	134	137	p	for
+15	142	161	n	Multi - NLI problem
+18	18	68	n	stacked ( multi-layered ) bidirectional LSTM - RNN
+18	69	73	p	with
+18	74	94	n	shortcut connections
+18	175	203	n	word embedding fine - tuning
+19	4	29	n	over all supervised model
+19	30	34	p	uses
+19	41	65	n	shortcutstacked encoders
+19	66	75	p	to encode
+19	76	95	n	two input sentences
+19	96	100	p	into
+19	101	112	n	two vectors
+19	127	130	p	use
+19	133	143	n	classifier
+19	144	148	p	over
+19	153	171	n	vector combination
+19	172	180	p	to label
+19	185	197	n	relationship
+19	198	205	p	between
+19	212	225	n	two sentences
+19	226	228	p	as
+19	237	247	n	entailment
+19	250	263	n	contradiction
+19	269	275	n	neural
+2	41	64	n	Multi- Domain Inference
+4	52	91	n	multi-domain natural language inference
+10	0	34	n	Natural language inference ( NLI )
+10	38	76	n	recognizing textual entailment ( RTE )
+75	6	9	p	for
+75	10	21	n	Multi - NLI
+75	27	34	p	improve
+75	35	48	n	substantially
+75	49	53	p	over
+75	58	94	n	CBOW and biL - STM Encoder baselines
+76	8	17	p	show that
+76	18	60	n	our final shortcut - based stacked encoder
+76	61	69	p	achieves
+76	70	92	n	around 3 % improvement
+76	96	107	p	compared to
+76	112	140	n	1 layer biLSTM - Max Encoder
+77	4	22	n	shortcut - encoder
+77	23	26	p	was
+77	36	77	n	top singe - model ( non-ensemble ) result
+77	78	80	p	on
+77	85	122	n	EMNLP RepEval Shared Task leaderboard
+78	11	15	n	SNLI
+78	21	28	p	compare
+78	33	56	n	shortcutstacked encoder
+78	57	61	p	with
+78	66	105	n	current state - of - the - art encoders
+78	106	110	p	from
+78	115	131	n	SNLI leaderboard
+79	8	18	p	compare to
+79	23	50	n	recent biLSTM - Max Encoder
+80	4	11	n	results
+80	12	20	p	indicate
+80	28	58	n	Our Shortcut - Stacked Encoder
+80	61	71	p	sur-passes
+80	72	120	n	all the previous state - of - the - art encoders
+80	127	135	p	achieves
+80	140	172	n	new best encoding - based result
+80	173	175	p	on
+80	176	180	n	SNLI

@@ -1,0 +1,101 @@
+32	114	123	p	represent
+32	124	135	n	each word w
+32	136	140	p	with
+32	143	149	n	code C
+37	78	81	p	use
+37	82	99	n	embedding vectors
+37	100	112	p	to represent
+37	35	40	n	codes
+37	123	134	p	rather than
+37	139	151	n	unique words
+38	23	29	p	create
+38	30	41	n	M codebooks
+38	65	80	p	each containing
+38	81	99	n	K codeword vectors
+39	27	35	p	computed
+39	4	23	n	embedding of a word
+39	36	49	p	by summing up
+39	54	63	n	codewords
+39	64	80	p	corresponding to
+39	81	111	n	all the components in the code
+59	3	10	p	utilize
+59	15	37	n	Gumbel - softmax trick
+59	38	45	p	to find
+59	50	69	n	best discrete codes
+59	75	83	p	minimize
+59	88	92	n	loss
+165	0	13	n	CODE LEARNING
+171	22	51	p	small batch of the embeddings
+171	55	72	n	sampled uniformly
+171	73	77	p	from
+171	82	107	n	baseline embedding matrix
+173	25	35	p	batch size
+173	46	49	n	128
+174	3	6	p	use
+174	7	21	n	Adam optimizer
+174	22	26	p	with
+174	29	48	n	fixed learning rate
+174	49	51	p	of
+174	52	58	n	0.0001
+175	4	12	p	training
+175	24	39	n	200K iterations
+177	10	20	p	distribute
+177	25	39	n	model training
+177	45	49	p	GPUs
+177	43	44	n	4
+177	50	55	p	using
+177	60	72	n	nccl package
+178	0	18	n	SENTIMENT ANALYSIS
+193	15	27	p	trained with
+193	28	42	n	Adam optimizer
+193	43	46	p	for
+193	47	56	n	15 epochs
+193	57	61	p	with
+193	64	83	n	fixed learning rate
+193	84	86	p	of
+193	87	93	n	0.0001
+206	71	82	p	achieved by
+206	85	104	n	16 32 coding scheme
+206	31	50	p	maximum loss - free
+206	51	67	n	compression rate
+208	49	71	p	substantially improved
+208	18	41	n	classification accuracy
+208	72	76	p	with
+208	79	110	n	slightly lower compression rate
+210	0	19	n	MACHINE TRANSLATION
+233	15	25	p	trained by
+233	26	58	n	Nesterov 's accelerated gradient
+233	59	63	p	with
+233	67	88	n	initial learning rate
+233	89	91	p	of
+233	92	96	n	0.25
+237	47	58	p	distributed
+237	35	43	p	training
+237	64	68	p	GPUs
+237	62	63	n	4
+237	80	88	n	computes
+237	91	101	p	mini-batch
+237	105	115	n	16 samples
+246	46	48	p	on
+246	49	62	n	ASPEC dataset
+246	63	73	p	by pruning
+246	74	97	n	90 % of the connections
+246	4	32	p	loss - free compression rate
+246	33	45	n	reaches 92 %
+247	78	80	p	in
+247	81	96	n	IWSLT14 dataset
+247	69	77	p	observed
+247	42	65	n	modest performance loss
+248	15	20	p	using
+248	21	41	n	compositional coding
+248	48	76	p	loss - free compression rate
+248	80	84	n	94 %
+248	85	88	p	for
+248	93	108	n	IWSLT14 dataset
+248	113	117	n	99 %
+248	118	121	p	for
+248	126	139	n	ASPEC dataset
+2	48	75	n	COMPRESSING WORD EMBEDDINGS
+5	55	136	n	compressing the word embeddings without any significant sacrifices in performance
+55	73	135	n	constructing word embeddings with drastically fewer parameters
+24	40	71	n	compress the size of NLP models

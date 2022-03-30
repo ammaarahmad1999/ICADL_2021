@@ -1,0 +1,203 @@
+141	0	3	p	For
+141	4	8	n	CNNs
+141	14	25	p	make use of
+141	30	92	n	well - known CNN - non-static architecture and hyperparameters
+141	107	111	p	with
+141	114	127	n	learning rate
+141	128	130	p	of
+141	131	137	n	0.0006
+141	140	151	p	obtained by
+141	152	158	n	tuning
+141	159	161	p	on
+141	166	181	n	validation data
+142	8	24	n	DM - MCNN models
+142	31	44	n	configuration
+142	45	47	p	of
+142	52	72	n	convolutional module
+142	80	91	p	same as for
+142	92	96	n	CNNs
+142	107	138	n	remaining hyperparameter values
+142	152	160	p	tuned on
+142	165	180	n	validation sets
+144	4	56	n	greater efficiency and better convergence properties
+144	63	71	n	training
+144	72	81	p	relies on
+144	82	94	n	mini-batches
+145	4	18	n	implementation
+145	19	28	p	considers
+145	33	56	n	maximal sentence length
+145	57	59	p	in
+145	60	75	n	each mini-batch
+145	80	91	p	zero - pads
+145	92	111	n	all other sentences
+145	112	114	p	to
+145	115	126	n	this length
+145	127	132	p	under
+145	133	153	n	convolutional module
+145	161	169	p	enabling
+145	170	197	n	uniform and fast processing
+145	198	200	p	of
+145	201	216	n	each mini-batch
+146	4	32	n	neural network architectures
+146	37	54	p	implemented using
+146	59	66	n	PyTorch
+125	0	10	n	Embeddings
+126	4	37	n	standard pre-trained word vectors
+126	43	46	p	for
+126	47	54	n	English
+126	55	58	p	are
+126	63	73	n	GloVe ones
+126	74	84	p	trained on
+126	85	103	n	840 billion tokens
+126	104	106	p	of
+126	107	124	n	Common Crawl data
+126	139	154	n	other languages
+126	160	167	p	rely on
+126	172	210	n	Facebook fastText Wikipedia embeddings
+126	211	213	p	as
+126	214	235	n	input representations
+127	13	16	p	are
+127	17	34	n	300 - dimensional
+128	4	11	n	vectors
+128	23	29	p	fed to
+128	34	37	n	CNN
+128	50	70	n	convolutional module
+128	71	73	p	of
+128	78	87	n	DM - MCNN
+128	88	94	p	during
+128	95	109	n	initialization
+128	118	131	n	unknown words
+128	136	152	p	initialized with
+128	153	158	n	zeros
+129	0	9	n	All words
+129	12	21	p	including
+129	26	38	n	unknown ones
+129	41	44	p	are
+129	45	57	n	fine - tuned
+129	58	64	p	during
+129	69	85	n	training process
+130	0	3	p	For
+130	8	34	n	transfer learning approach
+130	53	60	p	rely on
+130	65	95	n	multi-domain sentiment dataset
+130	101	115	p	collected from
+130	116	140	n	Amazon customers reviews
+138	4	30	n	cross - lingual projection
+138	36	43	p	extract
+138	44	49	n	links
+138	50	57	p	between
+138	58	63	n	words
+138	64	68	p	from
+138	71	117	n	2017 dump of the English edition of Wiktionary
+132	18	23	p	train
+132	24	35	n	linear SVMs
+132	36	41	p	using
+132	42	56	n	scikit - learn
+132	57	67	p	to extract
+132	68	85	n	word coefficients
+132	86	88	p	in
+132	89	100	n	each domain
+132	105	113	p	also for
+132	118	138	n	union of all domains
+132	150	158	p	yielding
+132	161	197	n	26 - dimensional sentiment embedding
+133	38	46	p	consider
+133	47	72	n	several alternative forms
+133	73	84	p	of infusing
+133	85	98	n	external cues
+135	21	38	n	sentiment lexicon
+135	39	45	p	called
+135	46	51	n	VADER
+137	6	13	p	contain
+137	14	47	n	separate domain - specific scores
+137	48	51	p	for
+137	52	84	n	250 different Reddit communities
+137	97	106	p	result in
+137	107	135	n	250 - dimensional embeddings
+139	3	11	p	restrict
+139	16	31	n	vocabulary link
+139	32	46	p	set to include
+139	51	60	n	languages
+139	66	72	p	mining
+139	153	163	n	Wiktionary
+139	73	86	p	corresponding
+139	87	98	n	translation
+139	101	109	n	synonymy
+139	112	122	n	derivation
+139	129	147	n	etymological links
+16	19	30	p	investigate
+16	35	52	n	extrinsic signals
+16	60	77	p	incorporated into
+16	78	98	n	deep neural networks
+16	99	102	p	for
+16	103	121	n	sentiment analysis
+18	26	34	p	consider
+18	35	50	n	word embeddings
+18	64	79	p	specialized for
+18	92	110	n	sentiment analysis
+18	135	142	p	lead to
+18	143	177	n	stronger and more consistent gains
+18	222	236	p	obtained using
+18	237	259	n	out - of - domain data
+20	11	18	p	propose
+20	21	70	n	bespoke convolutional neural network architecture
+20	71	75	p	with
+20	78	100	n	separate memory module
+20	101	113	p	dedicated to
+20	118	138	n	sentiment embeddings
+2	39	62	n	Deep Sentiment Analysis
+9	24	42	n	sentiment analysis
+12	140	184	n	supervised sentiment polarity classification
+152	0	17	p	Comparing this to
+152	18	22	n	CNNs
+152	23	27	p	with
+152	28	55	n	GloVe / fastText embeddings
+152	58	63	p	where
+152	64	70	n	Glo Ve
+152	74	82	p	used for
+152	83	90	n	English
+152	97	105	n	fastText
+152	109	117	p	used for
+152	118	137	n	all other languages
+152	143	150	p	observe
+152	151	175	n	substantial improvements
+152	176	186	p	across all
+152	187	195	n	datasets
+153	5	10	p	shows
+153	16	28	n	word vectors
+153	32	46	p	tend to convey
+153	47	79	n	pertinent word semantics signals
+153	80	91	p	that enable
+153	92	98	n	models
+153	99	112	p	to generalize
+153	113	119	n	better
+154	0	4	p	Note
+154	19	27	n	accuracy
+154	28	33	p	using
+154	34	39	n	GloVe
+154	40	42	p	on
+154	47	76	n	English movies review dataset
+154	80	95	p	consistent with
+154	96	103	n	numbers
+154	104	115	p	reported in
+154	116	129	n	previous work
+156	10	18	p	consider
+156	19	33	n	our DM - MCNNs
+156	34	38	p	with
+156	45	68	n	dual - module mechanism
+157	3	10	p	observe
+157	11	69	n	fairly consistent and sometimes quite substan - tial gains
+157	70	74	p	over
+157	75	79	n	CNNs
+157	80	89	p	with just
+157	94	118	n	GloVe / fastText vectors
+171	13	63	n	automatically projected cross - lingual embeddings
+171	64	67	p	are
+171	68	108	n	very noisy and limited in their coverage
+171	111	139	p	particularly with respect to
+171	140	155	n	inflected forms
+171	158	167	n	our model
+171	168	205	p	succeeds in exploiting them to obtain
+171	206	223	n	substantial gains
+171	224	226	p	in
+171	227	266	n	several different languages and domains

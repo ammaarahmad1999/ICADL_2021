@@ -1,0 +1,107 @@
+140	3	7	p	note
+140	17	42	n	deep residual coattention
+140	43	50	p	yielded
+140	55	75	n	highest contribution
+140	76	78	p	to
+140	79	96	n	model performance
+140	99	110	p	followed by
+140	115	130	n	mixed objective
+141	4	18	n	sparse mixture
+141	19	21	p	of
+141	22	35	n	experts layer
+141	36	38	p	in
+141	43	50	n	decoder
+141	51	56	p	added
+141	57	75	n	minor improvements
+141	76	78	p	to
+141	83	100	n	model performance
+126	3	13	p	preprocess
+126	18	24	n	corpus
+126	30	33	p	use
+126	38	58	n	reversible tokenizer
+126	59	63	p	from
+126	64	80	n	Stanford CoreNLP
+127	0	3	p	For
+127	4	19	n	word embeddings
+127	25	28	p	use
+127	29	45	n	GloVe embeddings
+127	46	59	p	pretrained on
+127	64	88	n	840B Common Crawl corpus
+128	17	28	p	concatenate
+128	29	45	n	these embeddings
+128	46	50	p	with
+128	51	75	n	context vectors ( CoVe )
+129	4	27	n	out of vocabulary words
+129	33	36	p	set
+129	41	71	n	embeddings and context vectors
+129	72	74	p	to
+129	75	79	n	zero
+130	3	10	p	perform
+130	11	23	n	word dropout
+130	24	26	p	on
+130	31	39	n	document
+130	46	51	p	zeros
+130	54	68	n	word embedding
+130	69	73	p	with
+130	74	91	n	probability 0.075
+131	17	21	p	swap
+131	26	44	n	first maxout layer
+131	45	47	p	of
+131	52	74	n	highway maxout network
+131	75	77	p	in
+131	82	93	n	DCN decoder
+131	94	98	p	with
+131	101	115	n	sparse mixture
+131	116	118	p	of
+131	119	132	n	experts layer
+18	29	36	p	propose
+18	39	54	n	mixed objective
+18	60	68	p	combines
+18	69	99	n	traditional cross entropy loss
+18	100	104	p	over
+18	105	114	n	positions
+18	115	119	p	with
+18	122	145	n	measure of word overlap
+18	146	158	p	trained with
+18	159	181	n	reinforcement learning
+19	3	9	p	obtain
+19	14	30	n	latter objective
+19	31	36	p	using
+19	37	68	n	self - critical policy learning
+19	69	77	p	in which
+19	82	88	n	reward
+19	92	100	p	based on
+19	101	113	n	word overlap
+19	114	121	p	between
+19	126	141	n	proposed answer
+19	150	169	n	ground truth answer
+22	49	55	p	extend
+22	60	95	n	Dynamic Coattention Network ( DCN )
+22	99	103	p	with
+22	106	139	n	deep residual coattention encoder
+2	58	76	n	QUESTION ANSWERING
+135	0	13	p	Comparison to
+135	14	36	n	baseline DCN with CoVe
+135	38	43	n	DCN +
+135	44	55	p	outperforms
+135	60	68	n	baseline
+135	112	114	p	on
+135	119	140	n	SQuAD development set
+135	69	71	p	by
+135	72	98	n	3.2 % exact match accuracy
+135	103	111	n	3.2 % F1
+136	0	5	p	shows
+136	10	37	n	consistent performance gain
+136	38	40	p	of
+136	41	46	n	DCN +
+136	47	51	p	over
+136	56	64	n	baseline
+136	65	71	p	across
+136	72	86	n	question types
+136	89	105	n	question lengths
+136	112	126	n	answer lengths
+137	16	21	n	DCN +
+137	22	30	p	provides
+137	33	54	n	significant advantage
+137	55	58	p	for
+137	59	73	n	long questions

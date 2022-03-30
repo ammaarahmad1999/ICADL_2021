@@ -1,0 +1,141 @@
+145	0	58	n	Both the coarse - grain module and the fine - grain module
+145	73	86	p	contribute to
+145	87	104	n	model performance
+149	4	29	n	fine - grain - only model
+149	30	44	n	under-performs
+149	49	76	n	coarse - grain - only model
+149	77	89	n	consistently
+149	90	96	p	across
+149	97	123	n	almost all length measures
+151	40	62	n	matches or outperforms
+151	67	94	n	coarse - grain - only model
+151	95	97	p	on
+151	98	106	n	examples
+151	107	111	p	with
+151	114	126	n	large number
+151	127	129	p	of
+151	130	147	n	support documents
+151	156	178	n	long support documents
+146	103	112	p	result in
+146	113	141	n	less performance degradation
+146	0	9	p	Replacing
+146	10	30	n	selfattention layers
+146	31	35	p	with
+146	36	50	n	mean - pooling
+146	59	77	n	bidirectional GRUs
+146	78	82	p	with
+146	83	102	n	unidirectional GRUs
+147	0	9	p	Replacing
+147	14	21	n	encoder
+147	22	26	p	with
+147	29	39	n	projection
+147	40	44	p	over
+147	45	60	n	word embeddings
+147	61	70	p	result in
+147	71	99	n	significant performance drop
+111	0	35	n	MULTI - EVIDENCE QUESTION ANSWERING
+111	36	38	p	ON
+111	39	46	n	WIKIHOP
+121	3	11	n	tokenize
+121	21	26	p	using
+121	27	43	n	Stanford CoreNLP
+122	3	6	p	use
+122	7	30	n	fixed Glo Ve embeddings
+122	31	41	p	as well as
+122	42	68	n	character ngram embeddings
+123	3	8	p	split
+123	9	33	n	symbolic query relations
+123	34	38	p	into
+123	39	44	n	words
+124	15	28	p	trained using
+124	29	33	n	ADAM
+127	4	7	n	CFC
+127	8	16	p	achieves
+127	17	47	n	state - of - the - art results
+127	48	50	p	on
+127	60	88	n	masked and unmasked versions
+127	89	91	p	of
+127	92	99	n	WikiHop
+128	16	18	p	on
+128	23	58	n	blind , held - out WikiHop test set
+128	65	68	n	CFC
+128	69	77	p	achieves
+128	80	97	n	new best accuracy
+128	98	100	p	of
+128	101	107	n	70.6 %
+134	0	39	n	RERANKING EXTRACTIVE QUESTION ANSWERING
+134	40	42	p	ON
+134	43	51	n	TRIVIAQA
+141	0	24	n	Our experimental results
+141	28	32	p	show
+141	38	47	n	reranking
+141	48	53	p	using
+141	58	61	n	CFC
+141	62	70	p	provides
+141	71	99	n	consistent performance gains
+141	100	115	p	over only using
+141	120	160	n	span extraction question answering model
+142	16	25	n	reranking
+142	26	31	p	using
+142	36	39	n	CFC
+142	40	48	n	improves
+142	49	60	n	performance
+143	0	2	p	On
+143	7	30	n	whole Trivia QA dev set
+143	33	42	n	reranking
+143	43	48	p	using
+143	53	56	n	CFC
+143	57	67	p	results in
+143	68	73	n	again
+143	74	76	p	of
+143	77	98	n	3.1 % EM and 3.0 % F1
+46	0	27	n	Our multi-evidence QA model
+46	34	89	n	Coarse - grain Fine - grain Coattention Network ( CFC )
+46	92	105	p	selects among
+46	108	111	n	set
+46	112	114	p	of
+46	115	132	n	candidate answers
+46	133	138	p	given
+46	141	144	n	set
+46	145	147	p	of
+46	148	165	n	support documents
+46	172	177	n	query
+47	4	7	n	CFC
+47	11	22	p	inspired by
+47	23	47	n	coarse - grain reasoning
+47	52	74	n	fine - grain reasoning
+51	0	11	n	Each module
+51	12	19	p	employs
+51	22	50	n	novel hierarchical attention
+51	55	64	n	hierarchy
+51	65	67	p	of
+51	68	79	n	coattention
+51	84	100	n	self - attention
+51	103	113	p	to combine
+51	114	125	n	information
+51	126	130	p	from
+51	135	152	n	support documents
+51	153	167	p	conditioned on
+51	172	177	n	query
+51	182	192	n	candidates
+48	0	2	p	In
+48	3	27	n	coarse - grain reasoning
+48	34	39	n	model
+48	40	46	p	builds
+48	49	63	n	coarse summary
+48	64	66	p	of
+48	67	84	n	support documents
+48	85	99	p	conditioned on
+48	104	109	n	query
+49	3	25	n	fine - grain reasoning
+49	32	37	n	model
+49	38	45	p	matches
+49	46	73	n	specific finegrain contexts
+49	134	142	p	to gauge
+49	147	156	n	relevance
+49	157	159	p	of
+49	87	96	n	candidate
+2	55	90	n	MULTI - EVIDENCE QUESTION ANSWERING
+4	63	81	n	question answering
+42	40	65	n	question answering ( QA )
+43	79	104	n	neural question answering

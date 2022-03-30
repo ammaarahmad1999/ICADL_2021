@@ -1,0 +1,7 @@
+{
+  "has research problem" : [
+    ["Semantic Relation Classification", {"from sentence" : "Semantic Relation Classification via Bidirectional LSTM Networks with Entity - aware Attention using Latent Entity Typing"}],
+    ["Classifying semantic relations between entity pairs in sentences", {"from sentence" : "Classifying semantic relations between entity pairs in sentences is an important task in Natural Language Processing ( NLP ) ."}],
+    ["predicting a semantic relationship between two tagged entities in a sentence", {"from sentence" : "A task of relation classification is defined as predicting a semantic relationship between two tagged entities in a sentence ."}]
+  ]
+}

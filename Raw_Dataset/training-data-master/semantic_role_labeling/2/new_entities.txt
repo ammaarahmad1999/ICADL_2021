@@ -1,0 +1,124 @@
+108	0	15	n	Without dropout
+108	22	27	n	model
+108	28	36	p	overfits
+108	40	57	n	around 300 epochs
+108	37	39	p	at
+108	61	66	n	78 F1
+109	0	36	n	Orthonormal parameter initialization
+109	37	39	p	is
+109	40	62	n	surprisingly important
+109	65	77	p	without this
+109	84	89	n	model
+109	90	98	p	achieves
+109	99	109	n	only 65 F1
+109	110	116	p	within
+109	121	136	n	first 50 epochs
+110	4	21	n	8 layer ablations
+110	22	28	p	suffer
+110	31	35	n	loss
+110	39	48	p	more than
+110	49	52	n	1.7
+110	53	55	p	in
+110	56	68	n	absolute F 1
+110	69	80	p	compared to
+110	85	95	n	full model
+87	4	11	n	network
+87	12	23	p	consists of
+87	24	80	n	8 BiLSTM layers ( 4 forward LSTMs and 4 reversed LSTMs )
+87	81	85	p	with
+87	86	114	n	300 dimensional hidden units
+87	123	136	n	softmax layer
+87	137	151	p	for predicting
+87	156	175	n	output distribution
+89	8	23	n	weight matrices
+89	24	26	p	in
+89	27	37	n	BiL - STMs
+89	42	58	p	initialized with
+89	59	86	n	random orthonormal matrices
+91	4	10	n	tokens
+91	11	14	p	are
+91	15	28	n	lower - cased
+91	33	49	p	initialized with
+91	50	84	n	100 - dimensional GloVe embeddings
+91	85	99	p	pre-trained on
+91	100	109	n	6B tokens
+91	114	128	p	updated during
+91	129	137	n	training
+92	0	6	n	Tokens
+92	16	30	p	not covered by
+92	31	36	n	GloVe
+92	41	54	p	replaced with
+92	57	91	n	randomly initialized UNK embedding
+95	8	14	n	models
+95	19	30	p	trained for
+95	31	41	n	500 epochs
+95	42	46	p	with
+95	47	61	n	early stopping
+95	62	70	p	based on
+95	71	90	n	development results
+93	12	15	p	use
+93	16	24	n	Adadelta
+93	43	47	p	with
+93	50	68	n	1e ?6 and ? = 0.95
+93	73	85	n	mini-batches
+93	89	93	p	size
+93	94	96	n	80
+94	3	6	p	set
+94	7	32	n	RNN - dropout probability
+94	33	35	p	to
+94	36	39	n	0.1
+94	44	48	p	clip
+94	49	58	n	gradients
+94	59	63	p	with
+94	64	68	n	norm
+94	69	80	p	larger than
+94	81	82	n	1
+11	63	68	p	using
+11	69	101	n	deep highway bidirectional LSTMs
+11	102	106	p	with
+11	107	127	n	constrained decoding
+14	18	23	p	treat
+14	24	27	n	SRL
+14	28	30	p	as
+14	33	52	n	BIO tagging problem
+14	57	60	p	use
+14	61	85	n	deep bidirectional LSTMs
+15	13	22	p	differ by
+15	29	40	n	simplifying
+15	45	68	n	input and output layers
+15	77	88	n	introducing
+15	89	108	n	highway connections
+15	117	122	p	using
+15	123	140	n	recurrent dropout
+15	149	157	n	decoding
+15	158	162	p	with
+15	163	177	n	BIOconstraints
+15	190	200	n	ensembling
+15	201	205	p	with
+15	208	226	n	product of experts
+2	0	27	n	Deep Semantic Role Labeling
+4	43	73	n	semantic role labeling ( SRL )
+10	64	67	n	SRL
+103	0	20	n	Our ensemble ( PoE )
+103	25	48	n	an absolute improvement
+103	93	97	p	over
+103	102	127	n	previous state of the art
+103	49	51	p	of
+103	52	58	n	2.1 F1
+103	59	61	p	on
+103	67	77	n	CoNLL 2005
+103	82	92	n	CoNLL 2012
+104	0	16	n	Our single model
+104	22	30	p	achieves
+104	31	58	n	more than a 0.4 improvement
+104	59	61	p	on
+104	62	75	n	both datasets
+105	0	18	p	In comparison with
+105	23	44	n	best reported results
+105	47	94	n	our percentage of completely correct predicates
+105	95	106	p	improves by
+105	107	117	n	5.9 points
+106	170	174	p	show
+106	180	210	n	accurate syntactic information
+106	215	222	p	improve
+106	229	240	n	deep models

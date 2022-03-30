@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Related works
+Method
+Overall architecture
+Rank score
+Training
+Discussion
+Experimental results
+Simulation on synthetic data
+Results on Chinese poems composition
+Results on COCO image captions
+Results on Shakespeare’s plays
+Conclusion

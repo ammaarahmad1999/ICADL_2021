@@ -1,0 +1,54 @@
+{
+  "has" : {
+    "Model" : {
+      "to model" : {
+        "hidden states of all words simultaneously" : {
+          "at" : "each recurrent step"
+        },
+        "from sentence" : "As shown in , the main idea is to model the hidden states of all words simultaneously at each recurrent step , rather than one word at a time ."
+      },
+      "view" : {
+        "whole sentence" : {
+          "as" : {
+            "single state" : {
+              "consists of" : [
+                {"sub-states" : {
+                  "for" : "individual words"
+                }},
+                "over all sentence - level state"
+              ]
+            }
+          }
+        },
+        "from sentence" : "In particular , we view the whole sentence as a single state , which consists of sub-states for individual words and an over all sentence - level state ."        
+      },
+      "To capture" : {
+        "local and non-local contexts" : {
+          "updated recurrently" : {
+            "states" : {
+              "by" : "exchanging information between each other"
+            }
+          }
+        },
+        "from sentence" : "To capture local and non-local contexts , states are updated recurrently by exchanging information between each other ."
+      },
+      "At each recurrent step" : {
+        "information exchange" : {
+          "conducted between" : ["consecutive words in the sentence", "sentence - level state and each word"]
+        },
+        "from sentence" : "At each recurrent step , information exchange is conducted between consecutive words in the sentence , and between the sentence - level state and each word ."
+
+      },
+      "has" : {
+        "each word" : {
+          "receives" : {
+            "information" : {
+              "from" : "predecessor and successor simultaneously"
+            }
+          }
+        },
+        "from sentence" : "In particular , each word receives information from its predecessor and successor simultaneously ."
+      }
+    } 
+  }
+}

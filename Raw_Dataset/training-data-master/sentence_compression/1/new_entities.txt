@@ -1,0 +1,49 @@
+19	46	59	p	benefits from
+19	64	101	n	very recent advances in deep learning
+19	106	110	p	uses
+19	111	170	n	word embeddings and Long Short Term Memory models ( LSTMs )
+19	171	180	p	to output
+19	181	231	n	surprisingly readable and informative compressions
+20	0	10	p	Trained on
+20	13	19	n	corpus
+20	20	22	p	of
+20	23	44	n	less than two million
+20	45	68	p	automatically extracted
+20	69	87	n	parallel sentences
+20	92	97	p	using
+20	100	113	n	standard tool
+20	114	123	p	to obtain
+20	124	139	n	word embeddings
+2	0	32	n	Sentence Compression by Deletion
+4	31	68	n	deletion - based sentence compression
+9	0	20	n	Sentence compression
+144	11	33	n	significant difference
+144	34	36	p	in
+144	37	48	n	performance
+144	49	51	p	of
+144	56	89	n	MIRA baseline and the LSTM models
+144	97	108	p	in terms of
+144	109	135	n	F1 - score and in accuracy
+145	0	14	n	More than 30 %
+145	15	17	p	of
+145	18	37	n	golden compressions
+145	38	46	p	could be
+145	53	64	n	regenerated
+145	65	67	p	by
+145	72	84	n	LSTM systems
+145	85	96	p	which is in
+145	97	111	n	sharp contrast
+145	112	116	p	with
+145	121	125	n	20 %
+145	126	128	p	of
+145	129	133	n	MIRA
+146	4	15	n	differences
+146	16	18	p	in
+146	19	27	n	F- score
+146	28	35	p	between
+146	40	62	n	three versions of LSTM
+146	63	66	p	are
+146	67	82	n	not significant
+146	89	95	n	scores
+146	100	108	p	close to
+146	109	113	n	0.81

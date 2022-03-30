@@ -1,0 +1,99 @@
+94	0	11	n	Grid search
+94	16	31	p	performed using
+94	32	57	n	20 % of the training data
+94	58	60	p	as
+94	63	77	n	validation set
+94	87	99	p	to determine
+94	104	127	n	optimal hyperparameters
+94	147	153	p	to use
+94	156	205	n	constant learning rate or learning rate annealing
+101	4	25	n	optimal learning rate
+101	26	40	p	in the case of
+101	41	58	n	cosine similarity
+101	59	61	p	is
+101	62	77	n	extremely small
+101	80	90	p	suggesting
+101	93	114	n	chaotic error surface
+105	4	11	n	weights
+105	12	14	p	of
+105	19	27	n	networks
+105	28	32	p	were
+105	33	44	n	initialized
+105	45	49	p	from
+105	52	72	n	uniform distribution
+105	73	75	p	in
+105	80	85	n	range
+105	86	88	p	of
+105	89	108	n	[ - 0.001 , 0.001 ]
+97	52	65	n	learning rate
+97	45	49	p	from
+97	71	104	n	[ 0.25 , 0.025 , 0.0025 , 0.001 ]
+97	15	19	p	tune
+97	24	44	n	number of iterations
+100	15	20	p	using
+100	21	47	n	L2 regularized dot product
+100	84	95	p	chosen from
+100	96	114	n	[ 1 , 0.1 , 0.01 ]
+103	18	26	p	requires
+103	29	52	n	larger number of epochs
+103	53	56	p	for
+103	57	68	n	convergence
+104	0	3	p	For
+104	8	20	n	distribution
+104	21	24	p	for
+104	25	48	n	sampling negative words
+104	54	58	p	used
+104	63	82	n	n-gram distribution
+104	83	92	p	raised to
+104	97	111	n	3 / 4 th power
+13	11	26	p	aims to improve
+13	36	61	n	document embedding models
+13	62	73	p	by training
+13	74	93	n	document embeddings
+13	94	99	p	using
+13	100	117	n	cosine similarity
+14	36	45	p	trying to
+14	46	53	n	predict
+14	54	59	p	given
+14	62	70	n	document
+14	77	94	n	words / n - grams
+14	14	16	p	in
+14	102	110	n	document
+14	134	142	n	maximize
+14	295	312	n	cosine similarity
+2	0	24	n	Sentiment Classification
+4	3	44	n	document - level sentiment classification
+10	41	65	n	sentiment classification
+10	94	147	n	binary sentiment classification of long movie reviews
+109	13	27	p	see that using
+109	28	45	n	cosine similarity
+109	46	56	p	instead of
+109	57	68	n	dot product
+109	69	77	p	improves
+109	78	86	n	accuracy
+111	21	33	p	suggest that
+111	34	43	n	switching
+111	44	48	p	from
+111	49	60	n	dot product
+111	18	20	p	to
+111	64	81	n	cosine similarity
+111	88	96	p	improves
+111	97	105	n	accuracy
+115	8	14	p	during
+115	15	26	n	grid search
+115	42	63	n	initial learning rate
+115	64	67	p	was
+115	68	72	n	0.25
+116	0	11	p	Introducing
+116	12	29	n	L2 regularization
+116	30	32	p	to
+116	33	44	n	dot product
+116	45	53	p	improves
+116	54	62	n	accuracy
+116	63	66	p	for
+116	67	76	n	all cases
+116	77	83	p	except
+116	86	98	n	depreciation
+116	99	119	p	in the case of using
+116	120	128	n	unigrams
+92	0	4	p	Code

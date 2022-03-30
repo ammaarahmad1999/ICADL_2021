@@ -1,0 +1,161 @@
+77	0	7	n	BERT SP
+77	10	46	n	BERT with structured prediction only
+78	0	22	n	Entity - Aware BERT SP
+78	25	39	n	our full model
+79	0	60	n	BERT SP with position embedding on the final attention layer
+80	5	7	p	is
+80	10	34	n	more straightforward way
+80	35	45	p	to achieve
+80	46	49	n	MRE
+80	50	52	p	in
+80	53	63	n	one - pass
+80	92	97	p	using
+80	98	117	n	position embeddings
+83	0	45	n	BERT SP with entity indicators on input layer
+83	51	59	p	replaces
+83	60	90	n	our structured attention layer
+83	97	101	p	adds
+83	102	112	n	indicators
+83	113	115	p	of
+83	116	154	n	entities ( transformed to embeddings )
+16	10	18	p	presents
+16	21	29	n	solution
+16	39	46	p	resolve
+16	51	86	n	inefficient multiple - passes issue
+16	87	89	p	of
+16	90	108	n	existing solutions
+16	109	112	p	for
+16	113	116	n	MRE
+16	117	128	p	by encoding
+16	133	148	n	input only once
+17	19	36	n	proposed solution
+17	40	55	p	built on top of
+17	60	138	n	existing transformer - based , pretrained general - purposed language encoders
+18	17	20	p	use
+18	21	85	n	Bidirectional Encoder Representations from Transformers ( BERT )
+18	86	88	p	as
+18	93	120	n	transformer - based encoder
+19	77	86	p	introduce
+19	89	116	n	structured prediction layer
+19	117	131	p	for predicting
+19	132	150	n	multiple relations
+19	151	154	p	for
+19	155	177	n	different entity pairs
+19	193	197	p	make
+19	202	222	n	selfattention layers
+19	223	231	p	aware of
+19	236	245	n	positions
+19	246	248	p	of
+19	249	262	n	all en-tities
+19	263	265	p	in
+19	270	285	n	input paragraph
+2	0	31	n	Extracting Multiple - Relations
+4	41	79	n	extracting multiple entity - relations
+5	57	92	n	multiple entityrelations extraction
+10	0	26	n	Relation extraction ( RE )
+12	27	29	n	RE
+12	38	74	n	multiplerelations extraction ( MRE )
+13	150	153	n	MRE
+86	4	21	n	first observation
+86	22	29	p	is that
+86	30	52	n	our model architecture
+86	53	61	p	achieves
+86	62	81	n	much better results
+86	82	93	p	compared to
+86	98	137	n	previous state - of - the - art methods
+90	38	45	n	BERT SP
+90	52	70	p	successfully adapt
+90	75	91	n	pre-trained BERT
+90	92	94	p	to
+90	99	107	n	MRE task
+90	114	122	p	achieves
+90	123	145	n	comparable performance
+94	0	14	n	Our full model
+94	17	21	p	with
+94	26	50	n	structured fine - tuning
+94	51	53	p	of
+94	54	70	n	attention layers
+94	73	79	p	brings
+94	80	99	n	further improvement
+94	100	102	p	of
+94	103	114	n	about 5.5 %
+94	117	119	p	in
+94	124	146	n	MRE one - pass setting
+94	153	161	p	achieves
+94	164	202	n	new state - of - the - art performance
+94	208	219	p	compared to
+94	224	254	n	methods with domain adaptation
+117	0	26	n	Our Entity - Aware BERT SP
+117	27	32	p	gives
+117	33	51	n	comparable results
+117	52	54	p	to
+117	59	78	n	top - ranked system
+117	79	81	p	in
+117	86	97	n	shared task
+117	100	104	p	with
+117	105	130	n	slightly lower Macro - F1
+117	180	206	n	slightly higher Micro - F1
+87	0	4	p	Note
+87	10	20	n	our method
+87	25	41	p	not designed for
+87	42	59	n	domain adaptation
+87	65	82	p	still outperforms
+87	89	96	n	methods
+87	97	101	p	with
+87	102	119	n	domain adaptation
+89	0	5	p	Among
+89	6	37	n	all the BERT - based approaches
+89	40	50	p	finetuning
+89	55	77	n	off - the - shelf BERT
+89	78	91	p	does not give
+89	94	111	n	satisfying result
+92	3	12	p	works for
+92	17	48	n	singlerelation per pass setting
+92	59	70	n	performance
+92	71	88	p	lags behind using
+92	89	104	n	only indicators
+92	105	107	p	of
+92	112	131	n	two target entities
+99	0	3	p	For
+99	4	11	n	BERT SP
+99	12	16	p	with
+99	17	34	n	entity indicators
+99	35	37	p	on
+99	38	44	n	inputs
+100	13	21	p	observed
+100	2	9	n	2 % gap
+103	4	36	n	BERT SP with position embeddings
+103	37	39	p	on
+103	44	65	n	final attention layer
+103	71	76	p	train
+103	81	86	n	model
+103	87	89	p	in
+103	94	119	n	single - relation setting
+103	124	133	p	test with
+103	134	156	n	two different settings
+103	159	161	p	so
+103	166	173	n	results
+103	174	177	p	are
+103	182	186	n	same
+118	0	15	p	When predicting
+118	16	34	n	multiple relations
+118	35	37	p	in
+118	38	48	n	one - pass
+118	54	58	p	have
+118	59	69	n	0.9 % drop
+118	70	72	p	on
+118	73	83	n	Macro - F1
+118	92	117	n	further 0.8 % improvement
+118	118	120	p	on
+118	121	131	n	Micro - F1
+120	20	31	p	compared to
+120	36	58	n	top singlemodel result
+120	61	79	p	which makes use of
+120	80	117	n	additional word and entity embeddings
+120	118	131	p	pretrained on
+120	132	148	n	in - domain data
+120	151	162	n	our methods
+120	163	174	p	demonstrate
+120	175	190	n	clear advantage
+120	191	193	p	as
+120	196	208	n	single model

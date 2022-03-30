@@ -1,0 +1,79 @@
+90	3	6	p	use
+90	7	35	n	pre-trained GloVe embeddings
+90	36	50	p	of dimension d
+90	51	58	n	w = 300
+90	63	70	p	produce
+90	71	109	n	character - based word representations
+90	110	113	p	via
+90	114	122	n	dc = 100
+90	123	144	n	convolutional filters
+90	145	149	p	over
+90	150	170	n	character embeddings
+14	29	33	p	take
+14	36	41	n	model
+14	47	58	p	carries out
+14	59	101	n	only basic question - document interaction
+14	106	116	p	prepend to
+14	122	128	n	module
+14	129	142	p	that produces
+14	143	159	n	token embeddings
+14	160	162	p	by
+14	163	180	n	explicitly gating
+14	181	188	p	between
+14	189	234	n	contextual and non-contextual representations
+16	33	40	p	turn to
+16	43	65	n	semisupervised setting
+16	78	86	p	leverage
+16	89	103	n	language model
+16	106	120	p	pre-trained on
+16	121	142	n	large amounts of data
+16	145	147	p	as
+16	150	166	n	sequence encoder
+16	173	193	p	forcibly facilitates
+16	194	213	n	context utilization
+2	40	61	n	Reading Comprehension
+8	0	28	n	Reading comprehension ( RC )
+9	0	2	n	RC
+68	62	69	p	observe
+68	70	90	n	superior performance
+68	91	93	p	by
+68	98	112	n	contextual one
+68	115	127	p	illustrating
+68	132	139	n	benefit
+68	140	142	p	of
+68	143	160	n	contextualization
+76	17	30	n	less frequent
+76	45	47	p	is
+76	33	44	n	word - type
+76	70	86	n	gate activations
+76	62	65	p	are
+76	54	61	n	smaller
+84	59	70	n	performance
+84	71	77	p	due to
+84	78	87	n	utilizing
+84	92	108	n	LM hidden states
+84	109	111	p	of
+84	116	132	n	first LSTM layer
+84	133	156	n	significantly surpasses
+84	161	179	n	other two variants
+80	0	13	p	Supplementing
+80	18	29	n	calculation
+80	30	32	p	of
+80	33	51	n	token reembeddings
+80	52	56	p	with
+80	61	74	n	hidden states
+80	75	77	p	of
+80	80	101	n	strong language model
+80	102	114	p	proves to be
+80	115	131	n	highly effective
+83	91	98	p	showing
+83	103	110	n	benefit
+83	111	113	p	of
+83	114	122	n	training
+83	125	133	n	QA model
+83	134	136	p	in
+83	139	161	n	semisupervised fashion
+83	47	51	p	with
+83	169	189	n	large language model
+83	13	20	p	observe
+83	23	46	n	significant improvement

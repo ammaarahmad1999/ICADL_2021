@@ -1,0 +1,85 @@
+{
+  "has" : {
+    "Model" : {
+      "extend" : {
+        "encoder - shared model" : {
+          "by" : {
+            "two independent encoders": {
+              "with" : "each for one language"
+            }
+          }
+        },
+        "from sentence" : "In order to address this issue , we extend the encoder - shared model , i.e. , the model with one shared encoder , by leveraging two independent encoders with each for one language ."
+      },
+      "utilized" : ["two independent decoders", {"from sentence" : "Similarly , two independent decoders are utilized ."}],
+      "For" : {
+        "each language" : {
+          "perform" : {
+            "AE" : {
+              "encoder generates" : {
+                "latent representations" : {
+                  "from" : "perturbed input sentences"
+                }
+              },
+              "decoder reconstructs" : {
+                "sentences" : {
+                  "from" : "latent representations"
+                }
+              }
+            }
+          },
+          "from sentence" : "For each language , the encoder and its corresponding decoder perform an AE , where the encoder generates the latent representations from the perturbed input sentences and the decoder reconstructs the sentences from the latent representations ."
+        },
+        "cross - language translation" : {
+          "utilize" : "backtranslation",
+          "from sentence" : "For cross - language translation , we utilize the backtranslation following ."
+        }        
+      },
+      "To map" : {
+        "latent representations" : {
+          "from" : {
+            "different languages" : {
+              "to" : {
+                "shared - latent space" : {
+                  "propose" : {
+                    "weightsharing constraint" : {
+                      "to" : "two AEs"
+                    }
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "from sentence" : "To map the latent representations from different languages to a shared - latent space , we propose the weightsharing constraint to the two AEs ."        
+      },
+      "are proposed" : {
+        "two different generative adversarial networks ( GAN )" : {
+          "namely" : "local and global GAN",
+          "to further improve" : "cross - language translation"
+        },
+        "from sentence" : "Additionally , two different generative adversarial networks ( GAN ) , namely the local and global GAN , are proposed to further improve the cross - language translation ."
+      },
+      "utilize" : {
+        "local GAN" : {
+          "to constrain" : {
+            "source and target latent representations" : {
+              "to have" : "same distribution"
+            }
+          }
+        },
+        "from sentence" : "We utilize the local GAN to constrain the source and target latent representations to have the same distribution , whereby the encoder tries to fool a local discriminator which is simultaneously trained to distinguish the language of a given latent representation ."
+      },
+      "apply" : {
+        "global GAN" : {
+          "to finetune" : {
+            "corresponding generator" : {
+              "i.e." : "composition of the encoder and decoder of the other language"
+            }
+          }
+        },
+        "from sentence" : "We apply the global GAN to finetune the corresponding generator , i.e. , the composition of the encoder and decoder of the other language , where a global discriminator is leveraged to guide the training of the generator by assessing how far the generated sentence is from the true data distribution 1 ."
+      }
+    }
+  }
+}

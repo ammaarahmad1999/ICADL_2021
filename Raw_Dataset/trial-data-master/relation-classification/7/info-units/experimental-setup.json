@@ -1,0 +1,45 @@
+{
+  "has" : {
+    "Experimental setup" : {
+      "used" : {
+        "BERT BASE model" : {
+          "pre-trained on" : {
+            "English Wikipedia and Books Corpus" : {
+              "for" : "1 M steps"
+            }
+          },
+          "from sentence" : "We used the BERT BASE model pre-trained on English Wikipedia and Books Corpus for 1 M steps ."          
+        },
+        "eight NVIDIA V100 ( 32GB ) GPUs" : {
+          "for" : "pre-training",
+        "from sentence" : "We used eight NVIDIA V100 ( 32GB ) GPUs for the pre-training ."          
+        },
+        "single NVIDIA Titan Xp ( 12GB ) GPU" : {
+          "to fine - tune" : {
+            "BioBERT" : {
+              "on" : "each task"
+            }
+          },
+          "from sentence" : "We used a single NVIDIA Titan Xp ( 12GB ) GPU to fine - tune BioBERT on each task ."
+        }
+      },
+      "has" : {
+        "BioBERT v1.0 ( PubMed PMC )" : {
+          "version of" : {
+            "BioBERT ( PubMed PMC )" : {
+              "trained for" : "470 K steps"
+            }
+          },
+          "from sentence" : "BioBERT v1.0 ( PubMed PMC ) is the version of BioBERT ( PubMed PMC ) trained for 470 K steps ."
+        },
+        "maximum sequence length" : {
+          "fixed to" : "512"
+        },
+        "mini-batch size" : {
+          "set to" : "192",
+          "from sentence" : "The maximum sequence length was fixed to 512 and the mini-batch size was set to 192 , resulting in 98 304 words per iteration ."
+        }
+      }
+    }
+  }
+}

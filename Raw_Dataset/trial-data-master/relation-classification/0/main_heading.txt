@@ -1,0 +1,7 @@
+title
+abstract
+Introduction
+Related Work
+Model
+Results and Discussion
+Conclusion

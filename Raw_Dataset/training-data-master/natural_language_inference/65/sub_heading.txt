@@ -1,0 +1,19 @@
+title
+abstract
+Introduction
+Neural Networks for Answer Selection
+Convolution
+Bidirectional LSTM (biLSTM)
+Scoring and Training Procedure
+Attentive Pooling Networks for Answer
+Related Work
+Experimental Setup
+Datasets
+Word Embeddings
+Neural Networks Setup
+Experimental Results
+InsuranceQA
+TREC-QA
+WikiQA
+Attentive Pooling Visualization
+Conclusions

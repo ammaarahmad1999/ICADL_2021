@@ -1,0 +1,1199 @@
+1609.05284v3 [cs.LG] 20 Jun 2017
+
+ar X1V
+
+ReasoNet: Learning to Stop Reading in Machine Comprehension
+
+Yelong Shen, Po-Sen Huang, Jianfeng Gao, Weizhu Chen
+Microsoft Research
+One Microsoft Way
+Redmond, WA 98053
+yeshen, pshuang, jfgao, wzchen@microsoft.com
+
+ABSTRACT
+
+Teaching a computer to read and answer general questions pertaining to a document is a challenging yet unsolved problem. In
+this paper, we describe a novel neural network architecture called
+the Reasoning Network (ReasoNet) for machine comprehension
+tasks. ReasoNets make use of multiple turns to effectively exploit
+and then reason over the relation among queries, documents, and
+answers. Different from previous approaches using a fixed number of turns during inference, ReasoNets introduce a termination
+state to relax this constraint on the reasoning depth. With the use
+of reinforcement learning, ReasoNets can dynamically determine
+whether to continue the comprehension process after digesting
+intermediate results, or to terminate reading when it concludes that
+existing information is adequate to produce an answer. ReasoNets
+achieve superior performance in machine comprehension datasets,
+including unstructured CNN and Daily Mail datasets, the Stanford
+SQuAD dataset, and a structured Graph Reachability dataset.
+
+KEYWORDS
+
+Machine Reading Comprehension, Deep Reinforcement Learning,
+ReasoNet
+
+1 INTRODUCTION
+
+Teaching machines to read, process, and comprehend natural language documents is a coveted goal for artificial intelligence [2, 7, 19].
+Genuine reading comprehension is extremely challenging, since
+effective comprehension involves thorough understanding of documents and sophisticated inference. Toward solving this machine
+reading comprehension problem, in recent years, several works
+have collected various datasets, in the form of question, passage,
+and answer, to test machine on answering a question based on the
+provided passage [7, 8, 18, 19]. Some large-scale cloze-style datasets
+[7, 8] have gained significant attention along with powerful deep
+learning models.
+
+Recent approaches on cloze-style datasets can be separated into
+two categories: single-turn and multi-turn reasoning. Single turn
+reasoning models utilize attention mechanisms [1] to emphasize
+specific parts of the document which are relevant to the query.
+
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for components of this work owned by others than ACM
+must be honored. Abstracting with credit is permitted. To copy otherwise, or republish,
+to post on servers or to redistribute to lists, requires prior specific permission and/or a
+fee. Request permissions from permissions@acm.org.
+
+KDD’17, August 13-17, 2017, Halifax, NS, Canada
+
+© 2017 ACM. 978-1-4503-4887-4/17/08...$15.00
+
+DOI: 10.1145/3097983.3098177
+
+These attention models subsequently calculate the relevance between a query and the corresponding weighted representations of
+document subunits (e.g. sentences or words) to score target candidates [7-9]. However, considering the sophistication of the problem,
+after a single-turn comprehension, readers often revisit some specific passage or the question to grasp a better understanding of the
+problem. With this motivation, recent advances in reading comprehension have made use of multiple turns to infer the relation
+between query, document and answer [6, 8, 21, 25]. By repeatedly
+processing the document and the question after digesting intermediate information, multi-turn reasoning can generally produce
+a better answer and these existing works have demonstrated its
+superior performance consistently.
+
+Existing multi-turn models have a pre-defined number of hops
+or iterations in their inference without regard to the complexity
+of each individual query or document. However, when human
+read a document with a question in mind, we often decide whether
+we want to stop reading if we believe the observed information
+is adequate already to answer the question, or continue reading
+after digesting intermediate information until we can answer the
+question with confidence. This behavior generally varies from document to document or question to question because it is related to
+the sophistication of the document or the difficulty of the question.
+Meanwhile, the analysis in [3] also illustrates the huge variations
+in the difficulty level with respect to questions in the CNN/Daily
+Mail datasets [7]. For a significant part of the datasets, this analysis shows that the problem cannot be solved without appropriate
+reasoning on both its query and document.
+
+With this motivation, we propose a novel neural network architecture called Reasoning Network (ReasoNet). which tries to
+mimic the inference process of human readers. With a question in
+mind, ReasoNets read a document repeatedly, each time focusing
+on different parts of the document until a satisfying answer is found
+or formed. This reminds us of a Chinese proverb: “The meaning
+of a book will become clear if you read it hundreds of times.”. Moreover, unlike previous approaches using fixed number of hops or
+iterations, ReasoNets introduce a termination state in the inference.
+This state can decide whether to continue the inference to the next
+turn after digesting intermediate information, or to terminate the
+whole inference when it concludes that existing information is sufficient to yield an answer. The number of turns in the inference is
+dynamically modeled by both the document and the query, and can
+be learned automatically according to the difficulty of the problem.
+
+One of the significant challenges ReasoNets face is how to design
+an efficient training method, since the termination state is discrete
+and not connected to the final output. This prohibits canonical
+back-propagation method being directly applied to train ReasoNets.
+Motivated by [15, 31], we tackle this challenge by proposing a reinforcement learning approach, which utilizes an instance-dependent
+reward baseline, to successfully train ReasoNets. Finally, by accounting for a dynamic termination state during inference and applying proposed deep reinforcement learning optimization method,
+ReasoNets achieve the state-of-the-art results in machine comprehension datasets, including unstructured CNN and Daily Mail
+datasets, and the proposed structured Graph Reachability dataset,
+when the paper is first publicly available on arXiv.! At the time of
+the paper submission, we apply ReasoNet to the competitive Stanford Question Answering Dataset(SQuAD), ReasoNets outperform
+all existing published approaches and rank at second place on the
+test set leaderboard.”
+
+This paper is organized as follows. In Section 2, we review and
+compare recent work on machine reading comprehension tasks. In
+Section 3, we introduce our proposed ReasoNet model architecture
+and training objectives. Section 4 presents the experimental setting and results on unstructured and structured machine reading
+comprehension tasks .
+
+2 RELATED WORK
+
+Recently, with large-scale datasets available and the impressive
+advance of various statistical models, machine reading comprehension tasks have attracted much attention. Here we mainly focus
+on the related work in cloze-style datasets [7, 8]. Based on how
+they perform the inference, we can classify their models into two
+categories: single-turn and multi-turn reasoning.
+
+Single-turn reasoning: Single turn reasoning models utilize
+an attention mechanism to emphasize some sections of a document
+which are relevant to a query. This can be thought of as treating
+some parts unimportant while focusing on other important ones
+to find the most probable answer. Hermann et al. [7] propose
+the attentive reader and the impatient reader models using neural
+networks with an attention over passages to predict candidates. Hill
+et al. [8] use attention over window-based memory, which encodes
+a window of words around entity candidates, by leveraging an endto-end memory network [22]. Meanwhile, given the same entity
+candidate can appear multiple times in a passage, Kadlec et al. [9]
+propose the attention-sum reader to sum up all the attention scores
+for the same entity. This score captures the relevance between a
+query and a candidate. Chen et al. [3] propose using a bilinear term
+similarity function to calculate attention scores with pretrained
+word embeddings. Trischler et al. [25] propose the EpiReader which
+uses two neural network structures: one extracts candidates using
+the attention-sum reader; the other reranks candidates based on a
+bilinear term similarity score calculated from query and passage
+representations.
+
+Multi-turn reasoning: For complex passages and complex
+queries, human readers often revisit the given document in order to perform deeper inference after reading a document. Several
+recent studies try to simulate this revisit by combining the information in the query with the new information digested from previous
+iterations [6, 8, 13, 21, 29]. Hill et al. [8] use multiple hops memory
+network to augment the query with new information from the
+
+‘https://arxiv.org/abs/1609.05284
+“http://www.stanford-qa.com
+
+previous hop. Gated Attention reader [6] is an extension of the
+attention-sum reader with multiple iterations by pushing the query
+encoding into an attention-based gate in each iteration. Iterative
+Alternative (IA) reader [21] produces a new query glimpse and
+document glimpse in each iteration and utilizes them alternatively
+in the next iteration. Cui et al. [5] further propose to extend the
+query-specific attention to both query-to-document attention and
+document-to-query attention, which is built from the intermediate
+results in the query-specific attention. By reading documents and
+enriching the query in an iterative fashion, multi-turn reasoning
+has demonstrated their superior performance consistently.
+
+Our proposed approach explores the idea of using both attentionsum to aggregate candidate attention scores and multiple turns to
+attain a better reasoning capability. Unlike previous approaches
+using a fixed number of hops or iterations, motivated by [15, 16],
+we propose a termination module in the inference. The termination
+module can decide whether to continue to infer the next turn after
+digesting intermediate information, or to terminate the whole inference process when it concludes existing information is sufficient
+to yield an answer. The number of turns in the inference is dynamically modeled by both a document and a query, and is generally
+related to the complexity of the document and the query.
+
+3 REASONING NETWORKS
+
+ReasoNets are devised to mimic the inference process of human
+readers. ReasoNets read a document repeatedly with attention
+on different parts each time until a satisfying answer is found.
+As shown in Figure 1, a ReasoNet is composed of the following
+components:
+
+Memory: The external memory is denoted as M. It is a list of
+word vectors, M = {mj;}j-1._p, where mj; is a fixed dimensional
+vector. For example, in the Graph Reachability, mj; is the vector
+representation of each word in the graph description encoded by a
+bidirectional-RNN. Please refer to Section 4 for the detailed setup
+in each experiment.
+
+Attention: The attention vector x; is generated based on the current internal state s; and the external memory M: x; = fart(sz, M; 0x).
+Please refer to Section 4 for the detailed setup in each experiment.
+
+Internal State: The internal state is denoted as s which is a vector representation of the question state. Typically, the initial state s;
+is the last-word vector representation of query by an RNN. The t-th
+time step of the internal state is represented by s;. The sequence
+of internal states are modeled by an RNN: s741 = RNN(s;, xz; 9s),
+where x; is the attention vector mentioned above.
+
+Termination Gate: The termination gate generates a random
+variable according to the current internal state; tz ~ p(-|ftg(sz; 9rg))).
+t; is a binary random variable. If t; is true, the ReasoNet stops, and
+the answer module executes at time step t; otherwise the ReasoNet
+generates an attention vector x;+1, and feeds the vector into the
+state network to update the next internal state s;+1.
+
+Answer: The action of answer module is triggered when the
+termination gate variable is true: a; ~ p(-|fa(s+; @a)).
+
+In Algorithm 1, we describe the stochastic inference process of
+a ReasoNet. The process can be considered as solving a Partially
+Observable Markov Decision Process (POMDP) [10] in the reinforcement learning (RL) literature. The state sequence s 1.7 is hidden
+Memory M O CO s 7 c
+
+NOS er
+
+  
+ 
+   
+
+eo----- - - - - - KK SR Ke nr nr nn ne ne ne ne ne ne ne ee nr ne ee ee
+
+Controller
+
+| Atrention xX Fate(®,)
+I
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+r-----T
+
+ 
+
+Figure 1: A ReasoNet architecture with an episode of {t; = 0,
+oy E¢41 = 0, tr+2 = 1}
+
+Algorithm 1: Stochastic Inference in a ReasoNet
+
+Input :Memory M; Initial state s,; Step t = 1; Maximum
+Step Tmax
+
+Output: Termination Step T, Answer ar
+
+Sample ¢; from the distribution p(-| fig(s¢; Arg):
+
+if tz is false, go to Step 3; otherwise Step 6;
+
+=
+
+dD
+
+Generate attention vector x; = fart(st, M; 0x);
+
+Update internal state s¢+1; = RNN(sz, x1; 0s);
+
+5 Sett =t+1;if t < Tmax go to Step 1; otherwise Step 6;
+Generate answer a; ~ p(-| fa(st; @a));
+
+o&
+
+rN
+
+an
+
+Return T = t and ay = a;;
+
+N
+
+and dynamic, controlled by an RNN sequence model. The ReasoNet
+performs an answer action ar at the T-th step, which implies that
+the termination gate variables t;.7 = (t; = 0,t2 = 0,...,t7-1 =
+0,t7 = 1). The ReasoNet learns a stochastic policy 2((t;, a¢)|s¢; @)
+with parameters @ to get a distribution of termination actions, to
+continue reading or to stop, and of answer actions if the model
+decides to stop at the current step. The termination step T varies
+from instance to instance.
+
+The learnable parameters 0 of the ReasoNet are the embedding
+matrices Ow, attention network 0,, the state RNN network 0, the
+answer action network 6g, and the termination gate network @jg.
+The parameters 0 = {Ow, Ox, 0s, Aa, Org} are trained by maximizing
+the total expect reward. The expected reward for an instance is
+
+defined as:
+T
+J(@) = En(tr,aT:0) » 7
+
+t=1
+The reward can only be received at the final termination step
+when an answer action a7 is performed. We define rr = 1iftr = 1
+and the answer is correct, and rr = 0 otherwise. The rewards on
+intermediate steps are zeros, {r; = 0};=1...T-1. J can be maximized
+by directly applying gradient based optimization methods. The
+
+gradient of J is given by:
+VoJ(@) = Ex (t).7,a7;0) [Vologz(ty:7, ar; 9)rr|
+Motivated by the REINFORCE algorithm [31], we compute Vg J(@):
+
+En (t.7,a7,0) Vologz(t:-7, ar; Orr] =
+
+n(ty:7, aT; 9) [Vologz(ty:7, ar; 8)(rr — br)]
+(1:7, ar) eAt
+
+where A’ is all the possible episodes, T,t;.7,a7 and ry are the
+termination step, termination action, answer action, and reward,
+respectively, for the (t1.7, ay) episode. br is called the reward baseline in the RL literature to lower the variance [23]. It is common to
+select br = E, [rr] [24], and can be updated via an online moving
+average approach : br = Abr + (1 — A)rr. However, we empirically
+find that the above approach leads to slow convergence in training
+ReasoNets. Intuitively, the average baselines {br;T = 1..Tmax} are
+global variables independent of instances. It is hard for these baselines to capture the dynamic termination behavior of ReasoNets.
+Since ReasoNets may stop at different time steps for different instances, the adoption of a global variable without considering the
+dynamic variance in each instance is inappropriate. To resolve
+this weakness in traditional methods and account for the dynamic
+characteristic of ReasoNets, we propose an instance-dependent
+baseline method to calculate VgJ(@), as illustrated in Section 3.1.
+Empirical results show that the proposed reward schema achieves
+better results compared to baseline approaches.
+
+3.1 Training Details
+
+In the machine reading comprehension tasks, a training dataset
+is a collection of triplets of query q, passage p, and answer a. Say
+(dn>Pn> Gn) is the n-th training instance.
+
+The first step is to extract memory M from py, by mapping each
+symbolic in the passage to a contextual representation given by
+the concatenation of forward and backward RNN hidden states,
+Le., Mp = [pn*. pn Paik], and extract initial state s; from gn
+by assigning s; = [gn!%!,G;1]. Given M and sj for the n-th
+training instance, a ReasoNet executes |AT| episodes, where all
+possible episodes A’ can be enumerated by setting a maximum
+step. Each episode generates actions and a reward from the last
+step: ((t1:T, aT), IT )(ty-p,ap)eAt: Therefore, the gradient of J can be
+rewritten as:
+
+Vel@= >
+
+(41:7, ar) eAt
+
+n(ty:7, aT; 9) [Vologr(ty:7, ar; O)(rr — b)]
+
+where the baseline b = Di(ty-7,a7)eAt m(ty.7, aT; O)rz is the average
+reward on the |A"| episodes for the n-th training instance. It allows
+different baselines for different training instances. This can be beneficial since the complexity of training instances varies significantly.
+In experiments, we empirically find using (= — 1) in replace of
+(ry — b) can lead to a faster convergence. Therefore, we adopt this
+approach to train ReasoNets in the experiments.
+
+4 EXPERIMENTS
+
+In this section, we evaluate the performance of ReasoNets in machine comprehension datasets, including unstructured CNN and
+Daily Mail datasets, the Stanford SQUAD dataset, and a structured
+Graph Reachability dataset.
+
+4.1 CNN and Daily Mail Datasets
+
+We examine the performance of ReasoNets on CNN and Daily
+Mail datasets.> The detailed settings of the ReasoNet model are as
+follows.
+
+Vocab Size: For training our ReasoNet, we keep the most frequent |V| = 101k words (not including 584 entities and 1 placeholder marker) in the CNN dataset, and |V| = 151k words (not
+including 530 entities and 1 placeholder marker) in the Daily Mail
+dataset.
+
+Embedding Layer: We choose 300-dimensional word embeddings, and use the 300-dimensional pretrained Glove word embeddings [17] for initialization. We also apply dropout with probability
+0.2 to the embedding layer.
+
+Bi-GRU Encoder: We apply bidirectional GRU for encoding
+query and passage into vector representations. We set the number
+of hidden units to be 256 and 384 for the CNN and Daily Mail
+datasets, respectively. The recurrent weights of GRUs are initialized
+with random orthogonal matrices. The other weights in GRU cell
+are initialized from a uniform distribution between —0.01 and 0.01.
+We use a shared GRU model for both query and passage.
+
+Memory and Attention: The memory of the ReasoNet on CNN
+and Daily Mail dataset is composed of query memory and passage memory. M = (M9@¥eTY, M2°°), where M7“e"Y and M4°°
+are extracted from query bidirectional-GRU encoder and passage
+bidirectional-GRU encoder respectively. We choose projected cosine similarity function as the attention module. The attention
+
+doc doc
+
+score ad, ; on memory m; given the state s; is computed as
+
+follows: agee = softmax;_1__ jypdoc)¥ cos(W°° mE", Wis: ),
+
+where y is set to 10. wee and wee are weight vectors asso
+ciated with mere and s;, respectively, and are joint trained in
+
+the ReasoNet. Thus, the attention vector on passage is given by
+
+x40 — yr Maer q4°£m °C Similarly, the attention vector on quer
+t 7 oj tii * y> query
+
+Mauery .
+! | ge Tey The final attention vector
+
+is the concatenation of the query attention vector and the passage attention vector x; = (ee gfoe ). The attention module is
+parameterized by 0, = (wee? weeny weer, wie),
+
+Internal State Controller: We choose GRU model as the internal state controller. The number of hidden units in the GRU
+state controller is 256 for CNN and 384 for Daily Mail. The initial
+state of the GRU controller is set to be the last-word of the query
+representation by a bidirectional-GRU encoder.
+
+Termination Module: We adopt a logistical regression to model
+the termination variable at each time step:
+
+fg (St: Org) = sigmoid(W;gs¢ + bt); Org = (Wig; btg)
+
+where Weg and b¢g are the weight matrix and bias vector, respectively.
+
+Answer Module: We apply a linear projection from GRU outputs and make predictions on the entity candidates. Following the
+
+uer
+1S xe 4 =
+
+>The CNN and Daily Mail datasets are available at https://github.com/deepmind/rcdata
+
+Table 1: The performance of Reasoning Network on CNN
+and Daily Mail dataset.
+
+ 
+
+CNN Daily Mail
+
+valid test valid test
+
+Deep LSTM Reader [7] 55.0 57.0 63.3 62.2
+
+Attentive Reader [7] 616 63.0 705 69.0
+MemNets [8] 63.4 66.8 - 
+AS Reader [9] 68.6 69.5 75.0 73.9
+
+Stanford AR [3] Tied 72.4 76.9 75.8
+DER Network [12] 71.3. 72.9 - Iterative Attention Reader [21] 72.6 73.3 - EpiReader [25] 73.4 74.0 - 
+GA Reader [6] 73.0 73.8 76.7 75.7
+AoA Reader [5] 73.1 74.4 - 
+ReasoNet 72.9 74.7 77.6 76.6
+
+70.0%
+
+60.0%
+
+(%)
+
+50.0%
+
+40.0%
+
+30.0%
+
+20.0%
+
+Percentage
+
+10.0%
+
+0.0%
+
+ 
+
+Termination Steps
+
+Figure 2: The termination step distribution of a ReasoNet
+(Tmax = 5) in the CNN dataset.
+
+settings in AS Reader [9], we sum up scores from the same candidate and make a prediction. Thus, AS Reader can be viewed as a
+special case of ReasoNets with Tmax = 1.4
+
+Other Details: The maximum reasoning step, Tmax is set to
+5 in experiments on both CNN and Daily Mail datasets. We use
+ADAM optimizer [11] for parameter optimization with an initial
+learning rate of 0.0005, 6; = 0.9 and fz = 0.999; The absolute value
+of gradient on each parameter is clipped within 0.001. The batch
+size is 64 for both CNN and Daily Mail datasets. For each batch
+of the CNN and Daily Mail datasets, we randomly reshuffle the
+assignment of named entities [7]. This forces the model to treat the
+named entities as semantically meaningless labels. In the prediction
+of test cases, we randomly reshuffle named entities up to 4 times,
+and report the averaged answer. Models are trained on GTX TitanX
+12GB. It takes 7 hours per epoch to train on the Daily Mail dataset
+and 3 hours per epoch to train on the CNN dataset. The models are
+usually converged within 6 epochs on both CNN and Daily Mail
+datasets.
+
+“When ReasoNet is set with Tmax = 1 in CNN and Daily Mail, it directly applies so
+to make predictions on the entity candidates, without performing attention on the
+memory module. The prediction module in ReasoNets is the same as in AS Reader. It
+sums up the scores from the same entity candidates, where the scores are calculated
+by the inner product between s; and m@°°, where m@°° is an embedding vector of
+
+one entity candidate in the passage.
+Query: passenger @placeholder , 36 , died at the scene
+
+—_1,
+
+Passage: ( @entityO ) what was supposed to be a fantasy sports car ride at
+@entity3 turned deadly when a @entity4 crashed into a guardrail . the crash
+took place sunday at the @entity8 , which bills itself as a chance to drive your
+
+dream car ona racetrack . the @entity4 's,passenger , 36 - year - old @entity14, of @entity15 , @entity16 , diedat the scene , @entity13 said . the driver of the
+
+ 
+
+Termination | Attention
+
+@entity4 , 24 - year - old @entity18.0f @entity19 , @entity16 , lost control of Step Probability Sum
+
+Fort how
+the vehicle , the @entity13 said . he was hospitalized with minor injuries .
+
+ 
+
+ 
+
+@entity24 , which operates the @entity8 at @entity3 , released a statement 1 0.0011 0.4916
+sunday night about the crash ." on behalf of everyone in the organization , it is 2 0.5747 0.5486
+
+with a very heavy heart that we extend our deepest sympathies to those
+involved in today 's tragic accident in @entity36 , " the company said . @entity24
+
+ 
+
+ 
+
+3 0.9178 0.5577
+
+ 
+
+also operates the @entity3 -- a chance to drive or ride in @entity39 race cars
+named for the winningest driver in the sport 's history . @entityO 's @entity43
+
+and @entity44 contributed to this report .
+
+Answer: @entity14
+
+ 
+
+Step 3
+
+Figure 3: Results of a test example 69e1f777e41bf67d5a22b7c69ae76f0ae873cf43.story from the CNN dataset. The numbers
+next to the underline bars indicate the rank of the attention scores. The corresponding termination probability and the sum
+of attention scores for the answer entity are shown in the table on the right.
+
+Results: Table 1 shows the performance of all the existing single model baselines and our proposed ReasoNet. Among all the
+baselines, AS Reader could be viewed as a special case of ReasoNet
+with Tmax = 1. Comparing with the AS Reader, ReasoNet shows
+the significant improvement by capturing multi-turn reasoning
+in the paragraph. Iterative Attention Reader, EpiReader and GA
+Reader are the three multi-turn reasoning models with fixed reasoning steps. ReasoNet also outperforms all of them by integrating
+termination gate in the model which allows different reasoning
+steps for different test cases. AoA Reader is another single-turn
+reasoning model, it captures the word alignment signals between
+query and passage, and shows a big improvement over AS Reader.
+ReasoNet obtains comparable results with AoA Reader on CNN test
+set. We expect that ReasoNet could be improved further by incorporating the word alignment information in the memory module
+as suggested in AoA Reader.
+
+We show the distribution of termination step distribution of
+ReasoNets in the CNN dataset in Figure 2. The distributions spread
+out across different steps. Around 70% of the instances terminate
+in the last step. Figure 3 gives a test example on CNN dataset,
+which illustrates the inference process of the ReasoNet. The model
+initially focuses on wrong entities with low termination probability.
+In the second and third steps, the model focuses on the right clue
+with higher termination probability. Interestingly, we also find its
+query attention focuses on the placeholder token throughout all
+the steps.
+
+4.2 SQuAD Dataset
+
+In this section, we evaluate ReasoNet model on the task of question
+answering using the SQUAD dataset [18].> SQUAD is a machine
+comprehension dataset on 536 Wikipedia articles, with more than
+100,000 questions. Two metrics are used to evaluate models: Exact
+Match (EM) and a softer metric, F1 score, which measures the
+weighted average of the precision and recall rate at the character
+level. The dataset consists of 90k/10k training/dev question-contextanswer tuples with a large hidden test set. The model architecture
+used for this task is as follows:
+
+°SQuAD Competition Website is https://rajpurkar.github.io/SQuAD-explorer/
+
+Table 2: Results on the SQUAD test leaderboard.
+
+Single Model Ensemble Model
+
+ 
+
+ 
+
+EM F1 EM F1
+Logistic Regression Baseline [18] 40.4 51.0 7 =
+Dynamic Chunk Reader [34] 62.5 71.0 - Fine-Grained Gating [33] 62.5 73.3 - Match-LSTM [26] 64.7 73.7 67.9 77.0
+RaSoR [14] : - 67.4 75.5
+Multi-Perspective Matching [28] 68.9 77.8 73.7 81.3
+Dynamic Coattention Networks [32] 66.2 75.9 71.6 80.4
+BiDAF [6] 68.0 773 733 81.1
+ReasoNet 69.1 78.9 73.4 81.8
+Iterative Co-attention Network® 67.55 76.8 - FastQA [30] 68.4 77.1 70.8 78.9
+jNet [36] 68.7 774 - Document Reader [4] 69.9 78.9 - R-Net [27] 71.3 79.7 75.9 82.9
+
+Vocab Size: We use the python NLTK tokenizer® to preprocess passages and questions, and obtain about 100K words in the
+vocabulary.
+
+Embedding Layer: We use the 100-dimensional pretrained
+Glove vectors [17] as word embeddings. These Glove vectors are
+fixed during the model training. To alleviate the out-of-vocabulary
+issue, we adopt one layer 100-dimensional convolutional neural
+network on character-level with a width size of 5 and each character encoded as an 8-dimensional vector following the work [20].
+The 100-dimensional Glove word vector and the 100-dimensional
+character-level vector are concatenated to obtain a 200-dimensional
+vector for each word.
+
+Bi-GRU Encoder: We apply bidirectional GRU for encoding
+query and passage into vector representations. The number of
+hidden units is set to 128.
+
+Memory: We use bidirectional-GRU encoders to extract the
+query representation M7“¢"Y and the passage representation M2,
+given a query and a passage. We compute the similarity matrix
+
+°NLTK package could be downloaded from http://www.nltk.org/
+Table 3: Reachability statistics of the Graph Reachability dataset.
+
+Large Graph
+7-9 No Reach 1-3 4-6 7-13
+
+ 
+
+| Small Graph
+Reachable Step | No Reach 1-3 4-6
+Train (%) 44.16 42.06 13.51
+Test (%) 45.00 41.35 13.44
+
+0.27 49.02 29.97 21.92 3.49
+0.21 49.27 25.46 21.74 3.53
+
+Table 4: Small and large random graph in the Graph Reachability dataset. Note that “A — B” represents an edge connected
+from A to B and the # symbol is used as a delimiter between different edges.
+
+ 
+
+Small Graph Large Graph
+Graph Description 0—->0#0—>72#1—72#2—>1# 0-717#173#1—>14#1—>6#
+372#373#376#377# 271142751342 715#3 —- 7#
+4>0#471#474#577# 570#577#6—>10# 6 — SF
+6—->0#67>1#7—-0# 77 15#7>7#8—711#8—7#
+10 —9#10 > 6#10>77#12>1#
+12 > 12 #12 >6#13—711#414—>17#
+14 > 14#15 > 10# 16> 2#17 > 4#
+17 > 7#
+Query 774 10 > 17
+Answer No Yes
+
+between each word in the query and each word in the passage.
+The similarity matrix is denoted as S ¢€ R?*XJ , where J and J
+are the number of words in the passage and query, respectively,
+and S;; = we [Mg°e; M389; Mg" ° Me] € R, where ws isa
+trainable weight vector, o denotes the elementwise multiplication,
+and |; | is the vector concatenation across row. We then compute
+the context-to-query attention and query-to-context attention from
+the similarity matrix S by following recent co-attention work [20]
+to obtain the query-aware passage representation G. We feed G to
+a 128-dimensional bidirectional GRU to obtain the memory M =
+bidirectional-GRU(G), where M € R296*7 |
+
+Internal State Controller: We use a GRU model with 256dimensional hidden units as the internal state controller. The initial
+state of the GRU controller is the last-word representation of the
+query bidirectional-GRU encoder.
+
+Termination Module: We use the same termination module
+as in the CNN and Daily Mail experiments.
+
+Answer Module: SQuAD task requires the model to find a
+span in the passage to answer the query. Thus the answer module
+requires to predict the start and end indices of the answer span in
+the passage. The probability distribution of selecting the start index
+over the passage at state s; is computed by :
+
+pi = softmax(w 7, [M;M 0 S¢])
+
+where S; is given via tiling s; by T times across the column and Wp!
+is a trainable weight vector. The probability distribution of selecting
+the end index over passage is computed in a similar manner:
+
+pr= softmax(w , [M; M o S;])
+
+Other Details: The maximum reasoning step Tmax is set to 10 in
+SQuAD experiments. We use AdaDelta optimizer [35] for parameter
+optimization with an initial learning rate of 0.5 and a batch size
+
+of 32. Models are trained on GTX TitanX 12GB. It takes about 40
+minutes per epoch for training, with 18 epochs in total.
+
+Results : In the Table 2, we report the performance of all models in the SQUAD leaderboard.’ In the upper part of the Table 2,
+we compare ReasoNet with all published baselines at the time of
+submission. Specifically, BiDAF model could be viewed as a special
+case of ReasoNet with Tingx = 1. Itis worth noting that this SQUAD
+leaderboard is highly active and competitive. The test set is hidden
+to all models and all the results on the leaderboard are produced
+and reported by the organizer; thus all the results here are reproducible. In Table 2, we demonstrate that ReasoNet outperforms
+all existing published approaches. While we compare ReasoNet
+with BiDAF, ReasoNet exceeds BiDAF both in single model and
+ensemble model cases. This demonstrates the importance of the
+dynamic multi-turn reasoning over a passage. In the bottom part
+of Table 2, we compare ReasoNet with all unpublished methods at
+the time of this submission, ReasoNet holds the second position in
+all the competing approaches in the SQUAD leaderboard.
+
+4.3 Graph Reachability Task
+
+Recent analysis and results [3] on the cloze-style machine comprehension tasks have suggested some simple models without multiturn reasoning can achieve reasonable performance. Based on
+these results, we construct a synthetic structured Graph Reachability dataset® to evaluate longer range machine inference and
+reasoning capability, since we anticipate ReasoNets to have the
+capability to handle long range relationships.
+
+We generate two synthetic datasets: a small graph dataset and
+a large graph dataset. In the small graph dataset, it contains 500K
+small graphs, where each graph contains 9 nodes and 16 direct
+
+7Results shown here reflect the SQUAD leaderboard (stanford-qa.com) as of 17 Feb
+2017, 9pm PST. We include the reference in the camera-ready version. a : Fudan
+University.
+
+The dataset is available at https://github.com/MSRDL/graph_reachability_dataset
+Table 5: The performance of Reasoning Network on the Graph Reachability dataset.
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Small Graph Large Graph
+ROC-AUC PR-AUC Accuracy ROC-AUC PR-AUC_ Accuracy
+Deep LSTM Reader 0.9619 0.9565 0.9092 0.7988 0.7887 0.7155
+ReasoNet-Tmax = 2 0.9638 0.9677 0.8961 0.8477 0.8388 0.7607
+ReasoNet-Last 1 1 1 0.8836 0.8742 0.7895
+ReasoNet 1 1 1 0.9988 0.9989 0.9821
+Step _| Termination Probability [Prediction
+
+1 1.00E-06 0.172
+
+2 1.00E-06 0.625
+
+3 1.00E-06 0.752
+
+4 1.00E-06 0.202
+
+> 1.00E-06 0.065
+
+6 1.00E-06 0.041
+
+7 2.30E-06 0.137
+
+8 0.0017 0.136
+
+9 0.49 0.761
+
+10 0.99 0.927
+
+ 
+
+ 
+
+ 
+
+ 
+
+Steps 5, 6,8
+
+Figure 4: An example of graph reachability result, given a query “10 — 17” (Answer: Yes). The red circles highlight the
+nodes/edges which have the highest attention in each step. The corresponding termination probability and prediction results
+
+are shown in the table. The model terminates at step 10.
+
+edges to randomly connect pairs of nodes. The large graph dataset
+contains 500K graphs, where each graph contains 18 nodes and 32
+random direct edges. Duplicated edges are removed. Table 3 shows
+the graph reachability statistics on the two datasets.
+
+In Table 4, we show examples of a small graph and a large graph
+in the synthetic dataset. Both graph and query are represented by a
+sequence of symbols. The details settings of the ReasoNet are listed
+as follows in the reachability tasks.
+
+Embedding Layer We use a 100-dimensional embedding vector
+for each symbol in the query and graph description.
+
+Bi-LSTM Encoder: We apply a bidirectional-LSTM layer with
+128 and 256 cells on query embeddings in the small and large
+graph datasets, respectively. The last states of bidirectional-LSTM
+on query are concatenated to be the initial internal state s; =
+[q|a!, G"] in the ReasoNet.
+
+Memory: We apply another bidirectional-LSTM layer with 128
+and 256 cells on graph description embeddings in the small and
+large graph datasets, respectively. It maps each symbol g’ to a
+contextual representation given by the concatenation of forward
+and backward LSTM hidden states m; = [@', Gigi tty,
+
+Internal State Controller: We use a GRU model with 128dimensional and 256-dimensional hidden units as the internal state
+controller for the small and large graph datasets, respectively. The
+initial state of the GRU controller is s.
+
+Answer Module: The final answer is either “Yes” or “No” and
+hence logistical regression is used as the answer module: a; =
+o(Wast + ba); Oa = (Wa, ba).
+
+Termination Module: We use the same termination module
+as in the CNN and Daily Mail experiments.
+
+Other Details: The maximum reasoning step Tmax is set to 15
+and 25 for the small graph and large graph dataset, respectively.
+We use AdaDelta optimizer [35] for parameter optimization with
+an initial learning rate of 0.5 and a batch size of 32.
+
+We denote “ReasoNet” as the standard ReasoNet with termination gate, as described in Section 3.1. To study the effectiveness of
+the termination gate in ReasoNets, we remove the termination gate
+and use the prediction from the last state, @ = ar,,,,. (Imax is the maximum reasoning step), denoted as “ReasoNet-Last”. To study the
+effectiveness of multi-turn reasoning, we choose “ReasoNet-Tmnax =
+2”, which only has single-turn reasoning. We compare ReasoNets
+with a two layer deep LSTM model [7] with 128 hidden units, denoted as “Deep LSTM Reader”, as a baseline. Table 5 shows the performance of these models on the graph reachability dataset. Deep
+LSTM Reader achieves 90.92% and 71.55% accuracy in the small
+and large graph dataset, respectively, which indicates the graph
+reachibility task is not trivial. The results of ReasoNet-Tmax = 2
+are comparable with the results of Deep LSTM Reader, since both
+Deep LSTM Reader and ReasoNet-Tmax = 2 perform single-turn
+reasoning. The ReasoNet-Last model achieves 100% accuracy on
+the small graph dataset, while the ReasoNet-Last model achieves
+1->16#1->12#1->14#1->7#2>17#3->1#4->0#4->1#4->12,
+#4 -> 646 ->O#6->3#6->7#8->
+2#8->4#8->134#8->14#9->16
+#10->0#10->6#11->10#11->2
+#12->2#13->2#13->6#14->2#
+14->7#16->13#416->14#17->0
+#17->13#
+
+A nueeawescbecnsusnensnsweuwenseweneseeseawesteuseeeveeueeceseeweseneeey
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+Na Step Termination Probability [Prediction
+Po GY 1 1.40E-05 4.49E-04
+= 2 0.999 1.40E-05
+
+ 
+
+ 
+
+  
+
+ 
+
+tep
+CO)
+
+ 
+
+Figure 5: An example of graph reachability result, given a query “4 — 9” (Answer: No). The numbers next to the underline
+bars indicate the rank of the attention scores. The corresponding termination probability and prediction results are shown in
+the table.
+
+only 78.95% accuracy on the large graph dataset, as the task be- 18.0% -—
+
+comes more challenging. Meanwhile, the ReasoNet model con- 36.09% For
+
+verges faster than the ReasoNet-Last model. The ReasoNet model So OM
+— 12.0%} 
+converges in 20 epochs in the small graph dataset, and 40 epochs
+in the large graph dataset, while the ReasoNet-Last model converges around 40 epochs in the small graph dataset, and 70 epochs
+in the large graph dataset. The results suggest that the termination gate variable in the ReasoNet is helpful when training with
+sophisticated examples, and makes models converge faster. Both
+the ReasoNet and ReasoNet-Last models perform better than the
+ReasoNet-Tmax = 2 model, which demonstrates the importance of
+the multi-turn reasoning. (a) Small Graph
+
+To further understand the inference process in ReasoNets, Figures 4 and 5 show test examples of the large graph dataset. In
+
+10.0%
+8.0% L-:
+
+6.0% F -:-
+Percentage
+
+4.0% --:
+2.0%}:
+
+ 
+
+0.0%
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+Termination Steps
+
+Figure 4, we can observe that the model does not make a firm pre- 3s
+diction till step 9. The highest attention word at each step shows ~
+the reasoning process of the model. Interestingly, the model starts a
+from the end node (17), traverses backward till finding the starting ©
+node (10) in step 9, and makes a firm termination prediction. On 5
+
+ou
+
+the other hand, in Figure 5, the model learns to stop in step 2. In
+step 1, the model looks for neighbor nodes (12, 6, 16) to 4 and 9.
+Then, the model gives up in step 2 and predict “No”. All of these
+demonstrate the dynamic termination characteristic and potential
+reasoning capability of ReasoNets.
+
+To better grasp when ReasoNets stop reasoning, we show the
+distribution of termination steps in ReasoNets on the test set. The
+termination step is chosen with the maximum termination probability p(k) = t; Wk} (1 — t;), where t; is the termination probability
+at step i. Figure 6 shows the termination step distribution of ReasoNets in the graph reachability dataset. The distributions spread
+out across different steps. Around 16% and 35% of the instances
+
+   
+
+° 123 45 6 7 8 9 1011121314151617181920 2122232425
+Termination Steps
+
+(b) Large Graph
+Figure 6: Termination step distribution of ReasoNets in the
+
+graph reachability dataset, where T;,,, is set to 15 and 25 in
+the small graph and large graph dataset, respectively.
+
+terminate in the last step for the small and large graph, respectively. = 2 indicates that there are two intermediate nodes in the shortest
+We study the correlation between the termination steps and the reachability path. Test instances with larger BFS-Steps are more
+complexity of test instances in Figure 7. Given the query, we use challenging. We denote BFS-Step = —1 as there is no reachable
+the Breadth-First Search (BFS) algorithm over the target graph to path for the given query. Figure 7 shows that test instances with
+
+analyze the complexity of test instances. For example, BFS-Step larger BFS-Steps require more reasoning steps.
+ 
+
+1600
+
+ 
+
+ 
+
+ 
+
+ 
+
+a
+Qo. : : : :
+oO : : 1200
+Tp UO pee Wl wdecr eel once beence sol cconcalllocasellescancad sonaseds
+- |= === 8 1000
+O 8) 0 300
+© a ' - =» = 8 8
+= 6 MB : © eomuapeenld a _—— oo a: beteeeeedes 4 600
+£ | ff ef 2
+oO a ee or s sonny pissiesse ie arated neiovoirtel aaioveneeeccnnacenese 4 400
+- , as Ss : 200
+a
+1. 0 1 2 3 4 5 6 7
+BFS Steps
+(a) Small Graph
+= 7 = 9 bs = = 7 = 7 = = TY
+a nH a = a a a a a . oe .
+= = = = = = - 2 - : : 1600
+= em
+A OS a a on ee a a ae 1400
+ov =
+Wn se keee es pe eb et: ie
+c 15 mM niceties
+Oo se es ee ee oe Pe: 1000
+cS lgesaeea * &
+C10 te: ee es BE ee Be Bese thee
+= see eee 600
+a 2
+a shan DO : AnD
+a Lk.
+woof : : 200
+: ! i | i ! i | 1
+-1 O 1 2 3 #4 5 6 7 8 9 10 11
+BFS Steps
+(b) Large Graph
+
+Figure 7: The correlation between BFS steps and ReasoNet
+termination steps in the graph reachability dataset, where
+Tmax is set to 15 and 25 in the small graph and large graph
+dataset, respectively, and BFS-Step= —1 denotes unreachable
+cases. The value indicates the number of instances in each
+case.
+
+5 CONCLUSION
+
+In this paper, we propose ReasoNets that dynamically decide whether
+to continue or to terminate the inference process in machine comprehension tasks. With the use of the instance-dependent baseline
+
+method, our proposed model achieves superior results in machine
+
+comprehension datasets, including unstructured CNN and Daily
+
+Mail datasets, the Stanford SQUAD dataset, and a proposed structured Graph Reachability dataset.
+
+6 ACKNOWLEDGMENTS
+
+We thank Ming-Wei Chang, Li Deng, Lihong Li, and Xiaodong Liu
+for their thoughtful feedback and discussions.
+
+REFERENCES
+
+[1] Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. 2015. Neural machine
+translation by jointly learning to align and translate. In ICLR.
+
+[2] Léon Bottou. 2014. From machine learning to machine reasoning. Machine
+Learning 94, 2 (2014), 133-149.
+
+[3] Dangi Chen, Jason Bolton, and Christopher D Manning. 2016. A Thorough
+Examination of the CNN / Daily Mail Reading Comprehension Task. In ACL.
+
+[4] Dangi Chen, Adam Fisch, Jason Weston, and Antoine Bordes. 2017. Reading
+Wikipedia to Answer Open-Domain Questions. CoRR abs/1704.00051 (2017).
+
+[5] Yiming Cui, Zhipeng Chen, Si Wei, Shijin Wang, Ting Liu, and Guoping Hu.
+2016. Attention-over-Attention Neural Networks for Reading Comprehension.
+CoRR abs/1607.04423 (2016).
+
+[6] Bhuwan Dhingra, Hanxiao Liu, William W. Cohen, and Ruslan Salakhutdinov.
+2016. Gated-Attention Readers for Text Comprehension. CoRR abs/1606.01549
+(2016).
+
+[7] Karm Moritz Hermann, Tomas Ko¢isky, Edward Grefenstette, Lasse Espeholt,
+Will Kay, Mustafa Suleyman, and Phil Blunsom. 2015. Teaching Machines to
+
+[8]
+
+[9]
+
+[10]
+
+[11]
+
+[12]
+
+[13]
+
+[14]
+
+[15]
+
+[16]
+
+[17]
+[18]
+
+[19]
+
+[20]
+
+[21]
+[22]
+[23]
+
+[24]
+
+[25]
+[26]
+
+[27]
+
+[28]
+[29]
+
+[30]
+
+[31]
+[32]
+
+[33]
+
+[34]
+
+[35]
+
+[36]
+
+Read and Comprehend. In NIPS. 1693-1701.
+
+Felix Hill, Antoine Bordes, Sumit Chopra, and Jason Weston. 2016. The Goldilocks
+Principle: Reading Children’S Books With Explicit Memory Representations. In
+ICLR.
+
+Rudolf Kadlec, Martin Schmid, Ondrej Bajgar, and Jan Kleindienst. 2016. Text
+Understanding with the Attention Sum Reader Network. arXiv:1603.01547v1
+[cs.CL] (2016). arXiv:1603.01547
+
+Leslie Pack Kaelbling, Michael L. Littman, and Anthony R. Cassandra. 1998. Planning and acting in partially observable stochastic domains. Artificial Intelligence
+101 (1998), 99-134.
+
+Diederik P. Kingma and Jimmy Ba. 2015. Adam: A Method for Stochastic
+Optimization. In ICLR.
+
+Sosuke Kobayashi, Ran Tian, Naoaki Okazaki, and Kentaro Inui. 2016. Dynamic
+Entity Representation with Max-pooling Improves Machine Reading. In Proceedings of the North American Chapter of the Association for Computational
+Linguistics and Human Language Technologies (NAACL-HLT).
+
+Ankit Kumar, Ozan Irsoy, Peter Ondruska, Mohit Iyyer, James Bradbury, Ishaan
+Gulrajani, Victor Zhong, Romain Paulus, and Richard Socher. 2016. Ask Me
+Anything: Dynamic Memory Networks for Natural Language Processing. In
+ICML.
+
+Kenton Lee, Tom Kwiatkowski, Ankur P. Parikh, and Dipanjan Das. 2016. Learning Recurrent Span Representations for Extractive Question Answering. CoRR
+abs/1611.01436 (2016).
+
+Volodymyr Mnih, Nicolas Heess, Alex Graves, et al. 2014. Recurrent models
+of visual attention. In Advances in Neural Information Processing Systems. 2204—
+2212.
+
+Rodrigo Nogueira and Kyunghyun Cho. 2016. WebNav: A New Large-Scale Task
+for Natural Language based Sequential Decision Making. In Advances in Neural
+Information Processing Systems.
+
+Jeffrey Pennington, Richard Socher, and Christopher D. Manning. 2014. Glove:
+Global Vectors for Word Representation.. In EMNLP.
+
+Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang. 2016.
+SQuAD: 100, 000+ Questions for Machine Comprehension of Text. In EMNLP.
+Matthew Richardson, Christopher JC Burges, and Erin Renshaw. 2013. MCTest:
+A Challenge Dataset for the Open-Domain Machine Comprehension of Text.. In
+EMNLP.
+
+Min Joon Seo, Aniruddha Kembhavi, Ali Farhadi, and Hannaneh Hajishirzi. 2016.
+Bidirectional Attention Flow for Machine Comprehension. CoRR abs/1611.01603
+(2016).
+
+Alessandro Sordoni, Phillip Bachman, and Yoshua Bengio. 2016. Iterative Alternating Neural Attention for Machine Reading. CoRR abs/1606.02245 (2016).
+Sainbayar Sukhbaatar, Jason Weston, and Rob Fergus. 2015. End-to-end memory
+networks. In Advances in Neural Information Processing Systems. 2440-2448.
+Richard Stuart Sutton. 1984. Temporal Credit Assignment in Reinforcement Learning. Ph.D. Dissertation.
+
+Richard S. Sutton, David McAllester, Satinder Singh, and Yishay Mansour. 1999.
+Policy Gradient Methods for Reinforcement Learning with Function Approximation. In NIPS.
+
+Adam Trischler, Zheng Ye, Xingdi Yuan, and Kaheer Suleman. 2016. Natural
+Language Comprehension with the EpiReader. In EMNLP.
+
+Shuohang Wang and Jing Jiang. 2016. Machine Comprehension Using MatchLSTM and Answer Pointer. CoRR abs/1608.07905 (2016).
+
+Wenhui Wang, Nan Yang, Furu Wei, Baobao Chang, and Ming Zhou. 2017. Gated
+Self-Matching Networks for Reading Comprehension and Question Answering.
+In ACL.
+
+Zhiguo Wang, Haitao Mi, Wael Hamza, and Radu Florian. 2016. Multi-Perspective
+Context Matching for Machine Comprehension. CoRR abs/1612.04211 (2016).
+Dirk Weissenborn. 2016. Separating Answers from Queries for Neural Reading
+Comprehension. CoRR abs/1607.03316 (2016).
+
+Dirk Weissenborn, Georg Wiese, and Laura Seiffe. 2017. FastQA: A Simple and
+Efficient Neural Architecture for Question Answering. CoRR abs/1703.04816
+(2017).
+
+Ronald J Williams. 1992. Simple statistical gradient-following algorithms for
+connectionist reinforcement learning. Machine Learning 8, 3-4 (1992), 229-256.
+Caiming Xiong, Victor Zhong, and Richard Socher. 2016. Dynamic Coattention
+Networks For Question Answering. CoRR abs/1611.01604 (2016).
+
+Zhilin Yang, Bhuwan Dhingra, Ye Yuan, Junjie Hu, William W. Cohen, and Ruslan
+Salakhutdinov. 2016. Words or Characters? Fine-grained Gating for Reading
+Comprehension. CoRR abs/1611.01724 (2016).
+
+Yang Yu, Wei Zhang, Kazi Hasan, Mo Yu, Bing Xiang, and Bowen Zhou. 2016.
+End-to-End Reading Comprehension with Dynamic Answer Chunk Ranking.
+CoRR abs/1610.09996 (2016).
+
+Matthew D. Zeiler. 2012. ADADELTA: An Adaptive Learning Rate Method. CoRR
+abs/1212.5701 (2012).
+
+Junbei Zhang, Xiao-Dan Zhu, Qian Chen, Li-Rong Dai, Si Wei, and Hui Jiang.
+2017. Exploring Question Understanding and Adaptation in Neural-NetworkBased Question Answering. CoRR abs/1703.04617 (2017).
+

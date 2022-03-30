@@ -1,0 +1,112 @@
+220	4	27	most critical component
+220	35	62	weight - sharing constraint
+220	71	86	is vital to map
+220	87	148	sentences of different languages to the shared - latent space
+221	40	63	brings some improvement
+221	4	34	embedding - reinforced encoder
+221	64	66	on
+221	67	95	all of the translation tasks
+222	8	14	remove
+222	19	47	directional self - attention
+222	53	56	get
+222	62	87	- 0.3 BLEU points decline
+224	14	35	significantly improve
+224	0	8	The GANs
+224	40	63	translation performance
+224	67	77	our system
+181	0	14	Lample et al .
+188	0	19	Supervised training
+168	33	36	set
+168	41	68	dimension of word embedding
+168	69	71	as
+168	72	75	512
+168	78	90	dropout rate
+168	91	93	as
+168	94	97	0.1
+168	106	117	head number
+168	118	120	as
+168	121	122	8
+169	3	6	use
+169	7	18	beam search
+169	19	23	with
+169	26	35	beam size
+169	36	38	of
+169	39	40	4
+169	45	59	length penalty
+169	60	63	? =
+169	64	67	0.6
+170	13	27	implemented in
+170	28	38	TensorFlow
+170	43	53	trained on
+170	54	73	up to four K80 GPUs
+170	88	90	in
+170	93	110	multi - GPU setup
+170	111	113	on
+170	116	130	single machine
+179	0	36	Word - by - word translation ( WBW )
+26	36	42	extend
+26	47	69	encoder - shared model
+26	115	117	by
+26	129	153	two independent encoders
+26	89	93	with
+26	159	180	each for one language
+27	41	49	utilized
+27	12	36	two independent decoders
+28	0	3	For
+28	4	17	each language
+28	62	69	perform
+28	73	75	AE
+28	88	105	encoder generates
+28	110	132	latent representations
+28	133	137	from
+28	142	167	perturbed input sentences
+28	176	196	decoder reconstructs
+28	201	210	sentences
+28	211	215	from
+28	220	242	latent representations
+33	4	32	cross - language translation
+33	38	45	utilize
+33	50	65	backtranslation
+29	0	6	To map
+29	11	33	latent representations
+29	34	38	from
+29	39	58	different languages
+29	59	61	to
+29	64	85	shared - latent space
+29	91	98	propose
+29	103	127	weightsharing constraint
+29	128	130	to
+29	135	142	two AEs
+34	105	117	are proposed
+34	15	68	two different generative adversarial networks ( GAN )
+34	71	77	namely
+34	82	102	local and global GAN
+34	118	136	to further improve
+34	141	169	cross - language translation
+35	3	10	utilize
+35	15	24	local GAN
+35	25	37	to constrain
+35	42	82	source and target latent representations
+35	83	90	to have
+35	95	112	same distribution
+36	3	8	apply
+36	13	23	global GAN
+36	24	35	to finetune
+36	40	63	corresponding generator
+36	66	70	i.e.
+36	77	137	composition of the encoder and decoder of the other language
+4	0	39	Unsupervised neural machine translation
+4	42	45	NMT
+4	84	103	machine translation
+5	24	40	unsupervised NMT
+192	0	33	Number of weight - sharing layers
+199	40	48	achieved
+199	8	36	best translation performance
+199	49	53	when
+199	54	92	only one layer is shared in our system
+200	0	4	When
+200	5	38	all of the four layers are shared
+200	89	92	get
+200	93	121	poor translation performance
+200	122	124	in
+200	125	159	all of the three translation tasks

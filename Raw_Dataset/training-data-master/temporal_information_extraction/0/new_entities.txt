@@ -1,0 +1,76 @@
+160	14	21	p	running
+160	24	49	n	transitive closure module
+160	50	55	p	after
+160	60	99	n	temporal rule - based sieve ( RB + TR )
+160	100	110	p	results in
+160	111	127	n	improving recall
+161	0	9	p	Combining
+161	10	63	n	rule - based and machine - learned sieves ( RB + ML )
+161	64	70	p	yields
+161	73	91	n	slight improvement
+161	92	105	p	compared with
+161	106	147	n	enabling only the machine - learned sieve
+161	148	150	p	in
+161	155	168	n	system ( ML )
+162	0	11	p	Introducing
+162	16	40	n	temporal reasoner module
+162	41	48	p	between
+162	53	80	n	two sieves ( RB + TR + ML )
+162	81	93	p	proves to be
+162	94	114	n	even more beneficial
+19	4	17	n	CATENA system
+19	18	26	p	includes
+19	27	58	n	two main classification modules
+19	61	68	p	one for
+19	69	77	n	temporal
+19	86	95	p	other for
+19	96	112	n	causal relations
+20	24	37	p	take as input
+20	40	48	n	document
+20	49	63	p	annotated with
+20	80	97	n	temporal entities
+20	98	110	p	according to
+20	111	128	n	TimeML guidelines
+20	131	140	p	including
+20	145	175	n	document creation time ( DCT )
+20	178	217	n	events and time expressions ( timexes )
+21	4	10	n	output
+21	11	13	p	is
+21	18	31	n	same document
+21	32	36	p	with
+21	37	62	n	temporal links ( TLINKs )
+21	63	74	p	set between
+21	75	80	n	pairs
+21	81	83	p	of
+21	84	101	n	temporal entities
+22	4	12	n	document
+22	21	35	p	annotated with
+22	36	63	n	causal relations ( CLINKs )
+22	64	71	p	between
+22	72	83	n	event pairs
+23	4	11	n	modules
+23	12	15	p	for
+23	16	59	n	temporal and causal relation classification
+23	60	72	p	rely both on
+23	75	101	n	sieve - based architecture
+23	104	112	p	in which
+23	117	143	n	remaining unlabelled pairs
+23	146	159	p	after running
+23	162	184	n	rule - based component
+23	196	215	n	transitive reasoner
+23	220	228	p	fed into
+23	231	252	n	supervised classifier
+4	54	112	n	temporal and causal relation extraction and classification
+150	26	32	n	CATENA
+150	33	35	p	is
+150	40	62	n	best performing system
+150	63	65	p	in
+150	66	76	n	both tasks
+156	51	67	p	performs best on
+156	68	109	n	timex - timex and event - timex relations
+156	112	117	p	while
+156	118	123	n	CAEVO
+156	130	138	p	achieves
+156	143	155	n	best results
+156	156	158	p	on
+156	159	194	n	event - DCT and event - event pairs

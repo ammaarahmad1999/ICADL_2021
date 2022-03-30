@@ -1,0 +1,100 @@
+27	0	10	n	SCIB - ERT
+27	11	18	p	follows
+27	23	48	n	same architecture as BERT
+27	64	77	p	pretrained on
+27	78	93	n	scientific text
+31	3	12	p	construct
+31	13	21	n	SCIVOCAB
+31	24	50	n	a new WordPiece vocabulary
+31	51	53	p	on
+31	54	75	n	our scientific corpus
+31	76	81	p	using
+31	86	112	n	Sen - tencePiece 1 library
+34	0	6	n	Corpus
+35	3	8	p	train
+35	9	16	n	SCIBERT
+35	17	19	p	on
+35	22	35	n	random sample
+35	36	38	p	of
+35	39	52	n	1.14 M papers
+35	53	57	p	from
+35	58	74	n	Semantic Scholar
+36	12	20	p	consists
+36	24	35	n	18 % papers
+36	36	40	p	from
+36	45	68	n	computer science domain
+36	73	77	n	82 %
+36	78	82	p	from
+36	87	110	n	broad biomedical domain
+9	48	83	n	https://github.com/allenai/scibert/
+2	12	37	n	Pretrained Language Model
+4	0	77	n	Obtaining large - scale annotated data for NLP tasks in the scientific domain
+5	23	87	n	pretrained language model based on BERT ( Devlin et al. , 2019 )
+5	91	165	n	address the lack of high - quality , large - scale labeled scientific data
+13	129	234	n	annotated data is difficult and expensive to collect due to the expertise required for quality annotation
+103	3	10	p	observe
+103	16	23	n	SCIBERT
+103	24	35	p	outperforms
+103	36	47	n	BERT - Base
+103	48	50	p	on
+103	51	119	n	scientific tasks ( + 2.11 F1 with finetuning and + 2.43 F1 without )
+106	0	17	n	Biomedical Domain
+107	3	10	p	observe
+107	16	23	n	SCIBERT
+107	24	35	p	outperforms
+107	36	47	n	BERT - Base
+107	48	50	p	on
+107	51	67	n	biomedical tasks
+107	80	95	p	with finetuning
+107	70	79	n	+ 1.92 F1
+107	110	117	p	without
+107	100	109	n	+ 3.59 F1
+108	14	24	n	SCIB - ERT
+108	25	33	p	achieves
+108	34	50	n	new SOTA results
+108	51	53	p	on
+108	54	74	n	BC5 CDR and ChemProt
+108	81	90	n	EBM - NLP
+118	0	23	n	Computer Science Domain
+119	3	10	p	observe
+119	16	23	n	SCIBERT
+119	24	35	p	outperforms
+119	36	47	n	BERT - Base
+119	48	50	p	on
+119	51	73	n	computer science tasks
+119	86	101	p	with finetuning
+119	76	85	n	+ 3.55 F1
+119	116	123	p	without
+119	106	115	n	+ 1.13 F1
+120	14	21	n	SCIBERT
+120	22	30	p	achieves
+120	31	47	n	new SOTA results
+120	48	50	p	on
+120	51	60	n	ACL - ARC
+120	71	89	n	NER part of SciERC
+122	0	16	n	Multiple Domains
+123	3	10	p	observe
+123	16	23	n	SCIBERT
+123	24	35	p	outperforms
+123	36	47	n	BERT - Base
+123	48	50	p	on
+123	55	72	n	multidomain tasks
+123	85	100	p	with finetuning
+123	75	84	n	+ 0.49 F1
+123	115	122	p	without
+123	105	114	n	+ 0.93 F1
+124	14	21	n	SCIBERT
+124	22	33	p	outperforms
+124	38	42	n	SOTA
+124	43	45	p	on
+124	46	56	n	Sci - Cite
+44	0	24	n	Named Entity Recognition
+44	27	30	n	NER
+45	4	19	n	PICO Extraction
+45	22	26	n	PICO
+46	4	23	n	Text Classification
+46	26	29	n	CLS
+47	4	27	n	Relation Classification
+47	30	33	n	REL
+48	4	22	n	Dependency Parsing
+48	25	28	n	DEP

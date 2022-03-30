@@ -1,0 +1,58 @@
+23	43	52	p	providing
+23	57	64	n	ability
+23	65	74	p	to answer
+23	75	101	n	more complicated questions
+24	52	90	n	more sophisticated inference procedure
+24	96	98	p	is
+24	104	113	n	efficient
+24	122	130	p	consider
+24	131	143	n	longer paths
+24	234	255	n	richer representation
+24	25	27	p	of
+24	162	169	n	answers
+24	277	284	p	encodes
+24	289	311	n	question - answer path
+24	316	336	n	surrounding subgraph
+24	256	258	p	of
+24	344	346	n	KB
+2	0	18	n	Question Answering
+4	45	88	n	answer questions on a broad range of topics
+8	25	111	n	automatically answer questions asked in natural language on any topic or in any domain
+9	90	137	n	open - domain question answering ( or open QA )
+10	89	96	n	open QA
+136	0	9	p	Replacing
+136	10	13	n	C 2
+136	14	16	p	by
+136	17	20	n	C 1
+136	21	28	p	induces
+136	31	41	n	large drop
+136	42	44	p	in
+136	45	56	n	performance
+137	10	15	p	using
+137	16	40	n	all 2 - hops connections
+137	41	43	p	as
+137	46	59	n	candidate set
+137	60	62	p	is
+137	68	79	n	detrimental
+138	17	23	p	verify
+138	28	38	n	hypothesis
+138	56	60	p	that
+138	63	84	n	richer representation
+138	85	88	p	for
+138	89	96	n	answers
+138	130	135	p	store
+138	136	162	n	more pertinent information
+139	13	24	p	demonstrate
+139	33	48	n	greatly improve
+139	49	53	p	upon
+139	58	63	n	model
+139	84	98	p	corresponds to
+139	101	108	n	setting
+139	109	113	p	with
+139	118	137	n	Path representation
+139	142	145	n	C 1
+139	146	148	p	as
+139	149	162	n	candidate set
+145	4	12	n	ensemble
+145	13	21	n	improves
+145	26	48	n	state - of - the - art

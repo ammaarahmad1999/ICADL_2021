@@ -1,0 +1,49 @@
+{
+  "has" : {
+    "Experiments" : {
+      "has" : {
+        "Experimental setup" : {
+          "server" : "64 - core Intel Xeon E7-4820 @ 2.00 GHz",
+          "Cache" : "18 Mb",
+          "RAM" : "0.986 TB",
+          "using" : "Matlab 2012",
+          "from sentence" : "All experiments are conducted on a server with 64 - core Intel Xeon E7-4820 @ 2.00 GHz , 18 Mb Cache and 0.986 TB RAM , using Matlab 2012 ."
+        },
+        "Results" : {
+          "Speed Comparisons" : {
+            "Speed vs. increasing N" : {
+              "curve" : "surprisingly lower and highly stable",
+              "over growing N" : "almost no rise of selection time",
+              "from sentence" : "Speed Comparisons
+Speed vs. increasing N To verify the great superiority of our method over the state - of - the - art methods in speed , three experiments are conducted .              
+Compared with TED and RRSS Nie , the curve of ARSS is surprisingly lower and highly stable against increasing N ; there is almost no rise of selection time over growing N ."
+
+            },
+            "Speed with fixed N" : {
+              "is" : "fastest algorithm",
+              "from sentence" : "Speed with fixed N The speed of four algorithms is summarized in , where each row shows the results on one dataset and the last row displays the average results .
+First , ARSS is the fastest algorithm , and RRSS our is the second fastest algorithm ."
+
+            }
+          },
+          "Prediction Accuracy" : {
+            "Accuracy comparison" : {
+              "achieve" : "appreciable advantage",
+              "from sentence" : "Prediction Accuracy
+Accuracy comparison
+Third , compared with TED , both RRSS and ARSS achieve an appreciable advantage ."
+              
+            },
+            "Prediction accuracies vs. increasing K" : {
+              "K increases" : ["prediction accuracies generally increase", {"from sentence" : "Prediction accuracies vs. increasing K To give a more detailed comparison , shows the prediction accuracies versus growing K ( the number of selected samples ) .
+              As we shall see , the prediction accuracies generally increase as K increases ."
+              
+              }],
+              "among the best" : ["ARSS", {"from sentence" : "For each sub-figure , ARSS is generally among the best ."}]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+title
+abstract
+Introduction
+Related Work
+Model
+Embedding Layer
+Sequence Layer
+Entity Detection
+Dependency Layer
+Stacking Sequence and Dependency
+Relation Classification
+Training
+Results and Discussion
+Data and Task Settings
+Experimental Settings
+End-to-end Relation Extraction Results
+Relation Classification Analysis Results
+Conclusion

@@ -1,0 +1,8 @@
+title
+abstract
+Introduction
+Related Work
+Approach
+Focal Visual-Text Attention
+Experiments
+Conclusions and future work

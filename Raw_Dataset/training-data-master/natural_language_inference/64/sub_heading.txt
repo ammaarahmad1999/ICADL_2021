@@ -1,0 +1,19 @@
+title
+abstract
+Introduction
+Related Work
+TANDA: Transfer and Adapt
+AS2 task and model definition
+Transformers for AS2
+TANDA
+Answer-Sentence Natural Questions
+Experiments on Standard Benchmarks
+Academic Datasets
+Training and testing details
+Main Results
+Properties of TANDA
+Insights on ASNQ
+Experiments on data from Alexa
+Datasets
+Results
+Conclusions

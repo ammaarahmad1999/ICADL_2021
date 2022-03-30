@@ -1,0 +1,929 @@
+NegBERT: A Transfer Learning Approach for Negation Detection and
+
+Scope Resolution
+
+Aditya Khandelwal, Suraj Sawant
+
+College of Engineering Pune
+khandelwalar16.comp @coep.ac.in, sts.comp @coep.ac.in
+
+Abstract
+
+Negation is an important characteristic of language, and a
+major component of information extraction from text. This
+subtask is of considerable importance to the biomedical domain. Over the years, multiple approaches have been explored to address this problem: simple rule-based systems,
+Machine Learning classifiers, Conditional Random Field
+Models, CNNs and more recently BiLSTMs. In this paper,
+we look at applying Transfer Learning to this problem.
+First, we extensively review previous literature addressing
+Negation Detection and Scope Resolution across the 3 datasets that have gained popularity over the years: BioScope
+Corpus, the Sherlock dataset, and the SFU Review Corpus.
+We then explore the decision choices involved with using
+BERT, a popular transfer learning model, for this task, and
+report a new state-of-the-art for scope resolution across all 3
+datasets. Our model, referred to as NegBERT, achieves a
+token level Fl score on scope resolution of 92.36 on the
+Sherlock dataset, 95.68 on the BioScope Abstracts, 91.24 on
+the BioScope Full Papers, 90.95 on the SFU dataset, outperforming the previous state-of-the-art by a significant margin. We also analyze the model’s generalizability to datasets
+on which it is not trained.
+
+Introduction
+
+Negation Detection and Scope Resolution is an important
+subtask for tasks ranging from Sentiment Analysis, where
+the sentiment of a given sentence is dependent on negation,
+to query response systems like Chatbots, where negation
+entirely changes the meaning and hence the relevance of a
+certain body of text. A substantial portion of the research
+till date on this topic focused solely on data from the biomedical domain where use of negation cues is abundant, as
+in medical reports. While negation is intuitive for humans
+to spot, finding the exact words that indicate such negation
+and delineating the scope of such negation cues has proven
+to be a tricky problem for computer-based systems. One
+could imagine that finding negation cues and their scopes
+could be easily solved via rules and carefully designed
+heuristics, and this was the exact approach used by the
+initial few systems attempting this task. But given the
+
+complexities of human language, these approaches weren’t
+accurate enough. Thus, other methods were explored, and
+Deep Learning-based approaches have shown to be particularly promising.
+
+A simple example of negation is as follows:
+
+This is not [a negation].
+We can observe that ‘not’ is the negation word (known as
+the negation cue) and the words whose meaning is altered
+by ‘not’ are ‘a’ and ‘negation’, which belong to what is
+known as the cue’s scope. Negation detection involves
+finding these negation cues, and scope resolution for each
+cue necessitates finding the words affected negatively by
+that cue (finding its scope).
+Cues can come in a variety of ways:
+1. An affix: (im)perfect, (a)typical, ca(n’t)
+2. A single word: not, no, failed, lacks
+3. A set of consecutive words or discontinuous words:
+
+neither...nor
+
+The scope of a cue is also not constrained to be continuous.
+These facts, coupled with the relatively small dataset sizes
+compared to other NLP datasets, make this task particularly challenging to solve.
+
+Transfer Learning, a method in which we train deep
+learning systems on huge corpora and then ‘transfer’ or
+tune these pretrained architectures on downstream tasks
+which have a dearth of data, has taken the NLP community
+by storm, achieving state-of-the-art results on almost every
+NLP task these models have been applied to. This method
+was originally used in Computer Vision, by training models on the ImageNet dataset which allowed them to capture
+important features in a picture, and then apply to other datasets by changing the output layer and training on the
+downstream task. Recently, a number of architectures including BERT (Devlin et. al. 2018) have applied this to
+NLP, contributing massively to the advancement of research in the field. Almost every NLP task benefitted from
+transfer learning, as training on massive corpora allowed
+these models to learn an understanding of language.
+Motivated by the success of transfer learning, we apply
+BERT to negation detection and scope resolution. We explore the set of design choices involved, and experiment on
+all 3 public datasets available: the BioScope Corpus (Abstracts and Full Papers) (Vincze et. al. 2008), the Sherlock
+Dataset (Morante and Blanco 2012) and the SFU Review
+Corpus (Konstantinova et. al. 2012). We train NegBERT
+on one dataset and report the scores on testing all datasets,
+thus showing the generalizability of NegBERT. Since the
+BioScope dataset is primarily from the biomedical domain,
+while the Sherlock dataset is taken from stories by Sir Author Conan Doyle (literary work), and the SFU Review
+Corpus is a collection of product reviews (free text by human users), the 3 datasets belong to different domains.
+
+This paper is organized as follows: In Section 2, we extensively review available literature on the subject. Section
+3 contains the details of the methodology used for NegBERT, while 4 includes experimental details for our experimentation. In Section 5, we report the results and analyze
+them. Our conclusions and our perspective on the future
+scope for this problem is presented in Section 6.
+
+Previous Work
+
+In 2012, the *sem Shared Task for the year was negation
+cue detection and scope resolution. The dataset used for
+this conference was the Sherlock dataset. The other 2 publicly available datasets are the Bioscope Corpus, and the
+SFU Review Corpus. In this section, we look at the previous literature addressing this task and summarize the results of those approaches at the end in a tabular format.
+
+Rule-Based Approaches
+
+The first approach that was explored in literature was a
+simple rule-based system. (Mutalik, Deshpande, and Nadkarni 2001). They tested the hypothesis that a lexical scanner that uses regular expressions to generate a finite state
+machine can detect negation cues in natural language.
+Their algorithm, NegFinder, was based on a manual inspection of 40 medical documents. They showed that it
+was possible to apply computational methods to detect
+negation cues in a sentence.
+
+Chapman et. al. (2001) proposed a simple regular expression algorithm (NegEx) to detect negation cues. They
+posited that medical language is lexically less ambiguous
+and hence a rule-based system can be applied, and that a
+simpler system than the one proposed by Mutalik et. al.
+also performed well. NegEx is a very reliable algorithm in
+the medical domain, which has been extensively used in
+further research.
+
+Sanchez-Graillet and Poesio (2007) looked at negation
+cue detection in the domain of Protein-Protein Interaction,
+proposing a heuristic-based system using a full dependency
+
+parser to extract negations tailored to that specific domain.
+They used the fact that rule-based systems had to be domain specific to perform well.
+
+Huang and Lowe (2007) stated that previous research
+had shown that the scope of negation may be difficult to
+identify if the cues are more than a few words away, and
+hence focused on addressing this problem. They proposed
+combining regular expression matching with grammatical
+parsing, which allowed the rule-based systems to account
+for long-term dependencies.
+
+For the *sem 2012 Shared task, the team from UCM-1
+(Albornoz et. al. 2012) used a rule-based system to detect
+negation cues. Scopes were resolved using the syntax tree
+of the sentence in which the negation arises. Their system
+was initially intended for processing negation in opinionated texts and was adapted to fit the task requirements. The
+team from UCM-2 (Ballesteros et. al. 2012) relied on a
+rule-based system engineered to the given dataset. Cue
+detection was performed via a static cue lexicon, scope was
+detected using rules based on a prior work by Ballesteros
+et. al. for the BioScope Corpus, which was modified for
+the Sherlock Corpus. The team from UGroningen (Basile
+et. al. 2012) also used a rule-based system based on NLP
+toolchain used to construct the Groningen Meaning Bank.
+Their system transformed the texts into logical formulas —
+using the C&C tools and Boxer, another system. They concluded that it is not easy to transfer the information about
+negation from a formal, logical representation of scope to a
+theory-neutral surface-oriented approach.
+
+These 3 methods showed how even rule-based systems
+with well-defined task-specific rules showed acceptable
+performance. The primary limitation, of course, were that
+these rules were not generalizable across domains or even
+datasets.
+
+Sohn, Wu, and Chute (2012) looked to improve Mayo
+Clinic’s clinical Text Analysis and Knowledge Extraction
+System (cTAKES) negation annotator via dependency
+parsers and a rule-based system. They found that using
+dependency-based negation proved to be a superior alternative to the pre-existing cTAKES negation annotator.
+
+Mehrabi et. al. (2015) proposed DEEPEN as an improvement to NegEx which added dependency parsing to
+it. They looked at negation detection only and evaluated
+their system on the Mayo Clinical Dataset. They made
+NegEx, a very reliable system, much more accurate.
+
+More recently, NegBio was introduced (Peng et al.
+2017), which utilized Universal Dependency patterns for
+cue detection. They improved on NegEx and showed that
+for the medical domain, this performed extremely well.
+Thus, we observe that recent rule-based systems incorporate dependency parsing in their rules, showing how each
+word needs to be considered in the context of the words
+around it. The sequential order of words makes a big difference even in detecting negation.
+Machine Learning Approaches
+
+The use of Machine Learning techniques for negation
+detection was explored by Rokach, Romano, and Maimon
+(2007) who described an approach to automatically generate and heuristically evaluate Regular Expression patterns.
+They then fed the results of the pattern evaluations and a
+few other concept features to a decision tree classifier.
+They also looked at a cascade of classifiers to make decisions. The sentence was made to pass to the next level of
+the cascade if no negation was found. The cascade they
+proposed was 3 levels deep. They relied on the regular
+expression matching paradigm to generate features but
+allowed the ML model to use them to come up with better
+rules(decisions), thus improving on just rule-based systems.
+
+In 2008, Morante, Liekens, and Daelemans (2008) proposed a system to both detect negation and find its scope in
+biomedical texts. This paper focused on the scope detection task, which hadn’t been previously explored. They
+proposed a memory-based scope finder that works in 2
+phases, cue detection and scope resolution. They used a kNearest Neighbors Classifier with features extracted from
+the sentence and modified to the task at hand. This was a
+novel approach to negation detection at the time and was
+performed on the BioScope Corpus.
+
+In 2009, Morante and Daelemans (2009) used IGTREE,
+which is a memory-based learning algorithm, as implemented in TiMBL, to detect cues. For scope resolution,
+they used a metalearner that used the predictions by 3 classifiers which predicted whether a given token was the beginning of a scope, end of the scope of neither. They used a
+memory-based algorithm, SVM and CREF as the 3 classifiers. This was also done on the Bioscope Corpus and
+achieved the state-of-the-art results in cue detection on the
+Bioscope Corpus. This algorithm was majorly rule based
+for detecting cues, as the algorithm only ran for words that
+were not a part of a predefined lexicon of words.
+
+For the *sem 2012 Shared Task, the team from UABCoRAL: (Gyawali and Solorio 2012) found the cue using a
+lexicon and classified each word as in-scope or out-ofscope by extracting features from a 2-tuple of words (the
+negation cue and the word under consideration) and passing that through a classifier. The team from UiO1: (Read
+et. al. 2012) detected cues in a similar way to Lapponi et.
+al. (Lapponi et. al. 2012). They used an SVM as the classifier. For scope resolution, they looked at the syntactic units
+and developed heuristics to improve the system and incorporated a data-driven approach which involved a ranking
+approach over syntactic constituents. At the time, this outperformed all other algorithms, majority of which were
+rule-based for the *sem 2012 Shared Task.
+
+In 2014, Packard et. al. (2014) looked at negation scope
+resolution as a semantic problem, and their approach
+
+worked over explicit and formal representations of propositional semantics. They proposed an MRS Crawler, and a
+maximum entropy model for parse ranking, trained on a
+different dataset of encyclopedia articles and tourist brochures. They achieved the maximum F1 score and outperformed all systems from *sem 2012 Shared Task on the
+Sherlock dataset.
+
+In 2015, Cruz, Taboada, and Mitkov (2015) looked at
+the Simon Fraser University (SFU) Review Corpus. They
+classified words as per the BIO representation schema.
+Another classifier attempted to tell if tokens in a sentence
+are in the scope of a negation cue. They used an SVM classifier with an RBF kernel and used Cost Sensitive Learning
+to deal with the imbalanced classification.
+
+Ou and Patrick (2015) looked at negation cue detection
+and experimented with 3 methods: lexicon-based, syntaxbased (both rule-based) and an SVM classifier. The SVM
+classifier delivered the best results. They collected their
+own dataset which had data from the biomedical domain.
+This showed that the most promise was not in furthering
+rule-based systems, but in exploring ML techniques for
+negation detection.
+
+Conditional Random Field Approaches
+
+A third approach to this task used the inherent sequential
+order to a sentence, by using Conditional Random Fields
+(CRFs). Agarwal and Yu (2010) used this approach for
+scope detection. Their system was robust and could identify scope in both biomedical and clinical domains. Morante
+and Daelemans had in contrast looked at the task as classification of word pairs, the negation word and the word to
+be labelled.
+
+Councill, McDonald, and Velikovich (2010) looked at
+negation in the context of improved sentiment analysis.
+They detected cues using a lexicon of explicit negation
+cues, and scopes using a CRF model as an annotator in a
+larger system. While they evaluated their system on the
+BioScope Corpus, they constructed a corpus called Product
+Reviews for their task. They showed that training on the
+biomedical domain and testing on the Product Reviews or
+vice versa led to poor results. This suggested that the corpuses constructed were too small and thus approaches too
+task-specific to be generalized to natural language.
+
+For the *sem 2012 Shared task, the team from UMichigan (Abu-Jbara and Radev 2012) trained a CRF on the
+lexical, structural and syntactic features of the data for both
+cue detection and scope resolution. They expanded the set
+of features given to the CRF. The team from FBK (Chowdhury 2012) trained CRF classifiers, trained on only features provided by the dataset. A different set of features
+was considered for the CRF which exploited phrasal and
+contextual clues along with token specific features. The
+team from Ui0O2: (Lapponi et. al. 2012) detected cues by
+maintaining a corpus and classifying known cue words as
+cue or non-cue. Scope was detected using CRFs trained on
+lexical and syntactic features, together with a fine-grained
+set of labels that captured the scopal behavior of certain
+tokens. The team from UWashington (White 2012) detected cues using regular expression rules from the training
+data. Scope tokens were detected using a CRF sequence
+tagger and custom defined features fed to the CRF.
+
+Li and Lu (2018) used models based on CRFs, semiMarkov CREF and latent-variable CRF, and achieved better
+results than previously reported on the Sherlock dataset,
+beating out all deep learning-based systems as well. Their
+key observation was that certain useful information such as
+features related to negation cue, long distance dependencies as well as some latent structural information could be
+exploited for such a task.
+
+Reinforcement Learning Approaches
+
+A distinctive and unique approach to negation scope
+resolution was the application of reinforcement learning.
+Prollochs, Feuerriegel, and Neumann (2016) looked at negation detection in the context of a decision support system
+for sentiment analysis. Their system thus represented the
+state by the encoding of the position in a sentence, and the
+set of actions as setting the state to negated or not negated.
+Thus, each token was labelled by the system by taking an
+action given the current state. This approach did not work
+as well as one would have hoped.
+
+Deep Learning Approaches
+
+More recent approaches have looked to apply Deep
+Learning architectures to the task. Qian et. al. (2016) were
+the first to apply deep learning to negation scope detection.
+They used Convolutional Neural Networks to path features
+to generate embeddings, which they concatenated with
+position features and fed to a softmax layer to compute
+confidence scores of its location labels. They used this system on the BioScope Corpus and outperformed all existing
+systems on the BioScope Abstracts.
+
+Fancellu, Lopez, and Webber (2016) looked at neural
+
+networks for scope detection. They rightly point out that
+most systems were highly engineered and only tested on
+the same genre they were trained on. They experimented
+with a one-hidden layer feed forward neural network and a
+bidirectional LSTM (BiLSTM) on the Sherlock Dataset,
+and found that the BiLSTM performed the best.
+Lazib et. al. (2016) at around the same time looked to Recurrent Neural Network variants for scope resolution. They
+experimented with RNN, LSTM, BiLSTM, GRU and CRF
+on the SFU Review Corpus Dataset. The BiLSTM, again,
+gave the best performance. Thus, we see different datasets
+benefitting from the use of BiLSTMs, indicating the potential in DL-based methods.
+
+Fancellu et. al. (2017) performed an analysis of the
+available datasets and showed that there existed a problem
+
+which enabled systems to gain high accuracy, namely that
+negation scopes were frequently annotated as a single span
+of text delimited by punctuation. They pointed out that the
+Bioscope and SFU Review corpus suffer from this problem, while the Sherlock Corpus does not. They also improved upon their previous model published in 2016
+(BiLSTM) by making joint predictions for all words. Their
+earlier approach would model the prediction of scope as
+independent predictions for each word. They added a dependence on the previous prediction for the next. By doing
+so, they managed to improve the best system for the task.
+
+Fancellu, Lopez, and Webber (2018) showed that
+BiLSTMs were the state of the art, and that models suffer
+from genre(domain) effects. They also looked at crosslingual scope detection, finding negation scope in languages where annotations aren’t available, which is a
+common problem for low-resource languages.
+
+Gautam et. al. (2018) looked at handling negation in
+tutorial dialogues. They too looked at LSTMs to solve a
+sequence labelling problem and got promising results on a
+custom dataset. Both cue detection and scope resolution
+were done using LSTMs.
+
+Taylor and Harabagiu (2018) used a combined BiLSTM
+to label cue and scope simultaneously. They wanted to
+look to augment patient cohort identification from electroencephalography reports. They preprocessed the text first,
+and then used the Gensim implementation of word2vec to
+generate embeddings for the text. Word embeddings were
+the first attempt at using Transfer Learning in NLP.
+
+More recently, Bhatia et. al. (2019) used a shared encoder and 2 separate decoders to get the entities and negations
+respectively. They performed evaluation over the 12b2/VA
+dataset and a proprietary medical condition dataset and
+showed that the joint model outperforms all standard models. They used a BiLSTM to encode the sequence at the
+word level, and an LSTM decoder. This method showed
+the power of using a joint encoding for both tasks.
+
+Chen (2019) used attention based BiLSTM networks
+and word embeddings to detect assertions and negations.
+This method applied attention, one of the more promising
+components of architectures addressing other NLP problems, to scope resolution.
+
+Authors Approach Precision Recall F1-Score
+NegFinder Rule-Based NA 95.7 NA
+NegEx Rule-Based 84.49 77.84 81.03
+Rokach et. al. ML Classifier Cascade 87.8 80.99 84.47
+Sanchez et. al. Rule-Based 89.15 67.27 76.68
+Huang et. al. Rule-Based 99.8 92.6 NA
+
+Custom Datasets: Negation Cue Detection
+
+Table 1. Previous Work on custom datasets.
+Authors Approach Precision Recall F1-Score
+Morante et. al. (2008) ML Classifier 89.77 93.38 91.54
+Morante et. al. (2009) ML Classifier 100 98.75 98.68
+
+BioScope(Abstracts): Negation Cue Detection
+
+ 
+
+Authors Approach Precision Recall F1-Score
+Morante et. al. (2008) ML Classifier 88.63 88.17 88.4
+Morante et. al. (2009) ML Metalearner 90.68 90.68 90.67
+
+Qian et. al. CNN 89.49 90.54 89.91
+Fancellu et. al. (2016) BiLSTM NA NA 91.35
+Fancellu et. al. (2017) BiLSTM-Joint NA NA 92.11
+
+Li et. al. CRF NA NA 92.1
+
+Taylor BiLSTM 88.72 89.02 88.85
+
+ 
+
+BioScope(Abstracts): Scope Resolution (Token Level F1 Score)
+
+Table 2. Previous Work on BioScope Corpus (Abstracts)
+
+Authors Approach Precision Recall F1-Score
+Morante et. al. (2009) ML Classifier 100 95.72 97.81
+Agarwal et. al. CRF 97.31 95.74 96.5
+Peng et. al. Rule-Based 96.1 95.7 95.9
+
+Authors Approach Precision Recall F1-Score
+Morante et. al. (2009) ML Metalearner 84.47 84.45 84.71
+Agarwal et. al. CRF 84.74 84.07 84.37
+Councill et. al. CRF 80.8 70.8 75.5
+Qian et. al. CNN 82.08 84.9 83.46
+Fancellu et. al. (2016) BiLSTM NA NA 77.85
+Fancellu et. al. (2017) BiLSTM-Joint NA NA 77.73
+Li et. al. CRF NA NA 83.1
+
+BioScope(Full Papers): Scope Resolution (Token Level F1 Score)
+
+Table 3. Previous Work on BioScope Corpus (Full Papers)
+
+ 
+
+Authors Approach Precision Recall F1-Score
+UMichigan CRF 94.31 87.88 90.98
+UCM-1 Rule-Based 89.26 91.29 90.26
+UCM-2 Lexicon 81.34 64.39 71.88
+UGroningen Rule-Based 88.89 84.85 86.82
+FBK CRF 93.41 91.29 92.34
+UABCoRAL Lexicon 85.93 85.61 85.77
+UiO2 Lexicon 89.17 93.56 91.31
+UiO1 ML Classifier 91.42 92.8 92.1
+
+UWashington Rule-Based 88.04 92.05 90
+Sherlock Dataset: Negation Cue Detection
+
+Authors Approach Precision Recall F1-Score
+UMichigan CRF 84.85 80.66 82.7
+UCM-1 Rule-Based 85.37 68.53 76.03
+UCM-2 Rule-Based 58.3 led 62.65
+UGroningen Rule-Based 69.2 82.87 75.17
+FBK CRF 81.53 82.44 81.98
+UABCoRAL ML Classifier 85.37 68.86 76.23
+UiO2 CRF 86.03 81.55 83.73
+UiO1 Data Driven Ranking 81.99 88.81 85.26
+UWashington CRF 83.26 83.77 83.51
+Packard et. al. ML Classifier 86.1 90.4 88.2
+Fancellu et. al. (2016) BiLSTM 92.62 85.13 88.72
+Fancellu et. al. (2017) BiLSTM-Joint NA NA 87.93
+Li et. al. CRF 94 85.3 89.4
+
+Sherlock Dataset: Scope Resolution (Token Level F1 Score)
+
+Table 4. Previous Work on the Sherlock Dataset
+
+ 
+
+Authors Approach Precision Recall F1-Score
+Cruz et. al. ML Classifier 82.44 93.22 89.64
+Authors Approach Precision Recall F1-Score
+Cruz et. al. ML Classifier 85.56 82.64 84.07
+Fancellu et. al. (2016) BiLSTM NA NA Sooo
+Lazib et. al. BiLSTM 91.21 87.56 89.38
+Fancellu et. al. (2017) BiLSTM-Joint NA NA 88.34
+
+SFU Review Corpus: Scope Resolution (Token Level F1 Score)
+
+Table 5. Previous Work on SFU Review Corpus
+
+Methodology
+
+We approach the task in the typical 2-stage fashion: negation cue detection performed before scope resolution.
+For both stages, we use Google’s Bidirectional Encoder
+Representation for Transformers (Devlin et. al. 2018)
+(BERT-base) with a classification layer on top of it. We
+use huggingface’s PyTorch implementation of BERT, and
+finetune the bert-base uncased model (110 million parameters) to the training sets.
+
+For negation detection, we use the following annotation
+schema:
+
+O — Affix
+2 — Part of a multiword cue
+
+1 — Normal Cue
+3 — Not a Cue
+
+This scheme is useful for the Sherlock dataset which has
+annotations for affixes, but the BioScope Corpus and SFU
+Review Dataset do not have annotations for affixes. Hence,
+when we test inter-dataset performance, we consider cues
+that are affixes as normal cues, and predictions of affixes
+as predictions of normal cues. (i.e. 0 and | are considered
+as the same label for the purpose of evaluation). We also
+use a 5th label for the padded tokens and set the class
+weights for that token category to 0 to avoid training on it.
+
+For scope resolution, we use a binary labelling scheme,
+0 as not a token and | as a token. We feed sentences which
+we know have cues to the model, and to encode that information into the input, we consider 2 methods:
+
+1. Replace: We replace the token which is the cue with
+another special token which represents the kind of token
+it is according the cue detection labelling scheme. Thus,
+‘[im]polite’ becomes ‘token[O]’, ‘not’ becomes ‘token[1]’, and ‘neither’ and ‘nor’ both become ‘token[2]’.
+
+2. Augment: We keep the original word and add the special
+token according to the scheme above immediately before the word. Thus, ‘[im]polite’ becomes ‘token[0] impolite’, ‘not’ becomes ‘token[1] not’, and ‘neither’ becomes ‘token[2] neither’.
+
+We need to preprocess the input to the model, as the
+tokenization performed by BERT’s BytePairEncoding creates a labelling issue. For instance:
+
+I am not impolite. -> I, am, not, im, ##polite.
+| : | : | Sherlock | BioScope | SFU Review
+BioScope SFULREVIEW! (Cue Annotated) |} | (Cue Annotated) || | (Cue Annotated)
+
+Sentences as a sequence of words and labels.
+One instance per cue occurence in sentence.
+BERT Tokenizer, and relabelling to ensure label
+consistency as per tokenization.
+
+BERT Model.
+Outputs the scores for whether or not the token is in
+scope.
+
+Sentences as a sequence of words and corresponding
+labels as per the annotation schema defined.
+BERT Tokenizer, and relabelling to ensure label
+consistency as per tokenization.
+
+BERT Model.
+
+Outputs a vector of probabilities per token.
+Postprocessing to get one label per word of the Postprocessing to get one label per word of the
+sentence. sentence.
+
+Cue-Annotated Scope-Annotated
+Sentences Sentences per Cue
+
+Figure 1. Proposed System (NegBERT)
+
+fl
+i
+
+  
+
+    
+     
+
+  
+        
+  
+
+    
+ 
+
+  
+
+    
+
+While we only have 3 labels for the sentence, BERT has
+to be fed 4 (1 label per token). Hence, we replicate the label for all tokens created from that word.
+
+Postprocessing is also needed for converting the tokenlevel predictions to word-level predictions. Hence, we consider the output for each token as a probability distribution
+over the classes possible and average them out for all tokens in a word, giving us a probability distribution for a
+word over all classes of tokens. A simple argmax gives us
+our required token type.
+
+We perform the preprocessing (split words into tokens,
+duplicate the labels for the word to the tokens it’s split into) and postprocessing (combining the outputs of multiple
+tokens that a word was split into to get word-level labels)
+for scope resolution as well. This postprocessing step increased the Fl score of NegBERT compared to considering
+just the first label of the first token that a word was split
+into as its label, indicating that it is important to consider
+the output for all tokens that a word has been split into.
+
+Experimentation
+
+We use Google’s BERT (Devlin et. al. 2018) (bert-baseuncased variant) as the base model to generate contextual
+embeddings for the sentence. The input to the BERT model
+is a sequence of tokenized and encoded tokens of a sentence. We then use a vector of dimension R# * “ to compute scores per token, for the classification task at hand.
+BERT outputs a vector of size R® per token of the input,
+which we feed to a common classification layer of dimen
+sion R#*° for cue detection and R®*? for scope resolution.
+We use early stopping on dev data for 6 epochs as tolerance and F1 score as the early stopping metric, use the Adam optimizer with an initial learning rate of 3e-5, and the
+Categorical Cross Entropy Loss with class weights as described above to avoid training on the padded label outputs.
+
+We perform cue detection and scope resolution for all 3
+datasets, and train on | and test on all datasets. For the
+Sherlock dataset, the training data is the Sherlock Train
+data used in *sem 2012 Shared Task available in cd-sco.
+The dev data is the dev data provided in the Sherlock Corpus, and the test data is the Sherlock Cardboard and Circle
+data used as test data for *sem 2012. For all other corpuses, we use a default 70 — 15 — 15 split for the train-dev-test
+data. We trained the models on free GPUs available via
+Google Colaboratory, the training scripts are publicly
+available.
+
+Results
+
+The results are tabulated in tables 6-8 below.
+
+For cue detection, on the Sherlock dataset test data, we
+see that we outperform the best system [FBK Chowdhury]
+by 0.6 Fl measure. On the BioScope Abstracts, we perform reasonably well. Unlike Morante and Daelemans, we
+do so without using a word lexicon taken from the data
+itself, thus allowing the model to generalize, as seen in its
+performance on BioScope Full Papers (F1: 92.42). On the
+BioScope Full papers, we are able to achieve 90.43 Fl
+when training on the same data, but we do note that the
+amount of training data available is significantly lower
+than for the other datasets, and while general Deep Learning based approaches cannot perform well in such situations, we still manage to perform well. On the SFU Review
+Corpus, we achieve an F1 of 87.08.
+
+For the inter-dataset comparison, we note that the model
+generalizes well across different domains, except the SFU
+Review corpus. We think this is due to annotation differences in both datasets, and that SFU corpus has cues that
+the other corpuses do not have.
+
+BioScope | BioScope
+
+Sherlock (Dev Set) 93.68 73.51 72.03 69.04
+Sherlock (Test Set) 92.94 73.62 69.63 70.51
+
+Bioscope (Abstracts) 76.71 95.65 92.37 83.86
+Bioscope (Full Papers) 90.23 79.68
+SFU Review Corpus | 36.92 17.44 59.24 87.08
+
+NegBERT: Negation Cue Detection
+
+ 
+
+Table 6. Fl Scores. A row represents the test dataset, a column
+represents the train dataset.
+ 
+
+BioScope | BioScope
+(Abstracts) | (Full Papers)
+
+Sherlock (Dev Set) 90.5 68.69 71.22 69.64
+Sherlock (Test Set) 92.36 75.55 74.96 73.72
+Bioscope (Abstracts) 72.6 95.68 91.91 80.73
+
+Bioscope (Full Papers)
+SFU Review Corpus
+Sherlock (Dev Set)
+Sherlock (Test Set)
+
+Bioscope (Abstracts) | 70.51 93.03 87.12 80.53
+Bioscope (Full Papers)| 69.58 89.84 85.27 76.44
+
+SFU Review Corpus | 74.86 85.25 78.89 89.2
+NegBERT: Scope Resolution (Token-Level F1 Score)
+
+Dataset Sherlock
+
+SFU
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Table 7. Token Level F1 Scores. A row represents the test dataset, a column represents the train dataset.
+
+For scope resolution: On the Sherlock dataset, we
+achieve an F1 of 92.36, outperforming the previous State
+of the Art by a significant margin (almost 3.0 Fl). On the
+BioScope Abstracts, we achieve an Fl of 95.68, outperforming the best architecture by 3.57 Fl. On the Bioscope
+Full Papers, we outperform the best architecture by 2.64 Fl
+when training on the same dataset On the SFU Review
+Corpus, we outperform the best system to date by 1.02 FI.
+
+For negation cue detection, we observe a significant gap
+between our model, NegBERT, and the current state-ofthe-art systems, while we outperform the baseline systems.
+We believe this is so as these datasets are fairly limited in
+size and scope, and for a such a task, bigger models like
+BERT need a lot more examples to train on to master the
+finer points of negation detection, while this is straightforward to handle for rule-based approaches and smaller datasets. This model does outperform other Deep Learning
+based systems applied to negation cue detection.
+
+NegBERT’s gain in accuracy on Scope Resolution is because it allows contextual embeddings and knowledge
+transfer across millions of documents to downstream tasks.
+
+When we trained on BioScope Abstracts and tested on
+the BioScope Full Papers, we surprisingly observed a stateof-the-art result of 91.24 (a gain of 3.89 Fl points over
+training on BioScope Full Papers), which is far beyond the
+achievable results on training and evaluating on the BioMedical sub corpora. This is only possible because of
+BERT’s pretraining, and the similarity of the sub corpora
+of the BioScope Corpus.
+
+BioScope (Abstracts) |Morante et. al. (2009) 98.68 95.65 -3.03
+
+SFU Review Cruz et. al. 89.64 87.08 -2.56
+Summary of Results on Negation Cue Detection
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Previous SOTA |NegBERT |Gain
+
+ 
+
+ 
+
+ 
+
+ 
+
+BioScope (Abstracts) | Fancellu et. al.(2017) 92.11 95.68
+BioScope (Full Papers) |Morante et. al. (2009) 84.71 91.24
+SFU Review Fancellu et. al.(2016) 89.93 90.95
+
+Summary of Results on Negation Scope Resolution
+
+ 
+
+ 
+
+Table 8. Results Comparison with previous SOTA
+
+We also notice that in general, though the cross-dataset
+generalizability is acceptable, it 1s far from what one would
+desire. We believe that the combination of these 2 results
+indicate that the datasets are highly disjoint in their representations of negations and are fairly limited in size, both
+of which contribute to the system’s inability to perform
+well on unseen data from a different domain, but perform
+well on data from within the same domain.
+
+Conclusion and Future Scope
+
+Negation Cue Detection and Scope Resolution is a very
+well researched problem. We reviewed all existing papers
+and identified the research trends moving towards Deep
+Learning approaches. Following the general trend in the
+NLP community, we looked to the new generation of transfer learning models (BERT) to solve both tasks. We explored the set of design choices and reported a significant
+improvement in scope detection systems using BERT-base
+uncased model. We also analyzed the inter-domain generalization of the models, and noted that the use of our proposed architecture, NegBERT, as the underlying model
+allows for really good performance on scope resolution for
+unseen datasets from different domains. We reported a new
+state-of-the-art model on every publicly available dataset
+using the same architecture with no task-specific tuning
+and the same set of hyperparameters for scope resolution.
+Thus, we clearly establish the usefulness of pretrained
+models and the usage of transfer learning to the task of
+negation scope resolution.
+
+We envision that the future progress in this task should
+focus on the use of ever-changing state-of-the-art models
+in the transfer learning domain which have significant potential to improve the accuracy of the system. We feel that
+a bigger dataset is needed to extract the maximum generalizability from such architectures.
+References
+
+Abu-Jbara A., Radev D. 2012. UMichigan: A Conditional Random Field Model for Resolving the Scope of Negation. In First
+Joint Conference on Lexical and Computational Semantics
+(*SEM). 328-334.
+
+Agarwal S., Yu H. 2010. Biomedical negation scope detection
+with conditional random fields. In Journal of the American Medical Informatics Association. 17:696-701.
+
+Albornoz J.; Plaza L.; Diaz A.; Ballasteros M. 2012. UCM-I: A
+Rule-based Syntactic Approach for Resolving the Scope of Negation. In First Joint Conference on Lexical and Computational
+Semantics (*SEM). 282-287
+
+Ballesteros M.; Diaz A.; Francisco V.; Gervas P.; Albornoz J.;
+Plaza L. 2012. UCM-2: a Rule-Based Approach to Infer the
+Scope of Negation via Dependency Parsing. In First Joint Conference on Lexical and Computational Semantics (*SEM). 288293
+
+Basile V.; Bos J.; Evang K.; Venhuizen N. 2012. UGroningen:
+Negation detection with Discourse Representation Structures. In
+First Joint Conference on Lexical and Computational Seman-tics
+(*SEM). 301-309.
+
+Bhatia P.; Celikkaya B.; Khalilia M.; Colak A. 2019. End-to-End
+Joint Entity Extraction and Negation Detection for Clinical Text.
+In Studies in Computational Intelligence. vol 843.
+
+Chapman W.; Bridewell W.; Hanbury P.; Cooper G.; Buchanan
+B. 2001. A Simple Algorithm for Identifying Negated Findings
+and Diseases in Discharge Summaries. In Journal of Biomedical
+Informatics. 34:301-310.
+
+Chen L. 2019. Attention-based deep learning system for negation
+and assertion detection in clinical notes. In /nternational Journal
+of Artificial Intelligence and Applications (IJAIA). Vol.10, No.1,
+January 2019.
+
+Chowdhury M. 2012. FBK: Exploiting Phrasal and Contextual
+Clues for Negation Scope Detection. In First Joint Conference on
+Lexical and Computational Semantics (*SEM). 340-346
+
+Councill I.; McDonald R.; Velikovich L. 2010. What’s Great and
+What’s Not: Learning to Classify the Scope of Negation for Improved Sentiment Analysis. In Workshop on Negation and Speculation in Natural Language Processing. 51—59.
+
+Cruz N.; Taboada M.; Mitkov R. 2015. A Machine-Learning
+Approach to Negation and Speculation Detection for Sentiment
+Analysis. In Journal of the Association for Information Science
+and Technology.
+
+Devlin J.; Chang M.; Lee K. 2018. Toutanova K.; BERT: Pretraining of Deep Bidirectional Transformers for Language Understanding. arXiv:1810.04805 [cs.CL].
+
+Fancellu F.; Lopez A.; Webber B. 2016. Neural Networks For
+Negation Scope Detection. In 54th Annual Meeting of the Association for Computational Linguistics. 495—504.
+
+Fancellu F.; Lopez A.; Webber B. 2018. Neural networks for
+cross-lingual negation scope detection. Preprint. arXiv:
+1810.02156v1 [cs.CL].
+
+Fancellu F.; Lopez A.; Webber B.; He H. 2017. Detecting negation scope is easy, except when it isn’t. In 15“ Conference of the
+European Chapter of the Association for Computational Linguistics. Volume 2, Short Papers 58-63.
+
+Gautam D.; Maharjan N.; Banjade R.; Tamang L.; Rus V. 2018.
+Long Short Term Memory Based Models for Negation Handling
+
+in Tutorial Dialogues. In The Thirty-First International Florida
+Artificial Intelligence Research Society Conference (FLAIRS-3 1).
+
+Gyawali B., Solorio T. 2012. UABCoRAL: A Preliminary study
+for Resolving the Scope of Negation. In First Joint Conference
+on Lexical and Computational Semantics (*SEM). 275—281
+
+Huang Y., Lowe H. 2007. In Journal of the American Medical
+Informatics Association. 14:304-311.
+
+Konstantinova N.; de Sousa S.; Cruz N.; Mana M.; Taboada M.;
+Mitkov R. 2012. A review corpus annotated for negation, speculation and their scope. In 8” International Conference On Language Resources and Evaluation (LREC).
+
+Lapponi E.; Vellldal E.; Ovrelid L.; Read J. 2012. UiO2: Sequence-Labeling Negation Using Dependency Features. In First
+Joint Conference on Lexical and Computational Semantics
+(*SEM). 319-327.
+
+Lazib L.; Zhao Y.; Qin B.; Liu T. 2016. Negation Scope Detection with Recurrent Neural Networks Models in Review Texts. In
+Springer Science+Business Media Singapore 2016. ICYCSEE
+2016, Part I, CCIS 623, pp. 494-508, 2016.
+
+Li H., Lu W. 2018. Learning with Structured Representations for
+Negation Scope Extraction. 56th Annual Meeting of the Association for Computational Linguistics (Short Papers). 533-539
+
+Mehrabi S.; Krishnan A.; Sohn S.; Roch A.; Schmidt H.; Kesterson J.; Beesley C.; Dexter P.; Schmidt C.; Liu H.; Palakal M.
+2015. DEEPEN: A negation detection system for clinical text
+incorporating dependency relation into NegEx. In Journal of
+Biomedical Informatics. 54:213-219
+
+Morante R., Blanco E. 2012. *SEM 2012 Shared Task: Resolving
+the Scope and Focus of Negation. In First Joint Conference on
+Lexical and Computational Semantics (*SEM). pages 265-274.
+
+Morante R., Daelemans W. 2009. A metalearning approach to
+processing the scope of negation. In Thirteenth Conference on
+Computational Natural Language Learning (CoNLL). 21—29
+
+Morante R.; Liekens A.; Daelemans W. 2008. Learning the Scope
+of Negation in Biomedical Texts. In 2008 Conference on Empirical Methods in Natural Language Processing. 715—724
+
+Mutalik P.; Deshpande A.; Nadkarni P. 2001. Use of Generalpurpose Negation Detection to Augment Concept Indexing of
+Medical Documents: A Quantitative Study Using the UMLS. In
+Journal of the American Medical Informatics Association. 8:598609
+
+Ou Y., Patrick J. 2015. Automatic negation detection in narrative
+pathology reports. In Artificial Intelligence in Medicine. 64:4150.
+
+Packard W.; Bender E.; Read J.; Oepen S.; Dridan R. 2014. Simple Negation Scope Resolution through Deep Parsing: A SemanticSolution to a Semantic Problem. In 52" Annual Meeting of the
+Association for Computational Linguistics. 69-78.
+
+Peng Y.; Wang X.; Lu L.; Bagheri M.; Summers R.; Lu Z. 2017.
+NegBio: a high-performance tool for negation and uncertainty
+detection in radiology reports. In AMJA 2018 Informatics Summit.
+
+Prollochs N.; Feuerriegel S.; Neumann D. 2016. Negation scope
+detection in sentiment analysis: Decision support for news-driven
+trading. In Decision Support Systems.
+
+Qian Z.; Li P.; Zhu Q.; Zhou G.; Luo Z.; Luo W. 2016. Speculation and Negation Scope Detection via Convolutional Neural
+Networks. In 2016 Conference on Empirical Methods in Natural
+Language Processing. 815-825.
+Read J.; Velldal E.; Ovrelid L.; Oepen S.; 2012. Ui01: Constituent-Based Discriminative Ranking for Negation Resolution. In
+First Joint Conference on Lexical and Computational Semantics
+(*SEM). 310-318.
+
+Rokach L.; Romano R.; Maimon O. 2008. Negation recognition
+in medical narrative reports. In Information Retrieval (2008).
+11:499-538
+
+Sanchez-Graillet O., Poesio M. 2007. Negation of protein—protein
+interactions: analysis and extraction. In Bioinformatics. 23(13):
+1424-32.
+
+Sohn S.; Wu S.; Chute C. 2012. Dependency Parser-based Negation Detection in Clinical Narratives. In AMIA Joint Summits on
+Translational Science. 2012:1-8.
+
+Taylor S., Harabagiu S.; 2018. The Role of a Deep-Learning
+Method for Negation Detection in Patient Cohort Identification
+from Electroencephalography Reports. In AMIA ... Annual Symposium proceedings. 2018: 1018-1027.
+
+Vinceze V.; Szarvas G.; Farkas R.; Mora G.; Csirik J. 2008. The
+BioScope corpus: annotation for negation, uncertainty and their
+scope in biomedical texts. In BMC Bioinformatics 2008. 9(Suppl
+11): S9
+
+White J. 2012. UWashington: Negation Resolution using Machine Learning Methods. In First Joint Conference on Lexical
+and Computational Semantics (*SEM). 335-339
+

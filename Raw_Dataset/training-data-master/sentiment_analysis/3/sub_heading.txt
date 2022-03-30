@@ -1,0 +1,20 @@
+title
+abstract
+Introduction
+Related Work
+Our Proposed KET Model
+Task Definition
+Knowledge Retrieval
+Embedding Layer
+Dynamic Context-Aware Affective Graph
+Hierarchical Self-Attention
+Context-Response Cross-Attention
+Experimental Settings
+Datasets and Evaluations
+Baselines and Model Variants
+Other Experimental Settings
+Result Analysis
+Comparison with Baselines
+Model Analysis
+Error Analysis
+Conclusion

@@ -1,0 +1,127 @@
+247	4	17	n	discriminator
+247	18	26	p	provides
+247	31	59	n	scalar training signal L g c
+247	60	63	p	for
+247	64	82	n	generator training
+247	91	115	n	feature vector F ( m t )
+247	116	119	p	for
+247	120	132	n	goal tracker
+248	27	39	p	increment of
+248	40	47	n	17.51 %
+248	48	52	p	from
+248	53	84	n	RASG w / o GTD to RASG w / o GT
+248	85	96	p	in terms of
+248	97	106	n	ROUGE - L
+249	28	40	n	goal tracker
+249	43	56	p	compared with
+249	57	79	n	RASG and RASG w / o GT
+249	96	102	p	offers
+249	82	95	n	RASG w/ o GTD
+249	105	116	p	decrease of
+249	117	137	n	45. 23 % and 17.88 %
+249	138	149	p	in terms of
+249	150	159	n	ROUGE - 1
+252	10	21	n	RASG w/o DM
+252	22	42	p	offers a decrease of
+252	43	52	n	10 . 22 %
+252	53	66	p	compared with
+252	67	71	n	RASG
+252	72	83	p	in terms of
+252	84	93	n	ROUGE - L
+224	6	9	n	S2S
+224	12	46	n	Sequence - to - sequence framework
+225	6	10	n	S2SR
+225	23	26	p	add
+225	31	77	n	reader attention on attention distribution ? t
+225	80	82	p	in
+225	88	101	n	decoding step
+226	6	9	n	CGU
+226	12	26	p	propose to use
+226	31	55	n	convolutional gated unit
+227	6	11	n	LEAD1
+227	56	63	p	selects
+227	68	109	n	first sentence of document as the summary
+228	6	14	n	TextRank
+228	17	33	p	propose to build
+228	36	41	n	graph
+228	49	52	p	add
+228	53	66	n	each sentence
+228	67	69	p	as
+228	72	78	n	vertex
+228	83	86	p	use
+228	87	91	n	link
+228	92	104	p	to represent
+228	105	124	n	semantic similarity
+231	3	12	p	implement
+231	13	28	n	our experiments
+231	29	31	p	in
+231	32	42	n	TensorFlow
+231	45	47	p	on
+231	51	65	n	NVIDIA P40 GPU
+232	4	28	n	word embedding dimension
+232	32	38	p	set to
+232	39	42	n	256
+232	51	73	n	number of hidden units
+232	77	80	n	512
+234	3	6	p	use
+234	7	24	n	Adagrad optimizer
+234	25	27	p	as
+234	32	52	n	optimizing algorithm
+235	3	9	p	employ
+235	10	21	n	beam search
+235	22	26	p	with
+235	27	38	n	beam size 5
+235	39	50	p	to generate
+235	51	80	n	more fluency summary sentence
+51	19	26	p	propose
+51	29	52	n	summarization framework
+51	53	58	p	named
+51	59	100	n	reader - aware summary generator ( RASG )
+51	106	118	p	incorporates
+51	119	134	n	reader comments
+51	135	145	p	to improve
+51	150	175	n	summarization performance
+52	66	74	p	employed
+52	17	62	n	seq2seq architecture with attention mechanism
+52	75	77	p	as
+52	82	105	n	basic summary generator
+53	9	36	p	calculate alignment between
+53	41	81	n	reader comments words and document words
+53	118	129	p	regarded as
+53	130	146	n	reader attention
+53	147	159	p	representing
+53	166	187	n	reader focused aspect
+54	10	15	p	treat
+54	20	45	n	decoder attention weights
+54	46	48	p	as
+54	53	92	n	focused aspect of the generated summary
+54	95	101	p	a.k.a.
+54	106	128	n	decoder focused aspect
+55	0	5	p	After
+55	6	24	n	each decoding step
+55	43	51	p	designed
+55	29	39	n	supervisor
+55	52	62	p	to measure
+55	67	75	n	distance
+55	76	83	p	between
+55	88	140	n	reader focused aspect and the decoder focused aspect
+57	4	15	p	training of
+57	20	34	n	framework RASG
+57	38	50	p	conducted in
+57	54	69	n	adversarial way
+2	0	30	n	Abstractive Text Summarization
+4	3	35	n	neural abstractive summarization
+5	48	93	n	reader - aware abstractive summary generation
+6	19	44	n	abstractive summarization
+240	3	11	p	see that
+240	12	16	n	RASG
+240	17	25	p	achieves
+240	28	62	n	11.0 % , 9.1 % and 6.6 % increment
+240	63	67	p	over
+240	72	105	n	state - of - the - art method CGU
+240	106	117	p	in terms of
+240	118	153	n	ROUGE - 1 , ROUGE - 2 and ROUGE - L
+241	6	20	p	worth noticing
+241	30	49	n	baseline model S2SR
+241	50	82	p	achieves better performance than
+241	83	86	n	S2S

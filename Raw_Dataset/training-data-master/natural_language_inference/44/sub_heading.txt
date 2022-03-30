@@ -1,0 +1,15 @@
+title
+abstract
+Introduction
+Human studies
+Analyses on existing QA model
+Method
+Neural Question Answering Model
+Sentence Selector
+Experiments
+Dataset and Evaluation Metrics
+SQuAD and NewsQA
+TriviaQA and SQuAD-Open
+SQuAD-Adversarial
+Related Work
+Conclusion
