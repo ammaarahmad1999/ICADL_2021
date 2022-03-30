@@ -10,13 +10,13 @@ c) Preprocessed_Dataset - Preprocessed Dataset used for training the model
 
 All file path should start with Prepocessed_Dataset
 
-Train the model with following command => 
+Train the model with following command \ 
 **python multitasking-both-scaffold.py**
 
-Inference for test data => 
+Inference for test data \
 **python test.py**
 
-Other Helper files\
+Other Helper files \
 Heading.ipynb, Test_Heading.ipynb - Used OCR to extract Main Heading and Sub Heading of a sentence in a paper \
 NCG_Preprocessing.ipynb - Convert Raw dataset into CSV format \
 Submission - Generates Submission folder on test_data. Submit it to Codalab Task Page for results 
