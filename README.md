@@ -10,10 +10,10 @@ c) Preprocessed_Dataset - Preprocessed Dataset used for training the model
 
 All file path should start with Prepocessed_Dataset
 
-Train the model with following command
+Train the model with following command => 
 **python multitasking-both-scaffold.py**
 
-Inference for test data
+Inference for test data => 
 **python test.py**
 
 Other Helper files
