@@ -2,8 +2,8 @@
 
 This repository contain 3 directory
 
-a) Raw_Dataset - NCG Dataset - Train, Trial and Test
-b) Raw_CSV_Dataset - CSV Format of Raw Dataset
+a) Raw_Dataset - NCG Dataset - Train, Trial and Test \
+b) Raw_CSV_Dataset - CSV Format of Raw Dataset \
 c) Preprocessed_Dataset - Preprocessed Dataset used for training the model
 
 **Steps to train the model**
