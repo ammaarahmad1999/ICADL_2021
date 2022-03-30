@@ -11,10 +11,10 @@ c) Preprocessed_Dataset - Preprocessed Dataset used for training the model
 All file path should start with Prepocessed_Dataset
 
 Train the model with following command
-python multitasking-both-scaffold.py
+**python multitasking-both-scaffold.py**
 
 Inference for test data
-python test.py
+**python test.py**
 
 Other Helper files
 Heading.ipynb, Test_Heading.ipynb - Used OCR to extract Main Heading and Sub Heading of a sentence in a paper
