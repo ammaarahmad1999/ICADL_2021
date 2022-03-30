@@ -16,7 +16,7 @@ Train the model with following command =>
 Inference for test data => 
 **python test.py**
 
-Other Helper files
-Heading.ipynb, Test_Heading.ipynb - Used OCR to extract Main Heading and Sub Heading of a sentence in a paper
-NCG_Preprocessing.ipynb - Convert Raw dataset into CSV format
-Submission - Generates Submission folder on test_data. Submit it to Codalab Task Page for results
+Other Helper files\
+Heading.ipynb, Test_Heading.ipynb - Used OCR to extract Main Heading and Sub Heading of a sentence in a paper \
+NCG_Preprocessing.ipynb - Convert Raw dataset into CSV format \
+Submission - Generates Submission folder on test_data. Submit it to Codalab Task Page for results 
